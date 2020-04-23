@@ -1,0 +1,27 @@
+name: Build and Deploy Jekyll Site
+
+on:
+  push:
+    branches: [ jekyll ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the site in the jekyll/builder container
+      run: |
+        docker run \
+        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build"
+    - name: Push the site onto the master branch
+      run: |
+        cd ${{ github.workspace }}/_site
+        git init
+        git config user.name ${GITHUB_ACTOR}
+        git config user.email Leo3418@users.noreply.github.com
+        git remote add origin https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git commit -a -m "Deploy Jekyll site on $( date )"
+        git push -f -u origin master
