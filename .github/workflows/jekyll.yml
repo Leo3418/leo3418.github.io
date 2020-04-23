@@ -18,6 +18,7 @@ jobs:
         jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build"
     - name: Push the site onto the master branch
       run: |
+        sudo chmod -R 777 ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
         git init
         git config user.name ${GITHUB_ACTOR}
