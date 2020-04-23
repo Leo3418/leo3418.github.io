@@ -1,0 +1,30 @@
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "" # the subpath of your site, e.g. /blog
+title:
+  en: "Leo3418's Personal Site"
+  zh: "Leo3418 的个人网站"
+
+defaults:
+  - # Default
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  - # Posts
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Leo"
+
+plugins:
+  - jekyll-polyglot
+
+# jekyll-polyglot
+languages: ["en", "zh"]
+default_lang: "en"
+exclude_from_localization: ["css", "images", "javascript"]
+parallel_localization: true
+sass: # https://github.com/untra/polyglot/issues/107#issuecomment-598274075
+  sourcemap: never
