@@ -1,10 +1,6 @@
 ---
 title: "Home"
+layout: home
 permalink: /
 lang: en
 ---
-
-## Posts
-{% for post in site.posts %}
-[{{ post.title }}]({{ post.url }})
-{% endfor %}

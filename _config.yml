@@ -3,13 +3,14 @@ baseurl: "" # the subpath of your site, e.g. /blog
 title:
   en: "Leo3418's Personal Site"
   zh: "Leo3418 的个人网站"
+author: "Leo"
 
 defaults:
   - # Default
     scope:
       path: ""
     values:
-      layout: "default"
+      layout: "page"
   - # Posts
     scope:
       path: ""
@@ -17,6 +18,8 @@ defaults:
     values:
       layout: "post"
       author: "Leo"
+
+theme: minima
 
 plugins:
   - jekyll-polyglot

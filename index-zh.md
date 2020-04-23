@@ -1,10 +1,7 @@
 ---
 title: "主页"
+layout: home
 permalink: /
 lang: zh
+list_title: "帖子"
 ---
-
-## 帖子列表
-{% for post in site.posts %}
-[{{ post.title }}]({{ post.url }})
-{% endfor %}

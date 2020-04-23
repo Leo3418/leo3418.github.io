@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="{{ site.active_lang | default: "en-US" }}">
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta charset="utf-8">
-        <title>{{ page.title }} - {{ site.title[site.active_lang] }}</title>
-        <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
-    </head>
+<html lang="{{ page.lang | default: site.active_lang | default: "en" }}">
+
+    {%- include head.html -%}
+
     <body>
-        {% include header.html %}
-        {{ content }}
+
+        {%- include header.html -%}
+
+        <main class="page-content" aria-label="Content">
+            <div class="wrapper">
+                {%- if page.lang != site.active_lang -%}
+                    {%- include no-translation.html -%}
+                {%- endif -%}
+                {{ content }}
+            </div>
+        </main>
+
+        {%- include footer.html -%}
+
     </body>
+
 </html>
