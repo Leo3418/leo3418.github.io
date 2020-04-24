@@ -10,13 +10,6 @@
     font-weight: bold;
 }
 
-.lang-option-inactive {
-    line-height: 1.5;
-    &, &:visited {
-        color: $text-color;
-    }
-}
-
 .message-box {
     margin-bottom: $spacing-unit;
     outline-color: lighten($grey-color, 30%);
