@@ -16,6 +16,7 @@ defaults:
       path: ""
     values:
       layout: "page"
+      license: "cc-by-sa-4_0"
   - # Posts
     scope:
       path: ""
@@ -23,6 +24,7 @@ defaults:
     values:
       layout: "post"
       author: "Leo"
+      license: "cc-by-sa-4_0"
   - # Images
     scope:
       path: "assets/img"
@@ -30,6 +32,9 @@ defaults:
       image: true
 
 theme: minima
+
+# minima
+github_username: "Leo3418"
 
 plugins:
   - jekyll-polyglot

@@ -1,0 +1,18 @@
+{% assign translations = site.data.i18n[site.active_lang] %}
+<div id="footer-site-info">
+    <div id="build-info">
+        <a href="https://github.com/Leo3418/leo3418.github.io">
+            <img alt="{{ translations['built_status'] }}" src="https://github.com/Leo3418/leo3418.github.io/workflows/Build%20and%20Deploy%20Jekyll%20Site/badge.svg?branch=jekyll" />
+        </a>
+        {{ translations["build_time"] }} {{ site.time }}
+    </div>
+    <div id="powered-by">
+        {{ translations["powered_by"] }}
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://github.com/jekyll/minima/">Minima</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
