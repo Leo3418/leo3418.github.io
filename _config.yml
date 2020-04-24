@@ -5,6 +5,11 @@ title:
   zh: "Leo3418 的个人网站"
 author: "Leo"
 
+collections_dir: "collections"
+collections:
+  windows-10-mobile:
+    output: true
+
 defaults:
   - # Default
     scope:
@@ -18,6 +23,11 @@ defaults:
     values:
       layout: "post"
       author: "Leo"
+  - # Images
+    scope:
+      path: "assets/img"
+    values:
+      image: true
 
 theme: minima
 
@@ -27,7 +37,7 @@ plugins:
 # jekyll-polyglot
 languages: ["en", "zh"]
 default_lang: "en"
-exclude_from_localization: ["css", "images", "javascript"]
+exclude_from_localization: ["assets/css", "assets/img"]
 parallel_localization: true
 sass: # https://github.com/untra/polyglot/issues/107#issuecomment-598274075
   sourcemap: never
