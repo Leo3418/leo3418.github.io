@@ -11,10 +11,10 @@
 }
 
 .message-box {
+    background-color: #eef;
+    border: 1px solid $grey-color-light;
+    border-radius: 3px;
     margin-bottom: $spacing-unit;
-    outline-color: lighten($grey-color, 30%);
-    outline-style: solid;
-    outline-width: thin;
     text-align: center;
 }
 
