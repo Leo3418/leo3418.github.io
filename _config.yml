@@ -31,6 +31,9 @@ defaults:
     values:
       image: true
 
+exclude:
+  - "README.md"
+
 theme: minima
 
 # minima
