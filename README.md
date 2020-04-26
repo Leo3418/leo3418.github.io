@@ -34,12 +34,9 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
 - `collections/`: Pages for a collection, posts, and drafts
   - `_drafts/<lang>/`: Drafts written in a language
   - `_posts/<lang>/`: Posts written in a language
-  - `_<collection-name>/`: Articles in a collection
-    - `<page-name>.md`: An article written in the site's default language
-    - `<page-name>-<lang>.md`: An article written in a non-default language
-  - `<collection-name>.md`: Home page for a collection, in the site's default
+  - `_<collection-name>/<lang>/`: Articles in a collection, in the specified
     language
-  - `<collection-name>-<lang>.md`: Home page for a collection, in a non-default
+  - `<collection-name>-<lang>.md`: Home page for a collection, in the specified 
     language
 - `_data/`: Data files
   - `<lang>/` Localized data files for a language
@@ -49,10 +46,7 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
 - `_layouts/`: Templates that wrap posts
 - `_sass/`: Sass partials to be included by the SCSS files
 - `_config.yml`: Jekyll configuration file
-- `index.md`: Body contents of the home page of the whole site, in the site's
-  default language
-- `index-<lang>.md` Body contents of the home page of the whole site, in a
-  non-default language
+- `<page-name>-<lang>.md`: Top level page written in the specified language
 
 ## Generating Static Files
 
