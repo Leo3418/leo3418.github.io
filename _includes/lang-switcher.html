@@ -1,6 +1,6 @@
 <div id="lang-switcher" class="trigger">
     {% for lang in site.languages %}
-        {% assign lang_name = site.data.lang_keys[lang] %}
+        {% assign lang_name = site.data[lang].l10n.lang_name %}
         {% if lang == site.active_lang %}
             <span class="lang-option-active page-link">{{ lang_name }}</span>
         {% else %}

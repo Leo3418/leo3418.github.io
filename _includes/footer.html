@@ -10,7 +10,7 @@
             {%- if site.author -%}
               {{ site.author | escape }}
             {%- else -%}
-              {{ site.title[site.active_lang] | escape }}
+              {{ site.data.l10n.title | escape }}
             {%- endif -%}
             </li>
             {%- if site.email -%}

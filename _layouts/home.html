@@ -15,7 +15,7 @@ layout: default
         {%- for post in site.posts -%}
             {%- if post.lang == site.active_lang -%}
             <li>
-                {%- assign date_format = site.data.date_formats[site.active_lang] | default: "%b %-d, %Y" -%}
+                {%- assign date_format = site.data.l10n.date_format | default: "%b %-d, %Y" -%}
                 <span class="post-meta">{{ post.date | date: date_format }}</span>
                 <h3>
                     <a class="post-link" href="{{ post.url | relative_url }}">
@@ -31,7 +31,7 @@ layout: default
     </ul>
 
     {%- else -%}
-    <div id="no-posts-msg">{{ site.data.i18n["no_posts"][site.active_lang] }}</div>
+    <div id="no-posts-msg">{{ site.data.strings.no_posts }}</div>
     {%- endif -%}
 
 </div>
