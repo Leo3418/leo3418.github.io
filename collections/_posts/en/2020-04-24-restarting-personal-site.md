@@ -9,20 +9,26 @@ something new, I usually spend some time reading tutorials, help articles, and
 blog posts about it. But of course, my reading is not limited to a single
 resource; instead, I often combine knowledge and steps across multiple
 resources and produce something not described by any single existing webpage.
+It would be very helpful if I write an article describing everything I've done,
+so just in case the same task needs to be performed again, the resources I
+would need could reduce from several different webpages to a single article,
+which is great.
 
 For example, in 2018, I decided to install a GNU/Linux distribution on my
 laptop to ditch virtual machines. My laptop has a dedicated NVIDIA GPU, which
 brought more harm than good on GNU/Linux. nouveau, the video driver shipped
 with Fedora, which is the distribution I chose, consumed a lot of battery
-power, so I replaced it with Bumblebee. Since then, every time after the lid is
-closed, the laptop would wake up immediately after it goes to sleep, with
-dedicated GPU, Bluetooth, and touchpad all stopped working.
-
-I searched on the Internet for a solution. Luckily for me, the ArchWiki has a
-workaround command for this issue, but it must be run every time after the
-system resumes from sleep. Well, at least the problem had been reduced to "how
-to run a script after system resumes", and a Google search directed me to use
-`systemd-suspend.service`. Problem solved!
+power, so I replaced it with Bumblebee using the steps described by a Fedora
+Project Wiki article. Since then, every time after the lid is closed, the
+laptop would wake up immediately after it goes to sleep, with dedicated GPU,
+Bluetooth, and touchpad all stopped working. I searched on the Internet for a
+solution. Luckily for me, the ArchWiki has a workaround command for this issue,
+but it must be run every time after the system resumes from sleep. Well, at
+least the problem had been reduced to "how to run a script after system
+resumes", and a Google search directed me to use `systemd-suspend.service`.
+Problem solved! But before reaching this stage, I had read at least three
+articles. In the future, if the driver would need to be reinstalled, then I
+would have to pull out all the three webpages to recall the steps.
 
 Creating a perfect Fedora installation on my laptop was complicated and uneasy.
 There were numerous nontrivial steps, and I feared for being unable to
@@ -45,11 +51,11 @@ webpages.
 
 Besides, I have been playing around with many other things, including Minecraft
 Forge mod development, RPM packaging, Docker, and even GTA Online. In fact, I
-am planning to start a collection of GTA Online tips! As an experienced player,
-I see new players making common mistakes and have a lot of things to share with
-the player community. Topics to write about and inspirations keep popping up in
-my mind, and it is time to reconstruct my personal site as a platform to post
-all these ideas.
+am planning to start a collection of GTA Online tips! As an experienced player
+who has played for 2000+ hours, I see new players making common mistakes and
+have a lot of things to share with the player community. Topics to write about
+and inspirations keep popping up in my mind, and it is time to reconstruct my
+personal site as a platform to post all these ideas.
 
 This time, I decide to use Jekyll. Being proficient in Markdown now, there is
 no reason for me to give it up and keep hardcoding my post in HTML. With site
