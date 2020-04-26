@@ -28,13 +28,13 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
 - `assets/`: Assets
   - `css/`: SCSS files used to generate this site's stylesheets
   - `img/`: Images
-    - `collections/<collection-name>/<page-name>/`: Images for a page in a
+    - `collections/<collection-name>/<doc-name>/`: Images for a document in a
       collection
     - `posts/<year>/<month>/<day>/<post-name>/`: Images for a post
-- `collections/`: Pages for a collection, posts, and drafts
+- `collections/`: Pages for collections, posts, and drafts
   - `_drafts/<lang>/`: Drafts written in a language
   - `_posts/<lang>/`: Posts written in a language
-  - `_<collection-name>/<lang>/`: Articles in a collection, in the specified
+  - `_<collection-name>/<lang>/`: Documents in a collection, in the specified
     language
   - `<collection-name>-<lang>.md`: Home page for a collection, in the specified 
     language
