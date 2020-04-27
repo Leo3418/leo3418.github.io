@@ -17,6 +17,9 @@
             <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
             {%- endif -%}
         </ul>
+        <p class="rss-subscribe">
+            <a href="{{ "/feed.xml" | relative_url }}">{{ site.data.strings.rss_subscribe }}</a>
+        </p>
         {%- if page.license -%}
         {%- include {{ page.license }}.html -%}
         {%- endif -%}

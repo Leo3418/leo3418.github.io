@@ -3,6 +3,7 @@ build_time: "构建于"
 no_posts: "无帖子"
 no_translation: "抱歉，此页面暂无中文版。"
 powered_by: "此网站由以下技术驱动："
+rss_subscribe: "RSS 订阅本站"
 
 cc_license: "知识共享许可协议"
 cc_by_sa_4_0: '此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。'
