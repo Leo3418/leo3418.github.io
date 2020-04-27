@@ -2,6 +2,25 @@
     color: $grey-color;
 }
 
+.collection-nav-footer {
+    margin-bottom: 0;
+    @extend %clearfix;
+
+    a {
+        float: right;
+    }
+}
+
+.collection-nav-header {
+    a {
+        float: left;
+    }
+
+    span {
+        @extend %clearfix;
+    }
+}
+
 .footer-col img {
     margin: 0;
 }
@@ -26,3 +45,8 @@ img {
     margin-left: auto;
     margin-right: auto;
 }
+
+p.collection-nav a {
+    display: block;
+}
+

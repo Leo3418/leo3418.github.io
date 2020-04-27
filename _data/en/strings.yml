@@ -7,3 +7,8 @@ rss_subscribe: "Subscribe via RSS"
 
 cc_license: "Creative Commons License"
 cc_by_sa_4_0: 'Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.'
+
+collection_nav:
+  home: "<< Back to collection home: $collection"
+  prev: "< Previous: $title"
+  next: "Next: $title >"
