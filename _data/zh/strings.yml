@@ -1,5 +1,5 @@
 build_status: "构建状态"
-build_time: "构建于"
+build_time: "构建于 $time"
 no_posts: "无帖子"
 no_translation: "抱歉，此页面暂无中文版。"
 powered_by: "此网站由以下技术驱动："

@@ -1,5 +1,5 @@
 build_status: "Build status"
-build_time: "Site built on"
+build_time: "Site built on $time"
 no_posts: "No posts"
 no_translation: "Sorry, this page is not available in English yet."
 powered_by: "Powered by:"
