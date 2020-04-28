@@ -6,13 +6,13 @@ layout: default
 
 <p class="collection-nav collection-nav-header">
 {% assign this_collection = page.collection %}
-{% capture collection_url %}/collections/{{ this_collection }}{% endcapture %}
-{% assign collection_home = site.pages | where: "url", collection_url | sample %}
+{%- capture collection_url -%}/collections/{{ this_collection }}{%- endcapture -%}
+{%- assign collection_home = site.pages | where: "url", collection_url | sample -%}
 <span><a class="collection-nav-home" href="{{ collection_url }}">{{ site.data.strings.collection_nav.home | replace: "$collection", collection_home.title }}</a></span>
 {% assign prev_page = page.previous %}
-{% if prev_page and prev_page.collection == this_collection %}
+{%- if prev_page and prev_page.collection == this_collection -%}
 <span><a class="collection-nav-prev" href="{{ prev_page.url }}">{{ site.data.strings.collection_nav.prev | replace: "$title", prev_page.title }}</a></span>
-{% endif %}
+{%- endif -%}
 </p>
 
 <header class="post-header">
@@ -24,10 +24,9 @@ layout: default
 </div>
 
 {% assign next_page = page.next %}
-{% if next_page and next_page.collection == this_collection %}
+{%- if next_page and next_page.collection == this_collection -%}
 <p class="collection-nav collection-nav-footer">
 <a class="collection-nav-next" href="{{ next_page.url }}">{{ site.data.strings.collection_nav.next | replace: "$title", next_page.title }}</a>
 </p>
 {% endif %}
-
 </article>

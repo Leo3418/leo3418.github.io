@@ -1,11 +1,9 @@
-<div id="lang-switcher" class="trigger">
-    {% for lang in site.languages %}
-        {% assign lang_name = site.data[lang].l10n.lang_name %}
-        {% if lang == site.active_lang %}
-            <span class="lang-option-active page-link">{{ lang_name }}</span>
-        {% else %}
-            {% capture url %}{% if lang == site.default_lang %} {{ page.url }} {% else %} /{{ lang }}{{ page.url }} {% endif %}{% endcapture %}
-            <a class="lang-option-inactive page-link" href="{{ url }}">{{ lang_name }}</a>
-        {% endif %}
-    {% endfor %}
-</div>
+{%- for lang in site.languages -%}
+    {%- assign lang_name = site.data[lang].l10n.lang_name -%}
+    {% if lang == site.active_lang %}
+        <span class="lang-option-active page-link">{{ lang_name }}</span>
+    {% else %}
+        {% capture url %} {% if lang == site.default_lang %}{{ page.url }}{% else %}/{{ lang }}{{ page.url }}{% endif %} {%- endcapture -%}
+        <a class="lang-option-inactive page-link" href="{{ url }}">{{ lang_name }}</a>
+    {% endif %}
+{%- endfor -%}
