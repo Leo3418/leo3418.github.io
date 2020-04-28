@@ -22,7 +22,7 @@
 }
 
 .footer-col img {
-    margin: 0;
+    display: block;
 }
 
 .lang-option-active {
@@ -37,11 +37,11 @@
     text-align: center;
 }
 
-img {
+.post-content img {
     display: block;
     max-height: 300px;
     margin-top: $spacing-unit / 2;
-    margin-bottom: 16px;
+    margin-bottom: $spacing-unit / 2;
     margin-left: auto;
     margin-right: auto;
 }
