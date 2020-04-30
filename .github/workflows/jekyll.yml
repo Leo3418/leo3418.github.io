@@ -14,10 +14,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the site in the jekyll/builder container
+      # 'chown -R jekyll /usr/gem' is a workaround described at
+      # https://github.com/envygeeks/jekyll-docker/issues/268#issuecomment-618561677
+      # Remove it once the image fixing the issue is pulled by GitHub
       run: |
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+        jekyll/builder:latest /bin/bash -c "chown -R jekyll /usr/gem && chmod 777 /srv/jekyll && bundle && jekyll build --future"
     - name: Push the site to the master branch
       if: ${{ github.event_name == 'push' }}
       run: |
