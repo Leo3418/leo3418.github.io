@@ -24,7 +24,7 @@ jobs:
         cd ${{ github.workspace }}/_site
         git init
         git config user.name ${GITHUB_ACTOR}
-        git config user.email Leo3418@users.noreply.github.com
+        git config user.email ${GITHUB_ACTOR}@users.noreply.github.com
         git remote add origin https://${GITHUB_ACTOR}:${SECRET}@github.com/${GITHUB_REPOSITORY}.git
         git add .
         git commit -m "Deploy Jekyll site on $( date )"
