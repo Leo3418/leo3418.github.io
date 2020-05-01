@@ -25,6 +25,10 @@
     display: block;
 }
 
+.home > h2 {
+    @include relative-font-size(1.75);
+}
+
 .lang-option-active {
     font-weight: bold;
 }
@@ -49,4 +53,3 @@
 p.collection-nav a {
     display: block;
 }
-

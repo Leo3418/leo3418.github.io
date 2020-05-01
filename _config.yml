@@ -4,6 +4,9 @@ author: "Leo"
 
 collections_dir: "collections"
 collections:
+  multilingual-jekyll-site:
+    output: true
+    sort_by: "ordinal"
   windows-10-mobile:
     output: true
 
@@ -27,6 +30,13 @@ defaults:
       path: "assets/img"
     values:
       image: true
+  -
+    scope:
+      path: ""
+      type: "multilingual-jekyll-site"
+    values:
+      layout: "collection-nav"
+      tags: "jekyll"
 
 exclude:
   - "README.md"

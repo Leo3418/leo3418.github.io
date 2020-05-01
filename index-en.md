@@ -5,3 +5,7 @@ permalink: /
 lang: en
 license: false
 ---
+
+## Collections
+
+- [Building a Multilingual Jekyll Site](/collections/multilingual-jekyll-site)
