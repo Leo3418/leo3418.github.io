@@ -1,4 +1,4 @@
-name: Build and Deploy Jekyll Site
+name: Jekyll Site CI
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
         jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
-    - name: Push the site onto the master branch
+    - name: Push the site to the master branch
       if: ${{ github.event_name == 'push' }}
       run: |
         sudo chmod -R 777 ${{ github.workspace }}/_site
