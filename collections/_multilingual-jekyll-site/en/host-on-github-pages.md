@@ -126,7 +126,7 @@ commands should push what's under `_site` after the build to your repository's
 ```sh
 cd ${{ github.workspace }}/_site
 git init
-git remote add origin https://github.com/%{{ github.repository }}.git
+git remote add origin https://github.com/${{ github.repository }}.git
 git add .
 git commit -m "Deploy site built from commit ${{ github.sha }}"
 git push -u origin master
@@ -160,7 +160,7 @@ change some existing ones:
   git init
 + git config user.name ${{ github.actor }}
 + git config user.email ${{ github.actor }}@users.noreply.github.com
-- git remote add origin https://github.com/%{{ github.repository }}.git
+- git remote add origin https://github.com/${{ github.repository }}.git
 + git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
   git add .
   git commit -m "Deploy site built from commit ${{ github.sha }}"
