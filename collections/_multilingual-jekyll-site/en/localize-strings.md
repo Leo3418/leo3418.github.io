@@ -139,10 +139,10 @@ It's working! We just need to create more localized versions of the home page.
 Make a copy of `index.md` for every language your site supports and define
 localized titles. Don't forget to also define permalink and the content's
 language as [Polyglot needs
-them](https://github.com/untra/polyglot/#how-to-use-it). Optionally, you can
-remove the `list_title` definition for the English home page to use the default
-value, and you may remove the original `index.md` if you have a separate copy
-for your site's default language.
+them](https://github.com/untra/polyglot/blob/1.3.2/README.md#how-to-use-it).
+Optionally, you can remove the `list_title` definition for the English home
+page to use the default value, and you may remove the original `index.md` if
+you have a separate copy for your site's default language.
 
 ```sh
 site-root$ cat index-en.md 

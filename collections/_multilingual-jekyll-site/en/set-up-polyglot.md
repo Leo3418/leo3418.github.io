@@ -83,8 +83,9 @@ The first four lines are just normal Polyglot preferences:
   spaces.
 - `parallel_localization` indicates whether localization is run parallel during
   site generation. According to [Polyglot's
-  documentation](https://github.com/untra/polyglot#compatibility), if you are
-  building your site on Windows, you might need to set this to `false`.
+  documentation](https://github.com/untra/polyglot/blob/1.3.2/README.md#compatibility),
+  if you are building your site on Windows, you might need to set this to
+  `false`.
 
 The `sass.sourcemap` option is a
 [workaround](https://github.com/untra/polyglot/issues/107#issuecomment-598274075)

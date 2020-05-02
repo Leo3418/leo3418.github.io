@@ -13,9 +13,9 @@ around and/or change front matters of all your pages.
 
 To choose a plugin, have a rough idea on how your site will look like. In my
 case, my site would definitely have pages offered in multiple languages, and it
-would be great if visitors can view the page in another language with one click
-like on Wikipedia. Some pages, however, would be only available in a single
-language; in this case, my site should either don't show links to other
+would be great if visitors can view the page in another language with one
+click, like on Wikipedia. Some pages, however, would be only available in a
+single language; in this case, my site should either don't show links to other
 languages, which is also similar to Wikipedia, or display a message after
 visitors click on a language link showing that translation is not provided.
 
@@ -45,5 +45,5 @@ Jekyll 4. The [Jekyll Multiple Languages
 Plugin](https://github.com/kurtsson/jekyll-multiple-languages-plugin) supports
 Jekyll 4, but if I were to use it, I would need to maintain a dedicated list of
 all page titles for a language in a single file, as shown
-[here](https://github.com/kurtsson/jekyll-multiple-languages-plugin#54-i18n-in-templates).
+[here](https://github.com/kurtsson/jekyll-multiple-languages-plugin/blob/v1.6.1/README.md#54-i18n-in-templates).
 I hate separating a page's metadata from its contents.

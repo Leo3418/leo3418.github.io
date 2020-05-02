@@ -60,8 +60,11 @@ language code with `site.default_lang`:
 Let's add in the links. The following snippet demonstrates doing this in HTML,
 but you can also add it into a Markdown file as well. Note that **a space is
 added** to {% raw %}`href=" {{ page.url }}"`{% endraw %}, between the quotation
-mark and the left curly brace. My experiment shows that the URL can be messed
-up without the space.
+mark and the left curly brace. This space is used to disable Polyglot's [URL
+relativizing](https://github.com/untra/polyglot/blob/1.3.2/README.md#relativized-local-urls):
+without it, Polyglot will still prepend the active language code {% raw %}`/{{
+lang }}`{% endraw %} to the URL, which effectively creates a link to the same
+webpage, in the same language.
 
 {% raw %}
 ```html

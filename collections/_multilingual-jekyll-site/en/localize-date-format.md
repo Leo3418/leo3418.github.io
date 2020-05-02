@@ -57,9 +57,11 @@ to format the current page's date, use the following:
 
 You might have noticed that Minima automatically puts a post's date for both
 its entry on the home page and its webpage. Minima supports [customizing the
-date format](https://github.com/jekyll/minima#change-default-date-format) via
-`site.minima.date_format`, but we can only specify one format rather than many,
-similar to the situation we faced for the [site title](localize-site-title).
+date
+format](https://github.com/jekyll/minima/blob/v2.5.1/README.md#change-default-date-format)
+via `site.minima.date_format`, but we can only specify one format rather than
+many, similar to the situation we faced for the [site
+title](localize-site-title).
 
 Like how we localize site title, we need to modify the files where Minima reads
 in the date and applies the format to it.
