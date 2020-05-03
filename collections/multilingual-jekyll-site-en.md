@@ -29,15 +29,4 @@ why I chose this plugin in a section in this collection.
 
 ## Contents
 
-<ul>
-{% for section in site.multilingual-jekyll-site %}
-{%- capture entry -%}<li><p><a href="{{ section.url }}">{{ section.title }}</a></p></li>{%- endcapture -%}
-{%- if section.level -%}
-    {%- for i in (2..section.level) -%}<ul>{%- endfor -%}
-    {{ entry }}
-    {%- for i in (2..section.level) -%}</ul>{%- endfor -%}
-{%- else -%}
-{{ entry }}
-{% endif %}
-{% endfor %}
-</ul>
+{% include collection-doc-list.html collection=site.multilingual-jekyll-site %}
