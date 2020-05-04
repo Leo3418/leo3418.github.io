@@ -15,7 +15,7 @@ might face when you host the site on GitHub Pages.
 
 ## Use of Unsupported Jekyll Plugins
 
-If you want GitHub Pages automatically build the Jekyll site and host it for
+If you want GitHub Pages to automatically build the Jekyll site and host it for
 you, the site must not use any plugin that is **not** on [this
 list](https://pages.github.com/versions/). As of this collection is written,
 Polyglot is not on the list. In this case, GitHub Pages' [help
@@ -28,11 +28,11 @@ thanks to a lot of continuous integration apps on GitHub, you can set up a CI
 environment to let it build your site every time you push new commits and
 publish the generated static files to GitHub Pages.
 
-The workflow would not change significantly. Suppose you don't use unsupported
+Your workflow would not change significantly. Suppose you don't use unsupported
 plugins for your site so that it can be built by GitHub Pages itself. Once you
 change your site's source files, you would create commits and push them, then
 the updated site would be available in a moment. If you use CI, then you commit
-and push as normal. All CI services supporting GitHub should be able to capture
+and push as usual. All CI services supporting GitHub should be able to capture
 a push event, and if set up properly, build and publish your site automatically
 after the push.
 
@@ -249,7 +249,7 @@ someone modifies your site merely with a pull request.
 
 Anyone can fork the repository for your GitHub Pages site, modify the contents
 in their fork, send a pull request back to you, which triggers a run of your
-workflow, and the changes they have made are immediately applied to your site
+workflow, and the changes they have made are immediately published to your site
 even before you merge the pull request. The best thing that could happen thanks
 to this is that when others fix typos on your site, the correction is
 immediately online; the worst case would be someone posting malicious contents
