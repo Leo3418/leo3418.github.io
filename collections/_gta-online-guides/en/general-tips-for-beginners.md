@@ -163,4 +163,4 @@ beginners. Considering this fact, you would probably choose to skip them until
 you acquire some better hardware.
 
 A brief history of GTA Online that covers the major content updates will be
-presented in a following section of this collection.
+presented in the [next section](a-history-of-gta-online).
