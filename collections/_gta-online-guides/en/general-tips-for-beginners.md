@@ -53,8 +53,9 @@ slow fire rate and no more than 100 rounds of ammo. You'd better avoid a
 must-lose duel with them.
 
 In GTA Online, it is important to learn how to steer clear of other players'
-disruptions and attacks. Please consult [this article](null) for how to protect
-yourself from unwanted attacks from other players.
+disruptions and attacks. Please consult [this
+article](learn-to-protect-yourself) for how to protect yourself from unwanted
+attacks from other players.
 
 ## Keep a Minimal Collection of Weapons
 
