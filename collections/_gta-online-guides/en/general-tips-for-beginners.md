@@ -53,8 +53,8 @@ slow fire rate and no more than 100 rounds of ammo. You'd better avoid a
 must-lose duel with them.
 
 In GTA Online, it is important to learn how to steer clear of other players'
-disruptions and attacks. Please consult the article about protecting yourself
-from unwanted attacks from other players in this collection.
+disruptions and attacks. Please consult [this article](null) for how to protect
+yourself from unwanted attacks from other players.
 
 ## Keep a Minimal Collection of Weapons
 
@@ -88,8 +88,8 @@ can't test this because I don't own a console. But still, considering the fatal
 overhead of finding a weapon in a large arsenal, keeping a minimal number of
 weapons is important.
 
-I will introduce a good minimal collection of weapons I use in a following
-article. There will also be a further discussion on Gun Lockers later.
+I will introduce a good minimal collection of weapons I use in [this
+article](null). There is also a [further discussion](null) on Gun Lockers.
 
 ## Criminal Enterprise Starter Pack: Claim Included Items Judiciously
 
@@ -108,8 +108,8 @@ better performance; once you claim them, you might never be able to get rid of
 them based on the reasons discussed in the section above.
 
 For more comments on items included in the Starter Pack, you can read other
-articles in this collection discussing itself in more details and properties in
-general.
+articles in this collection discussing [itself in more details](null) and
+[properties in general](null).
 
 ## Ignore Lamar Missions for Now
 
