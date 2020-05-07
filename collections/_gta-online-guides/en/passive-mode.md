@@ -78,7 +78,7 @@ In the Interaction Menu, navigate to the last item, which should be "Enable
 Passive Mode", and select it.
 
 !["Enable Passive Mode" option in Interaction
-Menu]({{ img_path }}/{{ page.lang }}/interaction-menu.png)
+Menu]({{ img_path_l10n }}/interaction-menu.png)
 
 After enabling Passive Mode, the option changes to "Disable Passive Mode",
 which can be used to disable it.

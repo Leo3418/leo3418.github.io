@@ -75,9 +75,9 @@ might not be available to you.
 From the Pause Menu in Story Mode, under the "Online" tab, select "Play GTA
 Online", and choose the type of session you want to start.
 
-![Choose "Play GTA Online"]({{ img_path }}/{{ page.lang }}/play-online.png)
+![Choose "Play GTA Online"]({{ img_path_l10n }}/play-online.png)
 
-![Select session type]({{ img_path }}/{{ page.lang }}/session-types.png)
+![Select session type]({{ img_path_l10n }}/session-types.png)
 
 If you choose the first option "Go", then you will be matched into a Public
 Session. Choose other options for sessions with limited access.
@@ -86,7 +86,7 @@ Session. Choose other options for sessions with limited access.
 
 On the top of player list, you can view the type of current session.
 
-![A Public Session]({{ img_path }}/{{ page.lang }}/public-session.png)
+![A Public Session]({{ img_path_l10n }}/public-session.png)
 
 ![An Invite Only
-Session]({{ img_path }}/{{ page.lang }}/invite-only-session.png)
+Session]({{ img_path_l10n }}/invite-only-session.png)
