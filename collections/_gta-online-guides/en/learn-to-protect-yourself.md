@@ -21,6 +21,6 @@ from other players away, applicable to different situations:
 
 1. [Passive Mode](passive-mode)
 
-2. [Non-Public Sessions](null)
+2. [Non-Public Sessions](session-types)
 
 3. [Solo Public Sessions](null)
