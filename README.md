@@ -30,7 +30,9 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
   - `img/`: Images
     - `collections/<collection-name>/<doc-name>/`: Images for a document in a
       collection
+      - `<lang>/`: Localized images for the document
     - `posts/<year>/<month>/<day>/<post-name>/`: Images for a post
+      - `<lang>/`: Localized images for the post
 - `collections/`: Pages for collections, posts, and drafts
   - `_drafts/<lang>/`: Drafts written in a language
   - `_posts/<lang>/`: Posts written in a language
