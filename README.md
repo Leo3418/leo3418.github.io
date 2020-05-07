@@ -41,7 +41,7 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
   - `<collection-name>-<lang>.md`: Home page for a collection, in the specified 
     language
 - `_data/`: Data files
-  - `<lang>/` Localized data files for a language
+  - `<lang>/`: Localized data files for a language
     - `l10n.yml`: Properties for the language and localized site variables
     - `strings.yml`: Translated strings
 - `_includes/`: Partials that can be included in other files, usually layouts
