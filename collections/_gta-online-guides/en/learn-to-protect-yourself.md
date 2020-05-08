@@ -23,4 +23,4 @@ from other players away, applicable to different situations:
 
 2. [Non-Public Sessions](session-types)
 
-3. [Solo Public Sessions](null)
+3. [Solo Public Sessions](solo-public-sessions)
