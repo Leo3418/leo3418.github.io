@@ -125,7 +125,7 @@ the limitation mentioned above.
 This method can completely block peer-to-peer connections between you and other
 players. It uses a different mechanism from other methods and should also be
 used differently. Because there are many details to cover, I have placed
-information about this method in a [dedicated page](null).
+information about this method in a [dedicated page](firewall-rule-on-pc).
 
 ### Methods for Consoles
 
