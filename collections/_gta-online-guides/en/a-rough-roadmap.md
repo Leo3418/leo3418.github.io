@@ -35,8 +35,8 @@ invest in another business and gain more income.
 
 You have just joined GTA Online and own almost nothing. Fortunately, there are
 plenty of ways that are friendly to beginners to get some start-up fundings.
-Follow [this guide](null) to earn your first $1.25M, then buy yourself a
-high-end Apartment, which can be used as a spawn point.
+Follow [this guide](your-first-1-25m) to earn your first $1.25M, then buy
+yourself a high-end Apartment, which can be used as a spawn point.
 
 If you have purchased the Criminal Enterprise Starter Pack, you should have
 another $1M to spend and plenty of properties to claim for free. I would
