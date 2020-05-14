@@ -33,10 +33,23 @@ invest in another business and gain more income.
 
 ## Starting Up
 
-You have just joined GTA Online and own almost nothing. Fortunately, there are
-plenty of ways that are friendly to beginners to get some start-up fundings.
-Follow [this guide](your-first-1-25m) to earn your first $1.25M, then buy
-yourself a high-end Apartment, which can be used as a spawn point.
+When you join GTA Online for the first time, you will be asked to create a
+character who represents you in Los Santos. You can customize your character's
+sex and appearance however you like.
+
+You will also get a chance to customize your character's stats for different
+abilities, which affects your character's performance in relevant activities.
+If you follow my suggestion about setting these stats in [this
+article](max-out-stats), you can save a lot of effort to max them out later.
+The same article also offers tricks for boosting those stats, which will
+greatly improve your character's ability to perform many essential tasks in GTA
+Online.
+
+After creating your character, you are now in the game, owning almost nothing.
+Fortunately, there are plenty of ways that are friendly to beginners to get
+some start-up fundings. Follow [this guide](your-first-1-25m) to earn your
+first $1.25M, then buy yourself a high-end Apartment, which can be used as a
+spawn point.
 
 If you have purchased the Criminal Enterprise Starter Pack, you should have
 another $1M to spend and plenty of properties to claim for free. I would
@@ -44,10 +57,6 @@ suggest you [not claim all of those
 immediately](general-tips-for-beginners#criminal-enterprise-starter-pack-claim-included-items-judiciously)
 but read [this article](null) about the Starter Pack to learn more about things
 included in it.
-
-Your GTA Online character has stats for different abilities, which affects your
-character's performance in relevant activities. You can boost those stats with
-the methods described [here](null).
 
 GTA Online has a player level system where the levels are called "Ranks", and
 the experience points for leveling up are "Reputation Points", abbreviated to
