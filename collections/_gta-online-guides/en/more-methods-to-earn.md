@@ -9,7 +9,8 @@ lang: en
 If you need some quick cash, there are several ways to earn some money in
 relatively short time:
 
-- [Daily Objectives](null) give you a chance to earn $30,000 every day.
+- [Daily Objectives](daily-objectives) give you a chance to earn $30,000 every
+  day.
 
 - You can [farm Sentinel XS](null) and sell it for $15,000-17,000.
 
