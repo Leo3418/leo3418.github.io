@@ -56,7 +56,7 @@ lang: zh
 
     ![]({{ img_path }}/09-2-link-created.png)
 
-10. 把第 4 步中被挪动的 `.egstore` 文件夹挪回 GTAV 中。
+10. 把第 4 步中被挪动的 `.egstore` 文件夹挪回 `GTAV` 中。
 
     ![]({{ img_path }}/10-restore-egstore.png)
 
