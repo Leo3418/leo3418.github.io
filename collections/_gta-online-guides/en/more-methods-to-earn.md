@@ -12,7 +12,8 @@ relatively short time:
 - [Daily Objectives](daily-objectives) give you a chance to earn $30,000 every
   day.
 
-- You can [farm Sentinel XS](null) and sell it for $15,000-17,000.
+- You can [farm Sentinel XS](sentinel-xs-farming) and sell it for
+  $15,000-17,000.
 
 - Completing the [Time Trial](null) for the week under par time gives you
   $100,000 every week.
