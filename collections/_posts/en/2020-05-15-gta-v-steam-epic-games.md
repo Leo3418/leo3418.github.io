@@ -90,7 +90,7 @@ Steam's copy of GTA V files under Epic Games' installation path.
 
 12. Once GTA V is ready to play from Epic Games, visit the folder storing GTA V
     game files again, copy `GTA5.exe` and `PlayGTAV.exe` similarly as in step
-    7, but label them as game files downloaded from Epic Games this time.
+    7, but label them as game files downloaded from *Epic Games* this time.
 
     ![]({{ img_path }}/12-two-copies-of-executables.png)
 
