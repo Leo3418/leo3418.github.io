@@ -1,6 +1,5 @@
 ---
 title: "Set Up Polyglot"
-permalink: /collections/multilingual-jekyll-site/set-up-polyglot
 ordinal: 30
 lang: en
 ---

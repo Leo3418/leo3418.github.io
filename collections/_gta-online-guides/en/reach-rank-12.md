@@ -1,6 +1,5 @@
 ---
 title: "Reach Rank 12"
-permalink: /collections/gta-online-guides/reach-rank-12
 ordinal: 440
 level: 2
 lang: en

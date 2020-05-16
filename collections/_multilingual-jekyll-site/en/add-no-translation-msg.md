@@ -1,6 +1,5 @@
 ---
 title: 'Add a "No Translation" Message'
-permalink: /collections/multilingual-jekyll-site/add-no-translation-msg
 ordinal: 54
 level: 2
 lang: en

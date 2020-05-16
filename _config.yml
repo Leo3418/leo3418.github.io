@@ -6,12 +6,15 @@ collections_dir: "collections"
 collections:
   gta-online-guides:
     output: true
+    permalink: /collections/:collection/:name
     sort_by: "ordinal"
   multilingual-jekyll-site:
     output: true
+    permalink: /collections/:collection/:name
     sort_by: "ordinal"
   windows-10-mobile:
     output: true
+    permalink: /collections/:collection/:name
 
 defaults:
   - # Default

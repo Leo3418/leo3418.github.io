@@ -1,6 +1,5 @@
 ---
 title: "Max Out Your Character's Stats"
-permalink: /collections/gta-online-guides/max-out-stats
 ordinal: 420
 level: 2
 lang: en

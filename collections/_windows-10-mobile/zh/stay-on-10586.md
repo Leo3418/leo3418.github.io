@@ -1,6 +1,5 @@
 ---
 title: "让 Windows 10 Mobile 停留在 10586.545 不再更新的方法"
-permalink: /collections/windows-10-mobile/stay-on-10586
 lang: zh
 ---
 

@@ -1,6 +1,5 @@
 ---
 title: "Solo Public Sessions"
-permalink: /collections/gta-online-guides/solo-public-sessions
 ordinal: 413
 level: 3
 lang: en

@@ -1,6 +1,5 @@
 ---
 title: "Passive Mode"
-permalink: /collections/gta-online-guides/passive-mode
 ordinal: 411
 level: 3
 lang: en

@@ -1,6 +1,5 @@
 ---
 title: "Localize Site Title"
-permalink: /collections/multilingual-jekyll-site/localize-site-title
 ordinal: 51
 level: 2
 lang: en

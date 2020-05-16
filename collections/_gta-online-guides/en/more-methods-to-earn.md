@@ -1,6 +1,5 @@
 ---
 title: "More Methods to Earn"
-permalink: /collections/gta-online-guides/more-methods-to-earn
 ordinal: 460
 level: 2
 lang: en

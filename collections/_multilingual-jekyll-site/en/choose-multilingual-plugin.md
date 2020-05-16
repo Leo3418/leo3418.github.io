@@ -1,6 +1,5 @@
 ---
 title: "Choose a Multilingual Plugin"
-permalink: /collections/multilingual-jekyll-site/choose-multilingual-plugin
 ordinal: 20
 lang: en
 ---

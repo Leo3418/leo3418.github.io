@@ -1,6 +1,5 @@
 ---
 title: "打开与关闭 Windows 10 Mobile 完整文件系统访问权限的方法"
-permalink: /collections/windows-10-mobile/toggle-full-fs-access
 lang: zh
 ---
 

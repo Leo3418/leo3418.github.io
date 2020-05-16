@@ -1,6 +1,5 @@
 ---
 title: "Sentinel XS Farming"
-permalink: /collections/gta-online-guides/sentinel-xs-farming
 ordinal: 462
 level: 3
 lang: en

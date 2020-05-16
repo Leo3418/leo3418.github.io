@@ -1,6 +1,5 @@
 ---
 title: "Closing Words"
-permalink: /collections/multilingual-jekyll-site/closing-words
 ordinal: 990
 lang: en
 ---

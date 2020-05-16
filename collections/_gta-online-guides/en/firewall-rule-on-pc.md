@@ -1,6 +1,5 @@
 ---
 title: "Firewall Rule on PC"
-permalink: /collections/gta-online-guides/firewall-rule-on-pc
 ordinal: 414
 level: 4
 lang: en

@@ -1,6 +1,5 @@
 ---
 title: "GTA Online Session Types"
-permalink: /collections/gta-online-guides/session-types
 ordinal: 412
 level: 3
 lang: en

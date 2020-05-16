@@ -1,6 +1,5 @@
 ---
 title: "Set Up Jekyll"
-permalink: /collections/multilingual-jekyll-site/set-up-jekyll
 ordinal: 10
 lang: en
 ---

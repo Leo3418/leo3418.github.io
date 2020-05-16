@@ -1,6 +1,5 @@
 ---
 title: "General Tips for Beginners"
-permalink: /collections/gta-online-guides/general-tips-for-beginners
 ordinal: 100
 lang: en
 ---

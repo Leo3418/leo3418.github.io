@@ -1,6 +1,5 @@
 ---
 title: "Localize Strings"
-permalink: /collections/multilingual-jekyll-site/localize-strings
 ordinal: 53
 level: 2
 lang: en

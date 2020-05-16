@@ -1,6 +1,5 @@
 ---
 title: "Initial Tasks"
-permalink: /collections/gta-online-guides/initial-tasks
 ordinal: 400
 lang: en
 ---

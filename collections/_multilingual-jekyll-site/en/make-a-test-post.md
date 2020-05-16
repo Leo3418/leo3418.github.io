@@ -1,6 +1,5 @@
 ---
 title: "Make a Test Post"
-permalink: /collections/multilingual-jekyll-site/make-a-test-post
 ordinal: 40
 lang: en
 ---

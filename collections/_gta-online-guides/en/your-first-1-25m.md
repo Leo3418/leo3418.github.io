@@ -1,6 +1,5 @@
 ---
 title: "Your First GTA$1.25M"
-permalink: /collections/gta-online-guides/your-first-1-25m
 ordinal: 430
 level: 2
 lang: en
