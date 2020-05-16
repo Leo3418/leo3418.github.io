@@ -66,7 +66,7 @@ directly with a vehicle or attack you with a gun.
 - You want to explore freely in a session containing other players without
   being attacked by them.
 
-- You want to steal NPC's cars without getting a Bounty set on your head.
+- You want to steal NPCs' cars without getting a Bounty set on your head.
 
 - You have just returned to a Public Session from a Heist Mission completed
   with strangers, and you want to avoid fighting with them.

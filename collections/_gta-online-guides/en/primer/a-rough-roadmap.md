@@ -72,7 +72,7 @@ yourself; there are a few Contact Missions requiring multiple players, but they
 don't require significant team collaboration. In addition, there are also some
 other [ways to earn some quick cash](more-methods-to-earn).
 
-Don't spend too much of the money you earned; save them for something big. When
+Don't spend too much of the money you earned; save it for something big. When
 you have $2.5M to $3.5M, you can purchase the first business you will ever own
 in GTA Online.
 
@@ -121,7 +121,7 @@ Here are the reasons I recommend these particular businesses:
 
   - It gives the [highest hourly passive income](null) among all businesses.
 
-  - Its sale missions only spawn land vehicles for the delivery job, whereas
+  - Its sell missions only spawn land vehicles for the delivery job, whereas
     for MC Businesses, you can get land vehicles, boats, planes, and
     helicopters.
 
@@ -211,7 +211,7 @@ Sniper Mk II is very helpful in the Avenger Setup Mission of The Bogdan Problem
 You may also consider buying the Oppressor Mk II if you don't own it yet.
 Although it is unfortunately many griefers' favorite vehicle, it is still
 essential and very helpful for Special Cargo and The Diamond Casino Heist. You
-should first own a Nightclub and a Terrobyte, and complete five [Client
+should first own a Nightclub and a Terrorbyte, and complete five [Client
 Jobs](null) to unlock the cheaper Trade Price of Oppressor Mk II. Then, if you
 don't need it immediately, you can wait until it is on sale so that you can buy
 it at a even lower price.  Otherwise, you can just pay the original Trade Price

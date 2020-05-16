@@ -24,7 +24,7 @@ $17,420.
 
 ## Method
 
-1. Make sure the in-game time is 22:00-04:00. You make check this from your
+1. Make sure the in-game time is 22:00-04:00. You may check this from your
    iFruit phone or in the top-right corner of the Pause Menu.
 
 2. Circle the block shown in the map below in counter-clockwise direction using

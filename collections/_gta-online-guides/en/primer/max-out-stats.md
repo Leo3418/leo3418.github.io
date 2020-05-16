@@ -78,7 +78,7 @@ your character's driving ability will improve gradually.
 ### Shooting and Flying
 
 These stats will also increase in common in-game activities. Certain Missions,
-such as Heists, give you opportunities to shoot enemies and use aircrafts. In
+such as Heists, give you opportunities to shoot enemies and use aircraft. In
 addition, there is special activity for boosting each of those stats. The
 shooting ranges in Ammu-Nation and your Bunker can be used to increase your
 shooting skill, and completing Flight School lessons boosts your flying stat.
@@ -89,7 +89,7 @@ of active control in an aircraft to gain 1 flying point. But getting a gold
 medal for a Flight School lesson directly gives you 3 to 5 points according to
 the GTA Wiki on Fandom, which saves you a lot of time. As always, I suggest you
 do Flight School lessons only after you already have some experience with
-aircrafts in the game.
+aircraft in the game.
 
 Notice that using an Oppressor Mk II does not count towards flying because it
 is a motorcycle, not an aircraft.

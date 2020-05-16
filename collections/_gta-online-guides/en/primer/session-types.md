@@ -47,7 +47,7 @@ might not be available to you.
   - Sourcing and selling Air Freight Cargo
   - Accessing the laptop in MC Businesses to purchase/steal Supplies, sell
     Stock, or buy Upgrades
-  - Accessing the laptop in your Bunker to purchase/steal supplies, sell
+  - Accessing the laptop in your Bunker to purchase/steal Supplies, sell
     Weapons, view your research progress, manage Staff, or buy Upgrades
   - Selling Goods from your Nightclub Warehouse
   - Completing Prep Missions of The Doomsday Heists

@@ -23,7 +23,7 @@ choose "Hide Options > Other > Time Trial", and change it to "Show".
 
 ## Guides
 
-GTA Series Videos has guides demonstrating how to complete every Time Trial
+GTA Series Videos has guides demonstrating how to complete each Time Trial
 under par time.
 
 - [2016

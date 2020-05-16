@@ -79,7 +79,6 @@ the Mission.
 | All in the Game | 10 |
 | El Burro Heists | 10 |
 | Gentry Does It | 10 |
-| Hit 'Em Up | 10 |
 | **Dispatch Missions**<br />Added in 2018 |   |
 | Dispatch I | 1 |
 | Dispatch II | 1 |

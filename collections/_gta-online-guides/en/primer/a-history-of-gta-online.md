@@ -79,7 +79,7 @@ important take-aways and implications of those events.
   them without paying a price. Then, just let your workers, who came with the
   factory you bought for the Business, generate Products for you; you can do
   anything else when they convert Supplies to Products. Finally, when you get
-  enough Products to sell, do a sale mission and collect the money.
+  enough Products to sell, do a sell mission and collect the money.
 
   This is often categorized as a "passive business" because you don't need to
   do anything while your investment is being transformed into revenue. In
@@ -107,13 +107,13 @@ important take-aways and implications of those events.
   new set of weapon accessories were also added to the game.
 
   In my opinion, Gunrunning is the best passive business. There are only 6
-  kinds of Bunker sale missions, none of which is extremely hard; the hourly
+  kinds of Bunker sell missions, none of which is extremely hard; the hourly
   profit of a Bunker is the highest among all passive businesses in GTA Online.
 
 - August 29: In the *Smuggler's Run* update, Hangars were introduced as both
-  storage for the player's personal aircrafts and bases for the Air Frieght
+  storage for the player's personal aircraft and bases for the Air Freight
   Cargo business, which is similar to Special Cargo but has its missions
-  oriented to aircrafts. This update also featured a wide array of new planes
+  oriented to aircraft. This update also featured a wide array of new planes
   and helicopters available for purchase.
 
 - December 12: *The Doomsday Heist* update was available. Three new Doomsday
@@ -190,7 +190,7 @@ important take-aways and implications of those events.
 - Every set of Heists has some requirements to be unlocked, but the classic
   Heists' prerequisites are easier to satisfy. They only require reaching Rank
   12 (which is easy) and owning a high-end Apartment (which can be purchased
-  with as few as $200,000). Both The Doomsday Heists and The Diamond Casino
+  with as little as $200,000). Both The Doomsday Heists and The Diamond Casino
   Heist require being a VIP, CEO, or MC President, and a specialized property
   whose price starts from $1.2M.
 

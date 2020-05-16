@@ -77,7 +77,7 @@ once you purchase a weapon, you can never get rid of it permanently. You can
 throw it away, but after you join a new session, it just comes back. If you
 have heard of Gun Lockers, which are claimed by Rockstar to be able to hide
 your weapons, you might think that they can solve this problem, until you try
-it out and find that they is not functioning as intended. Even if you have
+it out and find that they are not functioning as intended. Even if you have
 hidden some guns by defining a custom weapon loadout, they will show up again
 when you join a new session, and you need to toggle the loadout manually. Gun
 Lockers sometimes are not enabled for Missions, in which you need their
