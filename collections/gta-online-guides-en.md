@@ -38,6 +38,20 @@ character and 160 with another, and earned GTA$220M as of
 this collection on what to do, in what steps should you do them, and what not
 to do in order to get better progress in less time.
 
+## Work in Progress
+
+A lot of articles have been planned for this collection, and completing all of
+them takes very long time, so I have decided to publish this collection in
+several batches. Check back later to see if new articles have been published!
+
+You might find that some hyperlinks in those published articles are leading you
+to a "404 Not Found" page. These are links to planned but unpublished articles,
+and I intentionally left them there because I don't want to forget a link
+should be added to those places. If there is any inconvenience to you, please
+accept my apology.
+
 ## Contents
 
 {% include collection-doc-list.html collection=site.gta-online-guides %}
+
+- More articles coming soon...
