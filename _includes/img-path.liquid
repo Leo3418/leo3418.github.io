@@ -5,3 +5,5 @@
         /assets/img{{ page.permalink }}
     {%- endif -%}
 {%- endcapture -%}
+
+{%- assign img_path_l10n = img_path | append: "/" | append: page.lang -%}
