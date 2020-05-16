@@ -71,7 +71,7 @@ you, [Contact Missions](null) are an alternative choice of money and RP
 grinding. Although they have smaller payouts, most of them can be done by
 yourself; there are a few Contact Missions requiring multiple players, but they
 don't require significant team collaboration. In addition, there are also some
-other [ways to earn some quick cash](null).
+other [ways to earn some quick cash](more-methods-to-earn).
 
 Don't spend too much of the money you earned; save them for something big. When
 you have $2.5M to $3.5M, you can purchase the first business you will ever own
