@@ -141,3 +141,5 @@ collection. These articles will give an overview on what you should do to build
 up your GTA Online career, how to protect yourself from other players' attacks,
 and how to get some start-up cash and RP. Once released, they will be available
 under the "Collections" section of this site's home page. Stay tuned!
+
+Update: the collection is now online at [here](/collections/gta-online-guides)!
