@@ -15,5 +15,5 @@ relatively short time:
 - You can [farm Sentinel XS](sentinel-xs-farming) and sell it for
   $15,000-17,000.
 
-- Completing the [Time Trial](null) for the week under par time gives you
-  $100,000 every week.
+- Completing the [Time Trial](time-trials) for the week under par time gives
+  you $100,000 every week.
