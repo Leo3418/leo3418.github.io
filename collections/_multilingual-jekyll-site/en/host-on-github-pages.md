@@ -50,6 +50,8 @@ directory under your Git repository's root. Each workflow should have an
 associated YAML file under the directory, which will define its rules,
 environments, and procedures.
 
+### Create a Workflow
+
 A good starting point of the workflow for building a Jekyll site is
 [here](https://github.com/actions/starter-workflows/blob/master/ci/jekyll.yml).
 You may copy the file's contents into your own workflow file and start
@@ -112,6 +114,34 @@ because jobs are isolated, so what is built by the `build` job cannot be
 accessed from other jobs. The step can simply run a set of commands that push
 the static files to GitHub.
 
+### Add Command to Install Plugins
+
+The starter workflow file above was authored on
+{{ "2020-03-21" | date: "%B %e, %Y" }}. At that time, when you run the `jekyll
+build` command, the `jekyll/builder` image can automatically install
+dependencies declared in your `Gemfile` and then build your site. We desire
+this behavior because we need to install Polyglot as a gem before building the
+site.
+
+However, the image has been updated later on, and this behavior no longer
+persists. If any dependencies in `Gemfile` have not been installed, running
+`jekyll build` will install them, but it just stops there and does not build
+your site at all, unless you run `jekyll build` again. So now we need to run
+the `bundle` command to install dependencies before `jekyll build`.
+
+{% raw %}
+```diff
+  - name: Build the site in the jekyll/builder container
+    run: |
+      docker run \
+      -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
+-     jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
++     jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && bundle && jekyll build --future"
+```
+{% endraw %}
+
+### Add Step for Site Uploading
+
 If you are familiar with Docker and its command line interface, you will notice
 that the `docker` command in the workflow above mounts the `_site` directory
 under `github.workspace` (which is simply your Git repository's root) to the
@@ -137,6 +167,8 @@ However, this is not going to work for the following reasons:
 - The `_site` directory is created in the Docker container, possibly by a Linux
   user with another user ID, so we might get a "permission denied" error when
   running `git init` in it. We need to obtain the permission to that directory.
+  In this example, we get the permission by acquiring ownership of the
+  directory with `chown` to preserve file permission settings.
 
 - In the virtual environment instance on GitHub Actions, Git user name and
   email are not configured, which will prevent `git commit` from running
@@ -154,7 +186,7 @@ change some existing ones:
 
 {% raw %}
 ```diff
-+ sudo chmod -R 777 ${{ github.workspace }}/_site
++ sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
   cd ${{ github.workspace }}/_site
   git init
 + git config user.name ${{ github.actor }}
@@ -185,10 +217,10 @@ add them to the workflow file:
       run: |
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && bundle && jekyll build --future"
     - name: Push the site to the master branch
       run: |
-        sudo chmod -R 777 ${{ github.workspace }}/_site
+        sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
         git init
         git config user.name ${{ github.actor }}
@@ -263,7 +295,7 @@ is triggered by a push to the `jekyll` branch.
       - name: Push the site to the master branch
 +     - if: ${{ github.event_name == 'push' }}
         run: |
-          sudo chmod -R 777 ${{ github.workspace }}/_site
+          sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
           cd ${{ github.workspace }}/_site
           git init
 ```
@@ -274,13 +306,7 @@ so the published site in the `master` branch is intact.
 
 ![The "push to master" step is skipped]({{ img_path }}/push-not-performed.png)
 
-At this point, you should have produced a workflow file identical to
-[mine](https://github.com/Leo3418/leo3418.github.io/blob/ed6172525bbec39e501d133cc6dc8737b18f2d9e/.github/workflows/jekyll.yml).
+At this point, you should have produced a workflow file similar to
+[mine](https://github.com/Leo3418/leo3418.github.io/blob/313b8dbc0933b65605215786a12bd4c40b5b86b4/.github/workflows/jekyll.yml).
 Now you have a GitHub Actions workflow that allows you to host a Jekyll site
-using unsupported plugins on GitHub Pages with automated builds. The only
-significant difference I have been experiencing between this method and
-utilizing the native Jekyll support from GitHub Pages is that a site build in
-this manner usually takes about 5 minutes, so there is some waiting time. To
-avoid pushing your changes but disappointingly seeing a failed build after
-waiting for several minutes, consider building and previewing your site locally
-before the push.
+using unsupported plugins on GitHub Pages with automated builds.
