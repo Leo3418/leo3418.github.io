@@ -1,6 +1,5 @@
 ---
 title: "Nokia/Microsoft Lumia 使用 FFUTool 刷机教程"
-permalink: /collections/windows-10-mobile/lumia-flash-rom
 lang: zh
 ---
 

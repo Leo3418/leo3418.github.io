@@ -1,6 +1,5 @@
 ---
 title: "Time Trials"
-permalink: /collections/gta-online-guides/time-trials
 ordinal: 463
 level: 3
 lang: en

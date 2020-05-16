@@ -1,6 +1,5 @@
 ---
 title: "A Rough Roadmap to a Successful GTA Online Career"
-permalink: /collections/gta-online-guides/a-rough-roadmap
 ordinal: 300
 lang: en
 ---

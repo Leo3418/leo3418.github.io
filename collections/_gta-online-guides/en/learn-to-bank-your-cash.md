@@ -1,6 +1,5 @@
 ---
 title: "Learn to Bank Your Cash"
-permalink: /collections/gta-online-guides/learn-to-bank-your-cash
 ordinal: 450
 level: 2
 lang: en

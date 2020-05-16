@@ -1,6 +1,5 @@
 ---
 title: "A History of GTA Online"
-permalink: /collections/gta-online-guides/a-history-of-gta-online
 ordinal: 200
 lang: en
 ---

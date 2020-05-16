@@ -1,6 +1,5 @@
 ---
 title: "Improve Localization and User Experience"
-permalink: /collections/multilingual-jekyll-site/improve-l10n-and-ux
 ordinal: 50
 lang: en
 ---

@@ -1,6 +1,5 @@
 ---
 title: "Learn to Protect Yourself"
-permalink: /collections/gta-online-guides/learn-to-protect-yourself
 ordinal: 410
 level: 2
 lang: en

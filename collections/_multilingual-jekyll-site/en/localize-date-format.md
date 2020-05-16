@@ -1,6 +1,5 @@
 ---
 title: "Localize Date Format"
-permalink: /collections/multilingual-jekyll-site/localize-date-format
 ordinal: 55
 level: 2
 lang: en

@@ -1,6 +1,5 @@
 ---
 title: "Daily Objectives"
-permalink: /collections/gta-online-guides/daily-objectives
 ordinal: 461
 level: 3
 lang: en

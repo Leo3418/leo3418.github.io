@@ -1,6 +1,5 @@
 ---
 title: "Host the Site on GitHub Pages"
-permalink: /collections/multilingual-jekyll-site/host-on-github-pages
 ordinal: 60
 lang: en
 ---

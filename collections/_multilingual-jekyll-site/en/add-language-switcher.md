@@ -1,6 +1,5 @@
 ---
 title: "Add a Language Switcher"
-permalink: /collections/multilingual-jekyll-site/add-language-switcher
 ordinal: 52
 level: 2
 lang: en

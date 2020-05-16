@@ -1,6 +1,5 @@
 ---
 title: "打开 Windows 10 Mobile 烧屏保护功能的方法"
-permalink: /collections/windows-10-mobile/enable-burn-in-protection
 lang: zh
 ---
 
