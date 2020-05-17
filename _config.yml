@@ -39,17 +39,17 @@ defaults:
   -
     scope:
       path: ""
-      type: "multilingual-jekyll-site"
-    values:
-      layout: "collection-nav"
-      tags: "jekyll"
-  -
-    scope:
-      path: ""
       type: "gta-online-guides"
     values:
       layout: "collection-nav"
       tags: "gta-online"
+  -
+    scope:
+      path: ""
+      type: "multilingual-jekyll-site"
+    values:
+      layout: "collection-nav"
+      tags: "jekyll"
 
 exclude:
   - "README.md"
