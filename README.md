@@ -77,7 +77,7 @@ the following commands:
 ```sh
 $ jekyll -v
 jekyll x.y.z
-$ grep -P "jekyll\ \(\d+\.\d+\.\d+\)" Gemfile.lock
+$ grep "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
     jekyll (x.y.z)
 ```
 
