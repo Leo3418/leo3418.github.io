@@ -11,7 +11,7 @@ to get another free copy so they could have two or more GTA Online accounts.
 
 It appears that if you have already installed GTA V via Steam, you still need
 to download a full copy of the game files via Epic Games. However, by doing
-some tricks, you can let Epic Games and Steam share the same set of GTA V game
+some tricks, you can let Steam and Epic Games share the same set of GTA V game
 files to avoid downloading the game again and thus save disk space. We will use
 the `MKLINK` command on Windows, which is not well-known, to create a link to
 the existing game files. The link works as if the linked files and folders are
@@ -50,7 +50,8 @@ Steam's copy of GTA V files under Epic Games' installation path.
 
 6.  Find out where Steam stored GTA V game files. Open up game properties for
     GTA V in Steam, click on "Browse Local Files" under the "Local Files" tab,
-    and remember the path shown in the file explorer.
+    and remember the path shown in the file explorer. You may click on the
+    address bar to copy the full path.
 
     ![]({{ img_path }}/06-1-steam-game-properties.png)
 
