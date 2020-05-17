@@ -132,8 +132,8 @@ remaining $200,000 will be deposited after you get 50 kills.
 Launched in March 2019, the Social Club 2-Step Verification Bonus gives
 $500,000 to anyone who enables this extra security measure for their Social
 Club account. As of now, there is no information about this bonus on Rockstar's
-website, so I am not sure if it is still active. In early 2020, I heard that
-players could still claim this bonus.
+website, but as of June 2020, I heard that players could still claim this
+bonus.
 
 The Rockstar Support website has [an
 article](https://support.rockstargames.com/articles/360000031747/Setting-Up-2-Step-Verification-with-Social-Club)

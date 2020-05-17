@@ -39,7 +39,7 @@ connections between you and other players.
   grind a full large Warehouse of Special Cargo.
 
 - You want to grind with your friends together in a Public Session that only
-  contains yourselves. See [the section below](#advanced-usage) for details.
+  contains yourselves. See the "Advanced Usage" section below for details.
 
 ## Method
 

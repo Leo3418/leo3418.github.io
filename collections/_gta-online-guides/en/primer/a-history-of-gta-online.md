@@ -44,7 +44,7 @@ important take-aways and implications of those events.
 
   The Heists offer a very unique multiplayer gaming experience that is rarely
   found in other online games. There are still a lot of players doing those
-  classic Heists nowadays even though they were released very long ago and
+  original Heists nowadays even though they were released very long ago and
   Rockstar has added more Heists with higher payouts later on.
 
 - April 14: The Enhanced Edition of GTA V and GTA Online were released on PC.
@@ -104,7 +104,7 @@ important take-aways and implications of those events.
   new passive business of selling weapons, was introduced, allowing players to
   increase their earnings while they are doing other activities in GTA Online.
   Several weaponized vehicles, new Mk II variants of existing weapons, and a
-  new set of weapon accessories were also added to the game.
+  set of new weapon accessories were also added to the game.
 
   In my opinion, Gunrunning is the best passive business. There are only 6
   kinds of Bunker sell missions, none of which is extremely hard; the hourly
@@ -118,8 +118,8 @@ important take-aways and implications of those events.
 
 - December 12: *The Doomsday Heist* update was available. Three new Doomsday
   Heists, presented in a new theme and story line, and offered with better
-  payouts than the classic Heists, were added to the game. The Doomsday Heists
-  worked similarly as the classic Heists, but they can be completed by any
+  payouts than the original Heists, were added to the game. The Doomsday Heists
+  worked similarly as the original Heists, but they can be completed by any
   group of 2, 3, or 4 players. Also, as a continuation of the Gunrunning
   update, more weaponized vehicles and extra Mk II weapons became available.
 
@@ -158,7 +158,7 @@ important take-aways and implications of those events.
 
 - December 12: As a continuation of the story line in the Casino Missions, *The
   Diamond Casino Heist* update added a new Heist targeting the casino's vault.
-  The form of the Casino Heist is different from the classic Heists and the
+  The form of the Casino Heist is different from the original Heists and the
   Doomsday Heists but rather similar to Heists in the Story Mode, where the
   Heist Leader would choose the approach and hire several NPCs as crew members.
   Furthermore, except the Heist Finale, all Missions of the Heist can be done
@@ -179,22 +179,22 @@ important take-aways and implications of those events.
   should do and merrily join and play them after you have completed the GTA
   Online Tutorial.
 
-- There are three sets of Heists in GTA Online: the classic Heists released in
+- There are three sets of Heists in GTA Online: the original Heists released in
   2015, The Doomsday Heists, and The Diamond Casino Heist. If you wish to
   complete all the Heists in increasing difficulty, you might want to do them
-  in the chronological order of their releases. The classic Heists were a lot
+  in the chronological order of their releases. The original Heists were a lot
   more easier than The Doomsday Heists; some aspects of mission design in The
   Doomsday Heists were intended to prevent players from reusing the tricks that
-  could make the classic Heists easy.
+  could make the original Heists easy.
 
-- Every set of Heists has some requirements to be unlocked, but the classic
+- Every set of Heists has some requirements to be unlocked, but the original
   Heists' prerequisites are easier to satisfy. They only require reaching Rank
   12 (which is easy) and owning a high-end Apartment (which can be purchased
   with as little as $200,000). Both The Doomsday Heists and The Diamond Casino
   Heist require being a VIP, CEO, or MC President, and a specialized property
   whose price starts from $1.2M.
 
-  The classic Heists were released in March 2015, months before Rockstar added
+  The original Heists were released in March 2015, months before Rockstar added
   VIP as the first type of organizations a player can register. Since CEOs and
   MCs were introduced in 2016, every new major activity added to GTA Online
   required being a VIP, CEO, or MC President, including The Doomsday Heists and
@@ -203,7 +203,7 @@ important take-aways and implications of those events.
   Inflation is also a thing in GTA Online: prices of new vehicles and clothing
   items have skyrocketed update by update, and so are the properties' prices:
   you need to pay at least 6 times more for a property that unlocks newer
-  Heists than the cheapest Apartment for the classic Heists.
+  Heists than the cheapest high-end Apartment for the original Heists.
 
 - If you want to exploit the Nightclub Warehouse, make sure you have owned most
   of the following:
