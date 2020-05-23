@@ -1,5 +1,7 @@
 {%- capture img_path -%}
-    {%- if page.collection == "posts" -%}
+    {%- if page.draft -%}
+        /assets/img/drafts/{{ page.slug }}
+    {%- elsif page.collection == "posts" -%}
         /assets/img/posts{{ page.id }}
     {%- else -%}
         /assets/img{{ page.permalink }}
