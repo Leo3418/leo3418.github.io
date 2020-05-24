@@ -33,7 +33,7 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
       - `<lang>/`: Localized images for the document
     - `drafts/<post-name>/`: Images for a draft
       - `<lang>/`: Localized images for the draft
-    - `posts/<year>/<month>/<day>/<post-name>/`: Images for a post
+    - `posts/<year>-<month>-<day>-<post-name>/`: Images for a post
       - `<lang>/`: Localized images for the post
 - `collections/`: Pages for collections, posts, and drafts
   - `_drafts/<lang>/`: Drafts written in a language
