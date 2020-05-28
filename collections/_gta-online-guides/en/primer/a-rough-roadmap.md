@@ -198,8 +198,8 @@ reached a Rank high enough to unlock most weapons. So, complete your arsenal by
 purchasing the weapons you weren't able to buy at lower Ranks. However, [don't
 buy all the weapons you have
 unlocked](general-tips-for-beginners#keep-a-minimal-collection-of-weapons)! You
-can refer to [my minimum collection of weapons](null) to check what you should
-buy.
+can refer to [my minimum collection of weapons](my-weapon-collection) to check
+what you should buy.
 
 If you have passive businesses other than the Bunker, you can let your Bunker
 Staff do [research](null) instead of manufacturing. This will temporarily stop
