@@ -58,9 +58,10 @@ Before building the site, make sure you have [installed Jekyll and
 Bundler](https://jekyllrb.com/docs/installation/) in your environment.
 
 If this is the first time you build this site in your environment, then you
-should run `bundle` under the this repository's root directory. Also, you'd
-better run `bundle` again if the `Gemfile.lock` file has been changed since
-your last run of the command.
+should run `bundle` under the this repository's root directory to install this
+site's dependency gems. Also, you'd better run `bundle` again to update those
+dependencies if the `Gemfile.lock` file has been changed since your last run of
+the command.
 
 To generate the static files, run `bundle exec jekyll build`. By default, the
 static files are in the `_site/` directory under this repository's root.
@@ -69,17 +70,29 @@ To generate the files and view the site in a web browser, run `bundle exec
 jekyll serve`. By default, the site is accessible from
 `http://localhost:4000/`.
 
-If the default Jekyll version in your environment matches the version specified
-in `Gemfile.lock`, then you can build and serve with `jekyll build` and `jekyll
-serve` respectively for shorter commands. You can compare those versions with
-the following commands:
+If the default Jekyll version in your environment matches the version used for
+this site specified in `Gemfile.lock`, then you can build and serve with
+`jekyll build` and `jekyll serve` respectively for shorter commands. You can
+compare those versions with the following commands:
 
-```sh
-$ jekyll -v
-jekyll x.y.z
-$ grep "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
-    jekyll (x.y.z)
-```
+1. In a directory that is **not** the root of any Jekyll site, run this command
+   to retrieve the default Jekyll version:
+
+   ```sh
+   $ jekyll -v
+   jekyll x.y.z
+   ```
+
+2. In the root of this repository, run this command to get the Jekyll version
+   used for this site:
+
+   ```sh
+   $ grep "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
+       jekyll (x.y.z)
+   ```
+
+If the version numbers in the output of those commands are identical, then you
+can omit `bundle exec` in all `jekyll` commands you run for this site.
 
 ## Reusing Contents in This Repository
 
