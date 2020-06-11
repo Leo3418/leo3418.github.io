@@ -17,7 +17,7 @@ jobs:
       run: |
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chown jekyll:jekyll /srv/jekyll && bundle && jekyll build --future"
+        jekyll/builder:latest /bin/bash -c "chown jekyll:jekyll /srv/jekyll && jekyll build --future"
     - name: Push the site to the master branch
       if: ${{ github.event_name == 'push' }}
       run: |
