@@ -267,7 +267,7 @@ is triggered by a push to the `jekyll` branch.
 {% raw %}
 ```diff
       - name: Push the site to the master branch
-+     - if: ${{ github.event_name == 'push' }}
++       if: ${{ github.event_name == 'push' }}
         run: |
           sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
           cd ${{ github.workspace }}/_site
