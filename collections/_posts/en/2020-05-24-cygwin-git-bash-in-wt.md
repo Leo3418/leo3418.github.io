@@ -93,7 +93,7 @@ look differently from what is shown here, so please pay attention to that.
 
    Therefore, the full command to run Bash in Cygwin is
    `C:\cygwin64\bin\bash.exe --login -i`. If you have installed Cygwin to a
-   non-default path and/or wants to use another shell, then please change the
+   non-default path and/or want to use another shell, then please change the
    command accordingly.
 
    Finally, when adding the command to the configuration file, you need to
