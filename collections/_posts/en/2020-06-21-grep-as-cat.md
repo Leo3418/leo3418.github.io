@@ -63,8 +63,8 @@ repeat what you type by copying the input to its output.
 
 Who would like such a program that would only stupidly repeat what you tell it?
 The beauty of this behavior of the `cat` program could never have been seen
-without Unix shells' output redirection: you can let `cat` write its output to
-a file rather than the terminal, so now it will transfer the text you enter
+without Unix shells' **output redirection**: you can let `cat` write its output
+to a file rather than the terminal, so now it will transfer the text you enter
 from the keyboard to the file on disk.
 
 {% include asciinema-player.html name="cat-write-file.cast" poster="npt:4" %}
