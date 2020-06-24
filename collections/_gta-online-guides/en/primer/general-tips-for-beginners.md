@@ -110,7 +110,7 @@ them based on the reasons discussed in the section above.
 
 For more comments on items included in the Starter Pack, you can read other
 articles in this collection discussing [itself in more details](null) and
-[properties in general](null).
+[properties in general](properties-guide).
 
 ## Ignore Lamar Missions for Now
 
