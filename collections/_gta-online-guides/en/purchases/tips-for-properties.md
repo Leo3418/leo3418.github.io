@@ -14,7 +14,7 @@ properties.
   property that is in your wishlist, buy it now. If there is a bonus for an
   activity, complete it immediately.
 
-  *Main article: [GTA Online Weekly Events](null)*
+  *Main article: [GTA Online Weekly Events](weekly-events)*
 
 - Got enough money for a business property? Be ready to pay more than what you
   see, or your new business might not generate profit at all.

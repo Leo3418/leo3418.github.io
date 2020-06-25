@@ -166,9 +166,9 @@ Products to get another income. Now you have earned money from two businesses!
 You can purchase more properties if you have enough money to invest and are
 willing to do so. Because you already have some businesses running and
 providing good incomes, you don't have to rush your purchases; instead, keep an
-eye on the [discounts](null) Rockstar offers for different properties every
-week. You can save money in your bank account and buy properties when they are
-on sale.
+eye on the [discounts](weekly-events#discounts) Rockstar offers for different
+properties every week. You can save money in your bank account and buy
+properties when they are on sale.
 
 One significant benefit of owning a complete (or almost complete) collection of
 properties in GTA Online is that you can maximize the profit of Nightclub
@@ -234,11 +234,11 @@ drive. But keep in mind, those items will also be on sale sometimes, so you
 might want to wait for a discount.
 
 If you still need a great amount of money for your wish list, keep an eye on
-[Double Rewards](null) events that usually rotate every week. In a Double
-Rewards event, one or several select activities and businesses will offer
-double cash and RP. For most activities and businesses, the up-front cost is
-still the same as usual or even decreased in a few occasions, so your profit is
-more than doubled.
+[Double Rewards](weekly-events#rewards) events that usually rotate every week.
+In a Double Rewards event, one or several select activities and businesses will
+offer double cash and RP. For most activities and businesses, the up-front cost
+is still the same as usual or even decreased in a few occasions, so your profit
+is more than doubled.
 
 After grinding during a few Double Rewards events, you will have a lot of money
 for your pension and claim your GTA Online career to be a successful one.

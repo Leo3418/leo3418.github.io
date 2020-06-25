@@ -11,8 +11,9 @@ B under par time. You can use any normal land vehicle you own and take any
 route.
 
 Rockstar rotates the active Time Trial every week along with [weekly discounts
-and Double Rewards](null). In each week, when you successfully complete the
-active Time Trial under par time for the first time, you get an $100,000 bonus.
+and Double Rewards](weekly-events). In each week, when you successfully
+complete the active Time Trial under par time for the first time, you get an
+$100,000 bonus.
 
 The Time Trial is shown on the map as a purple stopwatch icon. Go to the
 location marked by the icon to start the Time Trial. If no such icon exists on
