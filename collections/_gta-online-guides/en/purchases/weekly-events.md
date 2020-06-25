@@ -67,6 +67,30 @@ about only once per month on average, but it is lucrative since it allows you
 to earn millions of GTA$ in a week. If you need money, you should definitely
 keep an eye on any bonus for sell missions of a business you own.
 
+### Recommendations
+
+Below are some best activities for players who usually play alone. They are
+manageable with only one player, so if you are a lone wolf, make sure to
+exploit any events for the following:
+- [Bunker](null)
+- [Special Cargo](null)
+- [Nightclub Warehouse](null) (rare)
+
+If you have buddies, then you can also participate in events for the following
+activities:
+- [MC Businesses](null) -- you may do this alone, but it is a lot more easier
+  with two or more players
+- [Casino Heist](null)
+- [Doomsday Heists](null) (rare)
+- [Heists](null) (very rare)
+
+Some other activities might not pay as much as the ones above, but depending on
+your circumstances, they might also be worth doing when there is a Double
+Rewards event targeting them:
+- [Contact Missions](null) -- good for ranking up quickly
+- [Client Jobs](null)
+- [VIP Works](null)
+
 ## Discounts
 
 Cars, motorcycles, planes, helicopters and even boats are often seen on the
