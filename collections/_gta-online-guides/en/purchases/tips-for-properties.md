@@ -19,7 +19,7 @@ properties.
 - Got enough money for a business property? Be ready to pay more than what you
   see, or your new business might not generate profit at all.
 
-  *Main article: [The Hidden Cost](null)*
+  *Main article: [The Hidden Cost](the-hidden-cost)*
 
 - Once you own some properties, you need to pay property utility charges and
   wages for the staff every in-game day (48 real-life minutes). The more

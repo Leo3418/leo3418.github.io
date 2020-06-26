@@ -78,12 +78,12 @@ best location will be the best forever.
 Next, the actual amount of extra money you need to pay in this act is higher
 than what you have possibly imagined. Many properties in GTA Online are
 upgradable, and I like to describe the price for the upgrades as ["the hidden
-cost"](null). There are upgrades that are not shown to you until you purchase
-the property, and many of those upgrades are vital for making your business
-even profitable. If you are counting on the new property to earn enough money
-to move to a better location, you should purchase these upgrades. The problem
-is, you have to purchase them again for the new property after you move, in
-full price.
+cost"](the-hidden-cost). There are upgrades that are not shown to you until you
+purchase the property, and many of those upgrades are vital for making your
+business even profitable. If you are counting on the new property to earn
+enough money to move to a better location, you should purchase these upgrades.
+The problem is, you have to purchase them again for the new property after you
+move, in full price.
 
 Therefore, I strongly suggest you increase your budget and buy a property at an
 accessible location on your initial purchase. If you don't have enough money,
