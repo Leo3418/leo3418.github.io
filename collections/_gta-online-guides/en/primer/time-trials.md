@@ -107,4 +107,4 @@ again, and you might get better performance as the result of relaxing.
 
 - If you think you have almost stayed in the current session for 48 real-life
   minutes (1 in-game day), you should start a new session if you want to avoid
-  the [daily property utility charges](null).
+  the [daily property utility charges](property-utility-charges).

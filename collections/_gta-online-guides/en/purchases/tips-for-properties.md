@@ -26,7 +26,7 @@ properties.
   properties you own, the more expensive they are. Fortunately, there are
   methods to avoid those charges.
 
-  *Main article: [Property Utility Charges](null)*
+  *Main article: [Property Utility Charges](property-utility-charges)*
 
 - Want to hide weapons you never need with one of the gun lockers in the game?
   Some of them work, while others do not. Make sure you only buy the working
