@@ -66,9 +66,8 @@ come back to the Weapon Wheel when you switch to another session or log into
 the game next time.
 
 So far, the best thing you can do to have a weapon removed from the Weapon
-Wheel is to hide some weapons using [Gun Lockers](gun-lockers), but the
-functionality provided by them is still limited, as discussed in the linked
-article.
+Wheel is to hide some weapons using [gun lockers](gun-lockers), but they are
+only working under certain conditions, as discussed in the linked article.
 
 ### No Way to Reorganize Weapons
 

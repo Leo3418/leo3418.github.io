@@ -75,13 +75,12 @@ weapons only in your arsenal, then such tragedy will occur less likely.
 Avoiding unnecessary weapons is even more important if you play on PC because
 once you purchase a weapon, you can never get rid of it permanently. You can
 throw it away, but after you join a new session, it just comes back. If you
-have heard of Gun Lockers, which are claimed by Rockstar to be able to hide
-your weapons, you might think that they can solve this problem, until you try
-it out and find that they are not functioning as intended. Even if you have
-hidden some guns by defining a custom weapon loadout, they will show up again
-when you join a new session, and you need to toggle the loadout manually. Gun
-Lockers sometimes are not enabled for Missions, in which you need their
-functionality most.
+have heard of gun lockers, which are claimed by Rockstar to be able to hide
+your weapons, you might think that they can solve this problem. In general, the
+design of gun lockers' weapon hiding mechanism is flawed and prevents
+successful removal of weapons in some situations. There are things you must pay
+attention to in order to make gun lockers work, as described in [this
+article](gun-lockers).
 
 I heard that on PS4 and Xbox One, you can permanently throw away a weapon. I
 can't test this because I don't own a console. But still, considering the fatal
@@ -89,8 +88,7 @@ overhead of finding a weapon in a large arsenal, keeping a minimal number of
 weapons is important.
 
 I will introduce a good minimal collection of weapons I use
-[here](my-weapon-collection). There is also a [further discussion](gun-lockers)
-on Gun Lockers.
+[here](my-weapon-collection).
 
 ## Criminal Enterprise Starter Pack: Claim Included Items Judiciously
 
