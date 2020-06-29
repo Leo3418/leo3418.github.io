@@ -89,8 +89,8 @@ overhead of finding a weapon in a large arsenal, keeping a minimal number of
 weapons is important.
 
 I will introduce a good minimal collection of weapons I use
-[here](my-weapon-collection). There is also a [further discussion](null) on Gun
-Lockers.
+[here](my-weapon-collection). There is also a [further discussion](gun-lockers)
+on Gun Lockers.
 
 ## Criminal Enterprise Starter Pack: Claim Included Items Judiciously
 

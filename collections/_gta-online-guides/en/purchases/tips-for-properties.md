@@ -32,7 +32,7 @@ properties.
   Some of them work, while others do not. Make sure you only buy the working
   ones.
 
-  *Main article: [Gun Lockers](null)*
+  *Main article: [Gun Lockers](gun-lockers)*
 
 - Can't resist the lure of Security upgrade for your businesses because they
   are being robbed by NPCs? The upgrade will not eliminate those robberies
