@@ -40,7 +40,7 @@ properties.
   use alternative methods that do not require any purchase to avoid those
   events.
 
-  *Main article: [Do Not Buy Security Upgrades](null)*
+  *Main article: [Do Not Buy Security Upgrades](security-upgrades)*
 
 - A final reminder: for most types of property, don't buy the property located
   near Paleto Bay or Paleto Forest.

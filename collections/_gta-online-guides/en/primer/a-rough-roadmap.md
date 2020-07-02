@@ -128,8 +128,8 @@ Here are the reasons I recommend these particular businesses:
   - It is very easy to ensure that your Bunker will not be hit by random events
     in the game that will cause you lose your unsold Products; for MC
     Businesses, however, those random events can still happen frequently even
-    if you have purchased the [Security upgrade](null), which is supposed to
-    make them less common.
+    if you have purchased the [Security upgrade](security-upgrades), which is
+    supposed to make them less common.
 
   - A Nightclub Warehouse cannot generate any income solely by itself; if you
     don't own any business yet, the Nightclub Warehouse is useless, so you
