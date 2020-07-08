@@ -45,4 +45,4 @@ properties.
 - A final reminder: for most types of property, don't buy the property located
   near Paleto Bay or Paleto Forest.
 
-  *Main article: [P is for Property, not Paleto Bay](null)*
+  *Main article: [P is for Property, not Paleto Bay](paleto-bay-properties)*
