@@ -54,8 +54,8 @@ If you have purchased the Criminal Enterprise Starter Pack, you should have
 another $1M to spend and plenty of properties to claim for free. I would
 suggest you [not claim all of those
 immediately](general-tips-for-beginners#criminal-enterprise-starter-pack-claim-included-items-judiciously)
-but read [this article](null) about the Starter Pack to learn more about things
-included in it.
+but read [this article](starter-pack) about the Starter Pack to learn more
+about things included in it.
 
 GTA Online has a player level system where the levels are called "Ranks", and
 the experience points for leveling up are "Reputation Points", abbreviated to

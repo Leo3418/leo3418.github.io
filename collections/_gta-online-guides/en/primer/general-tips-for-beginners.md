@@ -107,8 +107,8 @@ better performance; once you claim them, you might never be able to get rid of
 them based on the reasons discussed in the section above.
 
 For more comments on items included in the Starter Pack, you can read other
-articles in this collection discussing [itself in more details](null) and
-[properties in general](properties-guide).
+articles in this collection discussing [itself in more details](starter-pack)
+and [properties in general](properties-guide).
 
 ## Ignore Lamar Missions for Now
 
