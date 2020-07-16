@@ -30,11 +30,12 @@ one and the site supports three or more languages.) With this feature, at least
 I would be able to allow visitors see a message for untranslated posts.
 
 The only thing I don't like very much about Polyglot is it requires assigning a
-permalink to a document (i.e. a non-post item inside a collection) in the front
-matter. I want to use the document's file path directly as the permalink. But
-this is an acceptable trade-off because I usually add the front matter
-immediately after creating a file, and for each file it is just an one-time
-work, so the information is repeated only once.
+permalink to each document (i.e. a non-post item inside a collection) in its
+front matter. I want to use the document's file path directly as the permalink.
+Fortunately, this can be achieved by setting up [global permalinks for a
+collection](https://jekyllrb.com/docs/permalinks/#collections), which [greatly
+reduces
+redundancy](https://github.com/Leo3418/leo3418.github.io/commit/96102384cda7914052b173b5a83ce56068941218).
 
 I also looked at some other multilingual plugins. The [Octopress
 Multilingual](https://github.com/octopress/multilingual) plugin seems to have

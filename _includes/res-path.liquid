@@ -1,0 +1,9 @@
+{%- capture res_path -%}
+    {%- if page.draft -%}
+        /assets/res/drafts/{{ page.slug }}
+    {%- elsif page.collection == "posts" -%}
+        /assets/res/posts/{{ page.date | date: "%F" }}-{{ page.slug }}
+    {%- else -%}
+        /assets/res{{ page.permalink }}
+    {%- endif -%}
+{%- endcapture -%}

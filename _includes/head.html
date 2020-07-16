@@ -4,4 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
   <title>{{ page.title }} - {{ site.data.l10n.title }}</title>
+  {% if page.asciinema-player %}
+  <link rel="stylesheet"
+      href="{{ "/assets/css/asciinema-player.css" | relative_url }}">
+  <script type="text/javascript"
+      src="{{ "/assets/js/asciinema-player.js" | relative_url }}"></script>
+  {%- endif -%}
 </head>

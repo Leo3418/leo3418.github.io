@@ -31,8 +31,16 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
     - `collections/<collection-name>/<doc-name>/`: Images for a document in a
       collection
       - `<lang>/`: Localized images for the document
-    - `posts/<year>/<month>/<day>/<post-name>/`: Images for a post
+    - `drafts/<post-name>/`: Images for a draft
+      - `<lang>/`: Localized images for the draft
+    - `posts/<year>-<month>-<day>-<post-name>/`: Images for a post
       - `<lang>/`: Localized images for the post
+  - `js/`: Scripts for this site
+  - `res/`: Other types of resources
+    - `collections/<collection-name>/<doc-name>/`: Resources for a document in
+      a collection
+    - `drafts/<post-name>/`: Resources for a draft
+    - `posts/<year>-<month>-<day>-<post-name>/`: Resources for a post
 - `collections/`: Pages for collections, posts, and drafts
   - `_drafts/<lang>/`: Drafts written in a language
   - `_posts/<lang>/`: Posts written in a language
@@ -56,9 +64,10 @@ Before building the site, make sure you have [installed Jekyll and
 Bundler](https://jekyllrb.com/docs/installation/) in your environment.
 
 If this is the first time you build this site in your environment, then you
-should run `bundle` under the this repository's root directory. Also, you'd
-better run `bundle` again if the `Gemfile.lock` file has been changed since
-your last run of the command.
+should run `bundle` under the this repository's root directory to install this
+site's dependency gems. Also, you'd better run `bundle` again to update those
+dependencies if the `Gemfile.lock` file has been changed since your last run of
+the command.
 
 To generate the static files, run `bundle exec jekyll build`. By default, the
 static files are in the `_site/` directory under this repository's root.
@@ -67,17 +76,29 @@ To generate the files and view the site in a web browser, run `bundle exec
 jekyll serve`. By default, the site is accessible from
 `http://localhost:4000/`.
 
-If the default Jekyll version in your environment matches the version specified
-in `Gemfile.lock`, then you can build and serve with `jekyll build` and `jekyll
-serve` respectively for shorter commands. You can compare those versions with
-the following commands:
+If the default Jekyll version in your environment matches the version used for
+this site specified in `Gemfile.lock`, then you can build and serve with
+`jekyll build` and `jekyll serve` respectively for shorter commands. You can
+compare those versions with the following commands:
 
-```sh
-$ jekyll -v
-jekyll x.y.z
-$ grep -P "jekyll\ \(\d+\.\d+\.\d+\)" Gemfile.lock
-    jekyll (x.y.z)
-```
+1. In a directory that is **not** the root of any Jekyll site, run this command
+   to retrieve the default Jekyll version:
+
+   ```sh
+   $ jekyll -v
+   jekyll x.y.z
+   ```
+
+2. In the root of this repository, run this command to get the Jekyll version
+   used for this site:
+
+   ```sh
+   $ grep -o "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
+   jekyll (x.y.z)
+   ```
+
+If the version numbers in the output of those commands are identical, then you
+can omit `bundle exec` in all `jekyll` commands you run for this site.
 
 ## Reusing Contents in This Repository
 

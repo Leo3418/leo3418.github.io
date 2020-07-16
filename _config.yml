@@ -39,17 +39,17 @@ defaults:
   -
     scope:
       path: ""
-      type: "multilingual-jekyll-site"
-    values:
-      layout: "collection-nav"
-      tags: "jekyll"
-  -
-    scope:
-      path: ""
       type: "gta-online-guides"
     values:
       layout: "collection-nav"
       tags: "gta-online"
+  -
+    scope:
+      path: ""
+      type: "multilingual-jekyll-site"
+    values:
+      layout: "collection-nav"
+      tags: "jekyll"
 
 exclude:
   - "README.md"
@@ -65,7 +65,11 @@ plugins:
 # jekyll-polyglot
 languages: ["en", "zh"]
 default_lang: "en"
-exclude_from_localization: ["assets/css", "assets/img"]
+exclude_from_localization:
+  - "assets/css"
+  - "assets/img"
+  - "assets/js"
+  - "assets/res"
 parallel_localization: true
 sass: # https://github.com/untra/polyglot/issues/107#issuecomment-598274075
   sourcemap: never

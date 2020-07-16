@@ -34,7 +34,7 @@ lang: zh
 
     ![]({{ img_path }}/05-delete-epic-games-gtav-folder.png)
 
-6.  找出 Steam 里的 GTA V 安装路径。在 Steam 里查看 GTA V 的游戏属性，在“本地文件”中选择“浏览本地文件”，然后记下弹出的文件资源管理器里显示的路径。
+6.  找出 Steam 里的 GTA V 安装路径。在 Steam 里查看 GTA V 的游戏属性，在“本地文件”中选择“浏览本地文件”，然后记下弹出的文件资源管理器里显示的路径。点一下地址栏，就可以将完整路径复制出来。
 
     ![]({{ img_path }}/06-1-steam-game-properties.png)
 
