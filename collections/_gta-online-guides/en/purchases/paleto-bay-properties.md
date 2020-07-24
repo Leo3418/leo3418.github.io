@@ -52,7 +52,8 @@ Paleto Bay is not a suitable location for business properties, and the cheapest
 MC Businesses are located near Sandy Shores, there should be no reason to buy
 them at Paleto Bay.
 
-![Some MC Businesses on The Open Road]({{ img_path_l10n }}/the-open-road.png)
+![Coke Lockups on The Open Road]({{ img_path_l10n }}/coke-lockups.png)
+![Meth Labs on The Open Road]({{ img_path_l10n }}/meth-labs.png)
 
 ## Free Properties
 
@@ -116,6 +117,6 @@ Paleto Bay and Los Santos in Prep Missions.
 
 If you are too desperate to earn some money from the Casino Heist but cannot
 afford a good Arcade, then it is fine to claim this free one and use it just
-for one or two Heists, only for getting enough money for a better Arcade.
-Please never use it for the long term; move to a more optimal location
-immediately when you can.
+for one or two Heists, only to get enough money for a better Arcade. Please
+never use it for the long term; move to a more optimal location immediately
+when you can.

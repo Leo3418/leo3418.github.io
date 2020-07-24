@@ -76,18 +76,15 @@ manually disable the custom weapon loadout. More specifically,
 - The custom weapon loadout must work everywhere, from Freemode sessions to
   Freemode activities and Heists.
 
-The only flawless gun locker verified by me is the **Avenger's gun locker**.
-It is a part of the Avenger Weapon Workshop.
+Flawless gun lockers that are verified by me are the **Avenger's gun locker**, a part of the Avenger Weapon Workshop, and the **Arcade's gun locker** in its personal quarters.
 
 ![Weapon Workshop upgrade for Avenger]({{ img_path_l10n }}/avenger.png)
-
-I have also seen players reporting that **Arcade's gun locker** and
-**Penthouse's gun locker** are also working flawlessly. Because the Avenger's
-gun locker is not removable, I cannot test them by myself yet. The Arcade's gun
-locker is a part of Personal Quarters, and the Penthouse's gun locker is
-bundled with the Office expansion.
-
 ![Personal Quarter upgrade for Arcade]({{ img_path_l10n }}/arcade.png)
+
+I have also seen players reporting that the **Penthouse's gun locker** bundled
+with its Office expansion is also working flawlessly, but I cannot test it by
+myself yet.
+
 ![Office expansion for Penthouse]({{ img_path_l10n }}/penthouse.png)
 
 ## Interfering Gun Lockers
@@ -125,7 +122,7 @@ itself does not suggest anything related to a gun locker, but it is bundled
 with an interfering gun locker. There is a note about this fact in the
 renovation's description; however, if you do not pay attention to the message
 or do not understand its meaning when making the purchase, then you lose the
-ability to hide weapons permanently.
+ability to permanently hide weapons.
 
 ![Security Room renovation for Facilities]({{ img_path_l10n }}/facility.png)
 
@@ -153,7 +150,7 @@ you can first purchase the Paleto Forest Bunker, which is the cheapest Bunker
 in GTA Online. To save money, buy no renovations. Then you will be asked to
 trade in the old Bunker because you can only own one Bunker at a time. After
 this purchase, buy the Chumash Bunker again, and do **not** include the gun
-locker renovation.
+locker renovation this time.
 
 Because there is only one Arena Workshop in the game, once you buy it, you will
 have to live with the interfering gun locker in it. Therefore, **don't buy the
