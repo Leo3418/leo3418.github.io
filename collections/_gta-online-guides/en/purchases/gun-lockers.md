@@ -54,8 +54,8 @@ Freemode activities and Missions.**
 activity]({{ img_path_l10n }}/in-activities.png)
 
 The above screenshot was taken when I was in the Sightseer VIP Work, which is a
-Freemode activity, the custom weapon loadout option in the Interaction Menu is
-grayed out, preventing me from removing unwanted weapon from the Weapon Wheel.
+Freemode activity. The custom weapon loadout option in the Interaction Menu was
+grayed out, preventing me from hiding unwanted weapon from the Weapon Wheel.
 
 For a few gun lockers, **even if you remember to enable the custom loadout, the
 weapons you have hidden will still strangely come back to the Weapon Wheel in
@@ -67,7 +67,8 @@ depend on the functionality of gun lockers.
 
 Luckily for us, there are several gun lockers that work flawlessly. My
 definition of a gun locker's flawlessness is that all weapons you hide using it
-will disappear permanently like if you have never obtained them, unless you manually disable the custom weapon loadout. More specifically,
+will disappear permanently like if you have never obtained them, unless you
+manually disable the custom weapon loadout. More specifically,
 
 - The custom weapon loadout must be automatically enabled at all times, so you
   will never have to go to the Interaction Menu to activate it.
@@ -92,7 +93,7 @@ bundled with the Office expansion.
 ## Interfering Gun Lockers
 
 By contrast, some gun lockers are not only unable to hide your weapons
-flawlessly but also brake the functionality of working gun lockers mentioned in
+flawlessly but also break the functionality of working gun lockers mentioned in
 the previous section, hence I call them *interfering gun lockers*. Gun lockers
 in the following properties have been reported to be interfering, and **please
 do not purchase any of them**:
