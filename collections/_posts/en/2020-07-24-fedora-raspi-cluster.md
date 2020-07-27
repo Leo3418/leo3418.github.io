@@ -1,5 +1,5 @@
 ---
-title: "Setting Up Fedora on a Raspberry Pi Cluster"
+title: "Set Up Fedora on a Raspberry Pi Cluster"
 lang: en
 asciinema-player: true
 ---
