@@ -4,6 +4,37 @@ lang: en
 asciinema-player: true
 ---
 
+## Updates
+
+### {{ "2020-07-29" | date: site.data.l10n.date_format }}
+
+So, only one day after this post was published, the Raspberry Pi software
+maintainers made a
+[patch](https://github.com/raspberrypi/userland/commit/fdc2102ccf94a397661d495c6942eb834c66ee28)
+that allowed `vcgencmd` to be compiled directly on Fedora without any
+workaround. As a result, **you may now build `vcgencmd` on Fedora with simply
+`./buildme --aarch64`**.
+
+The building method described in this post still works after the patch, but it
+is no longer necessary. You can definitely use it without any issues, but just
+remember that `./buildme --aarch64` is now working fine and is probably the
+easier way to compile `vcgencmd`.
+
+`./buildme --aarch64` replaces the following commands:
+
+```console
+$ cmake -DARM64=ON .
+$ make -j 4
+$ sudo make install
+```
+
+The remaining instructions in this post are still accurate and working. In
+addition, you always have the option to [install my `vcgencmd` build with
+DNF](#use-dnf-to-install-the-program) if you are not a fan of building software
+packages yourself.
+
+---
+
 This post is a continuation of my [previous
 one](/2020/07/24/fedora-raspi-cluster.html) about setting up a cluster of
 Raspberry Pis running Fedora. After I got the cluster to compute something,
@@ -24,17 +55,23 @@ included in Fedora's software repositories. Luckily though, the source code of
 package](https://github.com/raspberrypi/userland) that contains the program, is
 available, so we can compile it on our own.
 
-## Challenge
+## ~~Challenge~~
+
+<div class="message-box">
+<b>Update</b>: the issue described in this section has been fixed by the
+upstream.
+</div>
 
 You probably have already tried to build a software package distributed by
 others. High-quality packages contain build instruction which makes the
 building process as easy as copy-pasting some commands. Although the `userland`
 package's build instruction is not very clear, at least it tells you to build
 with the `buildme` script and include the `--aarch64` flag if you are compiling
-the package for 64-bit ARM. Unfortunately, `buildme --aarch64` will fail on
-Fedora, as shown below.
+the package for 64-bit ARM. ~~Unfortunately, `buildme --aarch64` will fail on
+Fedora, as shown below.~~
 
-{% include asciinema-player.html name="build-failure.cast" poster="npt:14" %}
+{% include asciinema-player.html name="build-failure.cast"
+    poster="data:text/plain,Presentation of the issue, which has been fixed" %}
 
 So, I spent about an hour figuring out what the `buildme` script would do and
 how the package could be built without errors. I was able to find a solution,
@@ -66,7 +103,7 @@ shipped with Fedora.
     ```
 
 3.  This is the most important step in the building process. Use the following
-    commands instead of `./buildme --aarch64` to compile the program:
+    commands ~~instead of `./buildme --aarch64`~~ to compile the program:
 
     ```console
     $ cmake -DARM64=ON .
