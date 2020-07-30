@@ -84,7 +84,7 @@ compare those versions with the following commands:
 1. In a directory that is **not** the root of any Jekyll site, run this command
    to retrieve the default Jekyll version:
 
-   ```sh
+   ```console
    $ jekyll -v
    jekyll x.y.z
    ```
@@ -92,7 +92,7 @@ compare those versions with the following commands:
 2. In the root of this repository, run this command to get the Jekyll version
    used for this site:
 
-   ```sh
+   ```console
    $ grep -o "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
    jekyll (x.y.z)
    ```
