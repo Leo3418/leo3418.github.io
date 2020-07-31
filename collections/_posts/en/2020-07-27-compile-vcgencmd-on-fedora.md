@@ -207,7 +207,7 @@ steps described above, including creating a `.conf` file under
 `/etc/ld.so.conf.d` and modifying `~/.bashrc`. However, you still have to run
 `vcgencmd` with `sudo`.
 
-{% include asciinema-player.html name="dnf.cast" poster="npt:7" %}
+{% include asciinema-player.html name="dnf.cast" poster="npt:3.8" %}
 
 You can also build the RPM packages for `userland` by yourself from the SPEC
 file I wrote for it. For this one, I will only give you a demo of how to build
