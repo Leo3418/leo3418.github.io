@@ -78,8 +78,8 @@ to the output.
 
 Can `grep ""` replace `cat` for the purpose of writing files? Surely it can,
 because `grep` also has the similar behavior where if you do not specify files,
-it will read from the standard input, though command-line options for `grep`
-can override this behavior.
+it will read from the standard input, though command-line options for `grep`,
+like `-r`, can override this behavior.
 
 {% include asciinema-player.html name="grep-echo.cast" poster="npt:2.1" %}
 
