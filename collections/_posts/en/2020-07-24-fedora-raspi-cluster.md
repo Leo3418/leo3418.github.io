@@ -170,7 +170,7 @@ If you need to connect to a hidden Wi-Fi network, use this command instead:
 
 ## Set Static IP Address
 
-The MagPi article suggest configuring the nodes to use static IP addresses in
+The MagPi article suggests configuring the nodes to use static IP addresses in
 the `10.0.0.0/24` subnet. This might be unnecessary if you can connect the
 Raspberry Pi cluster to your router with a cable, but I will show you how to
 accomplish this on Fedora anyway.
@@ -212,9 +212,9 @@ you use SSH, try to connect to it using the new IP address.
 ## Configure Firewall
 
 This step is not required for Raspberry Pi OS and is thus not mentioned in the
-MagPi article. But, because Fedora's default firewall is more restrictive, you
-need to add an exception rule here to prevent the firewall from blocking
-communications between your Raspberry Pis.
+MagPi article. But, because Fedora's default firewall, `firewalld`, is more
+restrictive, you need to add an exception rule here to prevent the firewall
+from blocking communications between your Raspberry Pis.
 
 Run
 ```console
@@ -354,15 +354,15 @@ and then making the following change:
 
 {% include asciinema-player.html name="rm-sudo-passwd.cast" poster="npt:13" %}
 
-In case you are not familiar with `vi`, here are the operations for making the
-change:
+On Fedora, `visudo` uses `vi` as the text editor by default. In case you are
+not familiar with `vi`, here are the operations for making the change:
 
 1.  Type `/wheel` and press `Enter`. This takes you to the line above the first
     line you should edit.
 
 2.  Press `j` to move the cursor down by one line, then press `Shift-I` to go
     to the front of the line and start editing it. At this moment, you should
-    see the **`-- INSERT --`** indicator at the bottom of the screen.
+    see the **`-- INSERT --`** indicator at the bottom of the terminal.
 
 3.  Enter `#` so that the current line becomes a comment line. Now, press
     `Esc`, and the **`-- INSERT --`** indicator should disappear.
@@ -457,8 +457,8 @@ $ mpiexec -n 4 --host 10.0.0.1,10.0.0.2,10.0.0.3,10.0.0.4 hostname
 ```
 
 The `-n` option sets the number of nodes, and `--host` specifies the IP
-addresses or host names of the nodes that will run the program. If you have an
-alternative IP address configuration or a different number of nodes, then you
+addresses or host names of the nodes that will run the program. If you have a
+different number of nodes or an alternative IP address configuration, then you
 need to change the command based on your setup.
 
 The expected output of the command is a list of your Raspberry Pis' host names.
