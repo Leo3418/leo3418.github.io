@@ -14,11 +14,11 @@ repository. The process of building and uploading the site is automated by a
 [GitHub Actions
 workflow](https://github.com/Leo3418/leo3418.github.io/actions).
 
-Because the GitHub Pages site for a user must be published from the `master`
-branch, and we don't want to publish the source files for the site, the source
-files are stored in a dedicated branch named `jekyll`. The workflow for
-automated builds and deployment will pull the source files from the `jekyll`
-branch and upload the static files to the `master` branch.
+To separate the source files and generated static files for the site, these two
+sets of files are placed under different branches of this repository. The
+source files are stored in the `jekyll` branch. The workflow for automated
+builds and deployment will pull the source files from the `jekyll` branch and
+upload the static files to the `gh-pages` branch.
 
 ## Directory Structure of Source Files
 

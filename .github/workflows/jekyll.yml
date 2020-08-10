@@ -18,15 +18,15 @@ jobs:
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
         jekyll/builder:latest /bin/bash -c "chown jekyll:jekyll /srv/jekyll && jekyll build --future"
-    - name: Push the site to the master branch
+    - name: Push the site to the gh-pages branch
       if: ${{ github.event_name == 'push' }}
       run: |
         sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
-        git init
+        git init --initial-branch=gh-pages
         git config user.name ${{ github.actor }}
         git config user.email ${{ github.actor }}@users.noreply.github.com
         git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         git add .
         git commit -m "Deploy site built from commit ${{ github.sha }}"
-        git push -f -u origin master
+        git push -f -u origin gh-pages
