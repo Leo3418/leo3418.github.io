@@ -4,6 +4,37 @@ lang: en
 ---
 {% include img-path.liquid %}
 
+## Updates
+
+### {{ "2020-08-13" | date: site.data.l10n.date_format }}
+
+The method described in this article has been verified to be still working for
+the *Los Santos Summer Special* update (GTA Title Update 1.51) released on
+{{ "2020-08-11" | date: site.data.l10n.date_format }}.
+
+If you have been already using this method to share GTA V game files between
+Steam and Epic Games, then please perform the following steps for the new
+update:
+
+1.  Update GTA V from one game platform (either Steam or Epic Games). We will
+    denote this platform as *Platform A*.
+
+2.  Copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation path to
+    somewhere else, and clearly label them as game files downloaded from
+    *Platform A*.
+
+3.  Next, update GTA V from the other platform, which will be denoted as
+    *Platform B*.
+
+4.  Again, copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation
+    path to somewhere else, but label them as game files downloaded from
+    *Platform B* this time.
+
+Now, you should be able to launch GTA V and switch between Steam and Epic Games
+back and forth as before.
+
+---
+
 After Epic Games announced that it would give away free copies of GTA V for a
 week, many people started to claim this gift on that game platform. Even some
 existing GTA V players who have already purchased the game on Steam had decided
