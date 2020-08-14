@@ -2,6 +2,7 @@
 title: "Set Up Jekyll"
 ordinal: 10
 lang: en
+asciinema-player: true
 ---
 
 First, install Jekyll on your system. You may follow the [installation
@@ -25,6 +26,9 @@ root user, install the packages, and you should be able to continue Jekyll
 installation. In addition, when installing dependencies, you can replace
 `@development-tools` with `gcc gcc-c++ make` to reduce the number of packages
 being installed.
+
+{% include asciinema-player.html name="install-on-fedora.cast"
+    poster="data:text/plain,Demo of Installing Jekyll on Fedora" %}
 
 Once you've installed Jekyll, you are ready to initialize your site. There are
 two initialization options:
