@@ -24,7 +24,7 @@ localized `site.data`. Under the `_data` directory, create a directory for each
 language, which will hold localized data files for that language. If your site
 does not have a `_data` directory, then just create one before proceeding.
 
-```sh
+```console
 site-root$ cd _data
 site-root$/_data$ mkdir en zh
 ```
@@ -32,7 +32,7 @@ site-root$/_data$ mkdir en zh
 In each directory, create a file `l10n.yml` which will contain localized data
 for the corresponding language, then define the translated title in it:
 
-```sh
+```console
 site-root/_data$ ls en zh
 en:
 l10n.yml
@@ -55,7 +55,7 @@ the Minima theme to it, then you might ask where the theme's files are stored.
 Under the site root, no file or directory seems to contain anything for the
 theme:
 
-```sh
+```console
 site-root$ ls
 404.html        _config.yml  Gemfile       index.markdown  _site
 about.markdown  _data        Gemfile.lock  _posts
@@ -73,7 +73,7 @@ If you have `grep` available on your machine, then try to run this command
 under the installation path of the theme and you should capture all of them:
 
 {% raw %}
-```sh
+```console
 minima-x.y.z$ grep -nr "site\.title"
 _includes/header.html:6:    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
 _includes/footer.html:6:    <h2 class="footer-heading">{{ site.title | escape }}</h2>
@@ -145,7 +145,7 @@ can be discovered by running `grep -nr "<title>"` in the theme's installation
 path and seeing no reported occurrences. But after all, we can still try to
 find where Minima uses the `<head>` tag, in which `<title>` would reside:
 
-```sh
+```console
 minima-x.y.z$ grep -nr "<head>"
 _includes/head.html:1:<head>
 README.md:48:  - `head.html` &mdash; Code-block that defines the `<head></head>` in *default* layout.
@@ -155,7 +155,7 @@ It's used in `_includes/head.html`. Examine the file and we can confirm that
 `<title>` is used nowhere:
 
 {% raw %}
-```sh
+```console
 minima-x.y.z$ cat _includes/head.html 
 <head>
   <meta charset="utf-8">

@@ -30,7 +30,7 @@ specifiers
 After the format strings are determined, add each of them to the file
 `l10n.yml` for the corresponding language.
 
-```sh
+```console
 site-root$ cat _data/en/l10n.yml
 lang_name: "English"
 title: "My Site"
@@ -66,7 +66,7 @@ Like how we localize site title, we need to modify the files where Minima reads
 in the date and applies the format to it.
 
 {% raw %}
-```sh
+```console
 minima-x.y.z$ grep -nr "site.minima.date_format"
 _layouts/home.html:17:        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 _layouts/post.html:10:        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
