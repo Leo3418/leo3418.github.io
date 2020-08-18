@@ -102,7 +102,7 @@ they are way more cheaper than Arcadius Business Center Office alone:
 | Arcadius Business Center Office | $2,250,000 |
 
 Don't want to give up the 4 Integrity Way Apartment? Sure, you can keep that
-Apartment because you may own up to 6 Apartments at once in GTA Online.
+Apartment because you may own up to 8 Apartments at once in GTA Online.
 
 **TL;DR: If you prefer Arcadius Business Center because of its propinquity to
 your Apartment, but you don't have a lot of money, then you should buy Maze

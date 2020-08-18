@@ -57,7 +57,8 @@ important take-aways and implications of those events.
 
 - December 15: With the *Executives and Other Criminals* update, players can
   register as a VIP, hire Bodyguards, and complete VIP Works together as an
-  Organization.
+  Organization. The luxurious Galaxy Super Yacht was added in this update as
+  well.
 
 ### 2016
 
@@ -164,6 +165,13 @@ important take-aways and implications of those events.
   Furthermore, except the Heist Finale, all Missions of the Heist can be done
   by a single person.
 
+### 2020
+
+- August 11: The *Los Santos Summer Special* update brought a set of new jobs,
+  events, vehicles and cosmetic items to GTA Online. The Yacht was given a new
+  role of giving access to six new *A Superyacht Life* Missions that featured a
+  brief story line.
+
 ## Corollaries and Implications
 
 - Don't bother getting Gold Medals in the Flight School of GTA Online until you
@@ -220,3 +228,12 @@ important take-aways and implications of those events.
   mainly intended to let veteran players benefit from their existing businesses
   by collecting extra passive income. If you don't own any of the properties
   above, the Nightclub Warehouse will not function at all.
+
+- Please do not consider buying the Yacht and completing *A Superyacht Life*
+  missions as an investment. The payouts of those missions are not even
+  comparable to the cost of the cheapest financing option of the Yacht. A
+  possible reason for Rockstar to add those missions in 2020 was to make the
+  Yacht a little bit useful to players who had already owned it for years but
+  might have forgotten its existence. After all, the Galaxy Super Yacht had
+  been in GTA Online since late 2015. The missions were never intended to be a
+  way of grinding like Heists.
