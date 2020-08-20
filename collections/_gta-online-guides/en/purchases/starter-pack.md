@@ -248,19 +248,14 @@ for common grinding methods:
   average)
 - 85 hours of Bunker production
 
-If you have a friend who can host The Bogdan Problem or The Diamond Casino
-Heist for you and is willing to give you the maximum cut, then things will
-become much more easier:
+If you have a friend who can host The Diamond Casino Heist for you and is
+willing to give you the maximum cut, then things will become much more easier.
+You can get $4.6M from 2 Casino Heists, provided that in every run of the
+Heist, you get 85% cut and your team secure a take of at least $2.7M. This
+should only require 3 to 4 hours.
 
-- 5 replays of The Bogdan Problem with 85% cut; if your friend is willing to
-  use the Bogdan replay glitch, these can be done in less than 2 hours
-- 2 replays of The Diamond Casino Heist with 85% cut, if your team can secure a
-  take of at least $2.7M in each replay; this is safer than the Bogdan replay
-  glitch and requires about 3 hours
-
-Thus, if you can find people to play with, and they are capable of hosting
-rewarding Heists for you, then you only need a few hours of gameplay to earn
-the money equivalent to the Starter Pack's real value. In this case, the
-Starter Pack's marginal utility is low. Otherwise, as a lone-wolf player, you
-might have a hard time in getting enough money to buy business properties, and
-the Starter Pack could come in useful.
+Thus, if you can find people who will carry you, then you only need a few hours
+of gameplay to earn the money equivalent to the Starter Pack's real value. In
+this case, the Starter Pack's marginal utility is low. Otherwise, as a
+lone-wolf player, you might have a hard time in getting enough money to buy
+business properties, and the Starter Pack could come in useful.

@@ -55,7 +55,7 @@ even better weapon for sniping.
 
 The Mk II upgrade of Combat MG does not increase damage per shot very much.
 However, like many other Mk II weapons, Combat MG Mk II has muzzle brake
-accessories that reduces its recoil. Since the Combat MG has relatively high
+accessories that reduce its recoil. Since the Combat MG has relatively high
 recoil, the muzzle brakes make the Mk II variant more accurate and useful. In
 The Doomsday Scenario finale, my Combat MG Mk II with muzzle brake was very
 effective in killing Cliffford Mercenaries in the control center.

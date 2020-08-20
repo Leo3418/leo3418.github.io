@@ -48,4 +48,4 @@ According to my own experience, this method has the following limitations:
   do those Missions to unlock the weapons.
 
 - Occasionally, the default weapon selections are not applied after you leave a
-  Mission.
+  Job in GTA Online.

@@ -22,7 +22,7 @@ have different preferences, I will not give explicit recommendation on which
 Apartment you should buy, but rather show you the information about each
 location and let you make your own judgement based on it.
 
-Luckily though, unlike other business properties in GTA Online, you can own 6
+Luckily though, unlike other business properties in GTA Online, you can own 8
 Apartments rather than just one, so if you do need more than one Apartment due
 to your diverse demands, then just go for it. However, at the beginning of your
 GTA Online career in which you don't have a lot of money, you might not be able
@@ -34,7 +34,7 @@ satisfy your immediate and most important requirements.
 All original Heist Missions will begin from the Apartment where you start it.
 The Missions do not vary according to the Apartment's location: no matter where
 you start a Heist Mission, it will always ask you to go to the same place and
-complete the same set of objectives (unless the objective is to deliver
+complete the same set of objectives (unless an objective is to deliver
 something back to your home).
 
 Starting a Heist from the Apartment closest to the place you need to visit for
