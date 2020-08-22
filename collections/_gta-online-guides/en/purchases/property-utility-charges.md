@@ -60,7 +60,7 @@ following things:
 
 - Only purchase the upgrades that are fundamentally useful, so the utility
   charges will not increase. We will get to this with more details later.
-  
+
 - Leave the current session when you think you have spent about 48 minutes in
   it. Because one in-game day takes 48 minutes, if you are about to see the
   same time of day in the lobby, it is the time to leave and avoid the property

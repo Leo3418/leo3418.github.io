@@ -102,7 +102,7 @@ important take-aways and implications of those events.
 ### 2017
 
 - June 13: The *Gunrunning* update was released. Bunkers, the properties for a
-  new passive business of selling weapons, was introduced, allowing players to
+  new passive business of selling weapons, were introduced, allowing players to
   increase their earnings while they are doing other activities in GTA Online.
   Several weaponized vehicles, new Mk II variants of existing weapons, and a
   set of new weapon accessories were also added to the game.
@@ -133,7 +133,7 @@ important take-aways and implications of those events.
   Oppressor Mk II, the infamous flying motorcycle that can be customized with
   missiles.
 
-  There are two unique thing about the Nightclub Warehouse that differentiates
+  There are two unique things about the Nightclub Warehouse that differentiate
   it from MC Businesses and the Bunker:
 
   1. The only input required to earn money from it is completing the sale

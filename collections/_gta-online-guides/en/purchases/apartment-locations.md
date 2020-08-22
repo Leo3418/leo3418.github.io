@@ -76,8 +76,8 @@ the required location for Elite Challenge of The Fleeca Job.
 ![3 Alta St on the map]({{ img_path }}/3-alta-st-map.png)
 
 {: .img-caption}
-1. 3 Alta St  
-2. The LST Metro tunnel entrance  
+1. 3 Alta St
+2. The LST Metro tunnel entrance
 
 {: .img-caption}
 If you are being pursued by the Cops, you can easily find the tunnel entrance
