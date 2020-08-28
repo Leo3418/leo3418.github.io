@@ -26,7 +26,7 @@ lang: zh
 
 3. 在菜单中选择“设置”，会弹出 Windows Terminal 的配置文件。往下翻一点，您会看见一个 `profiles` 选项，里面有个 `list`，就是我们要加新配置的地方。
 
-   ![Windows Terminal 配置文件]({{ img_path_l10n }}/wt-config.png)
+   ![Windows Terminal 配置文件]({{ img_path }}/wt-config.png)
 
    一个基本的配置应该具有以下属性：
 
@@ -43,21 +43,17 @@ lang: zh
    - 用一个网上找的 UUID 生成器
    - 直接用我的示范里生成的 UUID：`a1f2ceb2-795d-4f2a-81cc-723cceec49c0`
 
-   ![在 Cygwin 的 shell 里运行 “uuidgen” 命令]({{ img_path_l10n }}/uuidgen.png)
+   ![在 Cygwin 的 shell 里运行 “uuidgen” 命令]({{ img_path }}/uuidgen.png)
 
 5. 找出启动 Cygwin 的 shell 的命令行指令。
 
    首先确定 Cygwin 的安装路径。如果您装的是 64 位版本，那么默认的安装路径是 `C:\cygwin64`。Bash 的可执行文件 `bash.exe` 存在 Cygwin 安装路径下的 `bin` 文件夹中，因此在默认的情况下，该文件的绝对路径是 `C:\cygwin64\bin\bash.exe`。
 
-   此处需要注意的一点是，Cygwin 中的 Bash 需要以交互式登录 shell（interactive login shell）的形式启动，否则的话，在运行一些包括 `ls` 在内的基本指令的时候会出 command not found 的消息。这个的原因是只有登录 shell 会在启动的时候运行 `/etc/profile`，然后 Cygwin 中的 `/etc/profile` 会把 `/usr/bin` 和 `/usr/local/bin` 加到 `PATH` 环境变量当中。如果开启的不是登录 shell，那么 `/etc/profile` 不会被运行，环境变量也就不会被设置。
+   此处需要注意的一点是，Cygwin 中的 Bash 需要以交互式登录 shell（interactive login shell）的形式启动，否则的话，在运行一些包括 `ls` 在内的基本指令的时候会出 "command not found" 的消息。这个的原因是只有登录 shell 会在启动的时候运行 `/etc/profile`，然后 Cygwin 中的 `/etc/profile` 会把 `/usr/bin` 和 `/usr/local/bin` 加到 `PATH` 环境变量当中。如果开启的不是登录 shell，那么 `/etc/profile` 不会被运行，环境变量也就不会被设置。启动交互式登录 shell 的方法是使用 `-i -l` 选项。如果您想使用别的 shell，那么请自行确认下让 `/usr/bin` 和 `/usr/local/bin` 被添加到 `PATH` 下的方法。
 
-   启动交互式登录 shell 的方法是添加 `--login -i` 选项，具体可以参考 Cygwin 安装路径下的 `Cygwin.bat` 文件。
+   因此，启动 Cygwin 的 Bash 的完整命令是 `C:\cygwin64\bin\bash.exe -i -l`；如果您把 Cygwin 装在了别的地方，或者想用别的 shell，请对命令进行相应的修改。
 
-   如果您想使用别的 shell，那么请自行确认下让 `/usr/bin` 和 `/usr/local/bin` 被添加到 `PATH` 下的方法。
-
-   因此，启动 Cygwin 的 Bash 的完整命令是 `C:\cygwin64\bin\bash.exe --login -i`；如果您把 Cygwin 装在了别的地方，或者想用别的 shell，请对命令进行相应的修改。
-
-   最后需要注意的就是，在往配置文件里写路径的时候，要把单斜杠 `\` 变成双斜杠 `\\`。比如说，上面的命令就会变成 `C:\\cygwin64\\bin\\bash.exe --login -i`。
+   Windows Terminal 的配置文件里支持使用正斜杠 `/` 用作路径分割符，所以在填写路径的时候，可将反斜杠 `\` 替换为 `/`。比如说，上面的命令就会变成 `C:/cygwin64/bin/bash.exe -i -l`。如果要用反斜杠作为分割符的话，就需要在反斜杠前再加一个反斜杠，也就是像 `C:\\cygwin64\\bin\\bash.exe -i -l` 这样。
 
 6. 到这里，我们就可以把新配置的信息加到配置文件里了：
 
@@ -65,7 +61,7 @@ lang: zh
             {
                 "guid": "{a1f2ceb2-795d-4f2a-81cc-723cceec49c0}",
                 "name": "Bash",
-                "commandline": "C:\\cygwin64\\bin\\bash.exe --login -i"
+                "commandline": "C:/cygwin64/bin/bash.exe -i -l"
             },
    ```
 
@@ -73,13 +69,13 @@ lang: zh
 
    如果不是把配置加到列表最后的话，别忘了在右花括号后面加个逗号，如上面示例所示；如果是加在最后的话，就不用给新加的配置加逗号了，但仍然别忘了给原先就在最后的配置后面补一个逗号。
 
-   ![添加新的配置]({{ img_path_l10n }}/config-new-profile.png)
+   ![添加新的配置]({{ img_path }}/config-new-profile.png)
 
 7. 保存配置文件。如果文件中没有语法错误的话，您现在应该就可以在菜单中看到刚添加的配置了。点一下该配置，Bash 就会在一个新的标签里启动了。
 
    ![新添加的配置]({{ img_path_l10n }}/wt-new-profile.png)
 
-   ![在 Windows Terminal 中运行 Bash]({{ img_path_l10n }}/cygwin-bash-added.png)
+   ![在 Windows Terminal 中运行 Bash]({{ img_path }}/cygwin-bash-added.png)
 
 ## 添加 Git Bash 的步骤
 
@@ -89,20 +85,20 @@ Git Bash 的步骤和 Cygwin 的步骤只有两处不同：
 
 - Shell 的路径和 Cygwin 不一样了：如果 Git for Windows 安装在 `C:\Program Files\Git`，那么 Git Bash 可执行文件的绝对路径就是 `C:\Program Files\Git\bin\bash.exe`。
 
-  ![Git Bash 的命令行路径]({{ img_path_l10n }}/git-bash-cmd.png)
+  ![Git Bash 的命令行路径]({{ img_path }}/git-bash-cmd.png)
 
-## 避免 Process Exited With Code x 的提示信息
+## 避免 "Process Exited With Code x" 提示信息
 
-![非零退出状态导致的提示信息]({{ img_path_l10n }}/non-zero-exit-status.png)
+![非零退出状态导致的提示信息]({{ img_path }}/non-zero-exit-status.png)
 
 在使用 `exit` 命令或 Ctrl-D 退出 shell 的时候，如果最后执行的命令的退出状态（exit status）不是 0 的话，可能会出现上图所示的提示信息。有的时候即使一个命令都没跑就直接退出 shell，也可能出现这种提示；这种情况则是因为诸如 `.bashrc` 的初始化脚本内有命令的退出状态非零。
 
-如果出现了这类错误提示，就必须得手动关闭 Windows Terminal 窗口。不过，有一种解决办法可以避免这类消息出现：向 `.bash_logout` 文件中添上一行 `exit 0`，就可以让 Bash 以正常退出状态结束，提示信息也会随之消失。
+如果出现了这类错误提示，就必须得手动关闭 Windows Terminal 窗口。不过，有一种解决办法可以避免这类消息出现：在配置中添加 `"closeOnExit": "always"` 选项，即可阻止 Windows Terminal 显示该信息。需要注意的一点是，如果该选项是此配置的最后一行，那么您需要确保此选项的上一行结尾有一个逗号。
 
-![.bash_logout 文件]({{ img_path_l10n }}/fix-non-zero-exit-msg.png)
+![在配置文件中添加此选项]({{ img_path }}/fix-non-zero-exit-msg.png)
 
 ## 选择 Windows Terminal 的默认配置
 
 Windows Terminal 的配置文件中有个 `defaultProfile` 选项可以用来选择启动时默认打开的 shell。如果想指定一个配置作为默认配置，那就把该配置的 `guid` 复制到这个选项的值中就行了。
 
-![选择默认配置]({{ img_path_l10n }}/set-default-profile.png)
+![选择默认配置]({{ img_path }}/set-default-profile.png)
