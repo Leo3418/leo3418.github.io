@@ -35,9 +35,9 @@ PM to 6:00 PM UTC every Thursday.
 
 The place where the events are most prominently posted is Rockstar Games Social
 Club. You can find the list of current and past events in
-[https://socialclub.rockstargames.com/events](https://socialclub.rockstargames.com/events).
-Keep in mind that events for Red Dead Online are also shown at the same place;
-look for events labeled with "Grand Theft Auto Online".
+<https://socialclub.rockstargames.com/events>. Keep in mind that events for Red
+Dead Online are also shown at the same place; look for events labeled with
+"Grand Theft Auto Online".
 
 Alternatively, you may go to [Rockstar Games
 Newswire](https://www.rockstargames.com/newswire/) for a cooler presentation of

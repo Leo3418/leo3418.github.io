@@ -46,7 +46,7 @@ New players often ask which bundle of the game they should buy. Some of them
 are confused by what is contained in each bundle; others wonder if the Criminal
 Enterprise Starter Pack is helpful at all.
 
-First and foremost, **the Premium Online Edition is not required for playing
+First and foremost, **the Premium Online Edition is *not* required for playing
 GTA Online**. Even if you buy the standard edition with GTA V itself only, you
 will get access to GTA Online. The Premium Online Edition's name can be
 misleading, as some people, even including me when I was new to this game,
@@ -250,9 +250,8 @@ for common grinding methods:
 
 If you have a friend who can host The Diamond Casino Heist for you and is
 willing to give you the maximum cut, then things will become much more easier.
-You can get $4.6M from 2 Casino Heists, provided that in every run of the
-Heist, you get 85% cut and your team secure a take of at least $2.7M. This
-should only require 3 to 4 hours.
+You can get $4.6M from about 3 Casino Heists, which typically require 3 to 5
+hours when the time for Prep Missions is accounted.
 
 Thus, if you can find people who will carry you, then you only need a few hours
 of gameplay to earn the money equivalent to the Starter Pack's real value. In

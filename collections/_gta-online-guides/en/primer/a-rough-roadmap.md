@@ -60,11 +60,11 @@ about things included in it.
 GTA Online has a player level system where the levels are called "Ranks", and
 the experience points for leveling up are "Reputation Points", abbreviated to
 "RP". At higher Ranks, you unlock more activities and purchasable items. During
-your start-up period, you should try to rank up quickly to unlock more items
-which will be helpful in your entire GTA Online career.
+your start-up period, you should try to [rank up quickly](reach-rank-12) to
+unlock more items which will be helpful in your entire GTA Online career.
 
 Once you reach Rank 12, you can find some teammates and start doing
-[Heists](null).  They are challenging but also interesting missions with decent
+[Heists](null). They are challenging but also interesting missions with decent
 payouts. If you can't find a reliable crew who can complete all the Heists with
 you, [Contact Missions](null) are an alternative choice of money and RP
 grinding. Although they have smaller payouts, most of them can be done by

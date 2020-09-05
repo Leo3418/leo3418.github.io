@@ -98,6 +98,9 @@ without its icon being shown. Here is the method:
    you for idling too long, nor will it make you pay for the property utility
    charges.
 
+   Note that the TV is not required to be turned on. As long as the TV controls
+   are shown at the screen's corner, you will not be kicked.
+
    ![Idling by watching TV]({{ img_path_l10n }}/watching-tv.png)
 
 3. When you don't need to stay AFK anymore, you can either quit the Mission

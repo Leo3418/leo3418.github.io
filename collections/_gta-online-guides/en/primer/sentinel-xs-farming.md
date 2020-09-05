@@ -14,7 +14,7 @@ farm them and get significant profit.
 
 In the method introduced by this article, two different variants of Sentinel XS
 can spawn: the yellow one is worth $14,970, and the purple one can be sold for
-$17,420.
+$20,370.
 
 ![Two variants of Sentinel XS]({{ img_path }}/sentinel-xs-variants.png)
 
@@ -36,7 +36,8 @@ $17,420.
 3. When you turn onto the north side of the block and drive towards west, you
    might see a Sentinel XS in either yellow or purple coming to you in the
    opposite direction. It usually appears in front of the Eight-Bit Arcade. If
-   you don't see it, keep circling until you do.
+   you don't see it, circle one more time. If it still does not spawn, leave
+   the area and come back, then try again.
 
    ![The yellow variant has spawned]({{ img_path }}/yellow-spawned.png)
 
