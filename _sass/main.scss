@@ -105,4 +105,10 @@ p.collection-nav a {
 
 pre, code {
     background-color: $syntax-highlight-color;
+    font-size: 0.9375em;
+    line-height: 1.25;
+}
+
+pre > code {
+    font-size: 0.875rem;
 }
