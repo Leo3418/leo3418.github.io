@@ -21,7 +21,7 @@ installed something with DNF but find that it is not what I want, I can
 uninstall it, along with *every dependency*, simply with `dnf history undo
 last`.
 
-## When 'dnf history undo' Fails
+## When `dnf history undo` Fails
 
 `dnf history undo` has been working consistently fine if I run it for a
 transaction performed recently, but for transactions ran a while ago, it might
@@ -57,7 +57,7 @@ Therefore, **if you have upgraded any package involved in a transaction, then
 has been doing its job when I run it for a recent transaction but would emit an
 error for a transaction performed a while ago.
 
-## What About 'dnf remove'?
+## What About `dnf remove`?
 
 The `dnf remove` command is capable of removing unused dependencies along with
 the packages requested to be removed, so theoretically, `dnf remove wine` would

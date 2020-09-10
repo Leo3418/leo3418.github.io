@@ -25,7 +25,7 @@ asciinema-player: true
 
 所以，`grep ""` 可以用来取代 `cat` 的最基础用法。
 
-## 使用 'grep' 创建和写入文件
+## 使用 `grep` 创建和写入文件
 
 `cat` 命令最常见的用法就是直接从终端查看一个文件的内容，但是它同样可以被用来直接从命令行界面写文件，不需要任何文本编辑器。网上有许多教程都会在需要建立新文件的时候用 `cat` 命令写入文件的内容。
 
@@ -45,7 +45,7 @@ asciinema-player: true
 
 {% include asciinema-player.html name="grep-write-file.cast" poster="npt:5" %}
 
-## 使用 'grep' 查找空行
+## 使用 `grep` 查找空行
 
 既然空的正则表达式匹配任何字符串，那么如果真的想要搜索空行的话，应该用什么正则表达式呢？
 

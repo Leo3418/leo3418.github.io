@@ -327,7 +327,7 @@ PATH="/usr/lib64/mpich/bin:$PATH"
 After a brief trial of MPICH, I still preferred Open MPI to it because the
 `mpiexec` program in Open MPI had clearer error messages.
 
-## Remove Password Prompt of 'sudo'
+## Remove Password Prompt of `sudo`
 
 When `sudo` is run, it asks you to enter your password and reads the keyboard
 input from the terminal, unless if you have just run it a few minutes before.

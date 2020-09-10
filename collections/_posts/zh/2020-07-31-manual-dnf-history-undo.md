@@ -9,7 +9,7 @@ asciinema-player: true
 
 正是因为有 `dnf history undo` 这种功能，我方能保持系统的整洁。如果我用 DNF 装了一个软件包，却发现并不是我想要的，可以直接用 `dnf history undo last` 将其卸载。最为重要的是，这个命令还会将该软件包的所有依赖一并删除，不会出现一个软件包被卸载但依赖包还残留在系统中，导致系统里无用的软件包越来越多的情况。
 
-## 无法使用 'dnf history undo' 的情况
+## 无法使用 `dnf history undo` 的情况
 
 用 `dnf history undo` 撤销一个不久前运行的事务往往没有问题，但是如果一个事务是一段时间以前运行的，可能就不好用。我最近就遇到了一例。
 
@@ -28,7 +28,7 @@ asciinema-player: true
 
 总而言之，**如果您更新了一个事务中任何改动过的软件包，那么用 `dnf history undo` 撤销该事务就会失败**。这也是为什么撤销近期的事务一般能成功，但撤销比较久远的事务可能不行。
 
-## 'dnf remove' 可以用吗？
+## `dnf remove` 可以用吗？
 
 `dnf remove` 可以连带移除一个软件包的依赖，所以直接运行 `dnf remove wine` 和 `dnf history undo 217` 的理论效果应当是一样的。不过，当我运行它的时候……
 
