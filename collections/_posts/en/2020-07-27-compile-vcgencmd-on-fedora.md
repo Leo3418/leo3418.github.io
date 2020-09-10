@@ -57,10 +57,8 @@ available, so we can compile it on our own.
 
 ## ~~Challenge~~
 
-<div class="message-box">
-<b>Update</b>: the issue described in this section has been fixed by the
-upstream.
-</div>
+{: .message-box}
+**Update**: the issue described in this section has been fixed by the upstream.
 
 You probably have already tried to build a software package distributed by
 others. High-quality packages contain build instruction which makes the
