@@ -41,6 +41,10 @@ $syntax-highlight-color: #dbedff !default;
     @include relative-font-size(1.75);
 }
 
+.img-caption {
+    font-size: $small-font-size;
+}
+
 .lang-option-active {
     font-weight: bold;
 }
