@@ -2,6 +2,7 @@
 title: "打开 Windows 10 Mobile 烧屏保护功能的方法"
 lang: zh
 ---
+{% include img-path.liquid %}
 
 Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 屏）并采用屏幕虚拟按钮的机型。由于 Super AMOLED 屏幕每个像素点衰老速度不同、以及显示纯黑色时像素点几乎完全不亮的特性，随着屏幕使用时间的累积，屏幕下方的导航栏区域可能会产生显著的“烧屏”现象：整个屏幕在全屏显示纯色（尤其是蓝色、白色）时，导航栏区域和其它区域的颜色并不相同。如果您长期使用深色主题模式并且没有在导航栏上使用配色，其它区域与导航栏区域相比可能偏黄；如果您长期使用浅色主题模式，或在导航栏上使用了配色，导航栏区域可能更黄。
 
@@ -20,13 +21,14 @@ Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 
 1. **下载、安装并配置最新版本的** [**Interop Tools**](http://forum.xda-developers.com/windows-10-mobile/windows-10-mobile-apps-and-games/app-interop-tools-versatile-registry-t3445271)**。**这是由 [XDA Developers](http://forum.xda-developers.com) 论坛用户 [gus33000](http://forum.xda-developers.com/member.php?u=7651894) 开发的修改 Windows 10 Mobile 系统注册表的应用。请自行搜索相关资源和教程。如果您已经安装好该应用并可以使用，请跳过此步骤。
 
 2. **修改注册表。**在 Interop Tools 中，浏览至注册表路径 `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Shell\NavigationBar`，点击屏幕界面右下角的“+”，在 `Registry Type` 下选择 `Integer`，在 `Registry Value Name` 下填写 `IsBurnInProtectionEnabled`;，在 `Registry Value Data` 下填写 `1`，然后点击“Write”。
-![修改注册表](/assets/img/{{ page.permalink }}/step2.png)
+![修改注册表]({{ img_path }}/step2.png)
+
 3. **重新启动手机。**现在您就成功开启了烧屏保护模式。当您大约 1 分钟没有使用导航栏时，该模式就会自动激活。  
 如果导航栏是黑色的，那么在此模式被激活时，亦或部分导航栏区域内的像素点亮起，避免导航栏区域衰老较慢；亦或虚拟按钮的亮度降低，防止虚拟按钮图标衰老过快。
-![黑色导航栏区域像素亮起](/assets/img/{{ page.permalink }}/black_1.png)
-![虚拟按钮变暗](/assets/img/{{ page.permalink }}/black_2.png)
+![黑色导航栏区域像素亮起]({{ img_path }}/black_1.png)
+![虚拟按钮变暗]({{ img_path }}/black_2.png)
 如果导航栏有颜色，那么部分像素点会熄灭，避免导航栏区域衰老过快。
-![白色导航栏区域像素熄灭](/assets/img/{{ page.permalink }}/white.png)
-![其它颜色导航栏区域像素熄灭](/assets/img/{{ page.permalink }}/color.png)
+![白色导航栏区域像素熄灭]({{ img_path }}/white.png)
+![其它颜色导航栏区域像素熄灭]({{ img_path }}/color.png)
 值得一提的是，每次激活此模式时，亮起或熄灭的像素点都会发生变化，以尽量保证衰老速度的平均。  
 如果需要关掉该功能，将步骤 2 所述的注册表值由 1 改为 0 再重启即可。

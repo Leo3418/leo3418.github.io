@@ -48,7 +48,7 @@ look differently from what is shown here, so please pay attention to that.
    you will see the `profiles` key and the `list` array under it. This is where
    the new profile will be added to.
 
-   ![Windows Terminal configuration]({{ img_path_l10n }}/wt-config.png)
+   ![Windows Terminal configuration]({{ img_path }}/wt-config.png)
 
    The basic attributes for a profile are:
 
@@ -71,7 +71,7 @@ look differently from what is shown here, so please pay attention to that.
    - Simply use the UUID I generated for the demo, which is
      `a1f2ceb2-795d-4f2a-81cc-723cceec49c0`
 
-   ![Run the "uuidgen" program in Cygwin]({{ img_path_l10n }}/uuidgen.png)
+   ![Run the "uuidgen" program in Cygwin]({{ img_path }}/uuidgen.png)
 
 5. Now, you need to know the command line used to start Cygwin's shell.
 
@@ -86,19 +86,21 @@ look differently from what is shown here, so please pay attention to that.
    basic commands like `ls`. This is because the file `/etc/profile`, which
    adds Cygwin's `/usr/bin` and `/usr/local/bin` directories to the `PATH`
    environment variable, is not executed for non-login shells. An interactive
-   login shell can be started with `--login -i` flags, as shown in the
-   `Cygwin.bat` file under your Cygwin installation path. If you are using
-   another shell, please confirm the way to get Cygwin's `/usr/bin` and
+   login shell can be started with `-i -l` flags. If you are using another
+   shell, please confirm the way to get Cygwin's `/usr/bin` and
    `/usr/local/bin` into `PATH` for your shell.
 
    Therefore, the full command to run Bash in Cygwin is
-   `C:\cygwin64\bin\bash.exe --login -i`. If you have installed Cygwin to a
+   `C:\cygwin64\bin\bash.exe -i -l`. If you have installed Cygwin to a
    non-default path and/or want to use another shell, then please change the
    command accordingly.
 
-   Finally, when adding the command to the configuration file, you need to
-   replace every `\` in it with `\\`. For instance, the above command will be
-   changed to `C:\\cygwin64\\bin\\bash.exe --login -i`.
+   Finally, the configuration file accepts the forward slash `/` as the path
+   component separator, so you can replace every backslash `\` in the command
+   with `/`. For instance, the above command will be changed to
+   `C:/cygwin64/bin/bash.exe -i -l`. If you want to use the backslash instead,
+   you have to escape it by adding another backslash, causing the command to
+   become `C:\\cygwin64\\bin\\bash.exe -i -l`.
 
 6. At this point you have collected all information needed for the new profile,
    so it's time to add it to the configuration file:
@@ -107,7 +109,7 @@ look differently from what is shown here, so please pay attention to that.
             {
                 "guid": "{a1f2ceb2-795d-4f2a-81cc-723cceec49c0}",
                 "name": "Bash",
-                "commandline": "C:\\cygwin64\\bin\\bash.exe --login -i"
+                "commandline": "C:/cygwin64/bin/bash.exe -i -l"
             },
    ```
 
@@ -118,7 +120,7 @@ look differently from what is shown here, so please pay attention to that.
    sure the trailing comma is not there, and add a comma after the profile that
    was originally the last one.
 
-   ![Adding the new profile]({{ img_path_l10n }}/config-new-profile.png)
+   ![Adding the new profile]({{ img_path }}/config-new-profile.png)
 
 7. Save the file. If your configuration file is valid, then you should now see
    the new profile added to the menu. When you choose it, you should see Bash
@@ -126,8 +128,7 @@ look differently from what is shown here, so please pay attention to that.
 
    ![New profile added]({{ img_path_l10n }}/wt-new-profile.png)
 
-   ![Running Bash in Windows
-   Terminal]({{ img_path_l10n }}/cygwin-bash-added.png)
+   ![Running Bash in Windows Terminal]({{ img_path }}/cygwin-bash-added.png)
 
 ## Steps for Git Bash
 
@@ -139,12 +140,11 @@ The steps to add Git Bash differ at only two places:
 - If you installed Git for Windows at `C:\Program Files\Git`, then the absolute
   path to the Git Bash executable is `C:\Program Files\Git\bin\bash.exe`.
 
-  ![Command line for Git Bash]({{ img_path_l10n }}/git-bash-cmd.png)
+  ![Command line for Git Bash]({{ img_path }}/git-bash-cmd.png)
 
 ## Removing "Process Exited With Code x" Messages
 
-![Message shown for non-zero
-exits]({{ img_path_l10n }}/non-zero-exit-status.png)
+![Message shown for non-zero exits]({{ img_path }}/non-zero-exit-status.png)
 
 If the last command you ran before quitting the shell using `exit` or Ctrl-D
 finished with a non-zero exit status, you might see something like what the
@@ -152,11 +152,12 @@ screenshot shows. Sometimes this can even happen if you did not run any
 command, which is likely to be caused by a command in initialization scripts
 like `.bashrc`.
 
-These messages must be dismissed manually. But as a workaround, you can add
-`exit 0` to `.bash_logout` to ensure Bash quits with zero exit status, and the
-messages will be gone.
+These messages must be dismissed manually. To stop Windows Terminal from
+generating them, add an `"closeOnExit": "always"` option to the new profile in
+the configuration file. Don't forget, if this option is the last line for the
+profile, you need to make sure a comma exists at the end of the previous line.
 
-![The ".bash_logout" file]({{ img_path_l10n }}/fix-non-zero-exit-msg.png)
+![Adding the option]({{ img_path }}/fix-non-zero-exit-msg.png)
 
 ## Setting Default Windows Terminal Profile
 
@@ -164,4 +165,4 @@ There is a `defaultProfile` option in the configuration file, which allows you
 to choose the default shell when a new terminal window or tab is opened. The
 default profile should be specified by its `guid`.
 
-![Setting the default profile]({{ img_path_l10n }}/set-default-profile.png)
+![Setting the default profile]({{ img_path }}/set-default-profile.png)

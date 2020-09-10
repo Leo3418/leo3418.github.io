@@ -14,7 +14,7 @@ Let's first create some stub pages or test posts that are available in only one
 language and see what will happen when it is accessed from another localized
 version of your site.
 
-```sh
+```console
 site-root$ cat _posts/en/2020-04-29-special-post.md 
 ---
 layout: post
@@ -47,7 +47,7 @@ message to be localized, so we will define translated strings for it. After
 these works, you might have something like this:
 
 {% raw %}
-```sh
+```console
 site-root$ cat _includes/no-translation.html
 <div class="message-box" id="no-translation-msg">
     {{ site.data.strings.no_translation }}

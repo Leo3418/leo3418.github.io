@@ -112,7 +112,7 @@ First, each language's name should be defined. We can add a language's name to
 the `l10n.yml` file for it, which would already have the lozalized site title
 if you followed the previous section's instruction:
 
-```sh
+```console
 site-root/_data$ cat en/l10n.yml
 lang_name: "English"
 title: "My Site"

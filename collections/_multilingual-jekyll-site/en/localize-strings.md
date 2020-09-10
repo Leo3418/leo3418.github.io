@@ -24,7 +24,7 @@ for "subscribe via RSS", there might be no results. Instead, we search for
 "subscribe":
 
 {% raw %}
-```sh
+```console
 minima-x.y.z$ grep -nr "subscribe"
 _layouts/home.html:31:    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
 ```
@@ -45,7 +45,7 @@ My solution is to maintain a file which stores all translated strings for each
 language, similar to how we manage localized site titles. In each directory
 under `_data`, create a file named `strings.yml`: 
 
-```sh
+```console
 site-root/_data$ ls *
 en:
 l10n.yml  strings.yml
@@ -60,7 +60,7 @@ values so that they are neither difficult to type in nor likely to duplicate
 any keys you might want to add in the future.
 
 {% raw %}
-```sh
+```console
 site-root/_data$ cat en/strings.yml
 rss_subscribe: 'subscribe <a href="$url">via RSS</a>'
 site-root/_data$ cat zh/strings.yml
@@ -100,7 +100,7 @@ We've still got to change the "Posts" string. Let's do another search in
 Minima's installation path to find it:
 
 {% raw %}
-```sh
+```console
 minima-x.y.z$ grep -nr "Posts"
 _layouts/home.html:13:    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
 _sass/minima/_layout.scss:213: * Posts
@@ -124,7 +124,7 @@ Let's do that now.
 Before localizing the string, let's see how to define it in the front matter
 and the effect of changing it:
 
-```sh
+```console
 site-root$ cat index.md
 ---
 layout: home
@@ -143,7 +143,7 @@ Optionally, you can remove the `list_title` definition for the English home
 page to use the default value, and you may remove the original `index.md` if
 you have a separate copy for your site's default language.
 
-```sh
+```console
 site-root$ cat index-en.md 
 ---
 layout: home

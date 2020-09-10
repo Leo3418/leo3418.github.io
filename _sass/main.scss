@@ -1,5 +1,8 @@
 @import "minima";
 
+$header-background-color: #242424 !default;
+$syntax-highlight-color: #dbedff !default;
+
 #no-posts-msg {
     color: $grey-color;
 }
@@ -27,8 +30,19 @@
     display: block;
 }
 
+.highlight {
+    .highlighter-rouge & {
+        background: $syntax-highlight-color;
+        border-radius: 3px;
+    }
+}
+
 .home > h2 {
     @include relative-font-size(1.75);
+}
+
+.img-caption {
+    font-size: $small-font-size;
 }
 
 .lang-option-active {
@@ -36,7 +50,7 @@
 }
 
 .message-box {
-    background-color: #eef;
+    background-color: #fee;
     border: 1px solid $grey-color-light;
     border-radius: 3px;
     margin-bottom: $spacing-unit;
@@ -52,6 +66,53 @@
     margin-right: auto;
 }
 
+.site-header {
+    background: $header-background-color;
+    border-top: 5px solid $grey-color;
+    border-bottom: 0px solid;
+}
+
+.site-nav {
+    background: $header-background-color;
+
+    .menu-icon {
+        background: $header-background-color;
+        border-radius: 5px;
+
+        > svg {
+            fill: $grey-color;
+        }
+    }
+
+    .page-link {
+        color: $grey-color-light;
+    }
+
+    @include media-query($on-palm) {
+        border: 1px solid $grey-color-dark;
+    }
+}
+
+.site-title {
+    &, &:visited {
+        color: $grey-color-light;
+    }
+}
+
+hr {
+    margin-bottom: $spacing-unit / 2;
+}
+
 p.collection-nav a {
     display: block;
+}
+
+pre, code {
+    background-color: $syntax-highlight-color;
+    font-size: 0.9375em;
+    line-height: 1.25;
+}
+
+pre > code {
+    font-size: $small-font-size;
 }

@@ -53,20 +53,19 @@ environments, and procedures.
 ### Create a Workflow
 
 A good starting point of the workflow for building a Jekyll site is
-[here](https://github.com/actions/starter-workflows/blob/master/ci/jekyll.yml).
+[here](https://github.com/actions/starter-workflows/blob/abf7f258d1d84c79ad067c704e069c8cf7d8d2d0/ci/jekyll.yml).
 You may copy the file's contents into your own workflow file and start
 customizing it.
 
 {% raw %}
-```yaml
-site-root$ cat .github/workflows/jekyll.yml
+```yml
 name: Jekyll site CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ $default-branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ $default-branch ]
 
 jobs:
   build:
@@ -114,7 +113,40 @@ because jobs are isolated, so what is built by the `build` job cannot be
 accessed from other jobs. The step can simply run a set of commands that push
 the static files to GitHub.
 
+### Enter the Default Branch's Name
+
+In the configuration file, `$default-branch` should be replaced by the actual
+name of your Git repository's default branch.
+
+You can use whatever name you prefer for the default branch. For demonstration
+purpose, I would pick `jekyll` here.
+
+```diff
+  on:
+    push:
+-     branches: [ $default-branch ]
++     branches: [ jekyll ]
+    pull_request:
+-     branches: [ $default-branch ]
++     branches: [ jekyll ]
+```
+
 ### Add Step for Site Uploading
+
+If you were not using unsupported Jekyll plugins so that you could push your
+site's static files to GitHub directly and let GitHub Pages build the site, you
+would never see the generated static files of your site. To achieve the same
+effect with the GitHub Actions workflow, we will avoid uploading the static
+files to the default branch of the Git repository for the site, so those files
+will never pop into the working tree that is full of source files.
+
+The most straightforward way of doing this is to dedicate a `gh-pages` branch
+for the static files, and let GitHub Pages use that branch as the publishing
+source. Your site's source files will stay in the default branch, so when
+anyone clones the repository, the Git working tree will consist exclusively of
+the source files, and they can start working on them immediately. As long as
+the `gh-pages` branch is not checked out, the generated static files are
+hidden.
 
 If you are familiar with Docker and its command line interface, you will notice
 that the `docker` command in the workflow above mounts the `_site` directory
@@ -123,16 +155,16 @@ under `github.workspace` (which is simply your Git repository's root) to the
 which means the site's static files will be accessible from {% raw %}`${{
 github.workspace }}/_site`{% endraw %} after the build. So, the following
 commands should push what's under `_site` after the build to your repository's
-`master` branch:
+`gh-pages` branch:
 
 {% raw %}
 ```sh
 cd ${{ github.workspace }}/_site
-git init
+git init -b gh-pages
 git remote add origin https://github.com/${{ github.repository }}.git
 git add .
 git commit -m "Deploy site built from commit ${{ github.sha }}"
-git push -u origin master
+git push -u origin gh-pages
 ```
 {% endraw %}
 
@@ -162,15 +194,15 @@ change some existing ones:
 ```diff
 + sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
   cd ${{ github.workspace }}/_site
-  git init
+  git init -b gh-pages
 + git config user.name ${{ github.actor }}
 + git config user.email ${{ github.actor }}@users.noreply.github.com
 - git remote add origin https://github.com/${{ github.repository }}.git
 + git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
   git add .
   git commit -m "Deploy site built from commit ${{ github.sha }}"
-- git push -u origin master
-+ git push -f -u origin master
+- git push -u origin gh-pages
++ git push -f -u origin gh-pages
 ```
 {% endraw %}
 
@@ -192,58 +224,19 @@ add them to the workflow file:
         docker run \
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
         jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
-    - name: Push the site to the master branch
+    - name: Push the site to the gh-pages branch
       run: |
         sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
-        git init
+        git init -b gh-pages
         git config user.name ${{ github.actor }}
         git config user.email ${{ github.actor }}@users.noreply.github.com
         git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         git add .
         git commit -m "Deploy site built from commit ${{ github.sha }}"
-        git push -f -u origin master
+        git push -f -u origin gh-pages
 ```
 {% endraw %}
-
-## The Conflicting `master` Branch
-
-We are planning to store both the source files and static files in a single
-GitHub repository. Ideally, the source files are placed in the `master` branch,
-and the generated static files go under another branch like `gh-pages`.
-However, for [user or organization
-sites](https://help.github.com/en/github/working-with-github-pages/about-github-pages#types-of-github-pages-sites)
-on GitHub Pages, the files used to present your site must be put under the
-`master` branch. It's even worse when the workflow we defined above would do a
-force push to the `master` branch, overwriting all existing files in it.
-
-Instead of putting source files in `master` and uploading static files to
-`gh-pages`, we can swap them so that static files will be deployed to `master`,
-and the source files are pushed to another branch, e.g. `jekyll`. Then, you can
-set `jekyll` as the [default
-branch](https://help.github.com/en/github/administering-a-repository/setting-the-default-branch)
-of your repository, so when the repository is cloned, the source files are
-checked out by default and ready to be edited without switching branches.
-GitHub Pages will always publish files under the branch named `master`, even if
-it is not the default branch.
-
-Since we will push source files to another branch, we also need to change the
-triggers for the GitHub Actions workflow:
-
-```diff
-  name: Jekyll site CI
-
-  on:
-    push:
--     branches: [ master ]
-+     branches: [ jekyll ]
-    pull_request:
--     branches: [ master ]
-+     branches: [ jekyll ]
-
-  jobs:
-    build:
-```
 
 ## Prevent Unauthorized Modifications to Your Site
 
@@ -261,26 +254,39 @@ immediately online; the worst case would be someone posting malicious contents
 on your site.
 
 To prevent such modifications, we can add a condition to the step that pushes
-the generated site to `master` so that it is only performed if the workflow run
-is triggered by a push to the `jekyll` branch.
+the generated site to `gh-pages` so that it is only performed if the workflow
+run is triggered by a push to the `jekyll` branch.
 
 {% raw %}
 ```diff
-      - name: Push the site to the master branch
+      - name: Push the site to the gh-pages branch
 +       if: ${{ github.event_name == 'push' }}
         run: |
           sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
           cd ${{ github.workspace }}/_site
-          git init
+          git init -b gh-pages
 ```
 {% endraw %}
 
 For other kinds of events, including pull requests, the step will be skipped,
-so the published site in the `master` branch is intact.
+so the published site in the `gh-pages` branch is intact.
 
-![The "push to master" step is skipped]({{ img_path }}/push-not-performed.png)
+![The "push to gh-pages" step is
+skipped]({{ img_path }}/push-not-performed.png)
 
 At this point, you should have produced a workflow file similar to
-[mine](https://github.com/Leo3418/leo3418.github.io/blob/9e7a9bfd1f0a6c6a82d130e5d83c2b54a7359f1e/.github/workflows/jekyll.yml).
+[mine](https://github.com/Leo3418/leo3418.github.io/blob/702a9f5325504606b405ac02086cc2b7940e84d4/.github/workflows/jekyll.yml).
 Now you have a GitHub Actions workflow that allows you to host a Jekyll site
 using unsupported plugins on GitHub Pages with automated builds.
+
+## Set the Publishing Source of GitHub Pages
+
+The last step is to tell GitHub Pages to use the files in the `gh-pages` branch
+for your site. First, commit your changes and push them to GitHub, and let the
+workflow run so it can push the generated files to `gh-pages`.
+
+Next, go to the settings page of your repository on GitHub website, and scroll
+down to the section called "GitHub Pages". From there, select the `gh-pages`
+branch as the source, and then click "Save".
+
+![Choosing GitHub Pages source]({{ img_path }}/gh-pages-source.png)

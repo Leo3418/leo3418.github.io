@@ -9,7 +9,7 @@ working. Under the `_posts` directory, create a directory for each of your
 site's supported language, whose name is the language's ISO 639-1 code you
 added to `_config.yml` before.
 
-```sh
+```console
 site-root$ cd _posts
 site-root/_posts$ mkdir en zh
 site-root/_posts$ ls
@@ -22,7 +22,7 @@ Then, under each directory, create a file with name format
 front matter should include a variable `lang`, whose value is the language code
 for this post.
 
-```sh
+```console
 site-root/_posts$ ls *
 en:
 2020-04-26-test-post.md
@@ -50,7 +50,7 @@ lang: zh
 Now, go back to your site's root directory, and run `bundle exec jekyll build`
 to build your site.
 
-```sh
+```console
 site-root/_posts$ cd ..
 site-root$ bundle exec jekyll build
 Configuration file: site-root/_config.yml
@@ -86,7 +86,7 @@ _site
 By examing the generated HTML files for the posts, we can see that Polyglot
 works! (The actual contents of the generated files depend on your theme)
 
-```sh
+```console
 site-root$ cat _site/2020/04/26/test-post.html 
 <!DOCTYPE html>
 <html lang="en-US">

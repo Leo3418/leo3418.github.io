@@ -50,7 +50,7 @@ output of `grep`.
 Mission complete: for the common and simple usage of `cat` where you just need
 to view a single file's contents, `grep ""` can do the same job.
 
-## Create and Write Files Using 'grep'
+## Create and Write Files Using `grep`
  
 For the `cat` program, besides the basic usage of viewing a file's contents
 from terminal output, it can also be used to write to files straight from the
@@ -78,14 +78,14 @@ to the output.
 
 Can `grep ""` replace `cat` for the purpose of writing files? Surely it can,
 because `grep` also has the similar behavior where if you do not specify files,
-it will read from the standard input, though command-line options for `grep`
-can override this behavior.
+it will read from the standard input, though command-line options for `grep`,
+like `-r`, can override this behavior.
 
 {% include asciinema-player.html name="grep-echo.cast" poster="npt:2.1" %}
 
 {% include asciinema-player.html name="grep-write-file.cast" poster="npt:5" %}
 
-## Searching for Blank Lines With 'grep'
+## Searching for Blank Lines With `grep`
 
 If the empty regular expression is defined to match not only empty strings but
 everything, then how should we write the regular expression that is just for
