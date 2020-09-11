@@ -1,26 +1,24 @@
 ---
-title: "Building a Multilingual Jekyll Site"
+title: "Build a Multilingual Jekyll Site"
 permalink: /collections/multilingual-jekyll-site
 lang: en
 license: false
 ---
 
-As I explained in [this post](/2020/04/24/restarting-personal-site), I plan to
-share on this site my experience and knowledge about things I play around with,
-in more than one language when possible. So, my goal was to build a
-multilingual site using [Jekyll](https://jekyllrb.com/). With Jekyll, bloggers
-can write their posts in a markup language like
-[Markdown](https://en.wikipedia.org/wiki/Markdown) and generate HTML documents
-directly from the contents, so they can focus more on their posts and less on
-HTML and other technical stuff. Jekyll also supports using plugins to augment
-the site, and thanks to plugin developers, multilingual plugins make publishing
-contents in several languages on the same Jekyll site easy.
+[Jekyll](https://jekyllrb.com/) is a static website generator. It creates
+static HTML documents directly, making hosting a website as easy as setting up
+an HTTP server. Yet it is still very powerful: it can generate HTML documents
+from [Markdown](https://en.wikipedia.org/wiki/Markdown), which makes writing
+and formatting articles and posts easy and fun; it supports plugins that add
+more feature to itself, the generated site, or even both.
 
-However, there are still a few things that require extra care and some possible
-improvements on the site's user experience that are not offered by those
-plugins, which will be covered by pages in this collection. We will walk
-through all the steps needed to set up a multilingual Jekyll site similar to
-this one.
+Thanks to plugin developers, we have multilingual plugins for Jekyll which
+allow us to make our site useful to more people in different parts of the world
+by presenting translated and localized contents. However, there are still a few
+things that require extra care and some possible improvements on the site's
+user experience that are not offered by those plugins, which will be covered by
+the guides in this collection. We will walk through all the steps needed to set
+up a multilingual Jekyll site similar to the one you are currently viewing.
 
 The multilingual plugin I will use for this collection is
 [Polyglot](https://github.com/untra/polyglot/). Of course, this is also the

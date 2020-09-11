@@ -36,8 +36,8 @@ two initialization options:
 1. Run `jekyll new PATH`, where `PATH` is where you want to store your site's
    source files. This creates a site with pre-applied
    [Minima](https://github.com/jekyll/minima/) theme (the theme this site uses
-   as of this collection is composed), and is a more complete starting point
-   for your own site.
+   as of this collection is composed, in a modified variant), and is a more
+   complete starting point for your own site.
 
 2. Run `jekyll new PATH --blank`; then, go to `PATH`, run `bundle init`, and
    add the following to `Gemfile`:

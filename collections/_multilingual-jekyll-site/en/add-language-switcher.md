@@ -170,7 +170,7 @@ appropriate:
 +          {%- include lang-switcher.html -%}
 +        </div>
        </div>
- 
+
        <div class="footer-col footer-col-2">
 ```
 {% endraw %}

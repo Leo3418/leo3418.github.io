@@ -54,8 +54,8 @@ environments, and procedures.
 
 A good starting point of the workflow for building a Jekyll site is
 [here](https://github.com/actions/starter-workflows/blob/abf7f258d1d84c79ad067c704e069c8cf7d8d2d0/ci/jekyll.yml).
-You may copy the file's contents into your own workflow file and start
-customizing it.
+You may copy the file's contents into a YAML file under `.github/workflows` and
+start customizing it.
 
 {% raw %}
 ```yml
@@ -187,7 +187,7 @@ However, this is not going to work for the following reasons:
   environment instance unrelated to the commit history on GitHub, and our push
   will fail. So, a force push is required.
 
-To solve these issues, we need to add some extra commands to this task or
+To solve these issues, we need to add some extra commands to this task and
 change some existing ones:
 
 {% raw %}

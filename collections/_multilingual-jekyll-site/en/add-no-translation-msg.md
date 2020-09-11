@@ -15,7 +15,7 @@ language and see what will happen when it is accessed from another localized
 version of your site.
 
 ```console
-site-root$ cat _posts/en/2020-04-29-special-post.md 
+site-root$ cat _posts/en/2020-04-29-special-post.md
 ---
 layout: post
 title: "Special Post"
@@ -70,7 +70,7 @@ content. For Minima, this can be done by overriding `_layouts/default.html`:
 ```diff
 --- minima-x.y.z/_layouts/default.html
 +++ site-root/_layouts/default.html
- 
+
      <main class="page-content" aria-label="Content">
        <div class="wrapper">
 +        {%- if page.lang != site.active_lang -%}
@@ -100,9 +100,9 @@ your own styles can be found
 ```scss
 .message-box {
     background-color: #eef;
-    border: 1px solid $grey-color-light;
+    border: 1px solid #e8e8e8;
     border-radius: 3px;
-    margin-bottom: $spacing-unit;
+    margin-bottom: 30px;
     text-align: center;
 }
 ```

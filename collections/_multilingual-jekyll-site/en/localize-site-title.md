@@ -13,8 +13,8 @@ one value, so we can't assign to it multiple titles in different languages.
 Even if we store key-value pairs in it, Polyglot can't get the value with
 language code key and mask `site.title` with the localized title.
 
-![The title looks OK on the English site](/assets/img/{{ page.permalink }}/before-en.png)
-![On the Chinese site, the title is not translated](/assets/img/{{ page.permalink }}/before-zh.png)
+![The title looks OK on the English site]({{ img_path }}/before-en.png)
+![On the Chinese site, the title is not translated]({{ img_path }}/before-zh.png)
 
 Therefore, we must modify any include and layout files that access `site.title`
 to let them read a localized site title in another way. Here, I plan to store
@@ -98,7 +98,7 @@ you know exactly which lines to edit in those files.
      {%- assign page_paths = site.header_pages | default: default_paths -%}
 -    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
 +    <a class="site-title" rel="author" href="{{ "/" | relative_url }}">{{ site.data.l10n.title | escape }}</a>
- 
+
      {%- if page_paths -%}
        <nav class="site-nav">
  
@@ -131,7 +131,7 @@ which should give you a list of files to edit and where to modify as well.
 Now, you should see that your site's title is translated for every version on
 the page.
 
-![The title on webpage is now translated](/assets/img/{{ page.permalink }}/site-title-after-zh.png)
+![The title on webpage is now translated]({{ img_path }}/site-title-after-zh.png)
 
 ## For Minima: Change the Title in HTML
 
@@ -156,7 +156,7 @@ It's used in `_includes/head.html`. Examine the file and we can confirm that
 
 {% raw %}
 ```console
-minima-x.y.z$ cat _includes/head.html 
+minima-x.y.z$ cat _includes/head.html
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -203,5 +203,5 @@ This should do the work. You may see that the HTML title no longer contains a
 description after the site title because it was added by the SEO plugin, but
 the title can now be translated correctly.
 
-![HTML title for English version](/assets/img/{{ page.permalink }}/html-title-after-en.png)
-![HTML title for Chinese version, which is now translated](/assets/img/{{ page.permalink }}/html-title-after-zh.png)
+![HTML title for English version]({{ img_path }}/html-title-after-en.png)
+![HTML title for Chinese version, which is now translated]({{ img_path }}/html-title-after-zh.png)

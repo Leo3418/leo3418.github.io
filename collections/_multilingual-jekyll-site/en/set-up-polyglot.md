@@ -74,12 +74,15 @@ The first four lines are just normal Polyglot preferences:
 - `languages` is an array of [ISO 639-1
   codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the
   languages your site supports.
+
 - `default_lang` is the code for your site's default language.
+
 - `exclude_from_localization` is an array of directories where the files should
   be commonly shared for all languages. I suggest you at least add the
   directory for your site's images here, so the images will not be copied for
   every localized version of your site during site generation, saving disk
   spaces.
+
 - `parallel_localization` indicates whether localization is run parallel during
   site generation. According to [Polyglot's
   documentation](https://github.com/untra/polyglot/blob/1.3.2/README.md#compatibility),
