@@ -95,6 +95,19 @@ $license-block-width: 300px !default;
     }
 }
 
+// Pagination
+
+.pagination {
+    .pagination-title, .pagination-no-title {
+        font-size: 0.75em;
+        font-weight: normal;
+    }
+
+    .pagination-no-title {
+        font-style: italic;
+    }
+}
+
 // Images
 
 .img-caption {
@@ -127,6 +140,16 @@ $license-block-width: 300px !default;
         color: revert;
         height: unset;
         margin-right: unset;
+    }
+}
+
+// Pagination
+
+.pagination {
+    display: flex;
+
+    .pagination--pager {
+        padding: 0.5em 0.5em;
     }
 }
 

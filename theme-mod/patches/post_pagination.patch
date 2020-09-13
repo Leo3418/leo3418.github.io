@@ -1,0 +1,37 @@
+--- _includes/post_pagination.html
++++ _includes/post_pagination.html
+@@ -1,16 +1,30 @@
++{% if page.collection and page.collection != "posts" %}
+ {% if page.previous or page.next %}
+   <nav class="pagination">
+     {% if page.previous %}
+-      <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html }}">{{ site.data.ui-text[site.active_lang].pagination_previous | default: "Previous" }}</a>
++      <a href="{{ page.previous.url | relative_url }}" class="pagination--pager" title="{{ page.previous.title | markdownify | strip_html }}">
++        <div class="pagination-guide-text">{{ site.data.ui-text[site.active_lang].pagination_previous | default: "Previous" }}</div>
++        <div class="pagination-title">{{ page.previous.title | markdownify | strip_html }}</div>
++      </a>
+     {% else %}
+-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.active_lang].pagination_previous | default: "Previous" }}</a>
++      <a href="#" class="pagination--pager disabled">
++        <div class="pagination-guide-text">{{ site.data.ui-text[site.active_lang].pagination_previous | default: "Previous" }}</div>
++        <div class="pagination-no-title">{{ site.data.strings.no_more_articles | default: "No more articles" }}</div>
++      </a>
+     {% endif %}
+     {% if page.next %}
+-      <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html }}">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</a>
++      <a href="{{ page.next.url | relative_url }}" class="pagination--pager" title="{{ page.next.title | markdownify | strip_html }}">
++        <div class="pagination-guide-text">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</div>
++        <div class="pagination-title">{{ page.next.title | markdownify | strip_html }}</div>
++      </a>
+     {% else %}
+-      <a href="#" class="pagination--pager disabled">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</a>
++      <a href="#" class="pagination--pager disabled">
++        <div class="pagination-guide-text">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</div>
++        <div class="pagination-no-title">{{ site.data.strings.no_more_articles | default: "No more articles" }}</div>
++      </a>
+     {% endif %}
+   </nav>
+ {% endif %}
++{% endif %}
+ 
+ {%- comment -%} patched-theme-file {%- endcomment -%}
