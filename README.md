@@ -55,6 +55,7 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
 - `_includes/`: Partials that can be included in other files, usually layouts
 - `_layouts/`: Templates that wrap posts
 - `_sass/`: Sass partials to be included by the SCSS files
+- `theme-mod/`: Scripts and patches for modifying the theme this site uses
 - `_config.yml`: Jekyll configuration file
 - `<page-name>-<lang>.md`: Top level page written in the specified language
 

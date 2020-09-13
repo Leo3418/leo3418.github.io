@@ -21,16 +21,16 @@ defaults:
     scope:
       path: ""
     values:
-      layout: "page"
+      layout: "single"
       license: "cc-by-sa-4_0"
   - # Posts
     scope:
       path: ""
       type: "posts"
     values:
-      layout: "post"
       author: "Leo"
       license: "cc-by-sa-4_0"
+      show_date: true
   - # Images
     scope:
       path: "assets/img"
@@ -41,23 +41,30 @@ defaults:
       path: ""
       type: "gta-online-guides"
     values:
-      layout: "collection-nav"
+      layout: "single"
       tags: "gta-online"
   -
     scope:
       path: ""
       type: "multilingual-jekyll-site"
     values:
-      layout: "collection-nav"
+      layout: "single"
       tags: "jekyll"
 
 exclude:
   - "README.md"
+  - "theme-mod"
 
-theme: minima
+theme: minimal-mistakes-jekyll
 
-# minima
-github_username: "Leo3418"
+# minimal-mistakes-jekyll
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/Leo3418/"
+after_footer_scripts:
+  - "/assets/js/main.js"
 
 plugins:
   - jekyll-polyglot

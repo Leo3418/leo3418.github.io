@@ -1,0 +1,13 @@
+--- _layouts/home.html
++++ _layouts/home.html
+@@ -15,7 +15,9 @@
+ {% assign entries_layout = page.entries_layout | default: 'list' %}
+ <div class="entries-{{ entries_layout }}">
+   {% for post in posts %}
+-    {% include archive-single.html type=entries_layout %}
++    {% if post.lang == site.active_lang %}
++      {% include archive-single.html type=entries_layout %}
++    {% endif %}
+   {% endfor %}
+ </div>
+ 

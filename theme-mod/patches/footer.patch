@@ -1,0 +1,9 @@
+--- _includes/footer.html
++++ _includes/footer.html
+@@ -16,6 +16,4 @@
+   </ul>
+ </div>
+ 
+-<div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.data.l10n.title }}. {{ site.data.ui-text[site.active_lang].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+-
+ {%- comment -%} patched-theme-file {%- endcomment -%}
