@@ -112,10 +112,6 @@ $code-padding-horizontal: 0.375em !default;
 
 // Images
 
-.img-caption {
-    font-size: 0.9375em;
-}
-
 img.half {
     width: calc(50% - 0.5em);
 }
@@ -254,6 +250,10 @@ p, a, li, figcaption, td {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+figure img {
+    border-radius: unset;
 }
 
 // Tables
