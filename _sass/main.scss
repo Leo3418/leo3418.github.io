@@ -3,6 +3,8 @@
 /* Values */
 
 $license-block-width: 300px !default;
+$code-font-size: 0.875em !default;
+$code-padding-horizontal: 0.375em !default;
 
 /* Custom classes */
 
@@ -115,6 +117,49 @@ $license-block-width: 300px !default;
 }
 
 /* Custom styles */
+
+// Fonts
+
+html {
+    font-size: unset;
+}
+
+.list__item {
+    .page__meta, .comment__date {
+        font-size: 0.75em;
+    }
+}
+
+div.highlighter-rouge, figure.highlight {
+    line-height: unset;
+
+    // Increase contrast of selected text against unselected in code snippets
+    *::selection {
+        color: $base00;
+        background: $base05;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, strong, em, del {
+    & > code {
+        background: $code-background-color;
+        border-radius: 4px;
+        font-size: $code-font-size;
+        padding: 0.1em $code-padding-horizontal;
+    }
+}
+
+p, a, li, figcaption, td {
+    & > code {
+        font-size: $code-font-size;
+        padding-left: $code-padding-horizontal;
+        padding-right: $code-padding-horizontal;
+
+        &:before, &:after {
+            content: unset;
+        }
+    }
+}
 
 // Masthead
 
