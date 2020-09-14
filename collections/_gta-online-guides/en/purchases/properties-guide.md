@@ -2,6 +2,7 @@
 title: "Properties Guide"
 ordinal: 600
 lang: en
+toc: false
 ---
 
 Most of the rewarding businesses and activities in GTA Online require a

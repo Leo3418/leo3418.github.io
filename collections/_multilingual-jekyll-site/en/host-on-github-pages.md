@@ -2,6 +2,7 @@
 title: "Host the Site on GitHub Pages"
 ordinal: 60
 lang: en
+toc: true
 ---
 {% include img-path.liquid %}
 

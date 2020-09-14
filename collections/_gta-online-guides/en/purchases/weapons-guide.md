@@ -2,6 +2,7 @@
 title: "Weapons Guide"
 ordinal: 500
 lang: en
+toc: false
 ---
 
 A good collection of weapons can be very helpful in passing Missions and

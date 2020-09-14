@@ -2,6 +2,7 @@
 title: "用 'grep' 替代 'cat'"
 lang: zh
 asciinema-player: true
+toc: true
 ---
 
 我遇到了一篇很有趣的英文文章 [Unix Recovery Legend](https://www.ee.ryerson.ca/~elf/hack/recovery.html)，讲的是一群人拯救一个被 `rm -rf /` 毁坏的系统的故事。几十年前，在电脑还没发展到人手一台，一台电脑要给好几个人同时使用，每个人自己只有一个终端的年代的某一天，与该文章作者同处一间办公室的同事发现邮件发不出去了，作者就前去帮忙检查，发现 `ls` 命令和 `/etc` 目录被删了，于是就去找系统管理员，发现管理员的屏幕上赫然显示着这么两行文字：

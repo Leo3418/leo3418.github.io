@@ -2,6 +2,7 @@
 title: "Perform Manual 'dnf history undo'"
 lang: en
 asciinema-player: true
+toc: true
 ---
 {% include res-path.liquid %}
 

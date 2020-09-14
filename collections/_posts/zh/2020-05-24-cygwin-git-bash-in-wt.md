@@ -1,6 +1,7 @@
 ---
 title: "在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash"
 lang: zh
+toc: true
 ---
 {% include img-path.liquid %}
 

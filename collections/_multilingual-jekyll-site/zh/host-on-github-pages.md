@@ -2,6 +2,7 @@
 title: "在 GitHub Pages 上托管网站"
 ordinal: 60
 lang: zh
+toc: true
 ---
 {% include img-path.liquid %}
 

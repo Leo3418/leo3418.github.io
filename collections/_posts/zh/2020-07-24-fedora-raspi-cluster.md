@@ -2,6 +2,7 @@
 title: "在树莓派集群上配置 Fedora"
 lang: zh
 asciinema-player: true
+toc: true
 ---
 {% include img-path.liquid %}
 

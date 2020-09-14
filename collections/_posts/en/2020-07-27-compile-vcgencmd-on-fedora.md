@@ -2,6 +2,7 @@
 title: "Compile Raspberry Pi's 'vcgencmd' on Fedora"
 lang: en
 asciinema-player: true
+toc: true
 ---
 
 ## Updates

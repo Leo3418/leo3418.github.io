@@ -3,6 +3,7 @@ title: "GTA Online Guides"
 permalink: /collections/gta-online-guides
 ordinal: 0
 lang: en
+toc: false
 ---
 
 [GTA Online](https://www.rockstargames.com/GTAOnline/) is an online multiplayer

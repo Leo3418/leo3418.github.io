@@ -3,6 +3,7 @@ title: "Add a Language Switcher"
 ordinal: 52
 level: 2
 lang: en
+toc: true
 ---
 {% include img-path.liquid %}
 

@@ -3,6 +3,7 @@ title: "The Hidden Cost"
 ordinal: 662
 level: 3
 lang: en
+toc: false
 ---
 {% include img-path.liquid %}
 

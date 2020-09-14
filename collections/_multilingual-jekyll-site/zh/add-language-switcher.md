@@ -3,6 +3,7 @@ title: "添加语言切换器"
 ordinal: 52
 level: 2
 lang: zh
+toc: true
 ---
 {% include img-path.liquid %}
 

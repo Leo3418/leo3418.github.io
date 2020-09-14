@@ -1,6 +1,7 @@
 ---
 title: "MC Forge Mod 开发记录：加入配置界面"
 lang: zh
+toc: true
 ---
 {% include img-path.liquid %}
 

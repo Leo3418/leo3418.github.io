@@ -1,6 +1,7 @@
 ---
 title: "MC Forge Mod Dev Blog: Adding a Configuration GUI"
 lang: en
+toc: true
 ---
 {% include img-path.liquid %}
 

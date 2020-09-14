@@ -3,6 +3,7 @@ title: "Learn to Protect Yourself"
 ordinal: 410
 level: 2
 lang: en
+toc: false
 ---
 
 I often hear complaints from new players about being repeatedly killed by other

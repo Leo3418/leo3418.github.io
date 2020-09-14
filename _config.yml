@@ -23,6 +23,7 @@ defaults:
     values:
       layout: "single"
       license: "cc-by-sa-4_0"
+      toc_sticky: true
   - # Posts
     scope:
       path: ""
@@ -43,6 +44,7 @@ defaults:
     values:
       layout: "single"
       tags: "gta-online"
+      toc: true
   -
     scope:
       path: ""

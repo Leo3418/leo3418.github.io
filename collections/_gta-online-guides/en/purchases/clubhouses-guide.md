@@ -3,6 +3,7 @@ title: "Clubhouses Guide"
 ordinal: 640
 level: 2
 lang: en
+toc: false
 ---
 
 {% include img-path.liquid %}
