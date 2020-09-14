@@ -176,6 +176,25 @@ $license-block-width: 300px !default;
     }
 }
 
+// Sidebar Navigation Menu
+
+.nav__list .nav__items {
+    font-size: unset;
+}
+
+.nav__list ul {
+    li {
+        line-height: normal;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+    ul {
+        padding-left: 12px;
+        margin-bottom: 0;
+    }
+}
+
 // Images
 
 .page__content img:not(.align-left):not(.align-right) {

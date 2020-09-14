@@ -28,7 +28,7 @@ PATCHES_PATH='theme-mod/patches'
 # Space-separated list of additional theme files that should be patched, even
 # if they do not contain matches of any PATTERNS
 ADDITIONAL_FILES=\
-''
+'_includes/sidebar.html'
 
 # Space-separated list of directories in the site root that contain theme files
 DIRS_WITH_THEME_FILES=\

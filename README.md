@@ -46,8 +46,6 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
   - `_posts/<lang>/`: Posts written in a language
   - `_<collection-name>/<lang>/`: Documents in a collection, in the specified
     language
-  - `<collection-name>-<lang>.md`: Home page for a collection, in the specified 
-    language
 - `_data/`: Data files
   - `<lang>/`: Localized data files for a language
     - `l10n.yml`: Properties for the language and localized site variables

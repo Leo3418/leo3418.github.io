@@ -1,0 +1,48 @@
+{%- comment -%}
+
+This file generates a list of documents in a collection that can be used as a
+sidebar navigation menu.
+
+This file assumes that it is being 'include'd in a file that belongs to a
+collection. It requires that the site has a document whose URL is
+'/collections/{{ page.collection }}' ('{{ page.collection }}' returns the label
+of the current page's collection). It will use that document's title as the
+name of this collection shown to the viewers.
+
+To indent a document's entry in the list, define a variable 'level' in the
+document's front matter, whose value is the level of indentation (starting from
+1, which means unindented). For example, 'level: 2' makes a document's entry
+indent by one level, and 'level: 3' makes it indent by two levels. If you don't
+want a document's entry to be indented, just omit the 'level' variable; the
+effect of defining 'level: 1' is undefined.
+
+{%- endcomment -%}
+
+{%- capture collection_home_url -%}/collections/{{ page.collection }}{%- endcapture -%}
+{%- assign collection_home = site.documents | where: "url", collection_home_url | sample -%}
+{%- assign collection_title = collection_home.title -%}
+{%- assign collection_docs = site.documents | where: "collection", page.collection -%}
+
+<nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">{{ collection_title }}</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">{{ site.data.ui-text[site.active_lang].menu_label | default: "Toggle Menu" }}</label>
+    <ul class="nav__items">
+    {% for doc in collection_docs %}
+    {%- capture entry -%}
+    {% if doc.url == collection_home_url %}
+    <li><a href="{{ doc.url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ site.data.strings.home }}</a></li>
+    {% else %}
+    <li><a href="{{ doc.url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ doc.title }}</a></li>
+    {% endif %}
+    {%- endcapture -%}
+    {% if doc.level %}
+        {% for i in (2..doc.level) %}<ul>{%- endfor -%}
+        {{ entry }}
+        {%- for i in (2..doc.level) -%}</ul>{% endfor %}
+    {% else %}
+        {{ entry }}
+    {% endif %}
+    {%- endfor -%}
+    </ul>
+</nav>
