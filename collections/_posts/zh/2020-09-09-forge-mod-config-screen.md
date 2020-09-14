@@ -26,6 +26,7 @@ Minecraft Forge 允许每个 mod 拥有自己的配置，以允许向玩家提�
 为了允许玩家自定义游戏信息的显示位置，我提供了几个相关的配置选项。在此基础上，还需要给玩家提供一种调整设置的机制。我在 2018 年上旬开始开发这个 mod 时，Minecraft 最新版本还是 1.12.2，当时的 Forge 里有一个配置界面框架，mod 开发者可以用它来制作一个允许玩家调整 mod 设置的界面。研究了一下之后，我感觉还行，就在这个框架的基础上做了我的 mod 的配置界面。
 
 ![Forge 自己的配置界面]({{ img_path_l10n }}/forge-config-gui.png)
+
 ![我的 mod 的配置界面]({{ img_path_l10n }}/mod-config-gui-forge.png)
 
 几个月后，Minecraft 1.13 横空出世。Mojang 在 1.13 内部调整了许多东西，导致 Minecraft Forge 开发组的跟进进度异常迟缓，直到 1.14 出了都未能完善，以至于 1.13.x 到最后没有 Forge 的稳定版。

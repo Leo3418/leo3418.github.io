@@ -111,4 +111,5 @@ After applying some styles, you can add more test posts not translated to every
 supported language and see if the message looks satisfying.
 
 ![Message in Chinese with style applied]({{ img_path }}/style-applied-zh.png)
+
 ![Message in English with style applied]({{ img_path }}/style-applied-en.png)

@@ -116,6 +116,14 @@ $code-padding-horizontal: 0.375em !default;
     font-size: 0.9375em;
 }
 
+img.half {
+    width: calc(50% - 0.5em);
+}
+
+img.third {
+    width: calc(33.3333% - 0.5em);
+}
+
 /* Custom styles */
 
 // Fonts

@@ -9,6 +9,7 @@ lang: zh
 一个普通的 Jekyll 网站的标题会在 `_config.yml` 中的 `title` 选项下定义，然后可以通过 `site.title` 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 `site.title` 变量，存不下。即使我们在 `site.title` 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。
 
 ![英文版网站下的标题显示正常]({{ img_path }}/before-en.png)
+
 ![中文版网站下的标题未被翻译]({{ img_path }}/before-zh.png)
 
 我们要做的是直接在主题的文件中找到读取 `site.title` 的值的地方，然后让它们从其它变量读取本地化的网站标题。我的想法是在 Jekyll 网站的数据文件中保存本地化的标题，因为 Polyglot 连数据文件都[支持](https://github.com/untra/polyglot/blob/1.3.2/README.md#localized-sitedata)本地化。在 `_data` 文件夹下为每种语言创建一个文件夹，用于保存该语言的本地化数据。如果您的网站没有 `_data` 文件夹，那么先创建一个，然后再进行操作即可。
@@ -157,4 +158,5 @@ minima-x.y.z$ cat _includes/head.html
 现在，HTML 标题中不再显示 SEO 插件自动在网站标题后面插入的描述，但是标题可以被正确地翻译了。
 
 ![英文版网站的 HTML 标题]({{ img_path }}/html-title-after-en.png)
+
 ![中文版网站的 HTML 标题，已被正确翻译]({{ img_path }}/html-title-after-zh.png)

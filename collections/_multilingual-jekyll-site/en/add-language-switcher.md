@@ -181,4 +181,5 @@ each option in the language switcher. You should see the contents changing to
 another language but you are still staying on the same page.
 
 ![Changing language to English]({{ img_path }}/footer-en.png)
+
 ![Changing language to Chinese]({{ img_path }}/footer-zh.png)

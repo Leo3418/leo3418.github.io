@@ -53,6 +53,7 @@ configuration GUI with it.
 
 ![Forge's own configuration GUI built upon the
 framework]({{ img_path_l10n }}/forge-config-gui.png)
+
 ![My mod's settings screen]({{ img_path_l10n }}/mod-config-gui-forge.png)
 
 A few months later, Minecraft 1.13 was launched. Mojang changed lots of

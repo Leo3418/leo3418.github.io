@@ -19,17 +19,25 @@ lang: zh
 ### 打开完整文件系统访问权限的方法
 
 1. **打开 Interop Tools，在主菜单中的“Interop Unlock”里，打开“Full Filesystem Access”选项。**
-![打开 Full Filesystem Access]({{ img_path }}/step2.png)
+
+   ![打开 Full Filesystem Access]({{ img_path }}/step2.png){: .half}
+
 2. **重新启动手机。**尽管现在将手机连接到电脑后可以显示文件系统中的部分文件夹，但并不完整。
-![刚打开选项后可访问的内容]({{ img_path }}/step3_1.png)
-此时需要重新启动手机，然后就可以看到完整的文件系统，如 PROGRAMS 文件夹。
-![重启手机后可访问的内容]({{ img_path }}/step3_2.png)
+
+   ![刚打开选项后可访问的内容]({{ img_path }}/step3_1.png)
+
+   此时需要重新启动手机，然后就可以看到完整的文件系统，如 PROGRAMS 文件夹。
+
+   ![重启手机后可访问的内容]({{ img_path }}/step3_2.png)
 
 ### 关闭完整文件系统访问权限的方法
 
 1. **打开 Interop Tools，在主菜单中的“Interop Unlock”里，关闭“Full Filesystem Access”选项。**
-![关闭 Full Filesystem Access]({{ img_path }}/step4.png)
+
+   ![关闭 Full Filesystem Access]({{ img_path }}/step4.png){: .half}
+
 2. **现在将手机连接电脑时还是会显示完整的文件系统，需要修改注册表项** `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MTP\DataStore` **为** `C:\Data\Users\Public`**，才能彻底关闭访问权限。**
-![修改注册表项]({{ img_path }}/step5.png)
+
+   ![修改注册表项]({{ img_path }}/step5.png){: .half}
 
 以后如果需要重新开启，重复打开完整文件系统访问权限的步骤即可。

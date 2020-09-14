@@ -90,4 +90,5 @@ no_translation: "抱歉，此页面无中文版。"
 应用完样式之后，您可以再多创建几个翻译不完全的测试帖，预览它们的网页，看对样式是否满意。
 
 ![应用样式后的中文提示信息]({{ img_path }}/style-applied-zh.png)
+
 ![应用样式后的英文提示信息]({{ img_path }}/style-applied-en.png)

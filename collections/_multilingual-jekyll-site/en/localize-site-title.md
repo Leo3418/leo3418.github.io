@@ -14,6 +14,7 @@ Even if we store key-value pairs in it, Polyglot can't get the value with
 language code key and mask `site.title` with the localized title.
 
 ![The title looks OK on the English site]({{ img_path }}/before-en.png)
+
 ![On the Chinese site, the title is not translated]({{ img_path }}/before-zh.png)
 
 Therefore, we must modify any include and layout files that access `site.title`
@@ -204,4 +205,5 @@ description after the site title because it was added by the SEO plugin, but
 the title can now be translated correctly.
 
 ![HTML title for English version]({{ img_path }}/html-title-after-en.png)
+
 ![HTML title for Chinese version, which is now translated]({{ img_path }}/html-title-after-zh.png)
