@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 The weapons mentioned here are the ones that every player should equip in my
 opinion.
 

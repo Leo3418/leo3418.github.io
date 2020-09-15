@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 Mk II weapons are upgraded variants of weapons sold from Ammu-Nation that offer
 better performance and more diverse accessories. This page covers Mk II
 upgrades of weapons recommended in the previous pages that bring significant

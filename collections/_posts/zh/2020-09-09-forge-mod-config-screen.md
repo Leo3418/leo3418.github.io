@@ -7,7 +7,6 @@ tags:
 toc: true
 ---
 {% include img-path.liquid %}
-
 ## 前言
 
 最近我萌生了一个想法，写一些记录我开发 Minecraft Forge 模组（mod）的过程、和我维护时长两年半的个人 mod 项目 [Hypixel 起床战争助手](https://github.com/Leo3418/HBWHelper)（HBW Helper）之间的故事的文章。这么做的目的主要有两个：首先是对我个人而言，可以有一个记录下我如何作出 mod 开发过程中的一些关键决定、遇到 mod 开发问题时的解决思路以及解决方案的地方，可供日后温习；其次是为屏幕前的您和其他的读者朋友，在遇到与我类似的情况时，提供一个参考内容。

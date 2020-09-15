@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 The Übermacht Sentinel XS is a model of car that spawns in the map in a
 predictable manner and can be sold for a good price, which makes it possible to
 farm them and get significant profit.

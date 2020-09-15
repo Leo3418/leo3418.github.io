@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 When you join GTA Online from GTA V, you will enter a Public Session by
 default. A Public Session might already have other players in it, and new
 players can join it as well.

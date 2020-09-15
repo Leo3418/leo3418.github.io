@@ -5,7 +5,6 @@ tags:
   - GTA Online
 ---
 {% include img-path.liquid %}
-
 ## Updates
 
 ### {{ "2020-08-13" | date: site.data.l10n.date_format }}

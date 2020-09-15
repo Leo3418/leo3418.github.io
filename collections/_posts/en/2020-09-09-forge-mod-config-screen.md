@@ -7,7 +7,6 @@ tags:
 toc: true
 ---
 {% include img-path.liquid %}
-
 ## Preamble
 
 In this Minecraft Forge Mod Development Blog series, I will write some stories

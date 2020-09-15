@@ -5,7 +5,6 @@ level: 2
 lang: zh
 ---
 {% include img-path.liquid %}
-
 一个普通的 Jekyll 网站的标题会在 `_config.yml` 中的 `title` 选项下定义，然后可以通过 `site.title` 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 `site.title` 变量，存不下。即使我们在 `site.title` 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。
 
 ![英文版网站下的标题显示正常]({{ img_path }}/before-en.png)

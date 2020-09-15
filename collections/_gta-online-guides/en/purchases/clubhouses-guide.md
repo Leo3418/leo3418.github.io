@@ -7,7 +7,6 @@ toc: false
 ---
 
 {% include img-path.liquid %}
-
 Clubhouses in GTA Online offer the ability to do the following things to their
 owner:
 

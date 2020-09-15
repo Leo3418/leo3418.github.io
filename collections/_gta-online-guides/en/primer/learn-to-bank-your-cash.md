@@ -6,7 +6,6 @@ lang: en
 toc: false
 ---
 {% include img-path.liquid %}
-
 Your GTA Online character has two locations for all GTA$ you own: cash and
 bank. Usually, you will receive a payout from a Job in the form of cash. In
 most cases, there is no reason to keep the money as cash because all common

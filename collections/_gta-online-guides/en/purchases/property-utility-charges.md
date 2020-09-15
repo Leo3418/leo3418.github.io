@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 GTA Online has a very interesting feature: if you have been in Freemode for one
 in-game day (which equals 48 real-life minutes), the game deducts some money
 from your in-game bank account for wages of your mechanic, assistant, staff in

@@ -5,7 +5,6 @@ level: 2
 lang: zh
 ---
 {% include img-path.liquid %}
-
 Jekyll 主题里往往会有一些字符串出现在网页的结构中，但主题并没有提供自定义这些字符串的功能。比如说，Minima 主题会在主页的帖子列表上方显示“Posts”，然后在帖子列表底部显示“subscribe via RSS”。即使网页上的内容是以其它语言呈现的，这些字符串依然以英文显示：
 
 ![未翻译的字符串]({{ img_path }}/not-translated.png)

@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 If you expect that some of your posts will not be translated to every language
 supported by your site, then you might want to tell those post's viewers that a
 translation is not available for their language.

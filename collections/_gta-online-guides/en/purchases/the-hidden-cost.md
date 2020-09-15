@@ -6,7 +6,6 @@ lang: en
 toc: false
 ---
 {% include img-path.liquid %}
-
 *The Hidden Cost* is a term I personally use to refer to the cost of business
 upgrades that are crucial in making the business profitable. It is hidden
 because the upgrades are not presented to you until you have purchased the

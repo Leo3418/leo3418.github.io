@@ -3,7 +3,6 @@ title: "打开与关闭 Windows 10 Mobile 完整文件系统访问权限的方�
 lang: zh
 ---
 {% include img-path.liquid %}
-
 在 Windows 10 Mobile 中，只需要安装由 [XDA Developers](http://forum.xda-developers.com) 论坛用户 [gus33000](http://forum.xda-developers.com/member.php?u=7651894) 开发的 [Interop Tools](http://forum.xda-developers.com/windows-10-mobile/windows-10-mobile-apps-and-games/app-interop-tools-versatile-registry-t3445271) 就可以实现修改注册表、访问完整文件系统等“越狱”后的权限。Interop Tools 中有一个打开完整文件系统访问权限的开关，但由于相关的说明不够详细，包括我在内的一些用户遭遇了不能看到所有文件、打开选项后关掉却依然在将手机连接电脑时看到完整文件系统等问题。此教程将对此类问题进行解答。
 
 ## 适用范围

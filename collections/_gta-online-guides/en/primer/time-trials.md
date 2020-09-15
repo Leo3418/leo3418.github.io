@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 Time Trial is a Freemode activity that requires you to go from point A to point
 B under par time. You can use any normal land vehicle you own and take any
 route.

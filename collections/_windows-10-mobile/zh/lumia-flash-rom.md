@@ -3,7 +3,6 @@ title: "Nokia/Microsoft Lumia 使用 FFUTool 刷机教程"
 lang: zh
 ---
 {% include img-path.liquid %}
-
 安卓可以刷机这一事实，许多人都应该是知道的。比如说我们买了一部国行的 Samsung Galaxy S6，但不喜欢冗余的预装软件，或者是想使用 Google Play 服务，我们可以通过刷个港版、美版固件的方式来从另一种方式去解决。或者对于那些有第三方 ROM 的手机，我们还可以选择一个自己喜欢的 ROM 去刷入。
 
 而对于 Windows Phone，我们显然不能刷入其它的 ROM，比如刷个安卓什么的，肯定不行。但我们可以像刚才叙述的前者那样，刷个其它地区的固件。Windows Phone 上的刷机一词就是指代这种刷机的方法。

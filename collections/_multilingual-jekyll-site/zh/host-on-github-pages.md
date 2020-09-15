@@ -5,7 +5,6 @@ lang: zh
 toc: true
 ---
 {% include img-path.liquid %}
-
 完成上述改进后，您的网站从内容到网页元素都支持了本地化，可以准备发布了。对于 Jekyll 网站而言，许多人都喜欢使用 [GitHub
 Pages](https://pages.github.com/) 来托管，但是我们的多语言 Jekyll 网站如果想在 GitHub Pages 上托管的话需要一些特殊的步骤。这部分将要介绍的就是如何解决您在 GitHub Pages 上托管您的网站时可能遇到的一些问题。
 

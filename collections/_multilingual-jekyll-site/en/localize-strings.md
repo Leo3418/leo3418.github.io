@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 A Jekyll theme is likely to have non-content strings on certain webpages. These
 strings are usually hard-coded in the theme's files so you cannot modify them
 without overriding the theme. For instance, Minima puts "Posts" above the list

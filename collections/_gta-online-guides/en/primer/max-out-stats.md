@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 Like the Story Mode protagonists, your GTA Online character has various skills
 that impact your character's performance in certain tasks. Maxing out the stats
 of those skills will give you significant benefits in Missions and some daily

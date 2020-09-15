@@ -6,7 +6,6 @@ tags:
 toc: true
 ---
 {% include img-path.liquid %}
-
 近日，微软发布了 Windows Terminal 的首个正式版本。Windows Terminal 是 Windows 10 上全新的终端程序。和命令提示符还有 Windows Subsystem for Linux (WSL) 默认使用的系统自带老式控制台 `conhost.exe` 相比，它允许使用多种不同的壳层（shell），例如 Windows PowerShell、命令提示符、以及 WSL。除此之外，Windows Terminal 提供的功能和自定义选项也是比原有的控制台多许多。
 
 得益于可自行添加 shell 的功能，我们可以将 [Cygwin](https://www.cygwin.com/) 的 shell 和 [Git for Windows](https://gitforwindows.org/) 中的 Git Bash 也加到 Windows Terminal 里，就可以在没有 WSL 的情况下在 Windows Terminal 里使用 Unix shell 和其它的一些 Unix 程序了。这篇文章将介绍相应的方法。

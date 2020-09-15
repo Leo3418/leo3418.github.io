@@ -6,7 +6,6 @@ lang: en
 toc: true
 ---
 {% include img-path.liquid %}
-
 Your site is now serving in more than one language, and each version can be
 accessed by appending the language code to your site's domain. When people want
 to change to another language, they must edit the URL manually and go to that

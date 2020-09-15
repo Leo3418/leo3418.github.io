@@ -5,7 +5,6 @@ lang: en
 toc: true
 ---
 {% include img-path.liquid %}
-
 After making those enhancements, your site is ready to serve to people using
 different languages with both the contents and site elements localized. A
 popular choice of services for hosting a Jekyll site is [GitHub

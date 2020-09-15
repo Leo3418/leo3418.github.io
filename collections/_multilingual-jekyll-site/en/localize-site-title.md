@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 A Jekyll site's title is usually defined in `_config.yml` with key `title` and
 can be accessed via variable `site.title`. This is also where most Jekyll
 themes will read the site title from. Unfortunately, the variable can only hold

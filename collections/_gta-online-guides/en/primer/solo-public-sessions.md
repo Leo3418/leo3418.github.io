@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 Alternative types of session can keep strangers away from you. Unfortunately,
 because Rockstar wants to foster PvP and other types of competition between
 players, it does not allow you to grind without worries about other unfriendly

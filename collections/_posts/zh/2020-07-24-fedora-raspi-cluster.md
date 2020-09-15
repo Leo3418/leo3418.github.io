@@ -9,7 +9,6 @@ asciinema-player: true
 toc: true
 ---
 {% include img-path.liquid %}
-
 在开始之前，我首先要感谢考森同志 [**@ColsonXu**](https://github.com/ColsonXu) 给了我一个折腾树莓派的机会。他买了几个树莓派 4，准备组一个计算用的集群，可是建好后却没什么可计算的，没什么用场。直到一天早晨，达西 [**@mrdarcychen**](https://github.com/mrdarcychen) 在 Fedora 杂志上发现了一篇[在树莓派上跑 Rosetta@home 的文章](https://fedoramagazine.org/running-rosettahome-on-a-raspberry-pi-with-fedora-iot/)，于是就问考森要不要搞。在他同意之后，我便开始着手配置他的树莓派集群。
 
 我拿到这堆树莓派的时候，集群已经设置好了。尽管我并没有问过机主本人他当时集群是怎么弄的，但他应该是按照[这篇 MagPi 杂志文章](https://magpi.raspberrypi.org/articles/build-a-raspberry-pi-cluster-computer)配置的。这篇文章里用的是树莓派 OS（旧称 Raspbian）而非 Fedora；如果想弄一个运行 Fedora 的树莓派集群，大体的流程还是相同的，但是具体的步骤和运行的命令有些不一样。接下来我将具体地介绍如何在 Fedora 上完成同样的集群配置步骤。

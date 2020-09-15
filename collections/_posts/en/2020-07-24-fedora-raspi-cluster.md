@@ -9,7 +9,6 @@ asciinema-player: true
 toc: true
 ---
 {% include img-path.liquid %}
-
 First and foremost, I would like to thank
 [**@ColsonXu**](https://github.com/ColsonXu) for giving me this opportunity to
 play with some Raspberry Pis. He had got a few Raspberry Pi 4's and built a
