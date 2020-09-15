@@ -3,7 +3,6 @@ title: "主页"
 layout: home
 permalink: /
 lang: zh
-license: false
 list_title: "帖子"
 ---
 

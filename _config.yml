@@ -24,6 +24,12 @@ defaults:
       layout: "single"
       license: "cc-by-sa-4_0"
       toc_sticky: true
+  - # Top-level Pages
+    scope:
+      path: "pages"
+    values:
+      layout: "archive"
+      license: false
   - # Posts
     scope:
       path: ""
