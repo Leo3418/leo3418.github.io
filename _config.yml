@@ -42,16 +42,7 @@ defaults:
       path: ""
       type: "gta-online-guides"
     values:
-      layout: "single"
-      tags: "gta-online"
       toc: true
-  -
-    scope:
-      path: ""
-      type: "multilingual-jekyll-site"
-    values:
-      layout: "single"
-      tags: "jekyll"
 
 exclude:
   - "README.md"
