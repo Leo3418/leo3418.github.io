@@ -62,6 +62,9 @@ footer:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/Leo3418/"
+tag_archive:
+  type: "liquid"
+  path: "/tags/"
 after_footer_scripts:
   - "/assets/js/main.js"
 
