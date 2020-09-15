@@ -3,39 +3,10 @@ title: "Share GTA V Game Files Between Steam and Epic Games"
 lang: en
 tags:
   - GTA Online
+toc: true
+last_modified_at: 2020-09-15
 ---
 {% include img-path.liquid %}
-## Updates
-
-### {{ "2020-08-13" | date: site.data.l10n.date_format }}
-
-The method described in this article has been verified to be still working for
-the *Los Santos Summer Special* update (GTA Title Update 1.51) released on
-{{ "2020-08-11" | date: site.data.l10n.date_format }}.
-
-If you have been already using this method to share GTA V game files between
-Steam and Epic Games, then please perform the following steps for the new
-update:
-
-1.  Update GTA V from one game platform (either Steam or Epic Games). We will
-    denote this platform as *Platform A*.
-
-2.  Copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation path to
-    somewhere else, and clearly label them as game files downloaded from
-    *Platform A*.
-
-3.  Next, update GTA V from the other platform, which will be denoted as
-    *Platform B*.
-
-4.  Again, copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation
-    path to somewhere else, but label them as game files downloaded from
-    *Platform B* this time.
-
-Now, you should be able to launch GTA V and switch between Steam and Epic Games
-back and forth as before.
-
----
-
 After Epic Games announced that it would give away free copies of GTA V for a
 week, many people started to claim this gift on that game platform. Even some
 existing GTA V players who have already purchased the game on Steam had decided
@@ -53,6 +24,8 @@ Because I believe almost all people who wants to let the apps of these two game
 platforms share the same game files have already downloaded GTA V from Steam
 rather than Epic Games, the following instructions will create a link to
 Steam's copy of GTA V files under Epic Games' installation path.
+
+## Steps
 
 1.  Download GTA V in Epic Games.
 
@@ -145,34 +118,25 @@ want to have a new Social Club account and activate the copy of GTA V you
 obtained on Epic Games for it, make sure you sign out your old Social Club
 account from Rockstar Games Launcher.
 
-## What to Do in GTA Online This Week
+## Steps to Do Upon Game Update
 
-This week, there is a discount on Bunkers, and Bunker sales are giving double
-rewards. This is a great opportunity for new players to get a head start.
+If an update for GTA V is available after you have used the above steps to
+share the game files, then please perform the following steps for the new
+update:
 
-The copy of GTA V you claim on Epic Games comes with the Criminal Enterprise
-Starter Pack, which includes GTA$1,000,000 and the Paleto Forest Bunker.
-**Don't use that Bunker!** It is too far away from Los Santos, selling Goods
-from it will definitely be a torture. Instead, purchase a Bunker closer to the
-city while they are on sale, such as Chumash or Farmhouse Bunker. Then, try to
-get enough money to purchase the Equipment Upgrade and the Staff Upgrade on the
-laptop inside your Bunker. Don't spend money on the Security Upgrade yet. You
-are now ready to start profiting from your Bunker!
+1.  Update GTA V from one game platform (either Steam or Epic Games). We will
+    denote this platform as *Platform A*.
 
-## One More Thing...
+2.  Copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation path to
+    somewhere else, and clearly label them as game files downloaded from
+    *Platform A*.
 
-I guess a lot of new players will flood into GTA Online on PC starting this
-week. If you are one of them, then there is some extra thing coming for you! I
-have been writing a collection of GTA Online guides at the start of May. It is
-planned as a very big project, and so far only about 20% of all planned
-contents are finished. But I had already decided to release those guides in
-several phases even before this promotion on Epic Games, and this event has
-just gave me one more reason to release what I have already completed.
+3.  Next, update GTA V from the other platform, which will be denoted as
+    *Platform B*.
 
-This weekend, I will release the first batch of articles I have written for the
-collection. These articles will give an overview on what you should do to build
-up your GTA Online career, how to protect yourself from other players' attacks,
-and how to get some start-up cash and RP. Once released, they will be available
-under the "Collections" section of this site's home page. Stay tuned!
+4.  Again, copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation
+    path to somewhere else, but label them as game files downloaded from
+    *Platform B* this time.
 
-Update: the collection is now online at [here](/collections/gta-online-guides)!
+Now, you should be able to launch GTA V and switch between Steam and Epic Games
+back and forth again as before.

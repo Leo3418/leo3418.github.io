@@ -9,6 +9,26 @@ asciinema-player: true
 toc: true
 ---
 
+This post is a continuation of my [previous
+one](/2020/07/24/fedora-raspi-cluster.html) about setting up a cluster of
+Raspberry Pis running Fedora. After I got the cluster to compute something,
+[**@ColsonXu**](https://github.com/ColsonXu), the cluster's owner, asked me if
+I could monitor the CPU temperature of each Raspberry Pi by running this
+command:
+
+```console
+$ /opt/vc/bin/vcgencmd measure_temp
+```
+
+The [`vcgencmd`
+program](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md)
+is included in Raspberry Pi OS (formerly called Raspbian) as a utility for
+retrieving information about Raspberry Pi's hardware. However, it is not
+included in Fedora's software repositories. Luckily though, the source code of
+`vcgencmd`, along with the entire [`userland`
+package](https://github.com/raspberrypi/userland) that contains the program, is
+available, so we can compile it on our own.
+
 ## Updates
 
 ### {{ "2020-07-29" | date: site.data.l10n.date_format }}
@@ -38,31 +58,9 @@ addition, you always have the option to [install my `vcgencmd` build with
 DNF](#use-dnf-to-install-the-program) if you are not a fan of building software
 packages yourself.
 
----
-
-This post is a continuation of my [previous
-one](/2020/07/24/fedora-raspi-cluster.html) about setting up a cluster of
-Raspberry Pis running Fedora. After I got the cluster to compute something,
-[**@ColsonXu**](https://github.com/ColsonXu), the cluster's owner, asked me if
-I could monitor the CPU temperature of each Raspberry Pi by running this
-command:
-
-```console
-$ /opt/vc/bin/vcgencmd measure_temp
-```
-
-The [`vcgencmd`
-program](https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md)
-is included in Raspberry Pi OS (formerly called Raspbian) as a utility for
-retrieving information about Raspberry Pi's hardware. However, it is not
-included in Fedora's software repositories. Luckily though, the source code of
-`vcgencmd`, along with the entire [`userland`
-package](https://github.com/raspberrypi/userland) that contains the program, is
-available, so we can compile it on our own.
-
 ## ~~Challenge~~
 
-{: .message-box}
+{: .notice--warning}
 **Update**: the issue described in this section has been fixed by the upstream.
 
 You probably have already tried to build a software package distributed by

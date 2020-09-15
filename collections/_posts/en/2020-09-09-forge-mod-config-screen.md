@@ -7,7 +7,24 @@ tags:
 toc: true
 ---
 {% include img-path.liquid %}
-## Preamble
+Minecraft Forge had been shipping a configuration GUI framework which mods
+could use to provide customization options, but the framework has been gone
+since Minecraft 1.13. This post describes how I created a mod configuration GUI
+without using that framework by directly using APIs of Minecraft.
+
+The procedure shown in this post are applicable to Minecraft 1.14.4 and 1.15.x.
+I did not check its correctness on Minecraft 1.13.x and old 1.14.x releases
+since those Minecraft versions do not have stable Minecraft Forge builds, but
+chances are the majority of the steps are also applicable to those versions.
+Nevertheless, I would recommend developing mods using only stable Minecraft
+Forge releases.
+
+For Minecraft 1.12.2 and earlier versions, you will need to rewrite the code in
+some of the examples. However, on those Minecraft versions, you can use the
+framework in Minecraft Forge directly, so there is no need to follow this post
+and create a configuration GUI with Minecraft's API in this case.
+
+## Preamble for the Series
 
 In this Minecraft Forge Mod Development Blog series, I will write some stories
 in the development process of my 2-year-old Minecraft Forge mod project,
@@ -665,17 +682,6 @@ factory as well, because the constructor's signature has been altered:
 +                 () -> (mc, screen) -> new ConfigScreen(screen)
           );
 ```
-
-## Summary
-
-Minecraft Forge had been shipping a configuration GUI framework which mods
-could use to provide customization options, but the framework has been gone
-since Minecraft 1.13. This post describes how to create a mod configuration GUI
-when the framework is still absent by directly using APIs of Minecraft.
-
-Note that the things described in this post are not necessary for Minecraft
-1.12.2 and earlier versions. On those versions, you can simply use that Forge's
-GUI framework.
 
 ## More Resources
 

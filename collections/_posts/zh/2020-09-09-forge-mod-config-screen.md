@@ -7,7 +7,13 @@ tags:
 toc: true
 ---
 {% include img-path.liquid %}
-## 前言
+Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。
+
+本文描述的方法适用于 Minecraft 1.14.4 和 1.15.x。该方法可能也适用于 Minecraft 1.13.x 和 1.14 系列的老版本，不过因为这些版本没有 Minecraft Forge 的稳定版，我并没有进行验证。一般还是推荐用稳定版的 Forge 来进行 mod 开发。
+
+如果是 Minecraft 1.12.2 或者之前的版本的话，要想使用本文描述的方法，可能需要对给出的代码示例进行大量修改；但是，在这些 Minecraft 老版本上可以直接使用 Forge 的配置界面框架，所以无需依照本篇文章的描述用 Minecraft 的 API 来替代。
+
+## 系列前言
 
 最近我萌生了一个想法，写一些记录我开发 Minecraft Forge 模组（mod）的过程、和我维护时长两年半的个人 mod 项目 [Hypixel 起床战争助手](https://github.com/Leo3418/HBWHelper)（HBW Helper）之间的故事的文章。这么做的目的主要有两个：首先是对我个人而言，可以有一个记录下我如何作出 mod 开发过程中的一些关键决定、遇到 mod 开发问题时的解决思路以及解决方案的地方，可供日后温习；其次是为屏幕前的您和其他的读者朋友，在遇到与我类似的情况时，提供一个参考内容。
 
@@ -450,12 +456,6 @@ public final class ConfigScreen extends Screen {
 +                 () -> (mc, screen) -> new ConfigScreen(screen)
           );
 ```
-
-## 总结
-
-Minecraft Forge 原有的允许 mod 创建自己的配置界面的框架在 Minecraft 1.13 推出后被移除，之后一直没有被加回来。这篇文章中所记载的就是如何在没有该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。
-
-如果是 Minecraft 1.12.2 或者之前的版本的话，就可以直接使用 Forge 的配置界面框架，无需依照本篇文章的描述用 Minecraft 的 API 来替代。
 
 ## 更多资源
 
