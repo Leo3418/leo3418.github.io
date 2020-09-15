@@ -1,6 +1,9 @@
 ---
 title: "Use `grep` as a Substitute for `cat`"
 lang: en
+tags:
+  - Unix Programs
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

@@ -1,6 +1,9 @@
 ---
 title: "用 `grep` 替代 `cat`"
 lang: zh
+tags:
+  - Unix 程序
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

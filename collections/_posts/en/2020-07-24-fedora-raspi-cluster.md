@@ -1,6 +1,10 @@
 ---
 title: "Set Up Fedora on a Raspberry Pi Cluster"
 lang: en
+tags:
+  - Raspberry Pi
+  - Fedora
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

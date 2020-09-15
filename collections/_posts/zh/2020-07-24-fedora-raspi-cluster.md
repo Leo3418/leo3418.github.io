@@ -1,6 +1,10 @@
 ---
 title: "在树莓派集群上配置 Fedora"
 lang: zh
+tags:
+  - 树莓派
+  - Fedora
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

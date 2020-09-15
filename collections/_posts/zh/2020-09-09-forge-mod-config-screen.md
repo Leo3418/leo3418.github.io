@@ -1,6 +1,9 @@
 ---
 title: "MC Forge Mod 开发记录：加入配置界面"
 lang: zh
+tags:
+  - Minecraft Forge
+  - Java
 toc: true
 ---
 {% include img-path.liquid %}

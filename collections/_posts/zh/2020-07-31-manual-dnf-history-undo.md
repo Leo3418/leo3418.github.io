@@ -1,6 +1,10 @@
 ---
 title: "手动进行 `dnf history undo`"
 lang: zh
+tags:
+  - Fedora
+  - Unix 程序
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

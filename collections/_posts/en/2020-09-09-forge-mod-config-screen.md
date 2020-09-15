@@ -1,6 +1,9 @@
 ---
 title: "MC Forge Mod Dev Blog: Adding a Configuration GUI"
 lang: en
+tags:
+  - Minecraft Forge
+  - Java
 toc: true
 ---
 {% include img-path.liquid %}

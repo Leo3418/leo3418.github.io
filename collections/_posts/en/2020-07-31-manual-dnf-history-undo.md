@@ -1,6 +1,10 @@
 ---
 title: "Perform Manual `dnf history undo`"
 lang: en
+tags:
+  - Fedora
+  - Unix Programs
+  - GNU/Linux
 asciinema-player: true
 toc: true
 ---

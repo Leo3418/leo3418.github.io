@@ -1,6 +1,8 @@
 ---
 title: "Use Cygwin's Shell or Git Bash in Windows Terminal"
 lang: en
+tags:
+  - Windows
 toc: true
 ---
 {% include img-path.liquid %}
