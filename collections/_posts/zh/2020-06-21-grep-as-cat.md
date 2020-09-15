@@ -1,5 +1,5 @@
 ---
-title: "用 'grep' 替代 'cat'"
+title: "用 `grep` 替代 `cat`"
 lang: zh
 asciinema-player: true
 toc: true

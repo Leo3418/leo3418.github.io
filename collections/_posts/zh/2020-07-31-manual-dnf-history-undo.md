@@ -1,5 +1,5 @@
 ---
-title: "手动进行 'dnf history undo'"
+title: "手动进行 `dnf history undo`"
 lang: zh
 asciinema-player: true
 toc: true

@@ -1,5 +1,5 @@
 ---
-title: "Compile Raspberry Pi's 'vcgencmd' on Fedora"
+title: "Compile Raspberry Pi's `vcgencmd` on Fedora"
 lang: en
 asciinema-player: true
 toc: true

@@ -1,5 +1,5 @@
 ---
-title: "Use 'grep' as a Substitute for 'cat'"
+title: "Use `grep` as a Substitute for `cat`"
 lang: en
 asciinema-player: true
 toc: true
