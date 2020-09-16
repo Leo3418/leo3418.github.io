@@ -1,8 +1,8 @@
 ---
 title: "Build a Multilingual Jekyll Site"
 permalink: /collections/multilingual-jekyll-site
+ordinal: 0
 lang: en
-license: false
 ---
 
 [Jekyll](https://jekyllrb.com/) is a static website generator. It creates
@@ -24,7 +24,3 @@ The multilingual plugin I will use for this collection is
 [Polyglot](https://github.com/untra/polyglot/). Of course, this is also the
 plugin that this site uses as of this collection is composed. I will discuss
 why I chose this plugin in a section in this collection.
-
-## Contents
-
-{% include collection-doc-list.html collection=site.multilingual-jekyll-site %}

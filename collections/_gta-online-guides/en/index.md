@@ -1,8 +1,8 @@
 ---
 title: "GTA Online Guides"
 permalink: /collections/gta-online-guides
+ordinal: 0
 lang: en
-license: false
 ---
 
 [GTA Online](https://www.rockstargames.com/GTAOnline/) is an online multiplayer
@@ -49,9 +49,3 @@ to a "404 Not Found" page. These are links to planned but unpublished articles,
 and I intentionally left them there because I don't want to forget a link
 should be added to those places. If there is any inconvenience to you, please
 accept my apology.
-
-## Contents
-
-{% include collection-doc-list.html collection=site.gta-online-guides %}
-
-- More articles coming soon...
