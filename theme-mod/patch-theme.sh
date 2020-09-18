@@ -64,13 +64,14 @@ fi
 echo "Getting files need to be patched..."
 grep --exclude='*.md' -Elr "${PATTERNS}" "${THEME_PATH}" | \
     xargs cp --parents -t .
+# Copy additional files which do not contain matches of PATTERNS
 for extra in ${ADDITIONAL_FILES}; do
     if [[ ! -f "${extra}" ]]; then
         cp --parents -t . "${THEME_PATH}/${extra}"
     fi
 done
 
-# The temporary directory for theme files in the patching patches
+# The temporary directory for the theme files to be patched
 temp_dir=$(realpath --relative-to=. "./${THEME_PATH}")
 
 echo "Patching files..."
