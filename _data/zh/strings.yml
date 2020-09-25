@@ -1,6 +1,7 @@
 home: "主页"
 no_more_articles: "已无更多文章"
 switch_lang: "切换语言"
+untranslated_posts_hidden: "已隐藏无翻译的文章"
 
 build_status: "构建状态"
 build_time: "构建于 $time"

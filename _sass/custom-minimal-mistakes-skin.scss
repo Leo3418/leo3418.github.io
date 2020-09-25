@@ -36,15 +36,18 @@ $max-width: 1360px !default;
 }
 
 // Change pagination pager colors
-.pagination--pager:not(.disabled) {
-    &:not(:hover) {
-        &, &:visited {
-            color: $text-color !important;
+.pagination li a, .pagination--pager {
+    &:not(.disabled) {
+        &:not(:hover) {
+            &, &:visited {
+                color: $text-color;
+            }
         }
-    }
 
-    &:hover {
-        // Make color change smoother in animation
-        background-color: $primary-color !important;
+        &:hover {
+            // Make color change smoother in animation
+            background-color: $primary-color;
+            color: $background-color;
+        }
     }
 }

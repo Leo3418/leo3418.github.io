@@ -12,3 +12,4 @@ gem "minimal-mistakes-jekyll"
 
 # Plugins
 gem "jekyll-polyglot"
+gem "jekyll-paginate-v2"
