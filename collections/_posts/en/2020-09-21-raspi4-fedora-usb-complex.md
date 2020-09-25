@@ -50,7 +50,7 @@ page](https://en.opensuse.org/HCL:Raspberry_Pi4) on the openSUSE Wiki.
 
 ### Extract the Image
 
-The download file is a `.xz` file, a compressed image. Before doing anything
+The downloaded file is a `.xz` file, a compressed image. Before doing anything
 with the image, you need to decompress the `.xz` file.
 
 If the `xz` program is available to you, you may decompress the file with the
