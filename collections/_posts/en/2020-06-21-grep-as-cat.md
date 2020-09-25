@@ -4,6 +4,8 @@ lang: en
 tags:
   - Unix Programs
   - GNU/Linux
+categories:
+  - Tricks
 asciinema-player: true
 toc: true
 ---

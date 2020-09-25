@@ -3,6 +3,8 @@ title: "在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash"
 lang: zh
 tags:
   - Windows
+categories:
+  - 教程
 toc: true
 ---
 {% include img-path.liquid %}

@@ -5,6 +5,8 @@ tags:
   - Fedora
   - Unix Programs
   - GNU/Linux
+categories:
+  - Tutorial
 asciinema-player: true
 toc: true
 ---

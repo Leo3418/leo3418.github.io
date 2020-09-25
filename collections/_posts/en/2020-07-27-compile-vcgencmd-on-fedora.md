@@ -5,6 +5,8 @@ tags:
   - Raspberry Pi
   - Fedora
   - GNU/Linux
+categories:
+  - Tutorial
 asciinema-player: true
 toc: true
 last_modified_at: 2020-09-25

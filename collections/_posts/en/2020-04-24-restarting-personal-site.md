@@ -1,6 +1,8 @@
 ---
 title: "Restarting This Personal Site"
 lang: en
+categories:
+  - Blog
 ---
 
 I have been planning to repurpose my personal website on GitHub Pages as a blog

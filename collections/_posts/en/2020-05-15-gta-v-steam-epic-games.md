@@ -3,6 +3,8 @@ title: "Share GTA V Game Files Between Steam and Epic Games"
 lang: en
 tags:
   - GTA Online
+categories:
+  - Tutorial
 toc: true
 last_modified_at: 2020-09-15
 ---

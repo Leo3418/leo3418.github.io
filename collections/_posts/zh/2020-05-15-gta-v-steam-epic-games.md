@@ -3,6 +3,8 @@ title: "让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件"
 lang: zh
 tags:
   - GTA Online
+categories:
+  - 教程
 excerpt_separator: "<!--more-->"
 toc: true
 last_modified_at: 2020-09-15

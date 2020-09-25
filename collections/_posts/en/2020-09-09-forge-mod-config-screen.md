@@ -4,6 +4,8 @@ lang: en
 tags:
   - Minecraft Forge
   - Java
+categories:
+  - Blog
 toc: true
 ---
 {% include img-path.liquid %}

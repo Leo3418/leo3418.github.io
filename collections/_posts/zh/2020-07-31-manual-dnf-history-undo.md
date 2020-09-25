@@ -5,6 +5,8 @@ tags:
   - Fedora
   - Unix 程序
   - GNU/Linux
+categories:
+  - 教程
 asciinema-player: true
 toc: true
 ---

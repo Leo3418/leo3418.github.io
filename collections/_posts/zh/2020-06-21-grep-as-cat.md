@@ -4,6 +4,8 @@ lang: zh
 tags:
   - Unix 程序
   - GNU/Linux
+categories:
+  - 技巧
 asciinema-player: true
 toc: true
 ---

@@ -16,6 +16,9 @@ collections:
     output: true
     permalink: /collections/:collection/:name
 
+# Permalink for a post
+permalink: /:year/:month/:day/:title:output_ext
+
 defaults:
   - # Default
     scope:
@@ -65,6 +68,9 @@ footer:
 tag_archive:
   type: "liquid"
   path: "/tags/"
+category_archive:
+  type: "liquid"
+  path: "/categories/"
 after_footer_scripts:
   - "/assets/js/main.js"
 

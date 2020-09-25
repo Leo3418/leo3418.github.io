@@ -5,6 +5,8 @@ tags:
   - 树莓派
   - Fedora
   - GNU/Linux
+categories:
+  - 教程
 asciinema-player: true
 toc: true
 ---

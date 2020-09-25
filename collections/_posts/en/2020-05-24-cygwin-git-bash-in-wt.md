@@ -3,6 +3,8 @@ title: "Use Cygwin's Shell or Git Bash in Windows Terminal"
 lang: en
 tags:
   - Windows
+categories:
+  - Tutorial
 toc: true
 ---
 {% include img-path.liquid %}

@@ -4,6 +4,8 @@ lang: zh
 tags:
   - 树莓派
   - Fedora
+categories:
+  - 教程
 toc: true
 ---
 

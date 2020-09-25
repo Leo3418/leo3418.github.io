@@ -4,6 +4,8 @@ lang: en
 tags:
   - Raspberry Pi
   - Fedora
+categories:
+  - Tutorial
 toc: true
 ---
 

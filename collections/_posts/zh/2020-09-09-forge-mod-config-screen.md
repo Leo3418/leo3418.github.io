@@ -4,6 +4,8 @@ lang: zh
 tags:
   - Minecraft Forge
   - Java
+categories:
+  - 博客
 toc: true
 ---
 {% include img-path.liquid %}
