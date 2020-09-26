@@ -62,7 +62,7 @@ xhci_hcd` again, and the error messages should disappear. Insert a USB device,
 it should start to work.
 
 As suggested by the option name itself, `total_mem=3072` limits the memory to
-3072 MB. Depending on how you use your Raspberry Pi, this amount of memory
+3072 MiB. Depending on how you use your Raspberry Pi, this amount of memory
 might be more than enough; but, if you do need more memory than that, and you
 want to use USB devices on Raspberry Pi, please use another solution I
 introduce in [a separate post](/2020/09/21/raspi4-fedora-usb-complex.html),
