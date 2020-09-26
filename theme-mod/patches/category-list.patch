@@ -1,12 +1,13 @@
 --- _includes/category-list.html
 +++ _includes/category-list.html
-@@ -19,7 +19,8 @@
+@@ -19,7 +19,9 @@
      {% for hash in category_hashes %}
        {% assign keyValue = hash | split: '|' %}
        {% capture category_word %}{{ keyValue[1] | strip_newlines }}{% endcapture %}
 -      <a href="{{ category_word | slugify | prepend: path_type | prepend: site.category_archive.path | relative_url }}" class="page__taxonomy-item" rel="tag">{{ category_word }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
-+      {% capture category_url %}{{ category_word | slugify | prepend: path_type | prepend: site.category_archive.path | relative_url }}{% endcapture %}
-+      <a href=" {% if site.active_lang != site.default_lang %}{{ site.active_lang | prepend: "/" }}{% endif %}{{ category_url }}" class="page__taxonomy-item" rel="tag">{{ category_word }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
++      {% capture category_url %}{{ category_word | slugify | prepend: path_type | prepend: site.category_archive.path }}{% endcapture %}
++      {% capture l10n_url %}{% if site.active_lang != site.default_lang %}{{ site.active_lang | prepend: "/" }}{% endif %}{{ category_url }}{% endcapture %}
++      <a href="{{ l10n_url | relative_url }}" class="page__taxonomy-item" rel="tag">{{ category_word }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
      {% endfor %}
      </span>
    </p>

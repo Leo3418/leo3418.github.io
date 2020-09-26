@@ -31,9 +31,9 @@ effect of defining 'level: 1' is undefined.
     {% for doc in collection_docs %}
     {%- capture entry -%}
     {% if doc.url == collection_home_url %}
-    <li><a href="{{ doc.url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ site.data.strings.home }}</a></li>
+    <li><a href="{{ doc.url | relative_url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ site.data.strings.home }}</a></li>
     {% else %}
-    <li><a href="{{ doc.url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ doc.title }}</a></li>
+    <li><a href="{{ doc.url | relative_url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ doc.title }}</a></li>
     {% endif %}
     {%- endcapture -%}
     {% if doc.level %}
