@@ -67,10 +67,10 @@ footer:
       url: "https://github.com/Leo3418/"
 tag_archive:
   type: "liquid"
-  path: "/tags/"
+  path: "/tags"
 category_archive:
   type: "liquid"
-  path: "/categories/"
+  path: "/categories"
 after_footer_scripts:
   - "/assets/js/main.js"
 
