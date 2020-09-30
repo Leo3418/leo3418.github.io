@@ -47,7 +47,7 @@ $ dmesg | grep xhci_hcd
    a computer.
 
 2. On the computer, open up your SD card's boot partition (which should be the
-   first partiton with size of 600 MiB), then edit `config.txt`. Add the
+   first partition with size of 600 MiB), then edit `config.txt`. Add the
    following line to the file:
 
    ```
