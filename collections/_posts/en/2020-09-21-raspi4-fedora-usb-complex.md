@@ -7,6 +7,7 @@ tags:
 categories:
   - Tutorial
 toc: true
+last_modified_at: 2020-10-07
 ---
 
 In [the previous post](/2020/09/20/raspi4-fedora-usb-simple.html) we looked at
@@ -185,55 +186,37 @@ Fedora. You need to
 
 Most disk management tools have the functionality to read a partition's UUID,
 and you can use whatever tool you like for this objective. The following
-example uses the `blkid` command-line program that is commonly available on
-GNU/Linux systems.
-
-First, you need to get the *device name* of the boot partition. This can be
-accomplished with the `lsblk` program:
+example continues to use the `lsblk` program used in a previous step.
 
 ```console
-$ lsblk -p
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-/dev/loop0    7:0    0   2.2G  0 loop /mnt/tmp
-/dev/sda      8:0    0 232.9G  0 disk
-├─/dev/sda1   8:1    0    96M  0 part /boot/efi
-├─/dev/sda2   8:2    0   384M  0 part /boot
-├─/dev/sda3   8:3    0  44.7G  0 part /home
-├─/dev/sda4   8:4    0  18.6G  0 part /
-├─/dev/sda5   8:5    0     8G  0 part [SWAP]
-└─/dev/sda6   8:6    0 161.1G  0 part
-/dev/sdb      8:16   0 238.5G  0 disk
-├─/dev/sdb1   8:17   0   100M  0 part
-├─/dev/sdb2   8:18   0    16M  0 part
-├─/dev/sdb3   8:19   0 237.9G  0 part
-└─/dev/sdb4   8:20   0 512.3M  0 part
-/dev/sdc      8:32   1  29.7G  0 disk
-├─/dev/sdc1   8:33   1   600M  0 part
-├─/dev/sdc2   8:34   1     1G  0 part
-└─/dev/sdc3   8:35   1  28.1G  0 part
+$ lsblk -o +UUID
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
+sda      8:0    0 232.9G  0 disk
+├─sda1   8:1    0   100M  0 part /boot/efi  B7BD-87CF
+├─sda2   8:2    0   512M  0 part /boot      8fa7443f-cf79-4a8d-b7b8-fe1d1886c761
+├─sda3   8:3    0  71.2G  0 part /home      a8bb548a-6e3d-4639-b38b-5e0eac68df4c
+└─sda4   8:4    0 161.1G  0 part            E01A56741A564824
+sdb      8:16   0 238.5G  0 disk
+├─sdb1   8:17   0   100M  0 part            6CBE-049D
+├─sdb2   8:18   0    16M  0 part
+├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
+└─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
+sdc      8:32   1  29.7G  0 disk
+├─sdc1   8:33   1   600M  0 part /run/media 8488-13BB
+├─sdc2   8:34   1     1G  0 part /run/media fe45e5bc-62c6-4d92-bc76-8d96c33a0b27
+└─sdc3   8:35   1  28.1G  0 part /run/media 869eff8d-1694-425b-8dc4-c00701742baf
+zram0  252:0    0     4G  0 disk [SWAP]
 ```
 
-Look for the disk whose size is about the same as your SD card. Here, a 32 GB
-SD card is used, and the size of `/dev/sdc` is 29.7 GiB, which equals 32 GB, so
-it is the device for the whole SD card. The boot partition is the first one on
-the SD card, and thus its device name is `/dev/sdc1` as shown in the first
-entry under the disk.
+First, look for the disk whose size is about the same as your SD card. Here, a
+32 GB SD card is used, and the size of `sdc` is 29.7 GiB, which equals 32 GB,
+so it is the device for the whole SD card. The boot partition is the first one
+on the SD card, which is `sdc1` as shown in the first entry under the disk. And
+the output of `lsblk` indicates that its UUID is `8488-13BB`.
 
 {: .notice--info}
 `GB` and `GiB` are different units. 1 GB = 0.9313 GiB. `lsblk` uses `GiB` and
 `MiB` as size units in its output.
-
-Next, pass in the **boot partition's** device name as argument to `blkid`. You
-should enter the device name that ends with a digit here; the one without an
-ending digit is for the whole disk, which should not be used.
-
-```console
-$ blkid /dev/sdc1
-/dev/sdc1: UUID="8488-13BB" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="8b1dd6db-01"
-```
-
-The value for the key `UUID`, which is `8488-13BB` in this example, is the UUID
-you will need.
 
 ### Change Bootloader Parameters
 
@@ -264,10 +247,30 @@ unmount it and remove the mount point with the following commands.
 
 ## Known Issues
 
-- When Fedora 32 runs on the 8GB model, regardless of whether this solution has
-  been applied, the amount of RAM available to the operating system is limited
-  to 4 GiB. This is caused by Fedora 32's outdated U-Boot image. Fedora 33
-  fixes this particular problem by shipping a newer U-Boot image.
+### Fedora 32
+
+When Fedora 32 runs on the 8GB model, regardless of whether this solution has
+been applied, the amount of RAM available to the operating system is limited to
+4 GiB. This is caused by Fedora 32's outdated U-Boot image. Fedora 33 fixes
+this particular problem by shipping a newer U-Boot image.
+
+### Fedora 33
+
+The U-Boot image shipped with Fedora 33 has an issue where the boot process
+gets stuck until you connect the Raspberry Pi to a monitor. This can be easily
+fixed by creating a file called `extraconfig.txt` under the SD card's boot
+partition and inserting the following line into the file:
+
+```
+hdmi_force_hotplug=1
+```
+
+This may be done by running the following command under the SD card's boot
+partition:
+
+```console
+$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
+```
 
 ## References
 

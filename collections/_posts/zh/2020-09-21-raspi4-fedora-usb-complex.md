@@ -7,6 +7,7 @@ tags:
 categories:
   - 教程
 toc: true
+last_modified_at: 2020-10-07
 ---
 
 在[上一篇帖子](/2020/09/20/raspi4-fedora-usb-simple.html)中，我介绍了一种十分简单的解决在树莓派 4B 4GB/8GB 内存型号上运行 Fedora 时无法使用 USB 接口的方法。这种方法通过牺牲可用内存的方式来换取 USB 接口的正常功能。而在现在这篇帖子中，我将再介绍一种方法，虽然需要更多的操作，但是不会导致 3 GiB 内存的限制。
@@ -125,45 +126,32 @@ $ mv {rpi4-,}u-boot.bin
 
 ### 查找引导分区的 UUID
 
-大部分磁盘管理工具都支持读取一个分区的 UUID，您可以随意选择相应的工具。下面的示例中使用的是 `blkid`，是 GNU/Linux 上常有的命令。
-
-首先要做的是查询引导分区的*设备名*。可以用 `lsblk` 命令：
+大部分磁盘管理工具都支持读取磁盘分区的 UUID，您可以随意选择相应的工具。下面的示例中使用的仍然是之前用过的 `lsblk`。
 
 ```console
-$ lsblk -p
-NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-/dev/loop0    7:0    0   2.2G  0 loop /mnt/tmp
-/dev/sda      8:0    0 232.9G  0 disk
-├─/dev/sda1   8:1    0    96M  0 part /boot/efi
-├─/dev/sda2   8:2    0   384M  0 part /boot
-├─/dev/sda3   8:3    0  44.7G  0 part /home
-├─/dev/sda4   8:4    0  18.6G  0 part /
-├─/dev/sda5   8:5    0     8G  0 part [SWAP]
-└─/dev/sda6   8:6    0 161.1G  0 part
-/dev/sdb      8:16   0 238.5G  0 disk
-├─/dev/sdb1   8:17   0   100M  0 part
-├─/dev/sdb2   8:18   0    16M  0 part
-├─/dev/sdb3   8:19   0 237.9G  0 part
-└─/dev/sdb4   8:20   0 512.3M  0 part
-/dev/sdc      8:32   1  29.7G  0 disk
-├─/dev/sdc1   8:33   1   600M  0 part
-├─/dev/sdc2   8:34   1     1G  0 part
-└─/dev/sdc3   8:35   1  28.1G  0 part
+$ lsblk -o +UUID
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
+sda      8:0    0 232.9G  0 disk
+├─sda1   8:1    0   100M  0 part /boot/efi  B7BD-87CF
+├─sda2   8:2    0   512M  0 part /boot      8fa7443f-cf79-4a8d-b7b8-fe1d1886c761
+├─sda3   8:3    0  71.2G  0 part /home      a8bb548a-6e3d-4639-b38b-5e0eac68df4c
+└─sda4   8:4    0 161.1G  0 part            E01A56741A564824
+sdb      8:16   0 238.5G  0 disk
+├─sdb1   8:17   0   100M  0 part            6CBE-049D
+├─sdb2   8:18   0    16M  0 part
+├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
+└─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
+sdc      8:32   1  29.7G  0 disk
+├─sdc1   8:33   1   600M  0 part /run/media 8488-13BB
+├─sdc2   8:34   1     1G  0 part /run/media fe45e5bc-62c6-4d92-bc76-8d96c33a0b27
+└─sdc3   8:35   1  28.1G  0 part /run/media 869eff8d-1694-425b-8dc4-c00701742baf
+zram0  252:0    0     4G  0 disk [SWAP]
 ```
 
-留意输出结果中大小与您的 SD 卡相近的磁盘。此示例中使用的是一张 32 GB 的 SD 卡，命令输出中 `/dev/sdc` 的大小是 29.7 GiB，两个大小相等，因此 `/dev/sdc` 对应整张 SD 卡。因为引导分区是 SD 卡上的第一个分区，而 `/dev/sdc` 下的第一个条目是 `/dev/sdc1`，所以引导分区的设备名是 `/dev/sdc1`。
+留意输出结果中大小与您的 SD 卡相近的磁盘。此示例中使用的是一张 32 GB 的 SD 卡，命令输出中 `sdc` 的大小是 29.7 GiB，两个大小相等，因此 `sdc` 对应整张 SD 卡。因为引导分区是 SD 卡上的第一个分区，而 `sdc` 下的第一个条目是 `sdc1`，所以引导分区的设备名是 `sdc1`。`lsblk` 的输出中显示 `sdc1` 的 UUID 是 `8488-13BB`。
 
 {: .notice--info}
 请注意区分 `GB` 和 `GiB` 这两个不同的单位。1 GB = 0.9313 GiB。`lsblk` 在命令输出中使用的大小单位是 `GiB` 和 `MiB`。
-
-接着，运行 `blkid` 命令，并将**引导分区**的设备名指定为参数。您在此处输入的设备名应该以数字结尾；不以数字结尾的设备名对应的是整个磁盘，不应在此处使用。
-
-```console
-$ blkid /dev/sdc1
-/dev/sdc1: UUID="8488-13BB" BLOCK_SIZE="512" TYPE="vfat" PARTUUID="8b1dd6db-01"
-```
-
-此命令输出中 `UUID` 后面的值就是引导分区的 UUID。例如，上面输出中显示的分区 UUID 是 `8488-13BB`。
 
 ### 修改引导程序参数
 
@@ -188,7 +176,23 @@ normal
 
 ## 已知问题
 
-- 在 8GB 内存型号上运行 Fedora 32 时，无论您是否已经应用了上述解决方案，系统都只能使用 4 GiB 的内存。此问题是由 Fedora 32 老版本的 U-Boot 映像导致的。Fedora 33 更新了 U-Boot 映像，此问题也随之而解。
+### Fedora 32
+
+在 8GB 内存型号上运行 Fedora 32 时，无论您是否已经应用了上述解决方案，系统都只能使用 4 GiB 的内存。此问题是由 Fedora 32 老版本的 U-Boot 映像导致的。Fedora 33 更新了 U-Boot 映像，此问题也随之而解。
+
+### Fedora 33
+
+如果在启动树莓派时没有接显示器的话，Fedora 33 自带的 U-Boot 映像在启动时会卡住，必须连上显示器才能继续启动。解决方法很简单，就是在 SD 卡的启动分区内创建一个名为 `extraconfig.txt` 的文件，然后在文件中填入下面的内容：
+
+```
+hdmi_force_hotplug=1
+```
+
+可以在 SD 卡的启动分区下运行下面的命令来创建此文件：
+
+```console
+$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
+```
 
 ## 参考资料
 
