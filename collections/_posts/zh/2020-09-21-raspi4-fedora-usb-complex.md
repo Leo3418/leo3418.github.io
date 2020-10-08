@@ -118,6 +118,20 @@ $ cp -rv /mnt/tmp/* .
 $ mv {rpi4-,}u-boot.bin
 ```
 
+### Fedora 33 用户应执行的额外步骤
+
+如果将 Fedora 33 自带的 U-Boot 映像和 openSUSE 的启动文件一起使用，并且在启动树莓派时没有接显示器的话，启动过程就会卡住，必须连上显示器才能继续启动。解决方法很简单，就是在 SD 卡的引导分区内创建一个名为 `extraconfig.txt` 的文件，然后在文件中填入下面的内容：
+
+```
+hdmi_force_hotplug=1
+```
+
+可以在 SD 卡的引导分区下运行下面的命令来创建此文件：
+
+```console
+$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
+```
+
 ## 修改引导配置文件
 
 如果不修改引导配置的话，从 openSUSE 移植到 Fedora 的配置文件会尝试从无效的路径读取文件，导致系统不能启动，因此您需要修改引导配置文件，填入 Fedora 引导文件的路径。
@@ -142,23 +156,7 @@ normal
 
 ## 已知问题
 
-### Fedora 32
-
-在 8GB 内存型号上运行 Fedora 32 时，无论您是否已经应用了上述解决方案，系统都只能使用 4 GiB 的内存。此问题是由 Fedora 32 老版本的 U-Boot 映像导致的。Fedora 33 更新了 U-Boot 映像，此问题也随之而解。
-
-### Fedora 33
-
-如果在启动树莓派时没有接显示器的话，Fedora 33 自带的 U-Boot 映像在启动时会卡住，必须连上显示器才能继续启动。解决方法很简单，就是在 SD 卡的启动分区内创建一个名为 `extraconfig.txt` 的文件，然后在文件中填入下面的内容：
-
-```
-hdmi_force_hotplug=1
-```
-
-可以在 SD 卡的启动分区下运行下面的命令来创建此文件：
-
-```console
-$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
-```
+- 在 8GB 内存型号上运行 Fedora 32 时，无论您是否已经应用了上述解决方案，系统都只能使用 4 GiB 的内存。此问题是由 Fedora 32 老版本的 U-Boot 映像导致的。Fedora 33 更新了 U-Boot 映像，此问题也随之而解。
 
 ## 参考资料
 

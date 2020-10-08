@@ -174,6 +174,25 @@ command, if you are willing to use it:
 $ mv {rpi4-,}u-boot.bin
 ```
 
+### Extra Step for Fedora 33
+
+When the U-Boot image shipped with Fedora 33 is used together with openSUSE's
+boot files, the boot process will get stuck until you connect the Raspberry Pi
+to a monitor. This can be easily fixed by creating a file called
+`extraconfig.txt` under the SD card's boot partition and inserting the
+following line into the file:
+
+```
+hdmi_force_hotplug=1
+```
+
+This may be done by running the following command under the SD card's boot
+partition:
+
+```console
+$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
+```
+
 ## Modify Boot Configuration File
 
 The bootloader you have ported from openSUSE to Fedora will attempt to read
@@ -206,30 +225,10 @@ unmount it and remove the mount point with the following commands.
 
 ## Known Issues
 
-### Fedora 32
-
-When Fedora 32 runs on the 8GB model, regardless of whether this solution has
-been applied, the amount of RAM available to the operating system is limited to
-4 GiB. This is caused by Fedora 32's outdated U-Boot image. Fedora 33 fixes
-this particular problem by shipping a newer U-Boot image.
-
-### Fedora 33
-
-The U-Boot image shipped with Fedora 33 has an issue where the boot process
-gets stuck until you connect the Raspberry Pi to a monitor. This can be easily
-fixed by creating a file called `extraconfig.txt` under the SD card's boot
-partition and inserting the following line into the file:
-
-```
-hdmi_force_hotplug=1
-```
-
-This may be done by running the following command under the SD card's boot
-partition:
-
-```console
-$ echo 'hdmi_force_hotplug=1' > extraconfig.txt
-```
+- When Fedora 32 runs on the 8GB model, regardless of whether this solution has
+  been applied, the amount of RAM available to the operating system is limited
+  to 4 GiB. This is caused by Fedora 32's outdated U-Boot image. Fedora 33
+  fixes this particular problem by shipping a newer U-Boot image.
 
 ## References
 
