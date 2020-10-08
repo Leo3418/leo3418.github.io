@@ -37,9 +37,9 @@ effect of defining 'level: 1' is undefined.
     {% endif %}
     {%- endcapture -%}
     {% if doc.level %}
-        {% for i in (2..doc.level) %}<ul>{%- endfor -%}
+        {% for i in (2..doc.level) %}<li><ul>{%- endfor -%}
         {{ entry }}
-        {%- for i in (2..doc.level) -%}</ul>{% endfor %}
+        {%- for i in (2..doc.level) -%}</ul></li>{% endfor %}
     {% else %}
         {{ entry }}
     {% endif %}
