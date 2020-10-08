@@ -120,45 +120,11 @@ $ mv {rpi4-,}u-boot.bin
 
 ## 修改引导配置文件
 
-如果不修改引导配置的话，从 openSUSE 移植到 Fedora 的配置文件会尝试从无效的路径读取文件，导致系统不能启动，因此您需要调整引导配置文件。整个操作分为两步：
-- 查找 Fedora SD 卡引导分区的 UUID
-- 在引导配置中填入该 UUID 以及 Fedora 的引导文件的路径
+如果不修改引导配置的话，从 openSUSE 移植到 Fedora 的配置文件会尝试从无效的路径读取文件，导致系统不能启动，因此您需要修改引导配置文件，填入 Fedora 引导文件的路径。
 
-### 查找引导分区的 UUID
-
-大部分磁盘管理工具都支持读取磁盘分区的 UUID，您可以随意选择相应的工具。下面的示例中使用的仍然是之前用过的 `lsblk`。
-
-```console
-$ lsblk -o +UUID
-NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
-sda      8:0    0 232.9G  0 disk
-├─sda1   8:1    0   100M  0 part /boot/efi  B7BD-87CF
-├─sda2   8:2    0   512M  0 part /boot      8fa7443f-cf79-4a8d-b7b8-fe1d1886c761
-├─sda3   8:3    0  71.2G  0 part /home      a8bb548a-6e3d-4639-b38b-5e0eac68df4c
-└─sda4   8:4    0 161.1G  0 part            E01A56741A564824
-sdb      8:16   0 238.5G  0 disk
-├─sdb1   8:17   0   100M  0 part            6CBE-049D
-├─sdb2   8:18   0    16M  0 part
-├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
-└─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
-sdc      8:32   1  29.7G  0 disk
-├─sdc1   8:33   1   600M  0 part /run/media 8488-13BB
-├─sdc2   8:34   1     1G  0 part /run/media fe45e5bc-62c6-4d92-bc76-8d96c33a0b27
-└─sdc3   8:35   1  28.1G  0 part /run/media 869eff8d-1694-425b-8dc4-c00701742baf
-zram0  252:0    0     4G  0 disk [SWAP]
-```
-
-留意输出结果中大小与您的 SD 卡相近的磁盘。此示例中使用的是一张 32 GB 的 SD 卡，命令输出中 `sdc` 的大小是 29.7 GiB，两个大小相等，因此 `sdc` 对应整张 SD 卡。因为引导分区是 SD 卡上的第一个分区，而 `sdc` 下的第一个条目是 `sdc1`，所以引导分区的设备名是 `sdc1`。`lsblk` 的输出中显示 `sdc1` 的 UUID 是 `8488-13BB`。
-
-{: .notice--info}
-请注意区分 `GB` 和 `GiB` 这两个不同的单位。1 GB = 0.9313 GiB。`lsblk` 在命令输出中使用的大小单位是 `GiB` 和 `MiB`。
-
-### 修改引导程序参数
-
-在您的 SD 卡的引导分区下的 `EFI/BOOT/grub.cfg` 文件中，删除所有已有内容，然后粘贴下面几行。如有必要，请将 `8488-13BB` 替换为您刚才实际获取到的分区 UUID。
+在您的 SD 卡的引导分区下的 `EFI/BOOT/grub.cfg` 文件中，删除所有已有内容，然后粘贴下列文本。
 
 ```
-search --fs-uuid --set=root 8488-13BB
 set prefix=($root)/EFI/fedora
 normal
 ```

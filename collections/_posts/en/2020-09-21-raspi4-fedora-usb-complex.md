@@ -178,54 +178,13 @@ $ mv {rpi4-,}u-boot.bin
 
 The bootloader you have ported from openSUSE to Fedora will attempt to read
 files from an invalid location and fail to boot unless it is reconfigured for
-Fedora. You need to
-- get the UUID of Fedora SD card's boot partition, then
-- tell the bootloader that UUID and the path to Fedora's boot files.
-
-### Get the Boot Partition's UUID
-
-Most disk management tools have the functionality to read a partition's UUID,
-and you can use whatever tool you like for this objective. The following
-example continues to use the `lsblk` program used in a previous step.
-
-```console
-$ lsblk -o +UUID
-NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
-sda      8:0    0 232.9G  0 disk
-├─sda1   8:1    0   100M  0 part /boot/efi  B7BD-87CF
-├─sda2   8:2    0   512M  0 part /boot      8fa7443f-cf79-4a8d-b7b8-fe1d1886c761
-├─sda3   8:3    0  71.2G  0 part /home      a8bb548a-6e3d-4639-b38b-5e0eac68df4c
-└─sda4   8:4    0 161.1G  0 part            E01A56741A564824
-sdb      8:16   0 238.5G  0 disk
-├─sdb1   8:17   0   100M  0 part            6CBE-049D
-├─sdb2   8:18   0    16M  0 part
-├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
-└─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
-sdc      8:32   1  29.7G  0 disk
-├─sdc1   8:33   1   600M  0 part /run/media 8488-13BB
-├─sdc2   8:34   1     1G  0 part /run/media fe45e5bc-62c6-4d92-bc76-8d96c33a0b27
-└─sdc3   8:35   1  28.1G  0 part /run/media 869eff8d-1694-425b-8dc4-c00701742baf
-zram0  252:0    0     4G  0 disk [SWAP]
-```
-
-First, look for the disk whose size is about the same as your SD card. Here, a
-32 GB SD card is used, and the size of `sdc` is 29.7 GiB, which equals 32 GB,
-so it is the device for the whole SD card. The boot partition is the first one
-on the SD card, which is `sdc1` as shown in the first entry under the disk. And
-the output of `lsblk` indicates that its UUID is `8488-13BB`.
-
-{: .notice--info}
-`GB` and `GiB` are different units. 1 GB = 0.9313 GiB. `lsblk` uses `GiB` and
-`MiB` as size units in its output.
-
-### Change Bootloader Parameters
+Fedora. You need to tell the bootloader the correct path to Fedora's boot
+files.
 
 Replace everything in file `EFI/BOOT/grub.cfg` under your SD card's boot
-partition with the following lines, and remember to change `8488-13BB` to the
-actual UUID you have obtained if they are different:
+partition with the following lines:
 
 ```
-search --fs-uuid --set=root 8488-13BB
 set prefix=($root)/EFI/fedora
 normal
 ```
