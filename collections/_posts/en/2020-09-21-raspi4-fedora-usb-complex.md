@@ -78,7 +78,7 @@ file in the same directory, with the `.xz` suffix removed.
 
 After the image is decompressed, it can be mounted so you are able to copy out
 the files in it. The image consists of multiple partitions; the main focus is
-on the first of them, which is the boot partition and contains the files you
+on the first of them, which is the EFI partition and contains the files you
 will need. Therefore, you just need to mount the first partition of the image.
 
 You may use whatever tool available on your operating system for mounting, as
@@ -89,7 +89,7 @@ your Fedora installation.
 The following instructions are for mounting the image's first partition on a
 GNU/Linux system with the `mount` program.
 
-1. Get the offset of the boot partition in the image. This information is
+1. Get the offset of the EFI partition in the image. This information is
    available indirectly from `fdisk`.
 
    ```console
@@ -130,7 +130,7 @@ GNU/Linux system with the `mount` program.
    # mount -o loop,offset=1048576 openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw /mnt/tmp/
    ```
 
-The files in the boot partition are now available at the mount point, so you
+The files in the EFI partition are now available at the mount point, so you
 are ready to copy them to elsewhere and have achieved the goal of mounting.
 
 ```console
@@ -149,8 +149,8 @@ bcm2710-rpi-3-b.dtb     fixup.dat
 ## Copy the Files to Fedora SD Card
 
 This step is very straightforward; just copy every file and directory in
-openSUSE's boot partition to your Fedora SD card's boot partition. If you want
-to use a command for this task, run the following one under the SD card's boot
+openSUSE's EFI partition to your Fedora SD card's EFI partition. If you want
+to use a command for this task, run the following one under the SD card's EFI
 partition:
 
 ```console
@@ -161,7 +161,7 @@ The `-r` flag let `cp` descend into child directories and copy their contents
 as well, and the `-v` flag is again an optional one merely for progress
 reporting.
 
-As of Fedora 32 and Linux kernel 5.8, there is one file in openSUSE's boot
+As of Fedora 32 and Linux kernel 5.8, there is one file in openSUSE's EFI
 partition that should not be used on Fedora, which is the *U-Boot image*
 `u-boot.bin`. When openSUSE's U-Boot image is being used, Fedora fails to boot.
 You can keep using Fedora's image `rpi4-u-boot.bin` instead, by first deleting
@@ -179,14 +179,14 @@ $ mv {rpi4-,}u-boot.bin
 When the U-Boot image shipped with Fedora 33 is used together with openSUSE's
 boot files, the boot process will get stuck until you connect the Raspberry Pi
 to a monitor. This can be easily fixed by creating a file called
-`extraconfig.txt` under the SD card's boot partition and inserting the
+`extraconfig.txt` under the SD card's EFI partition and inserting the
 following line into the file:
 
 ```
 hdmi_force_hotplug=1
 ```
 
-This may be done by running the following command under the SD card's boot
+This may be done by running the following command under the SD card's EFI
 partition:
 
 ```console
@@ -200,7 +200,7 @@ files from an invalid location and fail to boot unless it is reconfigured for
 Fedora. You need to tell the bootloader the correct path to Fedora's boot
 files.
 
-Replace everything in file `EFI/BOOT/grub.cfg` under your SD card's boot
+Replace everything in file `EFI/BOOT/grub.cfg` under your SD card's EFI
 partition with the following lines:
 
 ```

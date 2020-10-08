@@ -50,11 +50,11 @@ $ xz -dv openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.r
 
 ### 挂载映像
 
-映像解压完后，就可以将其挂载了，然后就可以将映像里的文件复制出来。openSUSE 的映像里有好几个分区；其中，第一个分区，也就是引导分区，包含您将要复制的引导文件和固件，所以只需挂载第一个分区即可。
+映像解压完后，就可以将其挂载了，然后就可以将映像里的文件复制出来。openSUSE 的映像里有好几个分区；其中，第一个分区，也就是 EFI 分区，包含您将要复制的引导文件和固件，所以只需挂载第一个分区即可。
 
 您可以任选用来挂载映像的工具，只要能够达成可以从映像中往外复制文件的最终目标就行。下面是在 GNU/Linux 环境中使用 `mount` 命令挂载映像的方法。
 
-1. 找出映像中引导分区的偏移量。可以使用 `fdisk` 命令来间接得出偏移量。
+1. 找出映像中 EFI 分区的偏移量。可以使用 `fdisk` 命令来间接得出偏移量。
 
    ```console
    $ fdisk -l openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw
@@ -85,7 +85,7 @@ $ xz -dv openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.r
    # mount -o loop,offset=1048576 openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw /mnt/tmp/
    ```
 
-此时就可以在挂载点下访问引导分区的文件了，也可以将它们复制出来，挂载分区的最终目标也就达成了。
+此时就可以在挂载点下访问 EFI 分区的文件了，也可以将它们复制出来，挂载分区的最终目标也就达成了。
 
 ```console
 $ cd /mnt/tmp
@@ -102,7 +102,7 @@ bcm2710-rpi-3-b.dtb     fixup.dat
 
 ## 将文件复制到 Fedora SD 卡上
 
-复制文件就很简单了，这里对文件复制的流程也没有特殊要求，只需将 openSUSE 引导分区中的所有文件和目录都复制到您安装了 Fedora 的 SD 卡上的引导分区即可。如果想使用命令来复制的话，在 SD 卡上的引导分区中运行下列命令：
+复制文件就很简单了，这里对文件复制的流程也没有特殊要求，只需将 openSUSE EFI 分区中的所有文件和目录都复制到您安装了 Fedora 的 SD 卡上的 EFI 分区即可。如果想使用命令来复制的话，在 SD 卡上的 EFI 分区中运行下列命令：
 
 ```console
 $ cp -rv /mnt/tmp/* .
@@ -110,7 +110,7 @@ $ cp -rv /mnt/tmp/* .
 
 此命令中的 `-r` 选项指定 `cp` 将子目录也一同复制过来；和之前一样，`-v` 选项是用来查看进度的可选选项。
 
-截至 Fedora 32 和 Linux 5.8，openSUSE 的引导分区中有一个文件在 Fedora 上是用不了的，那就是 *U-Boot 映像* `u-boot.bin`。如果用了 openSUSE 的 U-Boot 映像的话，Fedora 是无法启动的。作为替代，您可以使用 Fedora 的 `rpi4-u-boot.bin`：先删除 openSUSE 的 `u-boot.bin`，然后将 `rpi4-u-boot.bin` 重命名为 `u-boot.bin` 即可。
+截至 Fedora 32 和 Linux 5.8，openSUSE 的 EFI 分区中有一个文件在 Fedora 上是用不了的，那就是 *U-Boot 映像* `u-boot.bin`。如果用了 openSUSE 的 U-Boot 映像的话，Fedora 是无法启动的。作为替代，您可以使用 Fedora 的 `rpi4-u-boot.bin`：先删除 openSUSE 的 `u-boot.bin`，然后将 `rpi4-u-boot.bin` 重命名为 `u-boot.bin` 即可。
 
 如果想使用命令行的话，删除和重命名这两个操作可以只用一个命令来同时完成：
 
@@ -120,13 +120,13 @@ $ mv {rpi4-,}u-boot.bin
 
 ### Fedora 33 用户应执行的额外步骤
 
-如果将 Fedora 33 自带的 U-Boot 映像和 openSUSE 的启动文件一起使用，并且在启动树莓派时没有接显示器的话，启动过程就会卡住，必须连上显示器才能继续启动。解决方法很简单，就是在 SD 卡的引导分区内创建一个名为 `extraconfig.txt` 的文件，然后在文件中填入下面的内容：
+如果将 Fedora 33 自带的 U-Boot 映像和 openSUSE 的启动文件一起使用，并且在启动树莓派时没有接显示器的话，启动过程就会卡住，必须连上显示器才能继续启动。解决方法很简单，就是在 SD 卡的 EFI 分区内创建一个名为 `extraconfig.txt` 的文件，然后在文件中填入下面的内容：
 
 ```
 hdmi_force_hotplug=1
 ```
 
-可以在 SD 卡的引导分区下运行下面的命令来创建此文件：
+可以在 SD 卡的 EFI 分区下运行下面的命令来创建此文件：
 
 ```console
 $ echo 'hdmi_force_hotplug=1' > extraconfig.txt
@@ -136,7 +136,7 @@ $ echo 'hdmi_force_hotplug=1' > extraconfig.txt
 
 如果不修改引导配置的话，从 openSUSE 移植到 Fedora 的配置文件会尝试从无效的路径读取文件，导致系统不能启动，因此您需要修改引导配置文件，填入 Fedora 引导文件的路径。
 
-在您的 SD 卡的引导分区下的 `EFI/BOOT/grub.cfg` 文件中，删除所有已有内容，然后粘贴下列文本。
+在您的 SD 卡的 EFI 分区下的 `EFI/BOOT/grub.cfg` 文件中，删除所有已有内容，然后粘贴下列文本。
 
 ```
 set prefix=($root)/EFI/fedora
