@@ -28,17 +28,17 @@ effect of defining 'level: 1' is undefined.
     <input id="ac-toc" name="accordion-toc" type="checkbox" />
     <label for="ac-toc">{{ site.data.ui-text[site.active_lang].menu_label | default: "Toggle Menu" }}</label>
     <ul class="nav__items">
-    {% for doc in collection_docs %}
+    {%- for doc in collection_docs -%}
     {%- capture entry -%}
-    {% if doc.url == collection_home_url %}
+    {%- if doc.url == collection_home_url -%}
     <li><a href="{{ doc.url | relative_url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ site.data.strings.home }}</a></li>
-    {% else %}
+    {%- else -%}
     <li><a href="{{ doc.url | relative_url }}"{% if doc.url == page.url %} class="active"{% endif %}>{{ doc.title }}</a></li>
-    {% endif %}
+    {%- endif -%}
     {%- endcapture -%}
     {% if doc.level %}
-        {% for i in (2..doc.level) %}<li><ul>{%- endfor -%}
-        {{ entry }}
+        {%- for i in (2..doc.level) -%}<li><ul>{%- endfor -%}
+            {{ entry }}
         {%- for i in (2..doc.level) -%}</ul></li>{% endfor %}
     {% else %}
         {{ entry }}
