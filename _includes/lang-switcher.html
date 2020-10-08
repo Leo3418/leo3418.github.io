@@ -2,10 +2,10 @@
     {%- for lang in site.languages -%}
         {%- assign lang_name = site.data[lang].l10n.lang_name -%}
         {% if lang == site.active_lang %}
-    <li class="lang-option-active masthead__menu-item">{{ lang_name }}</span>
+    <li class="lang-option-active masthead__menu-item">{{ lang_name }}</li>
         {% else %}
             {% capture url %}{% if lang != site.default_lang %}{{ lang | prepend: "/" }}{% endif %}{{ page.url }}{%- endcapture -%}
     <li class="lang-option-inactive masthead__menu-item"><a href="{{ url | relative_url | prepend: " " }}">{{ lang_name }}</a></li>
         {% endif %}
     {%- endfor -%}
-</div>
+</ul>
