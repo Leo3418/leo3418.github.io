@@ -214,6 +214,17 @@ p, a, li, figcaption, td {
     }
 }
 
+// Header Links
+
+// Improve accessibility for users navigating with a keyboard
+.page__content {
+    h1, h2, h3, h4, h5, h6 {
+        .header-link:focus {
+            opacity: 1;
+        }
+    }
+}
+
 // Pagination
 
 .pagination {
