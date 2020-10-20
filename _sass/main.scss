@@ -239,15 +239,18 @@ p, a, li, figcaption, td {
     font-size: 0.75em;
 
     footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
         @include breakpoint($large) {
-            padding-left: calc(#{$right-sidebar-width-narrow} + 1em);
-            padding-right: calc(#{$right-sidebar-width-narrow} + 1em);
+            padding-left: calc(#{$right-sidebar-width-narrow} + 1rem);
+            padding-right: calc(#{$right-sidebar-width-narrow} + 1rem);
         }
 
         @include breakpoint($x-large) {
             max-width: $max-width;
-            padding-left: calc(#{$right-sidebar-width} + 1em);
-            padding-right: calc(#{$right-sidebar-width} + 1em);
+            padding-left: calc(#{$right-sidebar-width} + 1rem);
+            padding-right: calc(#{$right-sidebar-width} + 1rem);
         }
     }
 
