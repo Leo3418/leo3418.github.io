@@ -87,9 +87,11 @@ $code-padding-horizontal: 0.375em !default;
 .footer-block {
     flex: 1;
     margin-bottom: 16px;
+    margin-right: 16px;
+    min-width: 240px;
 
-    & + & {
-        margin-left: 16px;
+    &:last-of-type {
+        margin-right: revert;
     }
 }
 
