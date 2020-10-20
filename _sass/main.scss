@@ -3,7 +3,6 @@
 
 /* Values */
 
-$license-block-width: 300px !default;
 $code-font-size: 0.875em !default;
 $code-padding-horizontal: 0.375em !default;
 
@@ -75,35 +74,32 @@ $code-padding-horizontal: 0.375em !default;
 // Footer
 
 .custom-footer {
-    display: flow-root;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
     p {
         margin-top: 0;
         margin-bottom: 0;
     }
+}
 
-    .footer-block {
-        float: left;
-        margin-bottom: 16px;
-    }
+.footer-block {
+    flex: 1;
+    margin-bottom: 16px;
 
-    .license {
-        max-width: $license-block-width;
+    & + & {
+        margin-left: 16px;
     }
 }
 
-.footer-site-info {
-    padding-right: 16px;
-    min-width: calc(100% - #{$license-block-width});
+.footer-site-info .powered-by {
+    ul {
+        margin-top: 0;
+    }
 
-    .powered-by {
-        ul {
-            margin-top: 0;
-        }
-
-        ul, li {
-            margin-bottom: 0;
-        }
+    ul, li {
+        margin-bottom: 0;
     }
 }
 
