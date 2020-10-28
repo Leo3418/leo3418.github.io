@@ -104,23 +104,22 @@ Root 分区的文件系统已被成功转为 Btrfs 了。但是，因为文件�
 $ lsblk -o +UUID
 NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
 sda      8:0    0 232.9G  0 disk
-├─sda1   8:1    0   100M  0 part /boot/efi  B7BD-87CF
-├─sda2   8:2    0   512M  0 part /boot      8fa7443f-cf79-4a8d-b7b8-fe1d1886c761
-├─sda3   8:3    0  71.2G  0 part /home      a8bb548a-6e3d-4639-b38b-5e0eac68df4c
-└─sda4   8:4    0 161.1G  0 part            E01A56741A564824
+├─sda1   8:1    0   100M  0 part /boot/efi  6122-EBE7
+├─sda2   8:2    0  71.7G  0 part /home      b2c7f4cf-d75c-4f49-9a24-5f001e30d695
+└─sda3   8:3    0 161.1G  0 part            E01A56741A564824
 sdb      8:16   0 238.5G  0 disk
 ├─sdb1   8:17   0   100M  0 part            6CBE-049D
 ├─sdb2   8:18   0    16M  0 part
 ├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
 └─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
-sdc      8:32   1  29.8G  0 disk
-├─sdc1   8:33   1   600M  0 part /run/media BD95-A5EF
-├─sdc2   8:34   1     1G  0 part /run/media f25c31eb-a67b-46bb-a8b6-28003354b44a
-└─sdc3   8:35   1  28.2G  0 part /run/media ef9e12b6-16e4-44a7-902e-74e721199b67
+sdc      8:32   1  29.7G  0 disk
+├─sdc1   8:33   1   600M  0 part            3EC1-8F5F
+├─sdc2   8:34   1     1G  0 part            5c7fb847-cc50-4d5c-92e8-0aa3ca60cc8d
+└─sdc3   8:35   1  28.1G  0 part            368d0ec0-5f81-45f3-8dd1-786bd2e58c52
 zram0  252:0    0     4G  0 disk [SWAP]
 ```
 
-上面的示例中，root 分区 `sdc3` 对应的 UUID 是 `ef9e12b6-16e4-44a7-902e-74e721199b67`。您的磁盘上的分区 UUID 肯定会与此不同，因此在执行下面的步骤时，请切记将其改为您实际得到的 UUID。
+上面的示例中，root 分区 `sdc3` 对应的 UUID 是 `368d0ec0-5f81-45f3-8dd1-786bd2e58c52`。您的磁盘上的分区 UUID 肯定会与此不同，因此在执行下面的步骤时，请切记将其改为您实际得到的 UUID。
 
 ### 更新系统文件中的 UUID
 
@@ -146,22 +145,22 @@ zram0  252:0    0     4G  0 disk [SWAP]
   - 将此条目行尾的两个数改为 `0 0`
 
   ```diff
-  - UUID=b9c84f8b-74cc-4615-b8bb-59eee5ec46b7 /               ext4    defaults        1 1
-  + UUID=ef9e12b6-16e4-44a7-902e-74e721199b67 /               btrfs   defaults        0 0
-    UUID=f25c31eb-a67b-46bb-a8b6-28003354b44a /boot           ext4    defaults        1 2
-    UUID=BD95-A5EF                            /boot/efi       vfat    umask=0077,shortname=winnt 0 2
+  - UUID=80ddf2b2-a7c5-4e16-b520-b41a3d4feb3d /                       ext4    defaults        1 1
+  + UUID=368d0ec0-5f81-45f3-8dd1-786bd2e58c52 /                       btrfs   defaults        0 0
+    UUID=5c7fb847-cc50-4d5c-92e8-0aa3ca60cc8d /boot                   ext4    defaults        1 2
+    UUID=3EC1-8F5F          /boot/efi               vfat    umask=0077,shortname=winnt 0 2
   ```
 
 - 该磁盘上的 **`/boot` 分区**下 `loader/entries` 目录中的任何 `.conf` 文件：<br>
   修改 `options` 下 `root=UUID=` 后面的值
 
   ```diff
-    title Fedora (5.8.13-300.fc33.aarch64) 33 (Thirty Three Prerelease)
-    version 5.8.13-300.fc33.aarch64
-    linux /vmlinuz-5.8.13-300.fc33.aarch64
-    initrd /initramfs-5.8.13-300.fc33.aarch64.img
-  - options root=UUID=b9c84f8b-74cc-4615-b8bb-59eee5ec46b7 ro
-  + options root=UUID=ef9e12b6-16e4-44a7-902e-74e721199b67 ro
+    title Fedora (5.8.15-301.fc33.aarch64) 33 (Thirty Three)
+    version 5.8.15-301.fc33.aarch64
+    linux /vmlinuz-5.8.15-301.fc33.aarch64
+    initrd /initramfs-5.8.15-301.fc33.aarch64.img
+  - options root=UUID=80ddf2b2-a7c5-4e16-b520-b41a3d4feb3d ro rhgb quiet console=tty0
+  + options root=UUID=368d0ec0-5f81-45f3-8dd1-786bd2e58c52 ro rhgb quiet console=tty0
     grub_users $grub_users
     grub_arg --unrestricted
     grub_class kernel
