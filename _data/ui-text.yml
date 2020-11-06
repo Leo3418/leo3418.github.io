@@ -912,49 +912,52 @@ nl-NL:
 # ----------
 id: &DEFAULT_ID
   skip_links                 :
-  skip_primary_nav           :
-  skip_content               :
-  skip_footer                :
+  skip_primary_nav           : "Loncat ke navigasi"
+  skip_content               : "Loncat ke konten"
+  skip_footer                : "Loncat ke footer"
   page                       : "Halaman"
-  pagination_previous        : "Kembali"
-  pagination_next            : "Maju"
-  breadcrumb_home_label      : "Home"
+  pagination_previous        : "Sebelumnya"
+  pagination_next            : "Selanjutnya"
+  breadcrumb_home_label      : "Beranda"
   breadcrumb_separator       : "/"
-  menu_label                 : "Menu Toggle"
-  search_label               :
+  menu_label                 : "Menu"
+  search_label               : "Pencarian"
   toc_label                  : "Pada Halaman Ini"
   ext_link_label             : "Link langsung"
   less_than                  : "Kurang dari"
-  minute_read                : "Waktu baca"
-  share_on_label             : "Berbagi di"
+  minute_read                : "menit baca"
+  share_on_label             : "Bagikan di"
   meta_label                 :
-  tags_label                 : "Golongan:"
+  tags_label                 : "Label:"
   categories_label           : "Kategori:"
   date_label                 : "Diupdate:"
   comments_label             : "Tinggalkan komentar"
   comments_title             : "Komentar"
   more_label                 : "Pelajari lagi"
-  related_label              : "Anda juga akan suka"
+  related_label              : "Anda mungkin suka"
   follow_label               : "Ikuti:"
   feed_label                 : "Feed"
   powered_by                 : "Didukung oleh"
   website_label              : "Website"
   email_label                : "Email"
-  recent_posts               : "Posting terbaru"
+  recent_posts               : "Post terbaru"
   undefined_wpm              : "Parameter terdeskripsi words_per_minute di _config.yml"
-  comment_form_info          : "Email Anda tidak akan dipublish. Kolom yang diperlukan ditandai"
+  comment_form_info          : "Email Anda tidak akan dipublish. Kolom yang diperlukan ditandai dengan tanda "
   comment_form_comment_label : "Komentar"
-  comment_form_md_info       : "Markdown disupport."
+  comment_form_md_info       : "Markdown didukung."
   comment_form_name_label    : "Nama"
   comment_form_email_label   : "Alamat email"
   comment_form_website_label : "Website (opsional)"
-  comment_btn_submit         : "Submit Komentar"
-  comment_btn_submitted      : "Telah disubmit"
-  comment_success_msg        : "Terimakasih atas komentar Anda! Komentar ini akan tampil setelah disetujui."
-  comment_error_msg          : "Maaf, ada kesalahan pada submisi Anda. Pastikan seluruh kolom sudah dilengkapi dan coba kembali."
-  loading_label              : "Sedang meload..."
-  search_label_text          :
-  search_algolia_no_results  :
+  comment_btn_submit         : "Kirim Komentar"
+  comment_btn_submitted      : "Telah dikirim"
+  comment_success_msg        : "Terimakasih atas komentar Anda! Komentar akan tampil setelah disetujui."
+  comment_error_msg          : "Maaf, ada kesalahan pada komentar Anda. Pastikan seluruh kolom sudah dilengkapi dan coba kembali."
+  loading_label              : "Sedang memuat..."
+  search_label_text          : "Masukkan kata kunci percarian..."
+  search_placeholder_text    : "Masukkan kata kunci percarian..."
+  search_algolia_no_results  : "Tidak ada hasil"
+  results_found              : "Hasil percarian ditemukan"
+  back_to_top                : "Kembali ke awal"
 id-ID:
   <<: *DEFAULT_ID
 
@@ -972,7 +975,7 @@ vi: &DEFAULT_VI
   breadcrumb_separator       : "/"
   menu_label                 : "Menu"
   search_label               : "Tìm kiếm"
-  toc_label                  : "Tại trang này"
+  toc_label                  : "Mục lục"
   ext_link_label             : "Đường dẫn trực tiếp"
   less_than                  : "chỉ cần"
   minute_read                : "phút để đọc"
@@ -1005,7 +1008,7 @@ vi: &DEFAULT_VI
   loading_label              : "Đang tải..."
   search_label_text          : "Nhập từ khóa cần tìm..."
   search_placeholder_text    : "Nhập từ khóa cần tìm..."
-  search_algolia_no_results  :
+  search_algolia_no_results  : "Không tìm thấy kết quả nào"
   results_found              : "Kết quả tìm được"
   back_to_top                : "Lên đầu trang"
 vi-VN:
@@ -1793,6 +1796,61 @@ my: &DEFAULT_MY
   back_to_top                : "အပေါ်သို့ပြန်သွား"
 my-MM:
   <<: *DEFAULT_MY
+
+# Norwegian
+# -------
+no: &DEFAULT_NO
+  skip_links                 : "Hopp over lenker"
+  skip_primary_nav           : "Gå til primærnavigasjon"
+  skip_content               : "Gå til innhold"
+  skip_footer                : "Gå til fotnote"
+  page                       : "Side"
+  pagination_previous        : "Forrige"
+  pagination_next            : "Neste"
+  breadcrumb_home_label      : "Hjem"
+  breadcrumb_separator       : "/"
+  menu_label                 : "Vis/skjul meny"
+  search_label               : "Vis/skjul søk"
+  toc_label                  : "På denne siden"
+  ext_link_label             : "Direkte lenke"
+  less_than                  : "mindre enn"
+  minute_read                : "minutters lesing"
+  share_on_label             : "Del på"
+  meta_label                 :
+  tags_label                 : "Nøkkelord:"
+  categories_label           : "Kategorier:"
+  date_label                 : "Oppdatert:"
+  comments_label             : "Skriv en kommentar"
+  comments_title             : "Kommentarer"
+  more_label                 : "Lær mer"
+  related_label              : "Du vil kanskje også lese:"
+  follow_label               : "Følg:"
+  feed_label                 : "Feed"
+  powered_by                 : "Lagd med"
+  website_label              : "Nettside"
+  email_label                : "E-post"
+  recent_posts               : "Nyeste innlegg"
+  undefined_wpm              : "Parameteret words_per_minute er ikke definert i _config.yml"
+  comment_form_info          : "Din e-postadresse vil ikke bli publisert. Obligatoriske felt er markert"
+  comment_form_comment_label : "Kommentar"
+  comment_form_md_info       : "Markdown er støttet"
+  comment_form_name_label    : "Navn"
+  comment_form_email_label   : "E-postadresse"
+  comment_form_website_label : "Nettside (frivillig)"
+  comment_btn_submit         : "Send kommentar"
+  comment_btn_submitted      : "Sendt"
+  comment_success_msg        : "Takk for din kommentar! Den blir vist på siden så fort den er godkjent"
+  comment_error_msg          : "Beklager, noe gikk galt. Sjekk at alle obligatoriska felt er utfylt og prøv igjen"
+  loading_label              : "Laster..."
+  search_label_text          : "Skriv inn søkeord"
+  search_placeholder_text    : "Skriv inn søkeord"
+  search_algolia_no_results  : "Ingen treff"
+  results_found              : "Treff funnet"
+  back_to_top                : "Tillbake til toppen"
+no-NB:
+  <<: *DEFAULT_NO
+no-NN:
+  <<: *DEFAULT_NO
 
 # Another locale
 # --------------
