@@ -9,7 +9,7 @@ categories:
   - Tutorial
 asciinema-player: true
 toc: true
-last_modified_at: 2020-09-25
+last_modified_at: 2020-11-09
 ---
 
 This post is a continuation of my [previous
@@ -102,13 +102,13 @@ program in order to run it. To save yourself from the torture, you can add
 `/opt/vc/bin` to the `PATH` environment variable by editing `~/.bashrc`:
 
 ```diff
- # User specific environment
- if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
- then
-     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
- fi
-+PATH="/opt/vc/bin:$PATH"
- export PATH
+  # User specific environment
+  if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+  then
+      PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+  fi
++ PATH="/opt/vc/bin:$PATH"
+  export PATH
 ```
 
 Then, run the following command for the change to take effect:
@@ -140,17 +140,32 @@ $ cd /usr/lib/udev/rules.d/
 $ sudo curl -O https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
 ```
 
+Once the udev rule is copied to the correct location, you may apply it
+immediately without a reboot by using `udevadm`:
+
+```console
+$ sudo udevadm trigger /dev/vchiq
+```
+
+To see if the rule is in effect, check the permission settings for the VCHI
+device file `/dev/vchiq`. If its group is `video`, then the udev rule has been
+successfully activated.
+
+```console
+$ ls -l /dev/vchiq
+crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
+```
+
 {% include asciinema-player.html name="udev-rule.cast" poster="npt:11" %}
 
 Once this is done, any user in the `video` group can invoke `vcgencmd` without
-getting the same error.
+getting the same error. You can use the following command to add your own user
+account to the `video` group; however, **you must re-login to let the change
+take effect**.
 
 ```console
 $ sudo usermod -aG video $USER
 ```
-
-{: .notice--warning}
-**Note:** the changes listed in this section require a reboot to take effect.
 
 {% include asciinema-player.html name="add-to-group.cast" poster="npt:7.2" %}
 

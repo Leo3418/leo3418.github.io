@@ -9,7 +9,7 @@ categories:
   - 教程
 asciinema-player: true
 toc: true
-last_modified_at: 2020-09-25
+last_modified_at: 2020-11-09
 ---
 
 这篇帖子算是对我之前关于[在树莓派集群上配置 Fedora](/2020/07/24/fedora-raspi-cluster.html) 的那篇的一个延续。集群配置好后，我告知机主 [**@ColsonXu**](https://github.com/ColsonXu) 他的集群已经正式投入运算，他就告诉我可以运行一个命令来查看树莓派的 CPU 温度，监视硬件状况：
@@ -80,13 +80,13 @@ $ sudo ldconfig
 目前还有一个小瑕疵，那就是每次运行 `vcgencmd` 的时候都需要输入它的完整的绝对路径。如果不想这么麻烦的话，可以把 `vcgencmd` 所在的 `/opt/vc/bin` 加到 `PATH` 环境变量中。编辑 `~/.bashrc` 并作出如下修改：
 
 ```diff
- # User specific environment
- if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
- then
-     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
- fi
-+PATH="/opt/vc/bin:$PATH"
- export PATH
+  # User specific environment
+  if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+  then
+      PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+  fi
++ PATH="/opt/vc/bin:$PATH"
+  export PATH
 ```
 
 之后运行下面的命令，应用刚才的改动：
@@ -110,16 +110,26 @@ $ cd /usr/lib/udev/rules.d/
 $ sudo curl -O https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
 ```
 
+udev 规则下好后，无需重启，直接运行下列命令即可应用规则：
+
+```console
+$ sudo udevadm trigger /dev/vchiq
+```
+
+若要检查 udev 规则是否被应用，可以查看 VCHI 设备文件 `/dev/vchiq` 的权限设定。如果该文件所属的用户组是 `video`，就说明规则应用成功了。
+
+```console
+$ ls -l /dev/vchiq
+crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
+```
+
 {% include asciinema-player.html name="udev-rule.cast" poster="npt:11" %}
 
-之后，`video` 组中的用户就可以正常调用 `vcgencmd` 命令了。
+之后，`video` 组中的用户就可以正常调用 `vcgencmd` 命令了。您可以用下面的命令将当前的用户添加到 `video` 组中，但是在运行完命令后**必须重新登录才能令更改生效**。
 
 ```console
 $ sudo usermod -aG video $USER
 ```
-
-{: .notice--warning}
-**注意：**此部分中提及的改动需要重启才能生效。
 
 {% include asciinema-player.html name="add-to-group.cast" poster="npt:7.2" %}
 
