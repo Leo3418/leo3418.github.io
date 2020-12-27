@@ -8,6 +8,7 @@ categories:
   - Blog
 toc: true
 asciinema-player: true
+last_modified_at: 2020-12-27
 ---
 {% include res-path.liquid %}
 It has been six weeks since I published the last post on this site.  Myriad new
@@ -95,10 +96,11 @@ itself, but other articles in the Gentoo Wiki:
 - I wished to use the latest stable kernel (5.9) instead of the latest LTS
   kernel (5.4) Gentoo would install by default.  To do this, I had to define a
   rule in `/etc/portage/package.accept_keywords` to use latest kernel versions
-  that were not marked as stable by Gentoo.  Because I was using Btrfs, the
-  file system tools `btrfs-progs` should be on the latest version too in order
-  to [use bleeding-edge Btrfs features offered by the latest
-  kernel][btrfs-progs].
+  that were not marked as stable by Gentoo.  It is advisable to ensure the
+  Linux kernel headers package `sys-kernel/linux-headers` is on the latest
+  version in companion, too.  Because I was using Btrfs, the file system tools
+  `btrfs-progs` should be on the latest version as well in order to [use
+  bleeding-edge Btrfs features offered by the latest kernel][btrfs-progs].
 
   ```
   # /etc/portage/package.accept_keywords
@@ -106,7 +108,10 @@ itself, but other articles in the Gentoo Wiki:
   # Use the latest upstream stable kernel
   sys-kernel/vanilla-sources
 
-  # Also use the latest btrfs-progs in companion
+  # Use the latest kernel headers in companion
+  sys-kernel/linux-headers
+
+  # Use the latest btrfs-progs in companion
   sys-fs/btrfs-progs
   ```
 
@@ -134,7 +139,7 @@ itself, but other articles in the Gentoo Wiki:
 [gentoo-sources]: https://packages.gentoo.org/packages/sys-kernel/gentoo-sources
 [vanilla-sources]: https://packages.gentoo.org/packages/sys-kernel/vanilla-sources
 [dist-kernel]: https://www.kernel.org/category/releases.html#distribution-kernels
-[btrfs-progs]: https://btrfs.wiki.kernel.org/index.php/FAQ#Do_I_have_to_keep_my_btrfs-progs_at_the_same_version_as_my_kernel.2F
+[btrfs-progs]: https://btrfs.wiki.kernel.org/index.php/FAQ#Do_I_have_to_keep_my_btrfs-progs_at_the_same_version_as_my_kernel.3F
 [systemd-user-srv]: https://wiki.archlinux.org/index.php/systemd/User
 
 ### Tinkering with Kernel Configuration

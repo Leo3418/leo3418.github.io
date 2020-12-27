@@ -8,6 +8,7 @@ categories:
   - 博客
 toc: true
 asciinema-player: true
+last_modified_at: 2020-12-27
 ---
 {% include res-path.liquid %}
 自我上一篇文章发布到现在，已经过去六周时间了。各种新文章的主题和想法在我脑中迸发，把它们写下来并发布的意愿在我心中萦绕，只可惜太忙，而且忙的还是个竹篮打水一场空，只能在百忙之中匆匆把想法记录在草稿里，等有空的时候再写成正式的文章。现在终于忙完了一批活，难得短暂的清静，在可能只有写一篇文章的闲暇时间的情况下，我决定先把之前首次体验 [Gentoo][gentoo] 的经历记录下来。Gentoo 是一个*源码级* GNU/Linux 发行版，最有代表性的特点就是让用户自己编译系统的几乎所有组件，乃至于 Linux 内核也可以自己编译。
@@ -36,7 +37,7 @@ asciinema-player: true
 
 - 手册建议使用包括 Gentoo 自己的下游修改和补丁的内核源码（[`sys-kernel/gentoo-sources`][gentoo-sources]），但是我更想编译无修改的原版内核（[`sys-kernel/vanilla-sources`][vanilla-sources]）。[Linux 内核团队称][dist-kernel]，如果运行命令 `uname -r` 显示的内核版本结尾包括发行版自己加的标签，他们将无法对其提供支持，那我们就装一把编译出来之后运行 `uname -r` 就显示内核版本号的内核，体验一下直接编译纯净上游内核源码的感觉……
 
-- Gentoo 默认安装的是 LTS 内核（5.4），但我想使用最新的稳定内核（5.9）。想装最新的稳定内核的话，需要在 `/etc/portage/package.accept_keywords` 里定义一条规则，允许使用 Gentoo 还未标为稳定的内核版本。由于我选择了 Btrfs，配套的文件系统工具 `btrfs-progs` 最好也选用最新版本，[这样就可以使用内核提供的最新 Btrfs 功能][btrfs-progs]。
+- Gentoo 默认安装的是 LTS 内核（5.4），但我想使用最新的稳定内核（5.9）。想装最新的稳定内核的话，需要在 `/etc/portage/package.accept_keywords` 里定义一条规则，允许使用 Gentoo 还未标为稳定的内核版本。于此同时，作为搭配，Linux 内核头文件包 `sys-kernel/linux-headers` 的版本也应该是最新版本。由于我选择了 Btrfs，配套的文件系统工具 `btrfs-progs` 最好也选用最新版本，[这样就可以使用内核提供的最新 Btrfs 功能][btrfs-progs]。
 
   ```
   # /etc/portage/package.accept_keywords
@@ -44,7 +45,10 @@ asciinema-player: true
   # 使用最新的上游稳定版内核
   sys-kernel/vanilla-sources
 
-  # 配套使用最新的 btrfs-progs
+  # 使用最新版本的内核头文件
+  sys-kernel/linux-headers
+
+  # 使用最新的 btrfs-progs
   sys-fs/btrfs-progs
   ```
 
@@ -65,7 +69,7 @@ asciinema-player: true
 [gentoo-sources]: https://packages.gentoo.org/packages/sys-kernel/gentoo-sources
 [vanilla-sources]: https://packages.gentoo.org/packages/sys-kernel/vanilla-sources
 [dist-kernel]: https://www.kernel.org/category/releases.html#distribution-kernels
-[btrfs-progs]: https://btrfs.wiki.kernel.org/index.php/FAQ#Do_I_have_to_keep_my_btrfs-progs_at_the_same_version_as_my_kernel.2F
+[btrfs-progs]: https://btrfs.wiki.kernel.org/index.php/FAQ#Do_I_have_to_keep_my_btrfs-progs_at_the_same_version_as_my_kernel.3F
 [systemd-user-srv]: https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)
 
 ### 调试内核参数
@@ -156,7 +160,7 @@ Gentoo 对于以下几种用户群体而言是绝佳的选择：
   1074M /usr/src/linux-5.9.8
   ```
 
-  Gentoo 将构建软件包的用户交给了用户，而其它的二进制机器码发行版就相当于为用户编译好了所有的程序。选用一个普通的发行版就相当于让其他人帮您完成编译这一苛求性能的操作，在您自己的电脑性能一般的情况下可能是个明智的选择。
+  Gentoo 将构建软件包的任务交给了用户，而其它的二进制机器码发行版就相当于为用户编译好了所有的程序。选用一个普通的发行版就相当于让其他人帮您完成编译这一苛求性能的操作，在您自己的电脑性能一般的情况下可能是个明智的选择。
 
 - 刚开始接触 GNU/Linux 和/或软件构建和编译的人群。虽然配置和使用 Gentoo 的过程可以让您学到很多东西，但这也是建立在已经有了些 GNU/Linux 的基础知识、技能和理解的前提下。这种情况下，我建议先从一个容易安装和维护的 GNU/Linux 发行版入手，然后等到哪一天觉得安装 Arch Linux 不是什么大问题时，就可以考虑换到 Gentoo 了。
 
