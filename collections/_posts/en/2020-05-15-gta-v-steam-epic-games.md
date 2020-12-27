@@ -6,7 +6,7 @@ tags:
 categories:
   - Tutorial
 toc: true
-last_modified_at: 2020-09-15
+last_modified_at: 2020-12-27
 ---
 {% include img-path.liquid %}
 After Epic Games announced that it would give away free copies of GTA V for a
@@ -75,7 +75,7 @@ Steam's copy of GTA V files under Epic Games' installation path.
 
     ![]({{ img_path }}/08-start-cmd.png)
 
-9.  Run command `mklink /J "<Epic Games Path>" "<Steam Path>"` to create a link
+9.  Run command `mklink /D "<Epic Games Path>" "<Steam Path>"` to create a link
     to Steam's game files for Epic Games. Fill in the paths with values you got
     in step 1 and step 6 respectively. Remember to wrap the values in double
     quotes.
@@ -87,12 +87,13 @@ Steam's copy of GTA V files under Epic Games' installation path.
 
     ![]({{ img_path }}/09-2-link-created.png)
 
-10. Move the `.egstore` folder in step 4 back into GTAV.
+10. Move the `.egstore` folder in step 4 back into `GTAV`.
 
     ![]({{ img_path }}/10-restore-egstore.png)
 
-11. Start Epic Games Launcher. You should see it verifying files for GTA V,
-    which indicates success! Wait until it completes.
+11. Start Epic Games Launcher. If the download progress is paused, resume it
+    manually. Then, you should see it verifying files for GTA V, which
+    indicates success! Wait until it completes.
 
     ![]({{ img_path }}/11-epic-games-verifies.png)
 

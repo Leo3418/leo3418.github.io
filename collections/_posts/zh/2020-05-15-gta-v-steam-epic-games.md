@@ -7,7 +7,7 @@ categories:
   - 教程
 excerpt_separator: "<!--more-->"
 toc: true
-last_modified_at: 2020-09-15
+last_modified_at: 2020-12-27
 ---
 {% include img-path.liquid %}
 继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。
@@ -57,7 +57,7 @@ last_modified_at: 2020-09-15
 
     ![]({{ img_path }}/08-start-cmd.png)
 
-9.  在命令提示符里运行命令 `mklink /J "<Epic Games 路径>" "<Steam 路径>"`，在 Epic Games 游戏安装路径下创建一个连到 Steam 游戏文件的链接。分别将第 1 步和第 6 步里的路径代入该命令中。记得用英文的双引号把路径括起来，不要用中文的双引号。
+9.  在命令提示符里运行命令 `mklink /D "<Epic Games 路径>" "<Steam 路径>"`，在 Epic Games 游戏安装路径下创建一个连到 Steam 游戏文件的链接。分别将第 1 步和第 6 步里的路径代入该命令中。记得用英文的双引号把路径括起来，不要用中文的双引号。
 
     ![]({{ img_path }}/09-1-mklink.png)
 
@@ -69,7 +69,7 @@ last_modified_at: 2020-09-15
 
     ![]({{ img_path }}/10-restore-egstore.png)
 
-11. 现在启动 Epic Games 启动器，您应该能发现已经开始验证游戏文件了，说明操作成功！等待它完成即可。
+11. 现在启动 Epic Games 启动器。如果游戏下载仍然处于暂停状态的话，手动恢复下载。然后，您应该就能发现已经开始验证游戏文件了，说明操作成功！等待它完成即可。
 
     ![]({{ img_path }}/11-epic-games-verifies.png)
 
