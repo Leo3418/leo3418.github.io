@@ -173,6 +173,15 @@ p, a, li, figcaption, td {
     }
 }
 
+.notice, .notice--primary, .notice--info,
+.notice--warning, .notice--success, .notice--danger {
+    font-size: 0.875em !important;
+
+    div.highlighter-rouge, figure.highlight {
+        font-size: $code-font-size;
+    }
+}
+
 // Masthead
 
 .masthead, .greedy-nav {
