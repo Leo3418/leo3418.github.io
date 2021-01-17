@@ -13,7 +13,7 @@ toc: true
 自 Fedora 33 起，Fedora 将[开始][fedora-btrfs]使用 [Btrfs][wikipedia] 作为桌面版本的默认文件系统。在我关注的几个 Fedora 用户社区（以国外的为主）中，这一更改还是受到了一些欢迎的，毕竟 Btrfs 和传统的 ext4 相比有一些额外、实用的功能。其它非桌面版本（例如服务器版）默认仍然使用 ext4，不过用户在使用 Anaconda 安装 Fedora 时仍然可以手动选择使用 Btrfs。但是，如果使用的是非桌面版本的 raw 映像，比如 `aarch64` 最小安装（Minimal）映像，因为是直接将映像写到安装目标磁盘上的，而不是用 Anaconda 安装器，所以就没有机会选择使用除 ext4 以外的文件系统。而在这篇帖子中，我将展示一种用映像安装时也可以使用 Btrfs 的方法，其原理是在应用映像后手动转换文件系统。
 
 [fedora-btrfs]: https://fedoramagazine.org/btrfs-coming-to-fedora-33/
-[wikipedia]: https://en.wikipedia.org/wiki/Btrfs
+[wikipedia]: https://zh.wikipedia.org/zh-cn/Btrfs
 
 ## 选用 Btrfs 的理由
 

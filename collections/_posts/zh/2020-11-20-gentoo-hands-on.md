@@ -88,7 +88,7 @@ last_modified_at: 2020-12-27
 
 不过，我在网上找到了一个[各主流 CPU 型号上的内核编译时间的汇总][kernel-build-time]，如果里面的信息准确的话，那在目前常见的 CPU，甚至是英特尔前几年挤牙膏挤出的低压双核笔记本 CPU 上，编译内核所需的时间也不过是十分钟左右。我还没在我电脑上虚拟机以外的环境编译过内核，还想像不出十分钟编译完内核是什么体验，但如果真是这样的话，钻研并关闭无用的内核配置选项花的时间可能不及由此省下的编译时间。这种情况下，可以考虑直接用一个兼容主流硬件的内核配置，比如 [`genkernel`][genkernel] 生成的配置。
 
-[infiniband]: https://zh.wikipedia.org/wiki/InfiniBand
+[infiniband]: https://zh.wikipedia.org/zh-cn/InfiniBand
 [kernel-build-time]: https://openbenchmarking.org/test/pts/build-linux-kernel
 [genkernel]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel/zh-cn#.E5.A4.87.E9.80.89.EF.BC.9A.E4.BD.BF.E7.94.A8genkernel
 

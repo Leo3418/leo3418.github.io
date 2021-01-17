@@ -21,7 +21,7 @@ toc: true
 
 [freedesktop]: https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
-[fhs]: https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E6%A0%87%E5%87%86
+[fhs]: https://zh.wikipedia.org/zh-cn/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E6%A0%87%E5%87%86
 [0pointer-de]: http://0pointer.de/blog/projects/the-usr-merge
 [split-usr]: https://packages.gentoo.org/useflags/split-usr
 
