@@ -150,9 +150,9 @@ in the [Gentoo Handbook][handbook].
 
    <div class="notice--primary" id="variant-2-usr-sbin">
    {{ "If you wish to have the [second type of `/usr`
-   merge](#usr-merge-variant-2), you should move everything in `usr/sbin` into
-   `usr/bin` and replace `usr/sbin` with a symbolic link to the `usr/bin`
-   directory:" | markdownify }}
+   merge](#usr-merge-variant-2), you should additionally move everything in
+   `usr/sbin` into `usr/bin` and replace `usr/sbin` with a symbolic link to the
+   `usr/bin` directory:" | markdownify }}
 
    {{ "```console
 livecd /mnt/gentoo # cd usr
@@ -400,9 +400,9 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
    {: .notice--primary}
    If you wish to have the [second type of `/usr` merge][variant-2], you should
-   move everything in `sbin` and `usr/sbin` into `usr/bin`, and replace
-   `usr/sbin` with a symbolic link to the `usr/bin` directory.  Please see
-   [here][variant-2-usr-sbin] for commands you may use to do this.
+   additionally move everything in `sbin` and `usr/sbin` into `usr/bin`, and
+   replace `usr/sbin` with a symbolic link to the `usr/bin` directory.  Please
+   see [here][variant-2-usr-sbin] for commands you may use to do this.
 
 4. Restart your computer and boot into your system (not the bootable drive).
    As long as you have correctly copied the contents of `/bin`, `/lib`,
@@ -468,7 +468,8 @@ be under `/usr/sbin` is now in `/usr/bin`, which is already in `PATH`.
 However, if you are doing the [first kind of `/usr` merge][variant-1], this is
 not the desired result.  Executables under `/usr/sbin` are not moved in this
 case, but `/usr/sbin` is removed from `PATH` if we disable the `split-usr` USE
-flag, so we cannot invoke any command installed to that location!
+flag, so we cannot directly invoke any command installed to that location
+without prepending `/usr/sbin/` to the front of the command name!
 
 The way I suggest to add `/usr/sbin` back to `PATH` is to define it globally
 with a file under `/etc/env.d`.  Create a file with any name you like (e.g.
