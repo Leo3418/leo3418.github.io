@@ -7,11 +7,12 @@ tags:
 categories:
   - 博客
 toc: true
+last_modified_at: 2021-02-06
 ---
 {% include img-path.liquid %}
 Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。
 
-本文描述的方法适用于 Minecraft 1.14.4 和 1.15.x。该方法可能也适用于 Minecraft 1.13.x 和 1.14 系列的老版本，不过因为这些版本没有 Minecraft Forge 的稳定版，我并没有进行验证。一般还是推荐用稳定版的 Forge 来进行 mod 开发。
+本文描述的方法适用于 Minecraft 1.14.4 和 1.15.x。如果您是在 1.16.x 上的话，您仍然可以参考本文中的步骤，但**请务必仔细阅读关于 1.16 的特别说明**。该方法可能也适用于 Minecraft 1.13.x 和 1.14 系列的老版本，不过因为这些版本没有 Minecraft Forge 的稳定版，我并没有进行验证。一般还是推荐用稳定版的 Forge 来进行 mod 开发。
 
 如果是 Minecraft 1.12.2 或者之前的版本的话，要想使用本文描述的方法，可能需要对给出的代码示例进行大量修改；但是，在这些 Minecraft 老版本上可以直接使用 Forge 的配置界面框架，所以无需依照本篇文章的描述用 Minecraft 的 API 来替代。
 
@@ -111,6 +112,11 @@ public final class ConfigScreen extends Screen {
 }
 ```
 
+{: .notice--warning}
+**关于 Minecraft 1.16.x 的特别说明：**`render`方法的签名及其它与图形渲染相关的方法的签名发生了变化。请参阅我另一篇关于 Minecraft 1.16.x 中的变化的文章中的[此章节][render-matrixstack]以了解具体的细节。
+
+[render-matrixstack]: /2021/02/06/forge-mod-migrate-to-1-16#用于图形渲染的各种方法要求额外的-matrixstack-参数
+
 ### 注册配置界面工厂
 
 配置界面类创建好了，但现在还需要一个能创建它的实例的入口，用户才能打开这个界面来修改设置。下面要做的就是向 Minecraft Forge 注册可以创建新的配置界面实例的工厂。注册了工厂，mod 列表中的“配置”按钮就会亮起，用户点击它就可以进入配置界面了。
@@ -168,7 +174,6 @@ ExtensionPoint<BiFunction<Minecraft, Screen, Screen>> CONFIGGUIFACTORY
 ConfigScreen()` 就是一个不理会参数的工厂。这里顺带用到了 *lambda 表达式*；如果不熟悉的话，可以在网上查阅相关资料。
 
 而同样的类型也成为了 `registerExtensionPoint` 方法的类型参数 `<T>`，意味着这个方法的第二个参数——`extension`——被要求的类型是 `Supplier<BiFunction<Minecraft, Screen, Screen>`，也就是配置界面工厂的提供者。此处用到的 [`Supplier`](https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html) 接口用来代表一个不接受任何输入、直接返回结果的函数。只需要再写一个直接返回我刚才提到的工厂的 lambda 表达式 `() -> (mc, screen) -> new ConfigScreen()`，这个参数就解决了。
-
 
 ### 添加基本 UI 元素
 
@@ -257,6 +262,11 @@ public interface IPressable {
 
 作为一个“完成”按钮，我们希望在用户按下它时将配置界面关闭，所以我在回调函数中调用了 `Screen.onClose` 方法来关闭界面。此外，作为只有一个抽象方法的接口，`IPressable` 也是一个*函数式接口*，因此可以直接用 lambda 表达式 `button -> this.onClose()` 来实现它。
 
+{: .notice--warning}
+**关于 Minecraft 1.16.x 的特别说明：**`this.onClose()` 不能再用于关闭当前的屏幕界面了。请参阅[此章节][close-screen]以了解关闭界面的新方法。
+
+[close-screen]: /2021/02/06/forge-mod-migrate-to-1-16#用于关闭屏幕界面的方法有改动
+
 现在配置界面最基础的结构就完成了，可以开始添加用来操纵选项的控件了。
 
 ![基本配置界面]({{ img_path_l10n }}/basic-config-screen.png)
@@ -336,6 +346,11 @@ Double>`](https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.
 最有意思的参数当属 `getDisplayString`，一个返回此选项的字符串表示的 `BiFunction`。这个 `BiFunction` 返回的字符串将会被显示在配置界面上。`BooleanOption` 的构造器是没有这个参数的，因为那个类它自己定义了默认的字符串表示方式，也就是 `<选项名>: [开|关]`。然而，`SliderPercentageOption` 没有类似的默认定义，需要程序员来指定怎么以字符串来表示一个选项。我这里用的返回格式相似的字符串表示的 `BiFunction` 是 `(gs,
 option) -> option.getDisplayString() + option.get(gs)`。
 
+{: .notice--warning}
+**关于 Minecraft 1.16.x 的特别说明：**此处用到的 `getDisplayString()` 方法在 1.16 中被删除了。请参阅[此章节][option-display-string]以了解代替的方法。
+
+[option-display-string]: /2021/02/06/forge-mod-migrate-to-1-16#用于获取设置选项的名称的方法被删除
+
 在下面的示例中，假设 `ModSettings.getHudX` 返回 `int`，并且 `ModSettings.setHudX` 需要一个 `int` 参数。
 
 ```java
@@ -371,7 +386,7 @@ public IteratableOption(String translationKey,
 
 至于 getter 方面，它是一个返回字符串而非整数的 `BiFunction`，数据类型和 setter 出现了偏差。`IteratableOption` 的 getter 的作用和上文中 `SliderPercentageOption` 构造器的 `getDisplayString` 是一样的，都是返回直接显示在配置界面上的文字，而非代表当前设定值的对象，甚至不是下标。
 
-这样的设计可能让 API 难以理解和使用，不过倒是允许 `IteratableOption` 忽略所有与一个选项允许的设定值相关的信息。像总共有多少个设定值被允许、以及每个设定值的字符串表示这些信息，`IteratableOption` 都不需要知道。
+这样的设计可能让 API 难以理解和使用，不过倒是允许 `IteratableOption` 忽略所有与合法设定值相关的信息。比如，像总共有多少个不同的合法设定值、以及每个设定值如何用字符串表示这些信息，`IteratableOption` 都不需要知道。
 
 下面的示例演示了如何添加一个允许的设定值来自枚举类常量的选项。用到的枚举类是我的 mod 的 `DreamMode` 类，可以在[此处](https://github.com/Leo3418/HBWHelper/blob/v1.2.0/src/main/java/io/github/leo3418/hbwhelper/game/DreamMode.java)找到它的源代码。
 
@@ -391,6 +406,9 @@ public IteratableOption(String translationKey,
                         I18n.format(ModSettings.getDreamMode().getTranslateKey())
         ));
 ```
+
+{: .notice--warning}
+**关于 Minecraft 1.16.x 的特别说明：**此示例中用到的 `getDisplayString()` 方法在 1.16 中被删除了。请参阅[此章节][option-display-string]以了解代替的方法。
 
 #### 保存配置
 
@@ -448,6 +466,9 @@ public final class ConfigScreen extends Screen {
     }
 }
 ```
+
+{: .notice--warning}
+**关于 Minecraft 1.16.x 的特别说明：**在 `onClose()` 中调用 `Minecraft.displayGuiScreen(Screen)` 会导致游戏崩溃。在写 1.16 的 mod 时，您应该移除该调用。欲了解详情，请参考[此章节][close-screen]。
 
 除此以外，因为构造器签名的变动，调用配置界面类构造器的地方也需要进行修改，比如配置界面工厂：
 
