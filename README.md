@@ -92,8 +92,8 @@ compare those versions with the following commands:
    used for this site:
 
    ```console
-   $ grep -o "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
-   jekyll (x.y.z)
+   $ grep -o "\sjekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
+    jekyll (x.y.z)
    ```
 
 If the version numbers in the output of those commands are identical, then you
