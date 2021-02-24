@@ -8,7 +8,7 @@ categories:
   - Blog
 toc: true
 asciinema-player: true
-last_modified_at: 2020-12-27
+last_modified_at: 2021-02-23
 ---
 {% include res-path.liquid %}
 It has been six weeks since I published the last post on this site.  Myriad new
@@ -184,14 +184,21 @@ for Wi-Fi, Bluetooth, NFC and other hardware alike can be safely deactivated.
 If your computer is so old that it does not support NVMe, NVMe options may be
 disabled as well.
 
-But, if I am not mistaken, it seems that kernel compilation on recent CPUs,
+~~But, if I am not mistaken, it seems that kernel compilation on recent CPUs,
 including even some old Intel dual-core laptop CPUs, can [complete within ten
 minutes][kernel-build-time].  I have not tried building a kernel on a system
 physically installed on my computer instead of a virtual machine yet, so I
-cannot imagine completing the build in such a short time.  If this is the case,
-the time spent going through the endless kernel configuration list is very
-likely to exceed compile time saved by deactivating some options, so you can
-simply use a kernel configuration with best compatibility, such as the one
+cannot imagine completing the build in such a short time.~~  (**Edit:** Well, I
+did make a mistake here.  the kernel build times concerned in the linked
+webpage is only for building the kernel itself (i.e. the runtime of `make
+vmlinux` or a similar command); the bulk of the kernel building process would
+be compiling the kernel modules if a generic kernel configuration is used.  In
+fact, I have tried to compile the kernel natively on my laptop with a dual-core
+Intel Core i5-7200U, which could build the kernel itself in about 9 minutes but
+would spend nearly an hour building the enabled kernel modules.)  If this is
+the case, the time spent going through the endless kernel configuration list is
+very likely to exceed compile time saved by deactivating some options, so you
+can simply use a kernel configuration with best compatibility, such as the one
 created by [`genkernel`][genkernel].
 
 [infiniband]: https://en.wikipedia.org/wiki/InfiniBand
