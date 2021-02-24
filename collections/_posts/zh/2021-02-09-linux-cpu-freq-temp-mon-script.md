@@ -60,7 +60,7 @@ echo "cpu temperature : ${cpu_temp}"
 ```
 {: #script}
 
-把这个脚本放到一个 `PATH` 环境变量中声明的路径下，就可以方便地随处调用它了。比如，在绝大多数 GNU/Linux 发行版中，~/.local/bin 都在 `PATH` 里。如果要看 `PATH` 中都声明了哪些路径，可以使用 `printenv PATH` 命令。除此之外，别忘了给脚本设上可执行权限（`chmod +x`）。
+把这个脚本放到一个 `PATH` 环境变量中声明的路径下，就可以方便地随处调用它了。比如，在绝大多数 GNU/Linux 发行版中，`~/.local/bin` 都在 `PATH` 里。如果要看 `PATH` 中都声明了哪些路径，可以使用 `printenv PATH` 命令。除此之外，别忘了给脚本设上可执行权限（`chmod +x`）。
 
 {% include asciinema-player.html name="install.cast" poster="npt:3.5" %}
 
