@@ -6,6 +6,7 @@ tags:
 categories:
   - 教程
 toc: true
+last_modified_at: 2021-03-05
 ---
 
 *`/usr` 合并*是指在诸如 GNU/Linux 等的遵循[文件系统层次结构标准（FHS）][fhs]的系统上，将 `/bin`、`/lib`、`/lib64` 和 `/sbin` 中的内容分别迁移至 `/usr/bin`、`/usr/lib`、`/usr/lib64` 和 `/usr/sbin` 中，然后把 `/bin`、`/lib`、`/lib64` 和 `/sbin` 改成指向 `/usr` 中同名目录的符号链接（symbolic link）。如果想了解有关 `/usr` 合并的更多信息，可以参阅 [freedesktop.org][freedesktop] 和 [Fedora Wiki][fedora] 中的相关页面（皆为英文页面）。
@@ -18,6 +19,9 @@ toc: true
 
 {: .notice--danger}
 虽然目前可以在 Gentoo 上合并 `/usr`，但请铭记，**目前 Gentoo 官方尚未支持 `/usr` 合并！**如果您不擅长处理系统问题，尤其是和符号链接相关的问题的话，那么不推荐合并 `/usr`。
+
+{: .notice--danger}
+目前已知有些软件包在 `/usr` 合并后的 Gentoo 系统上无法正常安装，例如 `dev-ml/dune`。此类安装问题通常需要修改软件包的 `ebuild` 来解决，因此除非您了解相关的流程，否则不建议合并 `/usr`。
 
 [freedesktop]: https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
@@ -82,7 +86,7 @@ toc: true
 
    ```console
    livecd /mnt/gentoo/usr # cd ..
-   livecd /mnt/gentoo # rm -rf {bin,lib,lib64,sbin}
+   livecd /mnt/gentoo # rm -rf bin lib lib64 sbin
    livecd /mnt/gentoo # ln -s usr/bin bin
    livecd /mnt/gentoo # ln -s usr/lib lib
    livecd /mnt/gentoo # ln -s usr/lib64 lib64
@@ -282,7 +286,7 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 3. 将 `bin`、`lib`、`lib64` 和 `sbin` 替换为指向 `usr` 下同名目录的符号链接。
 
    ```console
-   livecd /mnt/gentoo # rm -rf {bin,lib,lib64,sbin}
+   livecd /mnt/gentoo # rm -rf bin lib lib64 sbin
    livecd /mnt/gentoo # ln -s usr/bin bin
    livecd /mnt/gentoo # ln -s usr/lib lib
    livecd /mnt/gentoo # ln -s usr/lib64 lib64
@@ -296,11 +300,7 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
 5. 修复 `/usr` 下损坏的符号链接，具体的步骤和在安装时合并 `/usr` 步骤中的[第 4 步][sys-inst-4]相同。不过，有一些符号链接是可以不用手动修复的：
 
-   - 如果您同时使用 systemd 和 dracut，您可能会遇到一些名称类似 `dracut-*.service` 的链接。此种链接不需要手动修复，只需重新安装 `sys-kernel/dracut` 即可：
-
-     ```console
-     # emerge --ask --oneshot sys-kernel/dracut
-     ```
+   - 如果您同时使用 systemd 和 dracut，您可能会遇到一些名称类似 `dracut-*.service` 的链接。此种链接不需要手动修复，只需在屏蔽 `split-usr` USE flag 并重新编译 systemd **之后**重新安装 `sys-kernel/dracut` 即可。
 
    - `/usr/lib/modules/*.*.*/build` 和 `/usr/lib/modules/*.*.*/source` 也可以不修复。
    
@@ -312,6 +312,12 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
    ```console
    # emerge --ask --update --deep --newuse @world
+   ```
+   
+   如果您同时使用 systemd 和 dracut，您现在就可以运行下面的命令重新安装 dracut，从而修复损坏的 `dracut-*.service` 符号链接了。如果您不使用 dracut，**请勿**运行下面的命令，因为它会安装 dracut。
+   
+   ```console
+   # emerge --ask --oneshot sys-kernel/dracut
    ```
 
 [bootable-drive]: #bootable-drive

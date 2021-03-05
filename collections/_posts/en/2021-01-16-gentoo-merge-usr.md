@@ -6,6 +6,7 @@ tags:
 categories:
   - Tutorial
 toc: true
+last_modified_at: 2021-03-05
 ---
 
 The *`/usr` merge*, sometimes also known as *`/usr` move*, refers to a process
@@ -47,6 +48,13 @@ Though it is possible, **merging `/usr` is not officially supported by Gentoo
 yet!** Unless you are somewhat confident in resolving arbitrary issues on your
 system, particularly those pertinent to system file paths and symbolic links,
 it is not advisable to merge `/usr` on Gentoo.
+
+{: .notice--danger}
+It is already known that a few packages cannot be installed correctly on a
+Gentoo system with `/usr` merged, like `dev-ml/dune`.  Fixing those package
+installation issues will typically require you to modify the package's
+`ebuild`, so unless you know how to do this right, merging `/usr` is not a good
+idea.
 
 [freedesktop]: https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
@@ -141,7 +149,7 @@ in the [Gentoo Handbook][handbook].
 
    ```console
    livecd /mnt/gentoo/usr # cd ..
-   livecd /mnt/gentoo # rm -rf {bin,lib,lib64,sbin}
+   livecd /mnt/gentoo # rm -rf bin lib lib64 sbin
    livecd /mnt/gentoo # ln -s usr/bin bin
    livecd /mnt/gentoo # ln -s usr/lib lib
    livecd /mnt/gentoo # ln -s usr/lib64 lib64
@@ -391,7 +399,7 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
    directory under `usr` with the same name.
 
    ```console
-   livecd /mnt/gentoo # rm -rf {bin,lib,lib64,sbin}
+   livecd /mnt/gentoo # rm -rf bin lib lib64 sbin
    livecd /mnt/gentoo # ln -s usr/bin bin
    livecd /mnt/gentoo # ln -s usr/lib lib
    livecd /mnt/gentoo # ln -s usr/lib64 lib64
@@ -415,11 +423,8 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
    - If you use systemd *and* dracut, you may see some broken links whose names
      are something like `dracut-*.service`.  These links can be easily fixed by
-     reinstalling `sys-kernel/dracut`:
-
-     ```console
-     # emerge --ask --oneshot sys-kernel/dracut
-     ```
+     reinstalling `sys-kernel/dracut` **after** systemd is rebuilt with
+     `split-usr` USE flag masked.
 
    - It should be fine to leave `/usr/lib/modules/*.*.*/build` and
      `/usr/lib/modules/*.*.*/source` unfixed.
@@ -435,6 +440,15 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
    ```console
    # emerge --ask --update --deep --newuse @world
+   ```
+
+   If you are using systemd and dracut, you can rebuild dracut now to fix the
+   broken `dracut-*.service` symbolic links.  Run the following command
+   **only** if you intend to use dracut, because otherwise it will install
+   dracut onto your system.
+
+   ```console
+   # emerge --ask --oneshot sys-kernel/dracut
    ```
 
 [bootable-drive]: #bootable-drive
