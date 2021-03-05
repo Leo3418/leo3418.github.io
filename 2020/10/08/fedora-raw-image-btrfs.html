@@ -1,0 +1,605 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Use Btrfs on Fedora Installed from a Raw Image - Leo3418’s Personal Site</title>
+<meta name="description" content="Fedora is moving to Btrfs for its default file system on its “desktop variants” in Fedora 33.  This change is welcomed by some users because of some benefits Btrfs is offering.  Other Fedora variants still default to ext4, although users may elect to use Btrfs during system installation with the Anaconda installer.  But for non-desktop-variant raw image distributions like the Minimal aarch64 image, you do not have the chance to choose a file system other than ext4, because you are applying the image directly instead of using Anaconda.  This post will show you how to use Btrfs on a Fedora installation derived from such image by converting the file system after the image is applied.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Use Btrfs on Fedora Installed from a Raw Image">
+<meta property="og:url" content="https://leo3418.github.io/2020/10/08/fedora-raw-image-btrfs.html">
+
+
+  <meta property="og:description" content="Fedora is moving to Btrfs for its default file system on its “desktop variants” in Fedora 33.  This change is welcomed by some users because of some benefits Btrfs is offering.  Other Fedora variants still default to ext4, although users may elect to use Btrfs during system installation with the Anaconda installer.  But for non-desktop-variant raw image distributions like the Minimal aarch64 image, you do not have the chance to choose a file system other than ext4, because you are applying the image directly instead of using Anaconda.  This post will show you how to use Btrfs on a Fedora installation derived from such image by converting the file system after the image is applied.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-10-08T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/10/08/fedora-raw-image-btrfs.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/10/08/fedora-raw-image-btrfs.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Use Btrfs on Fedora Installed from a Raw Image">
+    <meta itemprop="description" content="Fedora is moving to Btrfs for its default filesystem on its “desktop variants” in Fedora 33.  This change is welcomed by someusers because of some benefits Btrfs is offering.  Other Fedora variants stilldefault to ext4, although users may elect to use Btrfs during systeminstallation with the Anaconda installer.  But for non-desktop-variant rawimage distributions like the Minimal aarch64 image, you do not have thechance to choose a file system other than ext4, because you are applying theimage directly instead of using Anaconda.  This post will show you how to useBtrfs on a Fedora installation derived from such image by converting the filesystem after the image is applied.">
+    <meta itemprop="datePublished" content="2020-10-08T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Use Btrfs on Fedora Installed from a Raw Image
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-10-08T00:00:00-05:00">Oct  8, 2020</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#reasons-to-use-btrfs">Reasons to Use Btrfs</a></li><li><a href="#disclaimer">Disclaimer</a></li><li><a href="#overview">Overview</a></li><li><a href="#convert-file-system-to-btrfs">Convert File System to Btrfs</a></li><li><a href="#modify-os-files">Modify OS Files</a><ul><li><a href="#get-partition-uuid-after-the-conversion">Get Partition UUID After the Conversion</a></li><li><a href="#update-partition-uuid-in-os-files">Update Partition UUID in OS Files</a></li></ul></li><li><a href="#relabel-file-system-for-selinux">Relabel File System for SELinux</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>Fedora <a href="https://fedoramagazine.org/btrfs-coming-to-fedora-33/">is moving</a> to <a href="https://en.wikipedia.org/wiki/Btrfs">Btrfs</a> for its default file
+system on its “desktop variants” in Fedora 33.  This change is welcomed by some
+users because of some benefits Btrfs is offering.  Other Fedora variants still
+default to ext4, although users may elect to use Btrfs during system
+installation with the Anaconda installer.  But for non-desktop-variant raw
+image distributions like the Minimal <code class="language-plaintext highlighter-rouge">aarch64</code> image, you do not have the
+chance to choose a file system other than ext4, because you are applying the
+image directly instead of using Anaconda.  This post will show you how to use
+Btrfs on a Fedora installation derived from such image by converting the file
+system after the image is applied.</p>
+
+<h2 id="reasons-to-use-btrfs">Reasons to Use Btrfs</h2>
+
+<p>Some advantages of Btrfs are already outlined in the Fedora Magazine article
+linked above.  Personally, after using a Btrfs-based Fedora installation for a
+while on my laptop, I have found these benefits of Btrfs:</p>
+
+<ul>
+  <li>
+    <p>There will be no more headache of adjusting partition sizes when one
+partition is almost full but another one still has plentiful space.</p>
+
+    <p>Imagine if your <code class="language-plaintext highlighter-rouge">/home</code> partition is running out of space, but the <code class="language-plaintext highlighter-rouge">/</code>
+partition has some spare capacity, so you wish to shrink <code class="language-plaintext highlighter-rouge">/</code> and expand
+<code class="language-plaintext highlighter-rouge">/home</code>. In standard partitioning scheme, resizing partitions can be very
+hard.  If LVM is used, adjusting partitions (i.e. logical volumes) <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_logical_volumes/assembly_modifying-logical-volume-size-configuring-and-managing-logical-volumes">can be
+done</a> but still requires running some commands.</p>
+
+    <p>For Btrfs, you can create multiple <em>subvolumes</em> in a Btrfs partition for
+different mount points.  <code class="language-plaintext highlighter-rouge">/home</code> and <code class="language-plaintext highlighter-rouge">/</code> will be placed in two subvolumes in
+the same Btrfs partition, but they can be managed like if they are on two
+real and different partitions.  The coolest thing here is that <code class="language-plaintext highlighter-rouge">/home</code> and
+<code class="language-plaintext highlighter-rouge">/</code> can share the entire Btrfs partition’s space, thus the barrier between
+them no longer exists, and you will never find the need to shrink one
+partition to make space for another.</p>
+  </li>
+  <li>
+    <p>Btrfs allows you to take snapshots of subvolumes.  Snapshots can be sent to
+another place, effectively allowing full-disk and full-system backups.  The
+snapshots can be taken incrementally, which enables <a href="https://fedoramagazine.org/btrfs-snapshots-backup-incremental/">incremental
+backups</a> that save spaces.</p>
+  </li>
+</ul>
+
+<h2 id="disclaimer">Disclaimer</h2>
+
+<p>I will try my best to ensure that the instructions in this post are accurate,
+but this can never be guaranteed.  <strong>Before you proceed, please back up all the
+data you cannot afford to lose, and make sure you are aware of the procedure to
+correctly recover the backup.</strong>  I will not be responsible for any data loss
+and hardware damage, even if they are caused by you accurately following the
+steps listed in this post.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>The following instructions assume you have already installed a Fedora raw image
+to a disk, and you can operate on its partitions and files when Fedora on the
+disk is not running.  For example, you can boot into another OS installed at a
+different location to operate on the Fedora installation from the same
+computer; or, if the disk is a removable storage device, you can plug it into
+another computer.</p>
+
+<p>To use Btrfs, these tasks need to be completed:</p>
+
+<ol>
+  <li>Convert the root file system from ext4 to Btrfs</li>
+  <li>Modify OS files for the new file system</li>
+  <li>Relabel files on the root file system for SELinux</li>
+</ol>
+
+<h2 id="convert-file-system-to-btrfs">Convert File System to Btrfs</h2>
+
+<p>First, find out the device for the root partition of the disk.  You may run
+<code class="language-plaintext highlighter-rouge">lsblk -p</code> to find out the correct device.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>lsblk <span class="nt">-p</span>
+<span class="go">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+/dev/sda      8:0    0 232.9G  0 disk
+├─/dev/sda1   8:1    0   100M  0 part /boot/efi
+├─/dev/sda2   8:2    0   512M  0 part /boot
+├─/dev/sda3   8:3    0  71.2G  0 part /home
+└─/dev/sda4   8:4    0 161.1G  0 part
+/dev/sdb      8:16   0 238.5G  0 disk
+├─/dev/sdb1   8:17   0   100M  0 part
+├─/dev/sdb2   8:18   0    16M  0 part
+├─/dev/sdb3   8:19   0 237.9G  0 part
+└─/dev/sdb4   8:20   0 512.3M  0 part
+/dev/sdc      8:32   1  29.8G  0 disk
+├─/dev/sdc1   8:33   1   600M  0 part /run/media/leo/BD95-A5EF
+├─/dev/sdc2   8:34   1     1G  0 part /run/media/leo/f25c31eb-a67b-46bb-a8b6-280
+└─/dev/sdc3   8:35   1  28.2G  0 part /run/media/leo/b9c84f8b-74cc-4615-b8bb-59e
+/dev/zram0  252:0    0     4G  0 disk [SWAP]
+</span></code></pre></div></div>
+
+<p>In the output of <code class="language-plaintext highlighter-rouge">lsblk</code>, find the disk entry whose size is similar to the disk
+containing Fedora installed from the image.  In the sample output shown above,
+the disk is <code class="language-plaintext highlighter-rouge">/dev/sdc</code>.  The root partition is the last and largest partition
+in the disk, which is <code class="language-plaintext highlighter-rouge">/dev/sdc3</code>.</p>
+
+<p>With this information, you are ready to convert the root partition to Btrfs
+using the <code class="language-plaintext highlighter-rouge">btrfs-convert</code> program.  Indicate the device for that partition in
+the program’s argument.  If the device for the root partition is not shown as
+<code class="language-plaintext highlighter-rouge">/dev/sdc3</code> in the output of <code class="language-plaintext highlighter-rouge">lsblk</code>, please change the argument accordingly.
+In addition, you need superuser privilege to use <code class="language-plaintext highlighter-rouge">btrfs-convert</code>, so you might
+need to invoke it with <code class="language-plaintext highlighter-rouge">sudo</code>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>btrfs-convert /dev/sdc3
+</code></pre></div></div>
+
+<p>If you see an error saying the device is mounted, simply unmount it with this
+command, and run <code class="language-plaintext highlighter-rouge">btrfs-convert</code> again:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>umount /dev/sdc3
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-10-08-fedora-raw-image-btrfs/btrfs-convert.cast" poster="npt:18.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="modify-os-files">Modify OS Files</h2>
+
+<p>The file system for root partition is now Btrfs.  However, because the file
+system conversion changes the partition’s UUID, operating system files that
+refer to the root partition by its UUID need to be modified.</p>
+
+<h3 id="get-partition-uuid-after-the-conversion">Get Partition UUID After the Conversion</h3>
+
+<p>You need to get the new UUID in order to update those OS files.  To do this,
+invoke <code class="language-plaintext highlighter-rouge">lsblk -o +UUID</code>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>lsblk <span class="nt">-o</span> +UUID
+<span class="go">NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT UUID
+sda      8:0    0 232.9G  0 disk
+├─sda1   8:1    0   100M  0 part /boot/efi  6122-EBE7
+├─sda2   8:2    0  71.7G  0 part /home      b2c7f4cf-d75c-4f49-9a24-5f001e30d695
+└─sda3   8:3    0 161.1G  0 part            E01A56741A564824
+sdb      8:16   0 238.5G  0 disk
+├─sdb1   8:17   0   100M  0 part            6CBE-049D
+├─sdb2   8:18   0    16M  0 part
+├─sdb3   8:19   0 237.9G  0 part            8A36C90E36C8FBE7
+└─sdb4   8:20   0 512.3M  0 part            6CA8C978A8C940F6
+sdc      8:32   1  29.7G  0 disk
+├─sdc1   8:33   1   600M  0 part            3EC1-8F5F
+├─sdc2   8:34   1     1G  0 part            5c7fb847-cc50-4d5c-92e8-0aa3ca60cc8d
+└─sdc3   8:35   1  28.1G  0 part            368d0ec0-5f81-45f3-8dd1-786bd2e58c52
+zram0  252:0    0     4G  0 disk [SWAP]
+</span></code></pre></div></div>
+
+<p>The UUID of the root partition <code class="language-plaintext highlighter-rouge">sdc3</code> shown in this sample output is
+<code class="language-plaintext highlighter-rouge">368d0ec0-5f81-45f3-8dd1-786bd2e58c52</code>.  The partition UUID on your disk will
+be a different one, so please remember to replace this example UUID with the
+actual one you get when you are following the instructions below.</p>
+
+<h3 id="update-partition-uuid-in-os-files">Update Partition UUID in OS Files</h3>
+
+<p>Once you know the new UUID, you can update the files as instructed below.  Here are some things you should be wary of:</p>
+
+<ul>
+  <li>
+    <p>You need superuser privilege to modify those files, even though they are
+files that belong to another operating system which is off-line.</p>
+  </li>
+  <li>
+    <p>Make sure you are not editing the files of the currently running system.  Do
+not use absolute paths like <code class="language-plaintext highlighter-rouge">/etc/fstab</code> if you are editing the files from a
+terminal.</p>
+  </li>
+  <li>
+    <p>Since the root partition was unmounted for Btrfs conversion before, you
+should remount it to edit files in it.  For example:</p>
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">mkdir</span> /mnt/rootfs
+<span class="gp">#</span><span class="w"> </span>mount /dev/sdc3 /mnt/rootfs
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>The modifications are:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">etc/fstab</code> under root partition<br />
+Edit the entry for <code class="language-plaintext highlighter-rouge">/</code> as follows:
+    <ul>
+      <li>Update UUID</li>
+      <li>Change file system type from <code class="language-plaintext highlighter-rouge">ext4</code> to <code class="language-plaintext highlighter-rouge">btrfs</code></li>
+      <li>Change the last two numbers at the end of line to <code class="language-plaintext highlighter-rouge">0 0</code></li>
+    </ul>
+
+    <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- UUID=80ddf2b2-a7c5-4e16-b520-b41a3d4feb3d /                       ext4    defaults        1 1
+</span><span class="gi">+ UUID=368d0ec0-5f81-45f3-8dd1-786bd2e58c52 /                       btrfs   defaults        0 0
+</span>  UUID=5c7fb847-cc50-4d5c-92e8-0aa3ca60cc8d /boot                   ext4    defaults        1 2
+  UUID=3EC1-8F5F          /boot/efi               vfat    umask=0077,shortname=winnt 0 2
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Any <code class="language-plaintext highlighter-rouge">.conf</code> file under the <code class="language-plaintext highlighter-rouge">loader/entries</code> directory in the <strong>partition for
+<code class="language-plaintext highlighter-rouge">/boot</code></strong>, which is the second partition on the disk:<br />
+Change the value after <code class="language-plaintext highlighter-rouge">root=UUID=</code> under <code class="language-plaintext highlighter-rouge">options</code></p>
+
+    <div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  title Fedora (5.8.15-301.fc33.aarch64) 33 (Thirty Three)
+  version 5.8.15-301.fc33.aarch64
+  linux /vmlinuz-5.8.15-301.fc33.aarch64
+  initrd /initramfs-5.8.15-301.fc33.aarch64.img
+<span class="gd">- options root=UUID=80ddf2b2-a7c5-4e16-b520-b41a3d4feb3d ro rhgb quiet console=tty0
+</span><span class="gi">+ options root=UUID=368d0ec0-5f81-45f3-8dd1-786bd2e58c52 ro rhgb quiet console=tty0
+</span>  grub_users $grub_users
+  grub_arg --unrestricted
+  grub_class kernel
+</code></pre></div>    </div>
+
+    <p class="notice--info">Please make sure the <code class="language-plaintext highlighter-rouge">/boot</code> partition is mounted too before editing this
+file.  If the root partition is <code class="language-plaintext highlighter-rouge">/dev/sdc3</code>, then this partition will be
+<code class="language-plaintext highlighter-rouge">/dev/sdc2</code>.</p>
+
+    <p class="notice--info">If you have updated the Linux kernel before, there will be multiple <code class="language-plaintext highlighter-rouge">.conf</code>
+files under <code class="language-plaintext highlighter-rouge">loader/entries</code>, each for a single kernel version.  You may
+choose to edit only one of them, like the one for the latest kernel for
+example, as long as you do not boot into other kernels whose <code class="language-plaintext highlighter-rouge">.conf</code> file is
+not modified.</p>
+  </li>
+</ul>
+
+<h2 id="relabel-file-system-for-selinux">Relabel File System for SELinux</h2>
+
+<p>The pointers to the root file system are updated, but at this stage, the system
+boot process still cannot complete because of issues with SELinux.</p>
+
+<p>To resolve the issue, trigger a relabeling of files in the root file system by
+creating a file <code class="language-plaintext highlighter-rouge">.autorelabel</code> directly under the root file system:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">touch</span> .autorelabel
+</code></pre></div></div>
+
+<p>The operating system, now residing in a Btrfs partition, is ready to boot at
+this moment.  On the first boot after the file system conversion, you might see
+some systemd units that are failed to start, which is OK for the first time.
+Then, you should find a <code class="language-plaintext highlighter-rouge">Starting Relabel all filesystems</code> message, and this is
+when the files are being relabeled for SELinux.</p>
+
+<p><img src="/assets/img/posts/2020-10-08-fedora-raw-image-btrfs/relabeling.jpg" alt="Boot message indicating file systems are being relabeled for
+SELinux" class="half" /></p>
+
+<p>This process may take a while.  On my Raspberry Pi 4, it would take a few
+minutes to relabel all files in a fresh Fedora installation.  After it
+completes, the system reboots automatically and should no longer emit errors
+when booting.</p>
+
+<p>Enjoy Fedora installed from raw image on Btrfs!</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://wiki.archlinux.org/index.php/Btrfs#Ext3/4_to_Btrfs_conversion">https://wiki.archlinux.org/index.php/Btrfs#Ext3/4_to_Btrfs_conversion</a></li>
+  <li><a href="https://wiki.centos.org/HowTos/SELinux#Relabel_Complete_Filesystem">https://wiki.centos.org/HowTos/SELinux#Relabel_Complete_Filesystem</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

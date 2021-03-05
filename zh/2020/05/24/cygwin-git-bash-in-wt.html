@@ -1,0 +1,465 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash - Leo3418 的个人网站</title>
+<meta name="description" content="近日，微软发布了 Windows Terminal 的首个正式版本。Windows Terminal 是 Windows 10 上全新的终端程序。和命令提示符还有 Windows Subsystem for Linux (WSL) 默认使用的系统自带老式控制台 conhost.exe 相比，它允许使用多种不同的壳层（shell），例如 Windows PowerShell、命令提示符、以及 WSL。除此之外，Windows Terminal 提供的功能和自定义选项也是比原有的控制台多许多。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash">
+<meta property="og:url" content="https://leo3418.github.io/2020/05/24/cygwin-git-bash-in-wt.html">
+
+
+  <meta property="og:description" content="近日，微软发布了 Windows Terminal 的首个正式版本。Windows Terminal 是 Windows 10 上全新的终端程序。和命令提示符还有 Windows Subsystem for Linux (WSL) 默认使用的系统自带老式控制台 conhost.exe 相比，它允许使用多种不同的壳层（shell），例如 Windows PowerShell、命令提示符、以及 WSL。除此之外，Windows Terminal 提供的功能和自定义选项也是比原有的控制台多许多。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-05-24T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2020/05/24/cygwin-git-bash-in-wt.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2020/05/24/cygwin-git-bash-in-wt.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash">
+    <meta itemprop="description" content="近日，微软发布了 Windows Terminal 的首个正式版本。Windows Terminal 是 Windows 10 上全新的终端程序。和命令提示符还有 Windows Subsystem for Linux (WSL) 默认使用的系统自带老式控制台 conhost.exe 相比，它允许使用多种不同的壳层（shell），例如 Windows PowerShell、命令提示符、以及 WSL。除此之外，Windows Terminal 提供的功能和自定义选项也是比原有的控制台多许多。">
+    <meta itemprop="datePublished" content="2020-05-24T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">在 Windows Terminal 中使用 Cygwin 命令行或 Git Bash
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-05-24T00:00:00-05:00">2020-05-24</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#添加-cygwin-的-shell-的步骤">添加 Cygwin 的 Shell 的步骤</a></li><li><a href="#添加-git-bash-的步骤">添加 Git Bash 的步骤</a></li><li><a href="#避免-process-exited-with-code-x-提示信息">避免 “Process Exited With Code x” 提示信息</a></li><li><a href="#选择-windows-terminal-的默认配置">选择 Windows Terminal 的默认配置</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>近日，微软发布了 Windows Terminal 的首个正式版本。Windows Terminal 是 Windows 10 上全新的终端程序。和命令提示符还有 Windows Subsystem for Linux (WSL) 默认使用的系统自带老式控制台 <code class="language-plaintext highlighter-rouge">conhost.exe</code> 相比，它允许使用多种不同的壳层（shell），例如 Windows PowerShell、命令提示符、以及 WSL。除此之外，Windows Terminal 提供的功能和自定义选项也是比原有的控制台多许多。</p>
+
+<p>得益于可自行添加 shell 的功能，我们可以将 <a href="https://www.cygwin.com/">Cygwin</a> 的 shell 和 <a href="https://gitforwindows.org/">Git for Windows</a> 中的 Git Bash 也加到 Windows Terminal 里，就可以在没有 WSL 的情况下在 Windows Terminal 里使用 Unix shell 和其它的一些 Unix 程序了。这篇文章将介绍相应的方法。</p>
+
+<p>此文章的目的并不是推荐各位使用 Cygwin 或者 Git Bash 替代 WSL，主要是为了方便已经安装了 Cygwin 或者 Git Bash 的人。当然了，如果愿意的话，即使您之前没用过这些软件，也可以装一下，体验下它们。</p>
+
+<p>添加 Cygwin 和 Git Bash 的操作步骤大同小异，所以我会先写怎么把 Cygwin 的 shell 加到 Windows Terminal 里，然后再说弄 Git Bash 的时候哪些步骤是不同的。</p>
+
+<h2 id="添加-cygwin-的-shell-的步骤">添加 Cygwin 的 Shell 的步骤</h2>
+
+<p>下述的步骤假设您在 Cygwin 中安装了 Bash。其它的 shell 应该也可以用，不过如果要用别的 shell，那么配置文件也会和示范中的不同，请多加留意。</p>
+
+<ol>
+  <li>
+    <p>从<a href="https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701">应用商店</a>下载 Windows Terminal。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/zh/store-page.png" alt="应用商店中的 Windows Terminal" /></p>
+  </li>
+  <li>
+    <p>打开 Windows Terminal。在窗口上方，您可以看到一个打开下拉菜单的按钮，里面有各种 shell 的配置。接下来我们也准备给 Cygwin 的 shell 创建一个新配置。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/zh/wt-profiles.png" alt="Windows Terminal 的下拉菜单" /></p>
+  </li>
+  <li>
+    <p>在菜单中选择“设置”，会弹出 Windows Terminal 的配置文件。往下翻一点，您会看见一个 <code class="language-plaintext highlighter-rouge">profiles</code> 选项，里面有个 <code class="language-plaintext highlighter-rouge">list</code>，就是我们要加新配置的地方。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/wt-config.png" alt="Windows Terminal 配置文件" /></p>
+
+    <p>一个基本的配置应该具有以下属性：</p>
+
+    <ul>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">guid</code>：该配置的独立 ID</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">name</code>：配置名称</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">commandline</code>：运行此配置对应的 shell 的命令行</p>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">guid</code> 中的 ID 可以随便弄一个 128 位的 UUID，前提是不和配置文件中已有的 UUID 重复。不过需要特别注意的是，<strong>即使您要删除配置文件中自带的配置，也不能用它们的 ID</strong>。 比如说，您根本用不着 Azure Cloud Shell，所以把它的配置删了，但即使是删除过后，也不能把它配置中的 <code class="language-plaintext highlighter-rouge">guid</code> 给别的配置用。</p>
+
+    <p>其实这不应该是什么问题，因为生成 UUID 的方法有很多：</p>
+    <ul>
+      <li>在 Cygwin 的 shell 里运行一下 <code class="language-plaintext highlighter-rouge">uuidgen</code> 命令</li>
+      <li>用一个网上找的 UUID 生成器</li>
+      <li>直接用我的示范里生成的 UUID：<code class="language-plaintext highlighter-rouge">a1f2ceb2-795d-4f2a-81cc-723cceec49c0</code></li>
+    </ul>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/uuidgen.png" alt="在 Cygwin 的 shell 里运行 “uuidgen” 命令" /></p>
+  </li>
+  <li>
+    <p>找出启动 Cygwin 的 shell 的命令行指令。</p>
+
+    <p>首先确定 Cygwin 的安装路径。如果您装的是 64 位版本，那么默认的安装路径是 <code class="language-plaintext highlighter-rouge">C:\cygwin64</code>。Bash 的可执行文件 <code class="language-plaintext highlighter-rouge">bash.exe</code> 存在 Cygwin 安装路径下的 <code class="language-plaintext highlighter-rouge">bin</code> 文件夹中，因此在默认的情况下，该文件的绝对路径是 <code class="language-plaintext highlighter-rouge">C:\cygwin64\bin\bash.exe</code>。</p>
+
+    <p>此处需要注意的一点是，Cygwin 中的 Bash 需要以交互式登录 shell（interactive login shell）的形式启动，否则的话，在运行一些包括 <code class="language-plaintext highlighter-rouge">ls</code> 在内的基本指令的时候会出 “command not found” 的消息。这个的原因是只有登录 shell 会在启动的时候运行 <code class="language-plaintext highlighter-rouge">/etc/profile</code>，然后 Cygwin 中的 <code class="language-plaintext highlighter-rouge">/etc/profile</code> 会把 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 和 <code class="language-plaintext highlighter-rouge">/usr/local/bin</code> 加到 <code class="language-plaintext highlighter-rouge">PATH</code> 环境变量当中。如果开启的不是登录 shell，那么 <code class="language-plaintext highlighter-rouge">/etc/profile</code> 不会被运行，环境变量也就不会被设置。启动交互式登录 shell 的方法是使用 <code class="language-plaintext highlighter-rouge">-i -l</code> 选项。如果您想使用别的 shell，那么请自行确认下让 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 和 <code class="language-plaintext highlighter-rouge">/usr/local/bin</code> 被添加到 <code class="language-plaintext highlighter-rouge">PATH</code> 下的方法。</p>
+
+    <p>因此，启动 Cygwin 的 Bash 的完整命令是 <code class="language-plaintext highlighter-rouge">C:\cygwin64\bin\bash.exe -i -l</code>；如果您把 Cygwin 装在了别的地方，或者想用别的 shell，请对命令进行相应的修改。</p>
+
+    <p>Windows Terminal 的配置文件里支持使用正斜杠 <code class="language-plaintext highlighter-rouge">/</code> 用作路径分割符，所以在填写路径的时候，可将反斜杠 <code class="language-plaintext highlighter-rouge">\</code> 替换为 <code class="language-plaintext highlighter-rouge">/</code>。比如说，上面的命令就会变成 <code class="language-plaintext highlighter-rouge">C:/cygwin64/bin/bash.exe -i -l</code>。如果要用反斜杠作为分割符的话，就需要在反斜杠前再加一个反斜杠，也就是像 <code class="language-plaintext highlighter-rouge">C:\\cygwin64\\bin\\bash.exe -i -l</code> 这样。</p>
+  </li>
+  <li>
+    <p>到这里，我们就可以把新配置的信息加到配置文件里了：</p>
+
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">         </span><span class="p">{</span><span class="w">
+             </span><span class="nl">"guid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{a1f2ceb2-795d-4f2a-81cc-723cceec49c0}"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bash"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"commandline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:/cygwin64/bin/bash.exe -i -l"</span><span class="w">
+         </span><span class="p">}</span><span class="err">,</span><span class="w">
+</span></code></pre></div>    </div>
+
+    <p>配置文件中各个配置的出现顺序和它们在 Windows Terminal 里出现的顺序是一致的。所以，如果我想把 Bash 放在最上面，那我在配置文件中也是把它放在第一个。</p>
+
+    <p>如果不是把配置加到列表最后的话，别忘了在右花括号后面加个逗号，如上面示例所示；如果是加在最后的话，就不用给新加的配置加逗号了，但仍然别忘了给原先就在最后的配置后面补一个逗号。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/config-new-profile.png" alt="添加新的配置" /></p>
+  </li>
+  <li>
+    <p>保存配置文件。如果文件中没有语法错误的话，您现在应该就可以在菜单中看到刚添加的配置了。点一下该配置，Bash 就会在一个新的标签里启动了。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/zh/wt-new-profile.png" alt="新添加的配置" /></p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/cygwin-bash-added.png" alt="在 Windows Terminal 中运行 Bash" /></p>
+  </li>
+</ol>
+
+<h2 id="添加-git-bash-的步骤">添加 Git Bash 的步骤</h2>
+
+<p>Git Bash 的步骤和 Cygwin 的步骤只有两处不同：</p>
+
+<ul>
+  <li>
+    <p>Git Bash 里没有 <code class="language-plaintext highlighter-rouge">uuidgen</code> 命令。但是因为还有其它获取 UUID 的方法，所以这不是什么大问题。</p>
+  </li>
+  <li>
+    <p>Shell 的路径和 Cygwin 不一样了：如果 Git for Windows 安装在 <code class="language-plaintext highlighter-rouge">C:\Program Files\Git</code>，那么 Git Bash 可执行文件的绝对路径就是 <code class="language-plaintext highlighter-rouge">C:\Program Files\Git\bin\bash.exe</code>。</p>
+
+    <p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/git-bash-cmd.png" alt="Git Bash 的命令行路径" /></p>
+  </li>
+</ul>
+
+<h2 id="避免-process-exited-with-code-x-提示信息">避免 “Process Exited With Code x” 提示信息</h2>
+
+<p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/non-zero-exit-status.png" alt="非零退出状态导致的提示信息" /></p>
+
+<p>在使用 <code class="language-plaintext highlighter-rouge">exit</code> 命令或 Ctrl-D 退出 shell 的时候，如果最后执行的命令的退出状态（exit status）不是 0 的话，可能会出现上图所示的提示信息。有的时候即使一个命令都没跑就直接退出 shell，也可能出现这种提示；这种情况则是因为诸如 <code class="language-plaintext highlighter-rouge">.bashrc</code> 的初始化脚本内有命令的退出状态非零。</p>
+
+<p>如果出现了这类错误提示，就必须得手动关闭 Windows Terminal 窗口。不过，有一种解决办法可以避免这类消息出现：在配置中添加 <code class="language-plaintext highlighter-rouge">"closeOnExit": "always"</code> 选项，即可阻止 Windows Terminal 显示该信息。需要注意的一点是，如果该选项是此配置的最后一行，那么您需要确保此选项的上一行结尾有一个逗号。</p>
+
+<p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/fix-non-zero-exit-msg.png" alt="在配置文件中添加此选项" /></p>
+
+<h2 id="选择-windows-terminal-的默认配置">选择 Windows Terminal 的默认配置</h2>
+
+<p>Windows Terminal 的配置文件中有个 <code class="language-plaintext highlighter-rouge">defaultProfile</code> 选项可以用来选择启动时默认打开的 shell。如果想指定一个配置作为默认配置，那就把该配置的 <code class="language-plaintext highlighter-rouge">guid</code> 复制到这个选项的值中就行了。</p>
+
+<p><img src="/assets/img/posts/2020-05-24-cygwin-git-bash-in-wt/set-default-profile.png" alt="选择默认配置" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#windows" class="page__taxonomy-item" rel="tag">Windows</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E6%95%99%E7%A8%8B" class="page__taxonomy-item" rel="tag">教程</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

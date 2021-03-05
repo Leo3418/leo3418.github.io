@@ -1,0 +1,602 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Perform Manual dnf history undo - Leo3418’s Personal Site</title>
+<meta name="description" content="My choices of GNU/Linux distributions are Fedora for desktop computers and CentOS for servers. Both of them feature DNF - Red Hat’s package manager front-end for RPM, which is the primary reason I use these distributions. Although one might argue that it is slow, DNF is very clear on not only what it will do for an action but also what it has done: it maintains a history of package installation and removal operations, which are called “transactions”. You can undo a transaction with dnf history undo or roll back to a previous state with dnf history rollback. Other common package managers, like APT and Pacman, also save operation logs, but they generally do not offer a similar operation reverting functionality.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Perform Manual dnf history undo">
+<meta property="og:url" content="https://leo3418.github.io/2020/07/31/manual-dnf-history-undo.html">
+
+
+  <meta property="og:description" content="My choices of GNU/Linux distributions are Fedora for desktop computers and CentOS for servers. Both of them feature DNF - Red Hat’s package manager front-end for RPM, which is the primary reason I use these distributions. Although one might argue that it is slow, DNF is very clear on not only what it will do for an action but also what it has done: it maintains a history of package installation and removal operations, which are called “transactions”. You can undo a transaction with dnf history undo or roll back to a previous state with dnf history rollback. Other common package managers, like APT and Pacman, also save operation logs, but they generally do not offer a similar operation reverting functionality.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-31T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/07/31/manual-dnf-history-undo.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/07/31/manual-dnf-history-undo.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Perform Manual dnf history undo">
+    <meta itemprop="description" content="My choices of GNU/Linux distributions are Fedora for desktop computers andCentOS for servers. Both of them feature DNF - Red Hat’s package managerfront-end for RPM, which is the primary reason I use these distributions.Although one might argue that it is slow, DNF is very clear on not only what itwill do for an action but also what it has done: it maintains a history ofpackage installation and removal operations, which are called “transactions”.You can undo a transaction with dnf history undo or roll back to a previousstate with dnf history rollback. Other common package managers, like APT andPacman, also save operation logs, but they generally do not offer a similaroperation reverting functionality.">
+    <meta itemprop="datePublished" content="2020-07-31T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Perform Manual <code class="language-plaintext highlighter-rouge">dnf history undo</code>
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-07-31T00:00:00-05:00">Jul 31, 2020</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#when-dnf-history-undo-fails">When dnf history undo Fails</a></li><li><a href="#what-about-dnf-remove">What About dnf remove?</a></li><li><a href="#manually-undo-the-transaction">Manually Undo the Transaction</a></li><li><a href="#a-single-command-for-the-whole-task">A Single Command for the Whole Task</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>My choices of GNU/Linux distributions are Fedora for desktop computers and
+CentOS for servers. Both of them feature DNF - Red Hat’s package manager
+front-end for RPM, which is the primary reason I use these distributions.
+Although one might argue that it is slow, DNF is very clear on not only what it
+will do for an action but also <em>what it has done</em>: it maintains a history of
+package installation and removal operations, which are called “transactions”.
+You can undo a transaction with <code class="language-plaintext highlighter-rouge">dnf history undo</code> or roll back to a previous
+state with <code class="language-plaintext highlighter-rouge">dnf history rollback</code>. Other common package managers, like APT and
+Pacman, also save operation logs, but they generally do not offer a similar
+operation reverting functionality.</p>
+
+<p><code class="language-plaintext highlighter-rouge">dnf history undo</code> has been helping me keep my system clean. If I have
+installed something with DNF but find that it is not what I want, I can
+uninstall it, along with <em>every dependency</em>, simply with <code class="language-plaintext highlighter-rouge">dnf history undo
+last</code>.</p>
+
+<h2 id="when-dnf-history-undo-fails">When <code class="language-plaintext highlighter-rouge">dnf history undo</code> Fails</h2>
+
+<p><code class="language-plaintext highlighter-rouge">dnf history undo</code> has been working consistently fine if I run it for a
+transaction performed recently, but for transactions ran a while ago, it might
+fail.</p>
+
+<p>A month ago, I installed Wine on my laptop so I could play some retro Windows
+games on Fedora. After a few weeks, an incompatibility issue of Wine made me go
+back to Windows for gaming, so I decided to uninstall Wine.</p>
+
+<p>The first command I ran was <code class="language-plaintext highlighter-rouge">dnf history list wine</code>, which would give me a list
+of all transactions that involved the <code class="language-plaintext highlighter-rouge">wine</code> package. The output showed that
+transaction 217 was the one in which <code class="language-plaintext highlighter-rouge">wine</code> had been installed.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/view-history.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Alright, so all I would need to run was <code class="language-plaintext highlighter-rouge">dnf history undo 217</code>. However, it did
+not work as expected…</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/failed-history-undo.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>I had not removed those Wine packages yet, but why did DNF tell me that no
+package was matched? It was because transaction 217
+(<a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-217.txt">log</a>) installed Wine 5.10, but
+transaction 229 (<a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-229.txt">log</a>), which updated my
+system, upgraded Wine to 5.12. <code class="language-plaintext highlighter-rouge">dnf history undo</code> identifies packages by
+combinations of package name, version and architecture instead of merely the
+names, so it does not treat <code class="language-plaintext highlighter-rouge">wine-5.10-1.fc32.x86_64</code> and
+<code class="language-plaintext highlighter-rouge">wine-5.12-1.fc32.x86_64</code> as equivalent packages.</p>
+
+<p>Therefore, <strong>if you have upgraded any package involved in a transaction, then
+<code class="language-plaintext highlighter-rouge">dnf history undo</code> will fail for that transaction</strong>. This is why that command
+has been doing its job when I run it for a recent transaction but would emit an
+error for a transaction performed a while ago.</p>
+
+<h2 id="what-about-dnf-remove">What About <code class="language-plaintext highlighter-rouge">dnf remove</code>?</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">dnf remove</code> command is capable of removing unused dependencies along with
+the packages requested to be removed, so theoretically, <code class="language-plaintext highlighter-rouge">dnf remove wine</code> would
+do the same thing as <code class="language-plaintext highlighter-rouge">dnf history undo 217</code> if the packages were not upgraded.
+But, when I ran it…</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/remove.cast" poster="npt:4" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Only 83 packages would be removed by the command. The output of <code class="language-plaintext highlighter-rouge">dnf history
+list wine</code> suggested that 197 packages were installed in transaction 217. If I
+had chosen to proceed, 114 unused dependencies would have been left in my
+system.</p>
+
+<h2 id="manually-undo-the-transaction">Manually Undo the Transaction</h2>
+
+<p>Although undoing transaction 217 with <code class="language-plaintext highlighter-rouge">dnf history undo</code> was not possible, the
+<code class="language-plaintext highlighter-rouge">dnf history info 217</code> command could still give the list of packages installed
+in that transaction in its <a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-217.txt">output</a>. I
+could gather those packages’ names and supply them as arguments to <code class="language-plaintext highlighter-rouge">dnf remove</code>
+in order to perform a complete uninstallation.</p>
+
+<p>Here are some lines in the command output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ...
+    Install pulseaudio-libs-13.99.1-4.fc32.i686                       @updates
+    Install samba-common-tools-2:4.12.3-0.fc32.1.x86_64               @updates
+    Install samba-libs-2:4.12.3-0.fc32.1.x86_64                       @updates
+    Install samba-winbind-2:4.12.3-0.fc32.1.x86_64                    @updates
+    Install samba-winbind-clients-2:4.12.3-0.fc32.1.x86_64            @updates
+    Install samba-winbind-modules-2:4.12.3-0.fc32.1.x86_64            @updates
+    Install sane-backends-drivers-cameras-1.0.30-1.fc32.i686          @updates
+    Install sane-backends-drivers-scanners-1.0.30-1.fc32.i686         @updates
+    Install sane-backends-libs-1.0.30-1.fc32.i686                     @updates
+    Install spirv-tools-libs-2019.5-2.20200421.git67f4838.fc32.i686   @updates
+    Install spirv-tools-libs-2019.5-2.20200421.git67f4838.fc32.x86_64 @updates
+    ...
+</code></pre></div></div>
+
+<p>The packages are listed in their <strong>NEVRA</strong>s - Name, Epoch, Version, Release,
+and Architecture - in the form of <code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code>. When a
+package is upgraded, its <code class="language-plaintext highlighter-rouge">[epoch:]version-release</code> changes, but <code class="language-plaintext highlighter-rouge">name</code> and
+<code class="language-plaintext highlighter-rouge">arch</code> will always be constant. Thus, I should convert those NEVRAs from
+<code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code> to only <code class="language-plaintext highlighter-rouge">name.arch</code>.</p>
+
+<p>There were 197 packages, and processing all of them by hand would be tedious
+and error-prone, so I looked for the way to do the conversion with Unix
+programs.</p>
+
+<p>First and foremost, I used <code class="language-plaintext highlighter-rouge">grep</code> to reduce the command output so it would only
+contain lines with a NEVRA. At the beginning of the output were some lines
+containing the transaction’s metadata, which should be removed. I also saved
+the reduced output to a file for subsequent processing.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">history </span>info 217 | <span class="nb">grep</span> <span class="s1">'Install'</span> <span class="o">&gt;</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/filter-nevras.cast" poster="npt:8" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>The next thing that should be done was to trim each line so it only contains
+the NEVRA itself. This would require me to remove the word “Install”, the
+repository ID starting with <code class="language-plaintext highlighter-rouge">@</code>, and any white space. Replacing all occurrences
+of a string with another string sounds like a job for <code class="language-plaintext highlighter-rouge">sed</code>. I used <code class="language-plaintext highlighter-rouge">-i</code> flag
+for in-place modification and <code class="language-plaintext highlighter-rouge">-E</code> for extended regular expression support.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/^ *Install *//g'</span> /tmp/installed-pkgs.txt
+<span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/ *@.+$//g'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/trim-lines.cast" poster="npt:1.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>At this point, every line in the file contained only the NEVRA in the form of
+<code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code>. The next step would be further reducing
+those lines to the form of <code class="language-plaintext highlighter-rouge">name.arch</code>. To do this, I needed to come up with a
+regular expression for <code class="language-plaintext highlighter-rouge">-[epoch:]version-release</code>. The following one is the
+best I could make:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   -([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?
+1~~^^~~~~2~~~^^~~~~~~~~3~~~~~~~~^^~~~~~~~~~~~4~~~~~~~~~~~^^~~~~5~~~~^
+</code></pre></div></div>
+
+<p>As annotated, this regular expression consists of five parts:</p>
+
+<ol>
+  <li>
+    <p>The dash <code class="language-plaintext highlighter-rouge">-</code> is the separator between package name and versioning
+information.</p>
+  </li>
+  <li>
+    <p>This part is for <code class="language-plaintext highlighter-rouge">epoch</code>. The purpose of epoch is described
+<a href="https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_upstream_makes_unsortable_changes">here</a>
+in Fedora documentation. Not all packages have it, so this part ends with a
+question mark <code class="language-plaintext highlighter-rouge">?</code>, meaning that it matches 0 or 1 of the preceding group in
+the parentheses.</p>
+  </li>
+  <li>
+    <p>This section matches <code class="language-plaintext highlighter-rouge">version</code> and part of <code class="language-plaintext highlighter-rouge">release</code>. The version should
+start with a digit and may contain multiple digits and dots <code class="language-plaintext highlighter-rouge">.</code>, but
+chances are it also contains letters, as in <code class="language-plaintext highlighter-rouge">tzdata-2020a</code>. Letters may
+also exist in release, like <code class="language-plaintext highlighter-rouge">crontabs-1.11-22.20190603git</code> for example.</p>
+  </li>
+  <li>
+    <p>This is the value of <code class="language-plaintext highlighter-rouge">%{?dist}</code> tag in RPM macros, which marks the
+distribution release this package was built for. Example values include
+<code class="language-plaintext highlighter-rouge">.fc32</code>, <code class="language-plaintext highlighter-rouge">.el8</code>, and <code class="language-plaintext highlighter-rouge">.el8_2</code>.</p>
+  </li>
+  <li>
+    <p>Some packages might have extra minor release bump after <code class="language-plaintext highlighter-rouge">%{?dist}</code>. Like
+the part for epoch, it also ends with a question mark.</p>
+  </li>
+</ol>
+
+<p>This regular expression should be good for most packages on Fedora and packages
+on CentOS and RHEL that stick with Fedora’s package versioning guidelines. I
+only know one exception, <code class="language-plaintext highlighter-rouge">ntfs-3g-system-compression-1.0-3.fc32.x86_64</code>,
+because it has a digit right after a dash in its package name. Unless you are
+dealing with a package whose name meets this criterion, which should be rare,
+this issue does not matter.</p>
+
+<p>As a double check, you can first try to see how this regular expression matches
+the <code class="language-plaintext highlighter-rouge">-[epoch:]version-release</code> part of every NEVRA with the following command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">grep</span> <span class="nt">-E</span> <span class="nt">--</span> <span class="s1">'-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/check-conversion.cast" poster="npt:7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>The matched parts are shown in red. If everything looks good, you can make the
+modification with <code class="language-plaintext highlighter-rouge">sed</code>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?//g'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/make-conversion.cast" poster="npt:1.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>I finally got the list of packages specified in the form of <code class="language-plaintext highlighter-rouge">name.arch</code> in a
+file. All I needed to do at this moment was to pass in every line of the file
+to the <code class="language-plaintext highlighter-rouge">dnf remove</code> command as argument. This is where <code class="language-plaintext highlighter-rouge">xargs</code> came in handy.
+The <code class="language-plaintext highlighter-rouge">-a</code> option was for telling <code class="language-plaintext highlighter-rouge">xargs</code> to read the arguments from the
+specified file instead of standard input.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>xargs <span class="nt">-a</span> /tmp/installed-pkgs.txt <span class="nb">sudo </span>dnf remove
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/xargs.cast" poster="npt:7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>The transaction summary showed that 197 packages would be removed. No unused
+packages would remain in my system, and no unrelated packages were accidentally
+erased. When you are doing this step, <strong>please double check the number of
+packages which will be altered</strong> as well to prevent unexpected changes to your
+system. Should you find a mismatch, review any error messages from DNF and your
+package list file.</p>
+
+<p>The manual reversal of the transaction with the help of <code class="language-plaintext highlighter-rouge">dnf history info</code>,
+<code class="language-plaintext highlighter-rouge">grep</code>, <code class="language-plaintext highlighter-rouge">sed</code>, <code class="language-plaintext highlighter-rouge">xargs</code> and <code class="language-plaintext highlighter-rouge">dnf remove</code> was successful. This is yet another
+example for the Unix philosophy: multiple general-purpose tools were used
+together to complete a specialized and complex task, and they interfaced with
+each other through nothing but text streams.</p>
+
+<h2 id="a-single-command-for-the-whole-task">A Single Command for the Whole Task</h2>
+
+<p>In the steps above, I used a file <code class="language-plaintext highlighter-rouge">/tmp/installed-pkgs.txt</code> to observe how
+every command changed the package list more conveniently. Creation of the file
+is not necessary: once you are confident about what each command does so you do
+not need to study how the list is changed, you can use pipes to let each
+command pass its standard output directly to the next command as the standard
+input, so no file creation is required at all. This also transforms the whole
+process to a single long command.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">history </span>info &lt;transaction-id&gt; | <span class="se">\</span>
+    <span class="nb">grep</span> <span class="s1">'Install'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/^ *Install *//g'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/ *@.+//g'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?//g'</span> | <span class="se">\</span>
+    xargs <span class="nt">-o</span> <span class="nb">sudo </span>dnf remove
+</code></pre></div></div>
+
+<p>Some notable changes to the commands include:</p>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">-i</code> flag for <code class="language-plaintext highlighter-rouge">sed</code> is no longer used. Without this flag, <code class="language-plaintext highlighter-rouge">sed</code> will
+print the edited text to the standard output. Because the standard output
+will be passed to the next program’s standard input by a pipe, this is the
+desired behavior.</p>
+  </li>
+  <li>
+    <p>Since there is no file involved, the <code class="language-plaintext highlighter-rouge">-a</code> option for <code class="language-plaintext highlighter-rouge">xargs</code> is no longer
+needed. Instead, the <code class="language-plaintext highlighter-rouge">-o</code> flag is used here so you can make input from your
+keyboard to the program you run with <code class="language-plaintext highlighter-rouge">xargs</code>. DNF will ask for your
+confirmation before it performs the requested operation, and the <code class="language-plaintext highlighter-rouge">-o</code> option
+of <code class="language-plaintext highlighter-rouge">xargs</code> will allow you to answer <code class="language-plaintext highlighter-rouge">y</code> to DNF.</p>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#unix-programs" class="page__taxonomy-item" rel="tag">Unix Programs</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

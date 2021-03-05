@@ -1,0 +1,473 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>本地化网站标题 - Leo3418 的个人网站</title>
+<meta name="description" content="一个普通的 Jekyll 网站的标题会在 _config.yml 中的 title 选项下定义，然后可以通过 site.title 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 site.title 变量，存不下。即使我们在 site.title 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="本地化网站标题">
+<meta property="og:url" content="https://leo3418.github.io/collections/multilingual-jekyll-site/localize-site-title">
+
+
+  <meta property="og:description" content="一个普通的 Jekyll 网站的标题会在 _config.yml 中的 title 选项下定义，然后可以通过 site.title 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 site.title 变量，存不下。即使我们在 site.title 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/collections/multilingual-jekyll-site/localize-site-title">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/collections/multilingual-jekyll-site/localize-site-title">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">建立多语言 Jekyll 网站</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">切换菜单</label>
+    <ul class="nav__items">
+        <li><a href="/zh/collections/multilingual-jekyll-site">主页</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-jekyll">配置 Jekyll</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/choose-multilingual-plugin">挑选多语言插件</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-polyglot">配置 Polyglot</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/make-a-test-post">新建一篇测试帖</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/improve-l10n-and-ux">改善本地化与用户体验</a></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-site-title" class="active">本地化网站标题</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-language-switcher">添加语言切换器</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-strings">本地化字符串</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-no-translation-msg">添加“无翻译”提示信息</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-date-format">本地化日期格式</a></li></ul></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/host-on-github-pages">在 GitHub Pages 上托管网站</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/closing-words">结束语</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="本地化网站标题">
+    <meta itemprop="description" content="一个普通的 Jekyll 网站的标题会在 _config.yml 中的 title 选项下定义，然后可以通过 site.title 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 site.title 变量，存不下。即使我们在 site.title 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">本地化网站标题
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+<p>一个普通的 Jekyll 网站的标题会在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中的 <code class="language-plaintext highlighter-rouge">title</code> 选项下定义，然后可以通过 <code class="language-plaintext highlighter-rouge">site.title</code> 变量来读取。大部分 Jekyll 主题就是以这种方法来获取网站标题。然而，对于一个多语言 Jekyll 网站来说，可能会有不同语言的标题，但是只有一个 <code class="language-plaintext highlighter-rouge">site.title</code> 变量，存不下。即使我们在 <code class="language-plaintext highlighter-rouge">site.title</code> 下给每种语言下的标题都单独定义一个键值，Polyglot 也不知道应该怎么读取它们。</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/localize-site-title/before-en.png" alt="英文版网站下的标题显示正常" /></p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/localize-site-title/before-zh.png" alt="中文版网站下的标题未被翻译" /></p>
+
+<p>我们要做的是直接在主题的文件中找到读取 <code class="language-plaintext highlighter-rouge">site.title</code> 的值的地方，然后让它们从其它变量读取本地化的网站标题。我的想法是在 Jekyll 网站的数据文件中保存本地化的标题，因为 Polyglot 连数据文件都<a href="https://github.com/untra/polyglot/blob/1.3.2/README.md#localized-sitedata">支持</a>本地化。在 <code class="language-plaintext highlighter-rouge">_data</code> 文件夹下为每种语言创建一个文件夹，用于保存该语言的本地化数据。如果您的网站没有 <code class="language-plaintext highlighter-rouge">_data</code> 文件夹，那么先创建一个，然后再进行操作即可。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">site-root$</span><span class="w"> </span><span class="nb">cd </span>_data
+<span class="gp">site-root$</span>/_data<span class="nv">$ </span><span class="nb">mkdir </span>en zh
+</code></pre></div></div>
+
+<p>随后，在每个文件夹下创建一个 <code class="language-plaintext highlighter-rouge">l10n.yml</code> 文件，用于存储对应的语言的本地化数据，然后在该文件中定义网站标题的翻译：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">site-root/_data$</span><span class="w"> </span><span class="nb">ls </span>en zh
+<span class="go">en:
+l10n.yml
+
+zh:
+l10n.yml
+</span><span class="gp">site-root/_data$</span><span class="w"> </span><span class="nb">cat </span>en/l10n.yml
+<span class="go">title: "My Site"
+</span><span class="gp">site-root/_data$</span><span class="w"> </span><span class="nb">cat </span>zh/l10n.yml
+<span class="go">title: "本人的网站"
+</span></code></pre></div></div>
+
+<p>这些值都可以使用 <code class="language-plaintext highlighter-rouge">site.data.l10n.title</code> 变量来读取。Polyglot 的数据文件本地化功能可以让任何以 <code class="language-plaintext highlighter-rouge">site.data</code> 开头的变量的值变为本地化的值。现在唯一需要做的就是让网站的主题从 <code class="language-plaintext highlighter-rouge">site.data.l10n.title</code> 变量获取网站的标题。</p>
+
+<p>如果您当时创建网站时使用的是 <code class="language-plaintext highlighter-rouge">jekyll new PATH</code> 命令，自动应用了 Minima 主题，您可能会好奇主题的文件被存在了哪里，毕竟现在网站文件夹下并没有任何看起来和主题相关的文件：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">site-root$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">404.html        _config.yml  Gemfile       index.markdown  _site
+about.markdown  _data        Gemfile.lock  _posts
+</span></code></pre></div></div>
+
+<p>Jekyll 的文档对此作出了<a href="https://jekyllrb.com/docs/themes/#understanding-gem-based-themes">解释</a>：和主题相关的文件是直接存储在您机器上专门存放已安装的 Ruby gem 的位置。不过，Jekyll 文档也有如何覆写主题文件的<a href="https://jekyllrb.com/docs/themes/#overriding-theme-defaults">步骤</a>，大致就是从主题的安装路径中将要覆写的文件复制到您的网站的文件中，然后进行修改。</p>
+
+<p>现在需要解决的一个问题是如何找出要覆写的文件，也就是如何找出用到 <code class="language-plaintext highlighter-rouge">site.title</code> 变量的文件。如果您的机器上有 <code class="language-plaintext highlighter-rouge">grep</code> 的话，可以在主题安装路径下，用下面的命令来找出使用了该变量的文件：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">minima-x.y.z$</span><span class="w"> </span><span class="nb">grep</span> <span class="nt">-nr</span> <span class="s2">"site</span><span class="se">\.</span><span class="s2">title"</span>
+<span class="gp">_includes/header.html:6:    &lt;a class="site-title" rel="author" href="{{ "/" | relative_url }}"&gt;</span><span class="o">{{</span> site.title | escape <span class="o">}}</span>&lt;/a&gt;
+<span class="gp">_includes/footer.html:6:    &lt;h2 class="footer-heading"&gt;</span><span class="o">{{</span> site.title | escape <span class="o">}}</span>&lt;/h2&gt;
+<span class="go">_includes/footer.html:15:              {{ site.title | escape }}
+README.md:81:Usually the `site.title` itself would suffice...（已删减）
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">README.md</code> 是 Minima 的自述文档，可以忽略；其它的几个文件就是我们需要修改的，包括 <code class="language-plaintext highlighter-rouge">_includes/header.html</code> 和 <code class="language-plaintext highlighter-rouge">_includes/footer.html</code>。将它们复制到您的网站根目录下的 <code class="language-plaintext highlighter-rouge">_includes</code> 文件夹内，然后对它们进行编辑。<code class="language-plaintext highlighter-rouge">grep</code> 的 <code class="language-plaintext highlighter-rouge">-n</code> 选项让输出的结果显示每条结果是在文件中的第几行出现的，可以用这一信息来找出这些文件需要被修改的地方的位置。</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- minima-x.y.z/_includes/header.html
+</span><span class="gi">+++ site-root/_includes/header.html
+</span>
+   &lt;div class="wrapper"&gt;
+     {%- assign default_paths = site.pages | map: "path" -%}
+     {%- assign page_paths = site.header_pages | default: default_paths -%}
+<span class="gd">-    &lt;a class="site-title" rel="author" href="{{ "/" | relative_url }}"&gt;{{ site.title | escape }}&lt;/a&gt;
+</span><span class="gi">+    &lt;a class="site-title" rel="author" href="{{ "/" | relative_url }}"&gt;{{ site.data.l10n.title | escape }}&lt;/a&gt;
+</span>
+     {%- if page_paths -%}
+       &lt;nav class="site-nav"&gt;
+ 
+<span class="gd">--- minima-x.y.z/_includes/footer.html
+</span><span class="gi">+++ site-root/_includes/footer.html
+</span>
+   &lt;div class="wrapper"&gt;
+ 
+<span class="gd">-    &lt;h2 class="footer-heading"&gt;{{ site.title | escape }}&lt;/h2&gt;
+</span><span class="gi">+    &lt;h2 class="footer-heading"&gt;{{ site.data.l10n.title | escape }}&lt;/h2&gt;
+</span>
+     &lt;div class="footer-col-wrapper"&gt;
+       &lt;div class="footer-col footer-col-1"&gt;
+         &lt;ul class="contact-list"&gt;
+           &lt;li class="p-name"&gt;
+             {%- if site.author -%}
+               {{ site.author | escape }}
+             {%- else -%}
+<span class="gd">-              {{ site.title | escape }}
+</span><span class="gi">+              {{ site.data.l10n.title | escape }}
+</span>             {%- endif -%}
+             &lt;/li&gt;
+</code></pre></div></div>
+
+<p>如果您自己写的 <code class="language-plaintext highlighter-rouge">_includes</code> 文件和布局文件中也有用到 <code class="language-plaintext highlighter-rouge">site.title</code> 变量的地方，也可以在网站根目录下运行同样的命令，查找哪些文件的哪些位置需要修改。</p>
+
+<p>现在，网站的标题就应该随着语言而变化了。</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/localize-site-title/site-title-after-zh.png" alt="网页上展示的网站标题被翻译" /></p>
+
+<h2 id="针对-minima-的特别步骤更改-html-中的标题元素">针对 Minima 的特别步骤：更改 HTML 中的标题元素</h2>
+
+<p>虽然网页上的标题改过来了，但仔细看下上面的截图左上角标签页的标题，您会发现在浏览器上显示的、由 HTML <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> 标签定义的网站标题还是没有本地化的。然而，刚才用 <code class="language-plaintext highlighter-rouge">grep</code> 命令查找用到 <code class="language-plaintext highlighter-rouge">site.title</code> 的地方的时候，为什么漏掉了这里呢？</p>
+
+<p>造成此现象的原因是 Minima 根本不用 <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> 标签定义标题。在 Minima 安装路径下运行 <code class="language-plaintext highlighter-rouge">grep -nr "&lt;title&gt;"</code> ，没有任何搜索结果，就可以看出来这一点。虽是如此，我们仍然可以尝试寻找一些蛛丝马迹。<code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> 标签是要在 <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code> 标签中使用的，所以可以搜索一下 Minima 的主题文件中有哪里用到了 <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">minima-x.y.z$</span><span class="w"> </span><span class="nb">grep</span> <span class="nt">-nr</span> <span class="s2">"&lt;head&gt;"</span>
+<span class="gp">_includes/head.html:1:&lt;head&gt;</span><span class="w">
+</span><span class="gp">README.md:48:  - `head.html` &amp;mdash;</span><span class="w"> </span>Code-block that defines the <span class="sb">`</span>&lt;<span class="nb">head</span><span class="o">&gt;</span>&lt;/head&gt;<span class="sb">`</span> <span class="k">in</span> <span class="k">*</span>default<span class="k">*</span> layout.
+</code></pre></div></div>
+
+<p>可以看到 <code class="language-plaintext highlighter-rouge">_includes/head.html</code> 文件使用了 <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>。果不其然，这个文件里面没有用到 <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code>。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">minima-x.y.z$</span><span class="w"> </span><span class="nb">cat </span>_includes/head.html
+<span class="gp">&lt;head&gt;</span><span class="w">
+</span><span class="gp">  &lt;meta charset="utf-8"&gt;</span><span class="w">
+</span><span class="gp">  &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</span><span class="w">
+</span><span class="gp">  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</span><span class="w">
+</span><span class="go">  {%- seo -%}
+</span><span class="gp">  &lt;link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}"&gt;</span><span class="w">
+</span><span class="go">  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+</span><span class="gp">&lt;/head&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<p>不过，这个文件里仍然隐藏着一些东西。这里面有一个 <code class="language-plaintext highlighter-rouge">{%- seo -%}</code> Liquid 标签，用于调用 <a href="https://github.com/jekyll/jekyll-seo-tag">jekyll-seo-tag
+插件</a>，而 <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> 就是由该插件自动生成的。我们可以<a href="https://github.com/jekyll/jekyll-seo-tag/blob/v2.6.1/docs/advanced-usage.md#disabling-title-output">禁用 jekyll-seo-tag 插件自动生成 <code class="language-plaintext highlighter-rouge">&lt;title&gt;</code> 标签的行为</a>，然后手动定义该标签。</p>
+
+<p>和之前一样，将 <code class="language-plaintext highlighter-rouge">_includes/head.html</code> 从 Minima 的安装路径复制到您的网站的文件夹下，然后进行编辑：</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">--- minima-x.y.z/_includes/head.html
+</span><span class="gi">+++ site-root/_includes/head.html
+</span>
+   &lt;meta charset="utf-8"&gt;
+   &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+   &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+<span class="gd">-  {%- seo -%}
+</span><span class="gi">+  {%- seo title=false -%}
++  &lt;title&gt;{{ site.data.l10n.title }}&lt;/title&gt;
+</span>   &lt;link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}"&gt;
+   {%- feed_meta -%}
+   {%- if jekyll.environment == 'production' and site.google_analytics -%}
+</code></pre></div></div>
+
+<p>现在，HTML 标题中不再显示 SEO 插件自动在网站标题后面插入的描述，但是标题可以被正确地翻译了。</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/localize-site-title/html-title-after-en.png" alt="英文版网站的 HTML 标题" /></p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/localize-site-title/html-title-after-zh.png" alt="中文版网站的 HTML 标题，已被正确翻译" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/zh/collections/multilingual-jekyll-site/improve-l10n-and-ux" class="pagination--pager" title="改善本地化与用户体验
+">
+        <div class="pagination-guide-text">上一页</div>
+        <div class="pagination-title">改善本地化与用户体验
+</div>
+      </a>
+    
+    
+      <a href="/zh/collections/multilingual-jekyll-site/add-language-switcher" class="pagination--pager" title="添加语言切换器
+">
+        <div class="pagination-guide-text">下一页</div>
+        <div class="pagination-title">添加语言切换器
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

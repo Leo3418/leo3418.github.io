@@ -1,0 +1,370 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>打开 Windows 10 Mobile 烧屏保护功能的方法 - Leo3418’s Personal Site</title>
+<meta name="description" content="Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 屏）并采用屏幕虚拟按钮的机型。由于 Super AMOLED 屏幕每个像素点衰老速度不同、以及显示纯黑色时像素点几乎完全不亮的特性，随着屏幕使用时间的累积，屏幕下方的导航栏区域可能会产生显著的“烧屏”现象：整个屏幕在全屏显示纯色（尤其是蓝色、白色）时，导航栏区域和其它区域的颜色并不相同。如果您长期使用深色主题模式并且没有在导航栏上使用配色，其它区域与导航栏区域相比可能偏黄；如果您长期使用浅色主题模式，或在导航栏上使用了配色，导航栏区域可能更黄。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="打开 Windows 10 Mobile 烧屏保护功能的方法">
+<meta property="og:url" content="https://leo3418.github.io/collections/windows-10-mobile/enable-burn-in-protection">
+
+
+  <meta property="og:description" content="Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 屏）并采用屏幕虚拟按钮的机型。由于 Super AMOLED 屏幕每个像素点衰老速度不同、以及显示纯黑色时像素点几乎完全不亮的特性，随着屏幕使用时间的累积，屏幕下方的导航栏区域可能会产生显著的“烧屏”现象：整个屏幕在全屏显示纯色（尤其是蓝色、白色）时，导航栏区域和其它区域的颜色并不相同。如果您长期使用深色主题模式并且没有在导航栏上使用配色，其它区域与导航栏区域相比可能偏黄；如果您长期使用浅色主题模式，或在导航栏上使用了配色，导航栏区域可能更黄。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/collections/windows-10-mobile/enable-burn-in-protection">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/collections/windows-10-mobile/enable-burn-in-protection">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">Windows 10 Mobile 系列文章</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">Toggle menu</label>
+    <ul class="nav__items">
+        <li><a href="/collections/windows-10-mobile">Home</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/enable-burn-in-protection" class="active">打开 Windows 10 Mobile 烧屏保护功能的方法</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/lumia-flash-rom">Nokia/Microsoft Lumia 使用 FFUTool 刷机教程</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/stay-on-10586">让 Windows 10 Mobile 停留在 10586.545 不再更新的方法</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/toggle-full-fs-access">打开与关闭 Windows 10 Mobile 完整文件系统访问权限的方法</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+<div class="notice--warning" id="no-translation-msg">
+    Sorry, this page is not available in English yet.
+</div>
+    <meta itemprop="headline" content="打开 Windows 10 Mobile 烧屏保护功能的方法">
+    <meta itemprop="description" content="Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 屏）并采用屏幕虚拟按钮的机型。由于 Super AMOLED 屏幕每个像素点衰老速度不同、以及显示纯黑色时像素点几乎完全不亮的特性，随着屏幕使用时间的累积，屏幕下方的导航栏区域可能会产生显著的“烧屏”现象：整个屏幕在全屏显示纯色（尤其是蓝色、白色）时，导航栏区域和其它区域的颜色并不相同。如果您长期使用深色主题模式并且没有在导航栏上使用配色，其它区域与导航栏区域相比可能偏黄；如果您长期使用浅色主题模式，或在导航栏上使用了配色，导航栏区域可能更黄。">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">打开 Windows 10 Mobile 烧屏保护功能的方法
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+<p>Lumia 650、950 和 950 XL 三款设备为使用 Super AMOLED （以下简称 A 屏）并采用屏幕虚拟按钮的机型。由于 Super AMOLED 屏幕每个像素点衰老速度不同、以及显示纯黑色时像素点几乎完全不亮的特性，随着屏幕使用时间的累积，屏幕下方的导航栏区域可能会产生显著的“烧屏”现象：整个屏幕在全屏显示纯色（尤其是蓝色、白色）时，导航栏区域和其它区域的颜色并不相同。如果您长期使用深色主题模式并且没有在导航栏上使用配色，其它区域与导航栏区域相比可能偏黄；如果您长期使用浅色主题模式，或在导航栏上使用了配色，导航栏区域可能更黄。</p>
+
+<p>这也是我个人认为直到全面屏手机成为潮流之前，三星的 Galaxy 系列一直使用实体和电容按键的一个原因：采用自家 A 屏的设备不会因为底部虚拟按键而造成明显的烧屏。诺基亚时代的部分 Lumia 机型虽然也采用 A 屏，但也都是电容按键；而微软时代的 Lumia 开始推行导航栏和虚拟按键，于是就产生了烧屏的问题。</p>
+
+<p>如果您可以接受定期更换系统主题模式、定期开关导航栏颜色等折中的办法，那么虽然屏幕还是会衰老，但衰老相对平均，屏幕各个区域的使用累积时长相近，因此虽然屏幕整体会发黄，但不会看出烧屏现象。而本教程也将介绍另一种方法：通过修改注册表，打开系统隐藏的导航栏烧屏保护模式，从一定程度上可以缓解烧屏的发生。</p>
+
+<p>假如使用 A 屏的机型的用户因为电容按键失灵需要启用虚拟按键担心烧屏问题，或者使用 LCD 屏幕的机型的用户担心导航栏造成的屏幕残印问题（与烧屏的原理不同，发生概率很低，一般完全没必要担心，不过我在一台 Xperia Z1 上见到过），也可以按照本教程打开烧屏保护模式。</p>
+
+<h2 id="适用范围">适用范围</h2>
+
+<p>所有支持使用 Interop Tools 修改注册表的机型。</p>
+
+<h2 id="步骤">步骤</h2>
+
+<ol>
+  <li>
+    <p><strong>下载、安装并配置最新版本的</strong> <a href="http://forum.xda-developers.com/windows-10-mobile/windows-10-mobile-apps-and-games/app-interop-tools-versatile-registry-t3445271"><strong>Interop Tools</strong></a><strong>。</strong>这是由 <a href="http://forum.xda-developers.com">XDA Developers</a> 论坛用户 <a href="http://forum.xda-developers.com/member.php?u=7651894">gus33000</a> 开发的修改 Windows 10 Mobile 系统注册表的应用。请自行搜索相关资源和教程。如果您已经安装好该应用并可以使用，请跳过此步骤。</p>
+  </li>
+  <li>
+    <p><strong>修改注册表。</strong>在 Interop Tools 中，浏览至注册表路径 <code class="language-plaintext highlighter-rouge">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Shell\NavigationBar</code>，点击屏幕界面右下角的“+”，在 <code class="language-plaintext highlighter-rouge">Registry Type</code> 下选择 <code class="language-plaintext highlighter-rouge">Integer</code>，在 <code class="language-plaintext highlighter-rouge">Registry Value Name</code> 下填写 <code class="language-plaintext highlighter-rouge">IsBurnInProtectionEnabled</code>;，在 <code class="language-plaintext highlighter-rouge">Registry Value Data</code> 下填写 <code class="language-plaintext highlighter-rouge">1</code>，然后点击“Write”。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/enable-burn-in-protection/step2.png" alt="修改注册表" class="half" /></p>
+  </li>
+  <li>
+    <p><strong>重新启动手机。</strong>现在您就成功开启了烧屏保护模式。当您大约 1 分钟没有使用导航栏时，该模式就会自动激活。</p>
+
+    <p>如果导航栏是黑色的，那么在此模式被激活时，亦或部分导航栏区域内的像素点亮起，避免导航栏区域衰老较慢；亦或虚拟按钮的亮度降低，防止虚拟按钮图标衰老过快。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/enable-burn-in-protection/black_1.png" alt="黑色导航栏区域像素亮起" class="half" /></p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/enable-burn-in-protection/black_2.png" alt="虚拟按钮变暗" class="half" /></p>
+
+    <p>如果导航栏有颜色，那么部分像素点会熄灭，避免导航栏区域衰老过快。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/enable-burn-in-protection/white.png" alt="白色导航栏区域像素熄灭" class="half" /></p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/enable-burn-in-protection/color.png" alt="其它颜色导航栏区域像素熄灭" class="half" /></p>
+
+    <p>值得一提的是，每次激活此模式时，亮起或熄灭的像素点都会发生变化，以尽量保证衰老速度的平均。</p>
+  </li>
+</ol>
+
+<p>如果需要关掉该功能，将步骤 2 所述的注册表值由 1 改为 0 再重启即可。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/collections/windows-10-mobile" class="pagination--pager" title="Windows 10 Mobile 系列文章
+">
+        <div class="pagination-guide-text">Previous</div>
+        <div class="pagination-title">Windows 10 Mobile 系列文章
+</div>
+      </a>
+    
+    
+      <a href="/collections/windows-10-mobile/lumia-flash-rom" class="pagination--pager" title="Nokia/Microsoft Lumia 使用 FFUTool 刷机教程
+">
+        <div class="pagination-guide-text">Next</div>
+        <div class="pagination-title">Nokia/Microsoft Lumia 使用 FFUTool 刷机教程
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

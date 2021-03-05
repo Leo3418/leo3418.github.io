@@ -1,0 +1,461 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件 - Leo3418 的个人网站</title>
+<meta name="description" content="继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。  然而，很多人在 Steam 和 Epic Games 上同时拥有 GTA V 之后却发现即使已经从 Steam 上下过了游戏，也要从 Epic Games 上重新下载一遍。其实，只要利用一些小技巧，就可以让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件，既省去了重新下载的麻烦，又能节省磁盘空间。我们可以利用 Windows 上一个不知名的 MKLINK 命令来建立一个链接：链接给人的感觉类似于快捷方式，能够让被连的文件看起来是放在了链接所在的位置，但其实是被存在了另一个位置。而链接本身占用的空间也是非常小的，所以可以节省大量的磁盘空间。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件">
+<meta property="og:url" content="https://leo3418.github.io/2020/05/15/gta-v-steam-epic-games.html">
+
+
+  <meta property="og:description" content="继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。  然而，很多人在 Steam 和 Epic Games 上同时拥有 GTA V 之后却发现即使已经从 Steam 上下过了游戏，也要从 Epic Games 上重新下载一遍。其实，只要利用一些小技巧，就可以让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件，既省去了重新下载的麻烦，又能节省磁盘空间。我们可以利用 Windows 上一个不知名的 MKLINK 命令来建立一个链接：链接给人的感觉类似于快捷方式，能够让被连的文件看起来是放在了链接所在的位置，但其实是被存在了另一个位置。而链接本身占用的空间也是非常小的，所以可以节省大量的磁盘空间。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-05-15T00:00:00-05:00">
+
+
+
+  <meta property="article:modified_time" content="2020-12-27T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2020/05/15/gta-v-steam-epic-games.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2020/05/15/gta-v-steam-epic-games.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件">
+    <meta itemprop="description" content="继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。然而，很多人在 Steam 和 Epic Games 上同时拥有 GTA V 之后却发现即使已经从 Steam 上下过了游戏，也要从 Epic Games 上重新下载一遍。其实，只要利用一些小技巧，就可以让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件，既省去了重新下载的麻烦，又能节省磁盘空间。我们可以利用 Windows 上一个不知名的 MKLINK 命令来建立一个链接：链接给人的感觉类似于快捷方式，能够让被连的文件看起来是放在了链接所在的位置，但其实是被存在了另一个位置。而链接本身占用的空间也是非常小的，所以可以节省大量的磁盘空间。">
+    <meta itemprop="datePublished" content="2020-05-15T00:00:00-05:00">
+    <meta itemprop="dateModified" content="2020-12-27T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-05-15T00:00:00-05:00">2020-05-15</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:
+        <time datetime="2020-12-27">2020-12-27</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#步骤">步骤</a></li><li><a href="#提前退出您原有的-social-club-帐号">提前退出您原有的 Social Club 帐号！</a></li><li><a href="#游戏有更新时需执行的步骤">游戏有更新时需执行的步骤</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。</p>
+
+<p>然而，很多人在 Steam 和 Epic Games 上同时拥有 GTA V 之后却发现即使已经从 Steam 上下过了游戏，也要从 Epic Games 上重新下载一遍。其实，只要利用一些小技巧，就可以让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件，既省去了重新下载的麻烦，又能节省磁盘空间。我们可以利用 Windows 上一个不知名的 <code class="language-plaintext highlighter-rouge">MKLINK</code> 命令来建立一个链接：链接给人的感觉类似于快捷方式，能够让被连的文件看起来是放在了链接所在的位置，但其实是被存在了另一个位置。而链接本身占用的空间也是非常小的，所以可以节省大量的磁盘空间。
+<!--more--></p>
+
+<p>我相信这次几乎所有玩家都是想把已经在 Steam 上下的文件给 Epic Games 用，而不是反过来，所以下面的步骤是在 Epic Games 游戏安装路径下创建一个连到 Steam 下载的游戏文件的链接的步骤。</p>
+
+<h2 id="步骤">步骤</h2>
+
+<ol>
+  <li>
+    <p>在 Epic Games 里下载 GTA V。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/01-1-download-gta-v-in-epic-games.png" alt="" /></p>
+
+    <p>此时会出现一个让您选择下载路径的提示，随便选一个您想用的路径即可，但要记下这个路径，稍后会用到。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/01-2-choose-path.png" alt="" /></p>
+  </li>
+  <li>
+    <p>然后，在开始下载之后立刻暂停下载。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/02-pause-download.png" alt="" /></p>
+  </li>
+  <li>
+    <p>退出 Epic Games 启动器。可以忽视退出就取消游戏安装的警告。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/03-quit-epic-games.png" alt="" /></p>
+  </li>
+  <li>
+    <p>打开第 1 步里您选择的游戏下载路径，然后拷出其中的 <code class="language-plaintext highlighter-rouge">.egstore</code> 文件夹。这里我将其拷到了 <code class="language-plaintext highlighter-rouge">GTAV</code> 文件夹的上层。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/04-move-egstore.png" alt="" /></p>
+  </li>
+  <li>
+    <p>删除 <code class="language-plaintext highlighter-rouge">GTAV</code> 文件夹。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/05-delete-epic-games-gtav-folder.png" alt="" /></p>
+  </li>
+  <li>
+    <p>找出 Steam 里的 GTA V 安装路径。在 Steam 里查看 GTA V 的游戏属性，在“本地文件”中选择“浏览本地文件”，然后记下弹出的文件资源管理器里显示的路径。点一下地址栏，就可以将完整路径复制出来。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/06-1-steam-game-properties.png" alt="" /></p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/06-2-steam-gta-v-files.png" alt="" /></p>
+  </li>
+  <li>
+    <p>把从 Steam 安装的 GTA V 中的 <code class="language-plaintext highlighter-rouge">GTA5.exe</code> 和 <code class="language-plaintext highlighter-rouge">PlayGTAV.exe</code> 复制到别处，并记下它们是从 Steam 的文件复制出来的，比如说把它们都复制到一个叫 <code class="language-plaintext highlighter-rouge">Steam</code> 的文件夹中。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/07-copy-executables.png" alt="" /></p>
+  </li>
+  <li>
+    <p>以管理员身份运行命令提示符。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/08-start-cmd.png" alt="" /></p>
+  </li>
+  <li>
+    <p>在命令提示符里运行命令 <code class="language-plaintext highlighter-rouge">mklink /D "&lt;Epic Games 路径&gt;" "&lt;Steam 路径&gt;"</code>，在 Epic Games 游戏安装路径下创建一个连到 Steam 游戏文件的链接。分别将第 1 步和第 6 步里的路径代入该命令中。记得用英文的双引号把路径括起来，不要用中文的双引号。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/09-1-mklink.png" alt="" /></p>
+
+    <p>命令跑完后，您就能看到 <code class="language-plaintext highlighter-rouge">GTAV</code> 链接在 Epic Games 游戏安装路径下被创建了。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/09-2-link-created.png" alt="" /></p>
+  </li>
+  <li>
+    <p>把第 4 步中被挪动的 <code class="language-plaintext highlighter-rouge">.egstore</code> 文件夹挪回 <code class="language-plaintext highlighter-rouge">GTAV</code> 中。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/10-restore-egstore.png" alt="" /></p>
+  </li>
+  <li>
+    <p>现在启动 Epic Games 启动器。如果游戏下载仍然处于暂停状态的话，手动恢复下载。然后，您应该就能发现已经开始验证游戏文件了，说明操作成功！等待它完成即可。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/11-epic-games-verifies.png" alt="" /></p>
+  </li>
+  <li>
+    <p>当 Epic Games 启动器显示可以启动 GTA V 时，前往 GTA V 游戏文件所在路径，再次将 <code class="language-plaintext highlighter-rouge">GTA5.exe</code> 和 <code class="language-plaintext highlighter-rouge">PlayGTAV.exe</code> 复制出来，并记下它们是来自于 Epic Games 下载的文件。</p>
+
+    <p><img src="/assets/img/posts/2020-05-15-gta-v-steam-epic-games/12-two-copies-of-executables.png" alt="" /></p>
+  </li>
+</ol>
+
+<p>以后，如果您想从 Steam 启动 GTA V，那么就将第 7 步中从 Steam 的文件复制出来的两个 EXE 文件复制回 GTA V 游戏文件所在路径当中；如果想从 Epic Games 启动，那就复制第 12 步得到的文件。在 GTA V 的关键游戏文件中，只有 <code class="language-plaintext highlighter-rouge">GTA5.exe</code> 和 <code class="language-plaintext highlighter-rouge">PlayGTAV.exe</code> 这两个文件从 Steam 下载和从 Epic Games 下载会出现不同，别的文件全部都是一样的。</p>
+
+<h2 id="提前退出您原有的-social-club-帐号">提前退出您原有的 Social Club 帐号！</h2>
+
+<p>贴吧里已经有人反映称，在电脑上已经装了从 Steam 下载的 GTA V 之后，再从 Epic Games 启动 GTA V 时会将免费领的游戏绑定到原来的 Social Club 帐号下，导致小号未能创建。如果您想弄一个新的线上小号的话，请一定记得先在 R 星启动器里退出您原来的 Social Club 帐号。</p>
+
+<h2 id="游戏有更新时需执行的步骤">游戏有更新时需执行的步骤</h2>
+
+<p>如果您在使用上述步骤成功让两个平台共用游戏文件之后，GTA V 有更新，那么请执行下面的步骤：</p>
+
+<ol>
+  <li>
+    <p>在游戏平台 A（可以是 Steam，也可以是 Epic Games）上更新 GTA V。</p>
+  </li>
+  <li>
+    <p>将 GTA V 安装路径中的 <code class="language-plaintext highlighter-rouge">GTA5.exe</code> 和 <code class="language-plaintext highlighter-rouge">PlayGTAV.exe</code> 复制到别处，并记下它们是游戏平台 A 下载的文件。</p>
+  </li>
+  <li>
+    <p>在游戏平台 B（另一个游戏平台）上更新 GTA V。</p>
+  </li>
+  <li>
+    <p>再次将 GTA V 安装路径中的 <code class="language-plaintext highlighter-rouge">GTA5.exe</code> 和 <code class="language-plaintext highlighter-rouge">PlayGTAV.exe</code> 复制到别处，并记下它们是游戏平台 B 下载的文件。</p>
+  </li>
+</ol>
+
+<p>之后，您就可以像以前一样正常启动游戏、以及在两个平台之间来回切换。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#gta-online" class="page__taxonomy-item" rel="tag">GTA Online</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E6%95%99%E7%A8%8B" class="page__taxonomy-item" rel="tag">教程</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

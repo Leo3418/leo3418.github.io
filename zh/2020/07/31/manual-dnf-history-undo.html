@@ -1,0 +1,508 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>手动进行 dnf history undo - Leo3418 的个人网站</title>
+<meta name="description" content="我平时常用的 GNU/Linux 发行版包括 Fedora 和 CentOS。后者主要在服务器上使用，而在其它的使用场景下，比如我自己的电脑，就会使用前者。选择这两个发行版主要是因为这它们都使用 DNF 作为软件包管理器前端。有人嫌 DNF 太慢，但我喜欢它是因为它不仅会详细列出它将要进行的操作，包括装卸什么软件包、什么架构、什么版本，还允许方便地查询历史记录。DNF 对其运行的每个事务都保存记录（一个事务就是一次安装或卸载软件包的操作），并且还支持使用 dnf history undo 撤销事务，或使用 dnf history rollback 回滚到某一个事务。其它的一些像 APT 和 Pacman 的软件包尽管也会保存日志，但是并没有类似的撤销操作的功能。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="手动进行 dnf history undo">
+<meta property="og:url" content="https://leo3418.github.io/2020/07/31/manual-dnf-history-undo.html">
+
+
+  <meta property="og:description" content="我平时常用的 GNU/Linux 发行版包括 Fedora 和 CentOS。后者主要在服务器上使用，而在其它的使用场景下，比如我自己的电脑，就会使用前者。选择这两个发行版主要是因为这它们都使用 DNF 作为软件包管理器前端。有人嫌 DNF 太慢，但我喜欢它是因为它不仅会详细列出它将要进行的操作，包括装卸什么软件包、什么架构、什么版本，还允许方便地查询历史记录。DNF 对其运行的每个事务都保存记录（一个事务就是一次安装或卸载软件包的操作），并且还支持使用 dnf history undo 撤销事务，或使用 dnf history rollback 回滚到某一个事务。其它的一些像 APT 和 Pacman 的软件包尽管也会保存日志，但是并没有类似的撤销操作的功能。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-31T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2020/07/31/manual-dnf-history-undo.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2020/07/31/manual-dnf-history-undo.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="手动进行 dnf history undo">
+    <meta itemprop="description" content="我平时常用的 GNU/Linux 发行版包括 Fedora 和 CentOS。后者主要在服务器上使用，而在其它的使用场景下，比如我自己的电脑，就会使用前者。选择这两个发行版主要是因为这它们都使用 DNF 作为软件包管理器前端。有人嫌 DNF 太慢，但我喜欢它是因为它不仅会详细列出它将要进行的操作，包括装卸什么软件包、什么架构、什么版本，还允许方便地查询历史记录。DNF 对其运行的每个事务都保存记录（一个事务就是一次安装或卸载软件包的操作），并且还支持使用 dnf history undo 撤销事务，或使用 dnf history rollback 回滚到某一个事务。其它的一些像 APT 和 Pacman 的软件包尽管也会保存日志，但是并没有类似的撤销操作的功能。">
+    <meta itemprop="datePublished" content="2020-07-31T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">手动进行 <code class="language-plaintext highlighter-rouge">dnf history undo</code>
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-07-31T00:00:00-05:00">2020-07-31</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#无法使用-dnf-history-undo-的情况">无法使用 dnf history undo 的情况</a></li><li><a href="#dnf-remove-可以用吗">dnf remove 可以用吗？</a></li><li><a href="#手动撤销事务">手动撤销事务</a></li><li><a href="#一个命令包揽整个任务">一个命令包揽整个任务</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>我平时常用的 GNU/Linux 发行版包括 Fedora 和 CentOS。后者主要在服务器上使用，而在其它的使用场景下，比如我自己的电脑，就会使用前者。选择这两个发行版主要是因为这它们都使用 DNF 作为软件包管理器前端。有人嫌 DNF 太慢，但我喜欢它是因为它不仅会详细列出它将要进行的操作，包括装卸什么软件包、什么架构、什么版本，还允许方便地查询历史记录。DNF 对其运行的每个事务都保存记录（一个事务就是一次安装或卸载软件包的操作），并且还支持使用 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 撤销事务，或使用 <code class="language-plaintext highlighter-rouge">dnf history rollback</code> 回滚到某一个事务。其它的一些像 APT 和 Pacman 的软件包尽管也会保存日志，但是并没有类似的撤销操作的功能。</p>
+
+<p>正是因为有 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 这种功能，我方能保持系统的整洁。如果我用 DNF 装了一个软件包，却发现并不是我想要的，可以直接用 <code class="language-plaintext highlighter-rouge">dnf history undo last</code> 将其卸载。最为重要的是，这个命令还会将该软件包的所有依赖一并删除，不会出现一个软件包被卸载但依赖包还残留在系统中，导致系统里无用的软件包越来越多的情况。</p>
+
+<h2 id="无法使用-dnf-history-undo-的情况">无法使用 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 的情况</h2>
+
+<p>用 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 撤销一个不久前运行的事务往往没有问题，但是如果一个事务是一段时间以前运行的，可能就不好用。我最近就遇到了一例。</p>
+
+<p>一个月以前，为了能在 Fedora 上玩一些本该在 Windows 上运行的老游戏，我装了一个 Wine。一段时间过后，我发现兼容性并没有那么完美，不得不回到 Windows，故准备卸载 Wine。</p>
+
+<p>我首先运行的指令是 <code class="language-plaintext highlighter-rouge">dnf history list wine</code>，用来查询哪些事务牵扯到了 <code class="language-plaintext highlighter-rouge">wine</code> 软件包。从程序输出中可以看出，事务 217 是安装了 <code class="language-plaintext highlighter-rouge">wine</code> 的事务。</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/view-history.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>所以说，运行 <code class="language-plaintext highlighter-rouge">dnf history undo 217</code> 就可以卸载了。然而……</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/failed-history-undo.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>这个时候，所有跟 Wine 有关的软件包都还没卸载呢，可为什么 DNF 报了错，说这些软件包没被安装呢？原因是 217 号事务（<a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-217.txt">日志</a>）安装了 Wine 5.10，但是 229 号事务（<a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-229.txt">日志</a>）把 Wine 更新到了 5.12。<code class="language-plaintext highlighter-rouge">dnf history undo</code> 在查找软件包时，会同时根据包名、版本和架构来寻找，所以在这条命令看来， <code class="language-plaintext highlighter-rouge">wine-5.10-1.fc32.x86_64</code> 和 <code class="language-plaintext highlighter-rouge">wine-5.12-1.fc32.x86_64</code> 就不是同一个软件包。</p>
+
+<p>总而言之，<strong>如果您更新了一个事务中任何改动过的软件包，那么用 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 撤销该事务就会失败</strong>。这也是为什么撤销近期的事务一般能成功，但撤销比较久远的事务可能不行。</p>
+
+<h2 id="dnf-remove-可以用吗"><code class="language-plaintext highlighter-rouge">dnf remove</code> 可以用吗？</h2>
+
+<p><code class="language-plaintext highlighter-rouge">dnf remove</code> 可以连带移除一个软件包的依赖，所以直接运行 <code class="language-plaintext highlighter-rouge">dnf remove wine</code> 和 <code class="language-plaintext highlighter-rouge">dnf history undo 217</code> 的理论效果应当是一样的。不过，当我运行它的时候……</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/remove.cast" poster="npt:4" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>DNF 告诉我这条命令只会删除 83 个软件包，但是刚刚 <code class="language-plaintext highlighter-rouge">dnf history list wine</code> 命令的输出显示的相关软件包数量是 197 个，也就是说如果我用 <code class="language-plaintext highlighter-rouge">dnf remove</code> 的话，会残留 114 个无用的软件包。</p>
+
+<h2 id="手动撤销事务">手动撤销事务</h2>
+
+<p>虽然直接用 <code class="language-plaintext highlighter-rouge">dnf history undo</code> 撤销 217 号事务不可行，但是仍然可以从 <code class="language-plaintext highlighter-rouge">dnf history info 217</code> 命令的<a href="/assets/res/posts/2020-07-31-manual-dnf-history-undo/transaction-217.txt">输出</a>中查看这个事务都安装了哪些软件包。我当时的思路就是从这条命令的输出中把所有被安装的软件包的名字找出来，然后作为参数传入 <code class="language-plaintext highlighter-rouge">dnf remove</code> 命令来全部删除。</p>
+
+<p>以下是该命令输出的节选：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    ...
+    Install pulseaudio-libs-13.99.1-4.fc32.i686                       @updates
+    Install samba-common-tools-2:4.12.3-0.fc32.1.x86_64               @updates
+    Install samba-libs-2:4.12.3-0.fc32.1.x86_64                       @updates
+    Install samba-winbind-2:4.12.3-0.fc32.1.x86_64                    @updates
+    Install samba-winbind-clients-2:4.12.3-0.fc32.1.x86_64            @updates
+    Install samba-winbind-modules-2:4.12.3-0.fc32.1.x86_64            @updates
+    Install sane-backends-drivers-cameras-1.0.30-1.fc32.i686          @updates
+    Install sane-backends-drivers-scanners-1.0.30-1.fc32.i686         @updates
+    Install sane-backends-libs-1.0.30-1.fc32.i686                     @updates
+    Install spirv-tools-libs-2019.5-2.20200421.git67f4838.fc32.i686   @updates
+    Install spirv-tools-libs-2019.5-2.20200421.git67f4838.fc32.x86_64 @updates
+    ...
+</code></pre></div></div>
+
+<p>这里列出的软件包都是以它们的 <strong>NEVRA</strong> 表示的。NEVRA 是指 Name, Epoch, Version, Release, Architecture，勉强翻译成中文就是“包名、时期、版本、发布、架构”。</p>
+
+<p>在 RPM 中，时期的作用是避免一些软件项目瞎玩版本号，导致版本号排序出现混乱。比如 Java 5 版本号是 <code class="language-plaintext highlighter-rouge">5.0</code>，但到了 Java 6 却变成了 <code class="language-plaintext highlighter-rouge">1.6</code>。由于 <code class="language-plaintext highlighter-rouge">1.6</code> 比 <code class="language-plaintext highlighter-rouge">5.0</code> 小，RPM 会认为 Java 6 的版本比 Java 5 低，但这纯粹是因为 Java 版本号混乱导致的。这个时候，在版本号前面加上时期就可以解决排序问题。比如 Java 5 是时期 1，RPM 版本号就是 <code class="language-plaintext highlighter-rouge">1:5.0</code>；Java 6 版本号编号规则变化，就把时期加一，到了时期 2，RPM 版本号为 <code class="language-plaintext highlighter-rouge">2:1.6</code>；<code class="language-plaintext highlighter-rouge">2:1.6</code> 此时就比 <code class="language-plaintext highlighter-rouge">1:5.0</code> 大了。具体的规则，可以参考 <a href="https://docs.fedoraproject.org/en-US/packaging-guidelines/Versioning/#_upstream_makes_unsortable_changes">Fedora 官方文档</a>。</p>
+
+<p>而发布的作用就是在一个软件自身的版本没有变化，但是软件包维护者需要重新发布一个相同版本的软件包时，用来区分这两次发布。比如说，Vim 发布了新版本 <code class="language-plaintext highlighter-rouge">8.2.1224</code>，Fedora 软件包维护者就会下载这个版本的源码，然后根据 Fedora 项目自己写的 RPM 配置文件进行编译和打包，推出 <code class="language-plaintext highlighter-rouge">8.2.1224-1</code> 版本的 RPM 包，此时是发布 1。但是后来维护者发现编译的时候有几个编译器选项忘了开了，需要重新编译并打包，此时就需要把发布改为 2，重新推出一个 <code class="language-plaintext highlighter-rouge">8.2.1224-2</code> 版本的 RPM 包了，因为 Vim 上游的版本没变，只是 Fedora 自己重新编译了相同的版本、重发布了一遍。</p>
+
+<p>这里列出的 NEVRA 的格式是 <code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code>。当一个软件包被更新时，NEVRA 的 <code class="language-plaintext highlighter-rouge">[epoch:]version-release</code> 部分会变，但是剩下的 <code class="language-plaintext highlighter-rouge">name</code> 和 <code class="language-plaintext highlighter-rouge">arch</code> 会保持一致，所以我这里的思路就是把 <code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code> 转成 <code class="language-plaintext highlighter-rouge">name.arch</code>，就可以标识不同版本的同一软件包。</p>
+
+<p>由于总共有 197 个软件包，手工进行转换不仅无聊还容易出错，所以我就尝试使用 Unix 命令，让电脑来完成这项工作。</p>
+
+<p>首先，我用 <code class="language-plaintext highlighter-rouge">grep</code> 来精简命令的输出。输出的最开始是一些关于这个事务的一些信息，并不包含任何软件包名，应该被删去。每个有软件包 NEVRA 的行都有“Install”字样，所以可以根据有没有这个词来判断每行文字是否有软件包名。与此同时，我把软件包列表保存到了一个文件里，方便后面的处理。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">history </span>info 217 | <span class="nb">grep</span> <span class="s1">'Install'</span> <span class="o">&gt;</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/filter-nevras.cast" poster="npt:8" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>下一步就是把每一行的头和尾都去掉，只保留中间的软件包 NEVRA，也就是把“Install”、以 <code class="language-plaintext highlighter-rouge">@</code> 开头的软件仓库信息和任何空格都删除。最快捷的方法就是使用 <code class="language-plaintext highlighter-rouge">sed</code>。我在这里指定了 <code class="language-plaintext highlighter-rouge">-i</code> 选项，意思就是直接在提供给 <code class="language-plaintext highlighter-rouge">sed</code> 的文件里原地编辑，并且用了 <code class="language-plaintext highlighter-rouge">-E</code> 选项以使用扩展正则表达式。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/^ *Install *//g'</span> /tmp/installed-pkgs.txt
+<span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/ *@.+$//g'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/trim-lines.cast" poster="npt:1.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>这样一来，每行就只剩下 <code class="language-plaintext highlighter-rouge">name-[epoch:]version-release.arch</code> 格式的 NEVRA，没有别的东西了。下一步就可以把它们转换为 <code class="language-plaintext highlighter-rouge">name.arch</code> 格式了。为此，我尝试写了一个匹配 <code class="language-plaintext highlighter-rouge">-[epoch:]version-release</code> 的正则表达式规则：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   -([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?
+1~~^^~~~~2~~~^^~~~~~~~~3~~~~~~~~^^~~~~~~~~~~~4~~~~~~~~~~~^^~~~~5~~~~^
+</code></pre></div></div>
+
+<p>这个正则表达式总共由五部分组成：</p>
+
+<ol>
+  <li>
+    <p>一个横杠 <code class="language-plaintext highlighter-rouge">-</code>，用来分隔包名和版本信息。</p>
+  </li>
+  <li>
+    <p>匹配“时期”。时期并不是每个软件包都有的属性，所以这部分以问号 <code class="language-plaintext highlighter-rouge">?</code> 结尾，在正则表达式里的意思就是它前面的部分是可有可无的。</p>
+  </li>
+  <li>
+    <p>匹配“版本”、以及“发布”的一部分。一般地，版本都是以数字开头，并且可以包含多个数字和小数点 <code class="language-plaintext highlighter-rouge">.</code>。但版本也可以包含字母，例如 <code class="language-plaintext highlighter-rouge">tzdata-2020a</code>。发布当中也可以有字母，如 <code class="language-plaintext highlighter-rouge">crontabs-1.11-22.20190603git</code>。</p>
+  </li>
+  <li>
+    <p>匹配 RPM 宏标签 <code class="language-plaintext highlighter-rouge">%{?dist}</code> 的值。运行命令 <code class="language-plaintext highlighter-rouge">rpm --eval %{?dist}</code> 就可以查看您的系统上这个标签对应的值。这个值标志着这个 RPM 包是给哪个发行版版本构建的，比如 <code class="language-plaintext highlighter-rouge">.fc32</code>、<code class="language-plaintext highlighter-rouge">.el8</code>、或者 <code class="language-plaintext highlighter-rouge">.el8_2</code>。</p>
+  </li>
+  <li>
+    <p>有些软件包可能在 <code class="language-plaintext highlighter-rouge">%{?dist}</code> 后面还有小版本号。和时期一样，不是每个软件包的 NEVRA 都有这部分，所以这部分的正则表达式同样以问号结尾。</p>
+  </li>
+</ol>
+
+<p>这个正则表达式可以用于 Fedora 的大多数软件包和 CentOS 还有 RHEL 所有遵循 Fedora 软件包版本号规范的包。我唯一知道的例外是 <code class="language-plaintext highlighter-rouge">ntfs-3g-system-compression-1.0-3.fc32.x86_64</code>，因为它的包名里在横杠后面有数字。不过，这个正则表达式已经是我能想到的最好的了。除非您要处理的软件包里有类似的名字里横杠后面有数字的极端情况，否则应该是无所谓的。</p>
+
+<p>为保险起见，您可以先运行下面的命令检查这个正则表达式能否准确匹配每个 NEVRA 的 <code class="language-plaintext highlighter-rouge">-[epoch:]version-release</code> 部分。匹配的部分会以红色字体标出。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">grep</span> <span class="nt">-E</span> <span class="nt">--</span> <span class="s1">'-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/check-conversion.cast" poster="npt:7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>如果看起来没问题的话，就可以用 <code class="language-plaintext highlighter-rouge">sed</code> 作正式的修改了。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-E</span> <span class="s1">'s/-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?//g'</span> /tmp/installed-pkgs.txt
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/make-conversion.cast" poster="npt:1.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>现在我就得到了以 <code class="language-plaintext highlighter-rouge">name.arch</code> 格式列出的软件包列表，接下来需要做的就是把列表中的每一个软件包都以命令行参数的形式提供给 <code class="language-plaintext highlighter-rouge">dnf remove</code> 命令。将一个文件里的每一行都作为一个参数提供给一个命令是 <code class="language-plaintext highlighter-rouge">xargs</code> 的拿手绝活。<code class="language-plaintext highlighter-rouge">xargs</code> 默认是从标准输入读取参数，但它的 <code class="language-plaintext highlighter-rouge">-a</code> 选项允许直接从一个文件来读取。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>xargs <span class="nt">-a</span> /tmp/installed-pkgs.txt <span class="nb">sudo </span>dnf remove
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-31-manual-dnf-history-undo/xargs.cast" poster="npt:7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>这里的事务摘要显示有 197 个软件包会被删除，和之前的软件包数是一致的。没有用不上的软件包会残留在系统中，也没有额外的软件包被意外卸载。当您执行这一步时，也<strong>请仔细核实受影响的软件包数量</strong>，避免意外删除关键的系统软件包。如果发现有任何问题，请检查 DNF 的错误信息和您的软件包列表文件。</p>
+
+<p>到这一步，DNF 事务的手动撤销就完成了。整个过程中使用的命令包括 <code class="language-plaintext highlighter-rouge">dnf history undo</code>、<code class="language-plaintext highlighter-rouge">grep</code>、<code class="language-plaintext highlighter-rouge">sed</code>、<code class="language-plaintext highlighter-rouge">xargs</code> 和 <code class="language-plaintext highlighter-rouge">dnf remove</code>，都只是一些普通的命令；<code class="language-plaintext highlighter-rouge">grep</code>、<code class="language-plaintext highlighter-rouge">sed</code> 和 <code class="language-plaintext highlighter-rouge">xargs</code> 更只是平凡的 Unix 程序，却在手动撤销 DNF 事务这一特定任务中发挥了重要作用。这是 Unix 哲学的体现：多个通用的软件协同工作，仅凭纯文本作为彼此之间互相交流的接口，共同完成一个复杂和具体的任务。</p>
+
+<h2 id="一个命令包揽整个任务">一个命令包揽整个任务</h2>
+
+<p>在上面的步骤中，我创建了一个软件包列表文件 <code class="language-plaintext highlighter-rouge">/tmp/installed-pkgs.txt</code>，方便我观察上述的每个指令会如何修改软件包列表。然而，这个文件并不是必须的。如果您对每个命令的作用足够熟悉的话，完全不需要通过创建一个文件来观察它们在干什么，直接用 Unix 管道（pipe）把所有命令连接起来即可。管道可以让一个程序的标准输出变成下一个程序的标准输入，中间不需要经过任何文件。与此同时，管道可以将多个零散的命令合并成一个超长的命令。</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">history </span>info &lt;transaction-id&gt; | <span class="se">\</span>
+    <span class="nb">grep</span> <span class="s1">'Install'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/^ *Install *//g'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/ *@.+//g'</span> | <span class="se">\</span>
+    <span class="nb">sed</span> <span class="nt">-E</span> <span class="s1">'s/-([0-9]+:)?[0-9][0-9A-Za-z.-]*\.(el|fc)[0-9]+(_[0-9]+)?(\.[0-9]+)?//g'</span> | <span class="se">\</span>
+    xargs <span class="nt">-o</span> <span class="nb">sudo </span>dnf remove
+</code></pre></div></div>
+
+<p>和单独运行每个命令相比，这个使用管道的超长命令有如下不同：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">sed</code> 命令的 <code class="language-plaintext highlighter-rouge">-i</code> 选项不再被使用了。在没有这个选项的情况下，<code class="language-plaintext highlighter-rouge">sed</code> 会直接将编辑好的文本转移到标准输出中。不过，因为管道需要将一个程序的标准输出作为下一个程序的标准输入，所以这样的行为正是我们需要的。</p>
+  </li>
+  <li>
+    <p>因为我们在这里不使用文件，所以也就不需要 <code class="language-plaintext highlighter-rouge">xargs</code> 的 <code class="language-plaintext highlighter-rouge">-a</code> 选项了。取而代之的是 <code class="language-plaintext highlighter-rouge">-o</code> 选项，允许您通过键盘与 <code class="language-plaintext highlighter-rouge">xargs</code> 运行的程序进行交互。对于 DNF 而言，它在运行一个事务之前会进行用户交互，要求您输入 <code class="language-plaintext highlighter-rouge">y</code> 进行确认，所以需要使用 <code class="language-plaintext highlighter-rouge">-o</code> 选项；不用这个选项的话，就没有输入 <code class="language-plaintext highlighter-rouge">y</code> 确认的机会。</p>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#unix-%E7%A8%8B%E5%BA%8F" class="page__taxonomy-item" rel="tag">Unix 程序</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E6%95%99%E7%A8%8B" class="page__taxonomy-item" rel="tag">教程</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

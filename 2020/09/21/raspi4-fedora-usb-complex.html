@@ -1,0 +1,581 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>USB Issue on Raspberry Pi 4 Running Fedora - Complex Solution - Leo3418’s Personal Site</title>
+<meta name="description" content="In the previous post we looked at a very simple solution to fix the USB ports on Raspberry Pi 4B 4GB/8GB RAM models running Fedora, which involves a trade-off between the USB ports’ functionality and the amount of RAM available to the operating system. This post will give you another solution that takes more steps but no longer limits available memory to 3 GiB.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="USB Issue on Raspberry Pi 4 Running Fedora - Complex Solution">
+<meta property="og:url" content="https://leo3418.github.io/2020/09/21/raspi4-fedora-usb-complex.html">
+
+
+  <meta property="og:description" content="In the previous post we looked at a very simple solution to fix the USB ports on Raspberry Pi 4B 4GB/8GB RAM models running Fedora, which involves a trade-off between the USB ports’ functionality and the amount of RAM available to the operating system. This post will give you another solution that takes more steps but no longer limits available memory to 3 GiB.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-09-21T00:00:00-05:00">
+
+
+
+  <meta property="article:modified_time" content="2020-10-07T00:00:00-05:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/09/21/raspi4-fedora-usb-complex.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/09/21/raspi4-fedora-usb-complex.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="USB Issue on Raspberry Pi 4 Running Fedora - Complex Solution">
+    <meta itemprop="description" content="In the previous post we looked ata very simple solution to fix the USB ports on Raspberry Pi 4B 4GB/8GB RAMmodels running Fedora, which involves a trade-off between the USB ports’functionality and the amount of RAM available to the operating system. Thispost will give you another solution that takes more steps but no longer limitsavailable memory to 3 GiB.">
+    <meta itemprop="datePublished" content="2020-09-21T00:00:00-05:00">
+    <meta itemprop="dateModified" content="2020-10-07T00:00:00-05:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">USB Issue on Raspberry Pi 4 Running Fedora - Complex Solution
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-09-21T00:00:00-05:00">Sep 21, 2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:
+        <time datetime="2020-10-07">Oct  7, 2020</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#overview">Overview</a></li><li><a href="#obtain-files-from-opensuse">Obtain Files from openSUSE</a><ul><li><a href="#download-opensuses-image">Download openSUSE’s Image</a></li><li><a href="#extract-the-image">Extract the Image</a></li><li><a href="#mount-the-image">Mount the Image</a></li></ul></li><li><a href="#copy-the-files-to-fedora-sd-card">Copy the Files to Fedora SD Card</a><ul><li><a href="#extra-step-for-fedora-33">Extra Step for Fedora 33</a></li></ul></li><li><a href="#modify-boot-configuration-file">Modify Boot Configuration File</a></li><li><a href="#clean-up">Clean Up</a></li><li><a href="#known-issues">Known Issues</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>In <a href="/2020/09/20/raspi4-fedora-usb-simple.html">the previous post</a> we looked at
+a very simple solution to fix the USB ports on Raspberry Pi 4B 4GB/8GB RAM
+models running Fedora, which involves a trade-off between the USB ports’
+functionality and the amount of RAM available to the operating system. This
+post will give you another solution that takes more steps but no longer limits
+available memory to 3 GiB.</p>
+
+<p>As said in the previous post, no action is required for the 2GB model. The
+symptoms of this issue are available
+<a href="/2020/09/20/raspi4-fedora-usb-simple.html#symptoms">there</a> as well.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>You probably are already feeling this solution is not so simple just by finding
+that an overview section like this is needed for it. To summarize, this
+solution involves using the bootloader and firmware of <em>openSUSE</em> - another
+GNU/Linux distribution - on Fedora. So, you will need to</p>
+<ul>
+  <li>obtain those files from openSUSE,</li>
+  <li>copy them to the SD card on which you have installed Fedora, then</li>
+  <li>modify openSUSE’s boot configuration file for Fedora.</li>
+</ul>
+
+<p>I will go over many details on how each step should be performed. From the
+length and content of this post, you might think the procedure is complicated,
+but it really boils down to only these objectives.</p>
+
+<h2 id="obtain-files-from-opensuse">Obtain Files from openSUSE</h2>
+
+<h3 id="download-opensuses-image">Download openSUSE’s Image</h3>
+
+<p>For the mere purpose of extracting some critical boot and firmware files, I
+would recommend downloading the <em>openSUSE Leap JeOS</em> image. <em>Leap</em> is
+openSUSE’s regular release channel, so it is supposed to be more stable. JeOS
+stands for <em>Just enough Operating System</em>, which is a minimal distribution
+without a desktop environment, helping to reduce download size and disk usage.</p>
+
+<p>As of this post was initially composed, the newest version of the openSUSE Leap
+JeOS image for Raspberry Pi 4 was <a href="http://download.opensuse.org/ports/aarch64/distribution/leap/15.2/appliances/openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64.raw.xz">Leap
+15.2</a>.
+You may also get the latest image from <a href="https://en.opensuse.org/HCL:Raspberry_Pi4">this
+page</a> on the openSUSE Wiki.</p>
+
+<h3 id="extract-the-image">Extract the Image</h3>
+
+<p>The downloaded file is a <code class="language-plaintext highlighter-rouge">.xz</code> file, a compressed image. Before doing anything
+with the image, you need to decompress the <code class="language-plaintext highlighter-rouge">.xz</code> file.</p>
+
+<p>If the <code class="language-plaintext highlighter-rouge">xz</code> program is available to you, you may decompress the file with the
+following command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>xz <span class="nt">-dv</span> openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw.xz
+</code></pre></div></div>
+
+<p class="notice--info">Depending on the version of the image you download and where you download it
+to, you might need to change the file name in this command and all subsequent
+commands in the later steps.</p>
+
+<p>In this command, the <code class="language-plaintext highlighter-rouge">-d</code> flag tells <code class="language-plaintext highlighter-rouge">xz</code> to decompress. The <code class="language-plaintext highlighter-rouge">-v</code> flag is
+optional, as it does nothing more than enabling progress reporting.</p>
+
+<p>When the command completes, the decompressed image replaces the original <code class="language-plaintext highlighter-rouge">.xz</code>
+file in the same directory, with the <code class="language-plaintext highlighter-rouge">.xz</code> suffix removed.</p>
+
+<h3 id="mount-the-image">Mount the Image</h3>
+
+<p>After the image is decompressed, it can be mounted so you are able to copy out
+the files in it. The image consists of multiple partitions; the main focus is
+on the first of them, which is the EFI partition and contains the files you
+will need. Therefore, you just need to mount the first partition of the image.</p>
+
+<p>You may use whatever tool available on your operating system for mounting, as
+long as you can achieve the goal of this step, which is to ensure you can copy
+the files in that partition from the openSUSE image to the SD card containing
+your Fedora installation.</p>
+
+<p>The following instructions are for mounting the image’s first partition on a
+GNU/Linux system with the <code class="language-plaintext highlighter-rouge">mount</code> program.</p>
+
+<ol>
+  <li>
+    <p>Get the offset of the EFI partition in the image. This information is
+available indirectly from <code class="language-plaintext highlighter-rouge">fdisk</code>.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>fdisk <span class="nt">-l</span> openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw
+<span class="go">Disk openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw: 2.2 GiB, 2353004544 bytes, 4595712 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x52b80fee
+
+Device                                                                     Boot   Start     End Sectors  Size Id Type
+openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw1         2048  133119  131072   64M  c W95
+openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw2       133120 1157119 1024000  500M 82 Linu
+openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw3      1157120 4595678 3438559  1.7G 83 Linu
+</span></code></pre></div>    </div>
+
+    <p>The above output shows that the size of one sector is 512 bytes, and the
+first partition starts at sector 2048. Sectors are numbered from 0, so being
+sector 2048 means there are exactly 2048 sectors before it. Thus, the number
+of bytes from the image’s start to the partition’s beginning in that image
+is 512 * 2048 = 1,048,576 bytes, and that is the value of offset, which you
+will need later.</p>
+  </li>
+  <li>
+    <p>Create a directory to be used as the partition’s mount point, like
+<code class="language-plaintext highlighter-rouge">/mnt/tmp</code> for example. <code class="language-plaintext highlighter-rouge">/mnt</code> is typically not writable by a normal user,
+so if you decide to use this path as the mount point, you need to run this
+command with <em>superuser privilege</em> (often by prepending <code class="language-plaintext highlighter-rouge">sudo</code> to it).</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">mkdir</span> /mnt/tmp
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Mount the image, and specify the offset you calculated before. Note that the
+<code class="language-plaintext highlighter-rouge">mount</code> program usually needs to be run with superuser privilege.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>mount <span class="nt">-o</span> loop,offset<span class="o">=</span>1048576 openSUSE-Leap-15.2-ARM-JeOS-raspberrypi4.aarch64-2020.07.08-Build1.35.raw /mnt/tmp/
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>The files in the EFI partition are now available at the mount point, so you
+are ready to copy them to elsewhere and have achieved the goal of mounting.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cd</span> /mnt/tmp
+<span class="gp">$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">bcm2708-rpi-b.dtb       bcm2710-rpi-3-b-plus.dtb  LICENCE.broadcom
+bcm2708-rpi-b-plus.dtb  bcm2710-rpi-cm3.dtb       overlays
+bcm2708-rpi-cm.dtb      bcm2711-rpi-4-b.dtb       start4.elf
+bcm2708-rpi-zero.dtb    bootcode.bin              start.elf
+bcm2708-rpi-zero-w.dtb  config.txt                startup.nsh
+bcm2709-rpi-2-b.dtb     EFI                       u-boot.bin
+bcm2710-rpi-2-b.dtb     fixup4.dat                ubootconfig.txt
+bcm2710-rpi-3-b.dtb     fixup.dat
+</span></code></pre></div></div>
+
+<h2 id="copy-the-files-to-fedora-sd-card">Copy the Files to Fedora SD Card</h2>
+
+<p>This step is very straightforward; just copy every file and directory in
+openSUSE’s EFI partition to your Fedora SD card’s EFI partition. If you want
+to use a command for this task, run the following one under the SD card’s EFI
+partition:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> /mnt/tmp/<span class="k">*</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">-r</code> flag let <code class="language-plaintext highlighter-rouge">cp</code> descend into child directories and copy their contents
+as well, and the <code class="language-plaintext highlighter-rouge">-v</code> flag is again an optional one merely for progress
+reporting.</p>
+
+<p>As of Fedora 32 and Linux kernel 5.8, there is one file in openSUSE’s EFI
+partition that should not be used on Fedora, which is the <em>U-Boot image</em>
+<code class="language-plaintext highlighter-rouge">u-boot.bin</code>. When openSUSE’s U-Boot image is being used, Fedora fails to boot.
+You can keep using Fedora’s image <code class="language-plaintext highlighter-rouge">rpi4-u-boot.bin</code> instead, by first deleting
+openSUSE’s <code class="language-plaintext highlighter-rouge">u-boot.bin</code> and then renaming <code class="language-plaintext highlighter-rouge">rpi4-u-boot.bin</code> to <code class="language-plaintext highlighter-rouge">u-boot.bin</code>.</p>
+
+<p>The file deletion and renaming operations can be done together with a single
+command, if you are willing to use it:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">mv</span> <span class="o">{</span>rpi4-,<span class="o">}</span>u-boot.bin
+</code></pre></div></div>
+
+<h3 id="extra-step-for-fedora-33">Extra Step for Fedora 33</h3>
+
+<p>When the U-Boot image shipped with Fedora 33 is used together with openSUSE’s
+boot files, the boot process will get stuck until you connect the Raspberry Pi
+to a monitor. This can be easily fixed by creating a file called
+<code class="language-plaintext highlighter-rouge">extraconfig.txt</code> under the SD card’s EFI partition and inserting the
+following line into the file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hdmi_force_hotplug=1
+</code></pre></div></div>
+
+<p>This may be done by running the following command under the SD card’s EFI
+partition:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">echo</span> <span class="s1">'hdmi_force_hotplug=1'</span> <span class="o">&gt;</span> extraconfig.txt
+</code></pre></div></div>
+
+<h2 id="modify-boot-configuration-file">Modify Boot Configuration File</h2>
+
+<p>The bootloader you have ported from openSUSE to Fedora will attempt to read
+files from an invalid location and fail to boot unless it is reconfigured for
+Fedora. You need to tell the bootloader the correct path to Fedora’s boot
+files.</p>
+
+<p>Replace everything in file <code class="language-plaintext highlighter-rouge">EFI/BOOT/grub.cfg</code> under your SD card’s EFI
+partition with the following lines:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set prefix=($root)/EFI/fedora
+normal
+</code></pre></div></div>
+
+<p>Save the file and safely eject the SD card. Insert it into your Raspberry Pi,
+power it on, and the USB ports should be working after the system boots. Enjoy
+using your USB peripherals on Raspberry Pi running Fedora!</p>
+
+<h2 id="clean-up">Clean Up</h2>
+
+<p>If everything works well, you can start cleaning up the trace you have left on
+your computer. Should you have used <code class="language-plaintext highlighter-rouge">mount</code> to mount the openSUSE’s image,
+unmount it and remove the mount point with the following commands.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>umount /mnt/tmp
+<span class="gp">#</span><span class="w"> </span><span class="nb">rmdir</span> /mnt/tmp
+</code></pre></div></div>
+
+<h2 id="known-issues">Known Issues</h2>
+
+<ul>
+  <li>When Fedora 32 runs on the 8GB model, regardless of whether this solution has
+been applied, the amount of RAM available to the operating system is limited
+to 4 GiB. This is caused by Fedora 32’s outdated U-Boot image. Fedora 33
+fixes this particular problem by shipping a newer U-Boot image.</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<p>This post is basically just a detailed explanation of the issue’s solution
+described in <a href="http://rglinuxtech.com/?p=2768">this page</a> written by Robert
+Gadsdon on rglinuxtech.com. Any credit for the abstract idea behind this
+solution should go to that author; what I have done here is merely writing
+step-by-step instructions on how to apply it.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#raspberry-pi" class="page__taxonomy-item" rel="tag">Raspberry Pi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

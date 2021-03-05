@@ -1,0 +1,789 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MC Forge Mod Dev Blog: Migrating to Minecraft 1.16 - Leo3418’s Personal Site</title>
+<meta name="description" content="It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, as the first recommended build for 1.16.x, which is Forge 34.1.0, was released in September 2020, very soon after I published the previous blog post for this serires about an update to my mod project.  Development of Forge for Minecraft 1.16.x already had significant progress when the update for my mod was worked on, and I contemplated adding support for 1.16 along with that update.  However, after a hard attempt to port my mod to Minecraft 1.16, I decided that because many method names in the Minecraft API source code decompiled by MCP were still not fully deobfuscated, Forge on 1.16 was still immature, and my mod’s update would not ship with 1.16 support.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="MC Forge Mod Dev Blog: Migrating to Minecraft 1.16">
+<meta property="og:url" content="https://leo3418.github.io/2021/02/06/forge-mod-migrate-to-1-16.html">
+
+
+  <meta property="og:description" content="It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, as the first recommended build for 1.16.x, which is Forge 34.1.0, was released in September 2020, very soon after I published the previous blog post for this serires about an update to my mod project.  Development of Forge for Minecraft 1.16.x already had significant progress when the update for my mod was worked on, and I contemplated adding support for 1.16 along with that update.  However, after a hard attempt to port my mod to Minecraft 1.16, I decided that because many method names in the Minecraft API source code decompiled by MCP were still not fully deobfuscated, Forge on 1.16 was still immature, and my mod’s update would not ship with 1.16 support.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-02-06T00:00:00-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2021/02/06/forge-mod-migrate-to-1-16.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2021/02/06/forge-mod-migrate-to-1-16.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="MC Forge Mod Dev Blog: Migrating to Minecraft 1.16">
+    <meta itemprop="description" content="It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, asthe first recommended build for 1.16.x, which is Forge 34.1.0, was released inSeptember 2020, very soon after I published the previous blog post for thisserires about an update to my mod project.  Development ofForge for Minecraft 1.16.x already had significant progress when the update formy mod was worked on, and I contemplated adding support for 1.16 along withthat update.  However, after a hard attempt to port my mod to Minecraft 1.16, Idecided that because many method names in the Minecraft API source codedecompiled by MCP were still not fully deobfuscated, Forge on 1.16 was stillimmature, and my mod’s update would not ship with 1.16 support.">
+    <meta itemprop="datePublished" content="2021-02-06T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MC Forge Mod Dev Blog: Migrating to Minecraft 1.16
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-02-06T00:00:00-06:00">Feb  6, 2021</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#additional-matrix-stack-parameter-of-gui-rendering-methods">Additional Matrix Stack Parameter of GUI Rendering Methods</a></li><li><a href="#new-method-for-closing-a-screen">New Method for Closing a Screen</a></li><li><a href="#removed-method-for-getting-a-settings-options-display-string">Removed Method for Getting a Settings Option’s Display String</a></li><li><a href="#removed-method-for-getting-formatted-text">Removed Method for Getting Formatted Text</a></li><li><a href="#additional-parameter-of-method-for-sending-chat-messages">Additional Parameter of Method for Sending Chat Messages</a></li><li><a href="#mandatory-license-field-in-modstoml">Mandatory License Field in mods.toml</a></li><li><a href="#more">More</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, as
+the first recommended build for 1.16.x, which is Forge 34.1.0, was released in
+September 2020, very soon after I published <a href="/2020/09/09/forge-mod-config-screen.html">the previous blog post for this
+serires</a> about an update to my mod project.  Development of
+Forge for Minecraft 1.16.x already had significant progress when the update for
+my mod was worked on, and I contemplated adding support for 1.16 along with
+that update.  However, after a hard attempt to port my mod to Minecraft 1.16, I
+decided that because many method names in the Minecraft API source code
+decompiled by MCP were still not fully <em>deobfuscated</em>, Forge on 1.16 was still
+immature, and my mod’s update would not ship with 1.16 support.</p>
+
+<p>When I saw the first recommended build for 1.16.x, I downloaded it to find out
+whether the deobfuscation was complete.  I was disappointed: a build that still
+consisted of lots of meaningless obfuscated method names should never qualify
+as a stable build in my opinion, but Forge developers decided to say that “this
+build is production-ready and recommended”, <a href="https://forums.minecraftforge.net/topic/91710-forge-341-minecraft-1163/">dropping official support for
+Minecraft 1.14.x at the same time</a>.  An implication of Forge ending
+support for a Minecraft version is that if you ask a question about it on the
+official forum, <a href="https://forums.minecraftforge.net/topic/97284-forge-1144-sever-help/?do=findComment&amp;comment=442057">you</a> <a href="https://forums.minecraftforge.net/topic/97309-help-please/?do=findComment&amp;comment=442112">will</a>
+<a href="https://forums.minecraftforge.net/topic/97311-how-can-i-remove-knockback/?do=findComment&amp;comment=442119">see</a> a moderator coldly replying “your version is no longer
+supported, please update to receive support”, and ruthlessly closing the
+thread, preventing other community members from offering a helping hand.  So
+you release an incomplete version and deprecate an older stable version,
+forcing people who don’t want to be on the bleeding edge to use 1.15.x?  I
+almost wanted to curse Forge developers for this stupid decision and Forge
+forum moderators’ frigid treatment of forum threads about unsupported Minecraft
+versions.</p>
+
+<p>My wait for a Forge build that I think is truly stable continued, and it went a
+little longer than it should have been, as I got busy with other things in my
+life.  Deobfuscation was satisfactory <a href="https://github.com/MinecraftForge/MinecraftForge/commit/53eedb0f102bb1d8cf9432fae891730481206bce">by October 2020</a>, which
+helped me complete the majority of the migration to Minecraft 1.16.  The only
+thing that stopped me from finalizing the port was a redesign of text
+components API in Minecraft itself.  My mod needs to read chat messages
+delivered to the client in their original form, i.e. with the <a href="https://minecraft.gamepedia.com/Formatting_codes">formatting
+codes</a>, for detecting the start of a Bed Wars game and
+registering purchases of team upgrades.  Unfortunately, Minecraft’s internal
+method for getting a chat message in formatted form was removed in 1.16 without
+replacement, so I had to figure out a way to reconstruct a formatted message
+myself.  This was actually not as hard as I had imagined, but I chose to save
+it for later and did not revisit it until recently.</p>
+
+<div class="notice--success">
+
+<p><strong>What Is Deobfuscation?</strong></p>
+
+
+<p>To answer this question, let us first look at what <em>obfuscation</em> is.
+<a href="https://en.wikipedia.org/wiki/Obfuscation_(software)">Obfuscation</a> is a
+technique used by software developers who are so eager to protect their
+software from reverse engineering that they are afraid of other people getting
+even a tiny clue about how their software is implemented from mere peeks
+through the function/method names in the program.  More specifically,
+obfuscation entails scrambling function/method names into meaningless symbols,
+preventing other people from guessing what a function/method does from what it
+is called.</p>
+
+
+<p>Mojang has been obfuscating Minecraft for a very long time, and this can
+definitely be a barrier for people who want to write modifications to the game.
+The <a href="https://docs.spongepowered.org/stable/en/plugin/internals/mcp.html">Mod Coder
+Pack</a> (MCP)
+was created to remap obfuscated method names in decompiled Minecraft source
+code to better names that actually tell those methods’ purposes.  This process
+is called <strong>deobfuscation</strong>.</p>
+
+
+<p>The result of a complete deobfuscation is <em>MCP mappings</em>, which consist of
+reasonably meaningful method names (<em>MCP names</em>) enough to give us a rough idea
+of what each method does, like <code class="language-plaintext highlighter-rouge">getMainWindow</code> for example.  But those method
+names are not all generated by magic: they are available thanks to developers’
+efforts.  When an MCP name is not available for a method, it will be assigned a
+<em>Searge name</em> from <em>Searge mappings</em>, which can be something like
+<code class="language-plaintext highlighter-rouge">func_228018_at_</code>.  I would call Searge mappings <em>partially</em> deobfuscated
+because at least a method’s Searge name is different from its original name in
+the Minecraft binary, but it still does not tell the method’s purpose, so I
+would not call it a complete deobfuscation.</p>
+
+
+<p>It would not be easy to work with a Minecraft Forge release bundled with a
+version of MCP that still contains significant amount of Searge names.  Look at
+<a href="https://github.com/Leo3418/HBWHelper/commit/ddd6cecfec3c3168aba025a11ccff16583bc9b25">this
+commit</a>
+for my mod, which switched to a newer version of Forge with updated MCP
+mappings, and allowed me to replace the remaining Searge names with MCP names.
+Would anyone prefer the scrambled Searge names to more expressive MCP names?
+This is why I was unhappy about Forge releasing a recommended build with
+incomplete deobfuscation.  If it were up to me, I would not stabilize Forge for
+Minecraft 1.16 until all MCP mappings are done, because counting on mod
+developers themselves to figure out what each method does is not a responsible
+act.</p>
+
+
+<p><em>P.S. I hope all of us would never obfuscate the programs we write for the
+sole purpose of keeping the implementation details as a secret, no matter
+whether we are forced to do it by a manager or are doing it of our own
+volition.  Such act is against the spirit of free software.  Everyone should
+enjoy freedom to computing, which includes the freedom to study how the
+programs they use are designed and implemented, and the freedom to modify them
+as they wish.</em></p>
+
+
+</div>
+
+<p>Enough for rants, let us start looking at the patches to my mod that were
+necessary for migration to Minecraft 1.16.</p>
+
+<h2 id="additional-matrix-stack-parameter-of-gui-rendering-methods">Additional Matrix Stack Parameter of GUI Rendering Methods</h2>
+
+<p>Many methods pertinent to GUI rendering now requires an additional argument of
+type <code class="language-plaintext highlighter-rouge">com.mojang.blaze3d.matrix.MatrixStack</code>.  If you are calling such a method
+while there is already a variable called <code class="language-plaintext highlighter-rouge">matrixStack</code> in the current
+namespace, then you can use that variable’s value as the argument for free.
+Otherwise, you may simply create a new matrix stack by calling its default
+constructor <code class="language-plaintext highlighter-rouge">new MatrixStack()</code>.</p>
+
+<p>For example, the following code snippet shows how a method that handles
+rendering of a screen may look like.  Notice that it is calling some other GUI
+rendering methods too, including <code class="language-plaintext highlighter-rouge">renderBackground</code> and <code class="language-plaintext highlighter-rouge">drawCenteredString</code>.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// Draw the background of the screen</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">();</span>
+    <span class="c1">// Draw the title</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="n">title</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">color</span><span class="o">);</span>
+    <span class="c1">// Call the super class' method to complete rendering</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>For Minecraft 1.16.x, the same method would be changed to the one shown below.
+Notice that both the method signature and every GUI rendering method called
+inside it now have an extra <code class="language-plaintext highlighter-rouge">matrixStack</code> argument:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="nc">MatrixStack</span> <span class="n">matrixStack</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="n">title</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">color</span><span class="o">);</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="new-method-for-closing-a-screen">New Method for Closing a Screen</h2>
+
+<p>Unless we are Mojang employees, we have access to only the decompiled version
+of Minecraft source code, which is not expected to have any documentation, so
+any knowledge we can have about Minecraft’s API can only come from interpreting
+and analyzing the decompiled source code, plus experience gained mainly in
+trial-and-errors.  And the empirical knowledge I have about closing a screen
+implemented based on Minecraft’s <code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.screen.Screen</code> class
+is:</p>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">onClose()</code> method in the <code class="language-plaintext highlighter-rouge">Screen</code> class should complete any teardown
+tasks when the screen is being closed, and it must contain a call to
+<code class="language-plaintext highlighter-rouge">net.minecraft.client.Minecraft.displayGuiScreen(Screen)</code> in order to switch
+back to the parent screen.</p>
+  </li>
+  <li>
+    <p>By default, when the user presses the Esc key in a screen, its <code class="language-plaintext highlighter-rouge">onClose()</code>
+method will be called.  Therefore, calling the <code class="language-plaintext highlighter-rouge">onClose()</code> method is <em>the</em>
+way to let a screen close.</p>
+  </li>
+</ul>
+
+<p>In Minecraft 1.16, the intent of the <code class="language-plaintext highlighter-rouge">onClose()</code> method has been changed:</p>
+
+<ul>
+  <li>
+    <p>When the Esc key is pressed, the new <code class="language-plaintext highlighter-rouge">closeScreen()</code> method in the <code class="language-plaintext highlighter-rouge">Screen</code>
+class is now called instead.  The default implementation of <code class="language-plaintext highlighter-rouge">closeScreen()</code>
+only contains a call to <code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code>.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">onClose()</code> should only contain code that needs to be executed when the
+screen is being closed.  It <strong>must not</strong> call
+<code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code>; otherwise, an error would occur.</p>
+  </li>
+  <li>
+    <p>Hence, if you would like to close the current screen, you should no longer
+call the <code class="language-plaintext highlighter-rouge">onClose()</code> method.  Instead, you can either directly call
+<code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code> or, as a better way, use the
+<code class="language-plaintext highlighter-rouge">closeScreen()</code> method.  Both methods would eventually cause the <code class="language-plaintext highlighter-rouge">onClose()</code>
+method to be called.</p>
+  </li>
+</ul>
+
+<p>How does this actually look?  Consider a class like this:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * OK for 1.14.4 and 1.15.x, but not 1.16.x
+ */</span>
+
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.screen.Screen</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.button.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="cm">/** The parent screen of this screen */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">(</span><span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Set screen title</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parentScreen</span> <span class="o">=</span> <span class="n">parentScreen</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+        <span class="c1">// Add a "Done" button for leaving this screen</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addButton</span><span class="o">(</span><span class="k">new</span> <span class="nc">Button</span><span class="o">(</span>
+                <span class="n">horizontalPosition</span><span class="o">,</span> <span class="n">verticalPosition</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"gui.done"</span><span class="o">),</span>
+                <span class="c1">// Action performed when the button is pressed</span>
+                <span class="n">button</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">onClose</span><span class="o">()</span>
+        <span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Executes tasks before this screen is closed, then closes this screen */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Save mod configuration</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="c1">// Display the parent screen to close this screen</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">.</span><span class="na">displayGuiScreen</span><span class="o">(</span><span class="n">parentScreen</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>To port this class to Minecraft 1.16.x, it needs to be modified as this:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * OK for 1.16.x, but not 1.14.4 or 1.15.x
+ */</span>
+
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.screen.Screen</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.button.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">(</span><span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parentScreen</span> <span class="o">=</span> <span class="n">parentScreen</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addButton</span><span class="o">(</span><span class="k">new</span> <span class="nc">Button</span><span class="o">(</span>
+                <span class="n">horizontalPosition</span><span class="o">,</span> <span class="n">verticalPosition</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span>
+                <span class="c1">// By the way, the type for button text is also changed</span>
+                <span class="c1">// from String to ITextComponent</span>
+                <span class="k">new</span> <span class="nf">TranslationTextComponent</span><span class="o">(</span><span class="s">"gui.done"</span><span class="o">),</span>
+                <span class="c1">// Note that another method is used to close the screen instead</span>
+                <span class="n">button</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">closeScreen</span><span class="o">()</span>
+        <span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Only executes tasks before this screen is closed */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="c1">// Must NOT call Minecraft.displayGuiScreen(Screen) here!</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** Closes this screen (New method added in 1.16) */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">closeScreen</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// The method call to display the parent screen is moved to here</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">.</span><span class="na">displayGuiScreen</span><span class="o">(</span><span class="n">parentScreen</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="removed-method-for-getting-a-settings-options-display-string">Removed Method for Getting a Settings Option’s Display String</h2>
+
+<p>If you have followed <a href="/2020/09/09/forge-mod-config-screen.html">the previous blog in this series</a> to
+create a configuration GUI for your mod, then you need to make changes to every
+usage of <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> and <code class="language-plaintext highlighter-rouge">IteratableOption</code>.  The
+<code class="language-plaintext highlighter-rouge">net.minecraft.client.settings.AbstractOption.getDisplayString()</code> method, which
+returns the option’s translated name, was changed to a protected method
+<code class="language-plaintext highlighter-rouge">getBaseMessageTranslation()</code>, so there is no available public method left in
+the <code class="language-plaintext highlighter-rouge">AbstractOption</code> class that can return the option’s name.  If you still
+want to display the same translated option name as before, you must generated
+it in your own code by passing the translation key to method
+<code class="language-plaintext highlighter-rouge">I18n.format(String)</code> and concatenating the result with a colon.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.settings.SliderPercentageOption</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.settings.IteratableOption</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="c1">// For SliderPercentageOption</span>
+<span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">SliderPercentageOption</span><span class="o">(</span>
+        <span class="s">"hbwhelper.configGui.hudX.title"</span><span class="o">,</span>
+        <span class="n">min</span><span class="o">,</span> <span class="n">max</span><span class="o">,</span> <span class="n">step</span><span class="o">,</span>
+        <span class="n">unused</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">getHudX</span><span class="o">(),</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setHudX</span><span class="o">(</span><span class="n">newValue</span><span class="o">.</span><span class="na">intValue</span><span class="o">()),</span>
+        <span class="c1">// BiFunction that returns a string text component in format "&lt;name&gt;: &lt;value&gt;"</span>
+        <span class="o">(</span><span class="n">gs</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span>
+                <span class="c1">// Use I18n.format(String) to get a translation key's value</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"hbwhelper.configGui.hudX.title"</span><span class="o">)</span>
+                <span class="o">+</span> <span class="s">": "</span>
+                <span class="o">+</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">option</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">gs</span><span class="o">)</span>
+        <span class="o">)</span>
+<span class="o">));</span>
+
+<span class="c1">// For IteratableOption</span>
+<span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">IteratableOption</span><span class="o">(</span>
+        <span class="s">"hbwhelper.configGui.dreamMode.title"</span><span class="o">,</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span>
+                <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setDreamMode</span><span class="o">(</span><span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">()[</span>
+                        <span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">ordinal</span><span class="o">()</span> <span class="o">+</span> <span class="n">newValue</span><span class="o">)</span>
+                                <span class="o">%</span> <span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">().</span><span class="na">length</span>
+                <span class="o">]),</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"hbwhelper.configGui.dreamMode.title"</span><span class="o">)</span>
+                <span class="o">+</span> <span class="s">": "</span>
+                <span class="o">+</span> <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">getTranslateKey</span><span class="o">())</span>
+        <span class="o">)</span>
+<span class="o">));</span>
+</code></pre></div></div>
+
+<p>This inevitably leads to repetitions of translation keys in the source code,
+but it is the most straightforward solution I can find at this moment.  After
+all, we are depending on the internal and undocumented API of Minecraft, so
+anything can change.</p>
+
+<p>As an alternative, you may choose to extend the <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> and
+<code class="language-plaintext highlighter-rouge">IteratableOption</code> classes to gain access to the protected
+<code class="language-plaintext highlighter-rouge">getBaseMessageTranslation()</code> method, but this involves creating two new
+classes.</p>
+
+<h2 id="removed-method-for-getting-formatted-text">Removed Method for Getting Formatted Text</h2>
+
+<p>Many Minecraft players should be familiar with <a href="https://minecraft.gamepedia.com/Formatting_codes">formatting
+codes</a> starting with the section sign character <code class="language-plaintext highlighter-rouge">§</code>.  They
+can be used to colorize text and control text other text styles like bold and
+italic.  Text containing one or more formatting codes is called <em>formatted
+text</em>.</p>
+
+<p>In Minecraft, there is an internal interface
+<code class="language-plaintext highlighter-rouge">net.minecraft.util.text.ITextComponent</code>, which is the interface for text
+component objects.  Almost every piece of text you see in Minecraft has an
+underlying text component object that represents it.  The <code class="language-plaintext highlighter-rouge">ITextComponent</code>
+interface had a <code class="language-plaintext highlighter-rouge">getFormattedText()</code> method that could return the text being
+represented by the text component with formatting codes but is removed in 1.16,
+and now there is not any convenient way to obtain the formatted text from a
+text component as before.</p>
+
+<p>The ability to read chat messages in formatted text form is pivotal to my mod’s
+core features.  It <a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/GameDetector.java#L202">detects the beginning of a Bed Wars game</a> by
+checking if the client receives the introductory message Hypixel generates when
+a game starts.  It <a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/game/GameManager.java#L323">monitors the chat</a> to see if the player’s
+team have purchased a team upgrade.  Although it is still possible to get and
+parse chat messages without formatting codes in 1.16, this would make my mod
+vulnerable to attacks from other players who know how it works.  They would be
+able to send a chat message like “Leo3418 has purchased Heal Pool” to trick my
+mod into registering the Heal Pool team upgrade when nobody in the team has
+actually bought it.  The current implementation of my mod defends against such
+attacks by matching chat messages with formatting codes, because players cannot
+send formatted chat messages, and all text messages with formatting codes are
+sure to be originated from Hypixel.</p>
+
+<p>To deal with this problem, I have written <a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/TextComponents.java#L68">my own utility
+method</a> that takes an <code class="language-plaintext highlighter-rouge">ITextComponent</code> instance and returns
+the formatted string for it, and then all I need to do is to replace usages of
+the removed <code class="language-plaintext highlighter-rouge">getFormattedText()</code> method with calls to my utility method.
+Minecraft 1.16’s API is still providing enough methods for recreate a string
+with formatting codes by hand, but such procedure is a little bit complicated,
+so I encapsulated it into a standalone method to reuse the code for different
+modules in my mod.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- String formattedMsg = event.getMessage().getFormattedText();
+</span><span class="gi">+ String formattedMsg = TextComponents.toFormattedText(event.getMessage());
+</span></code></pre></div></div>
+
+<p>If you are facing the same issue, you are free to use the file that contains my
+utility method in your own mod, because my mod is released as free software
+under GNU GPLv3 or later with additional permissions, as long as you follow the
+<a href="https://github.com/Leo3418/HBWHelper/tree/v1.2.1#license">license terms</a>.</p>
+
+<h2 id="additional-parameter-of-method-for-sending-chat-messages">Additional Parameter of Method for Sending Chat Messages</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">net.minecraft.entity.Entity</code> class contains a <code class="language-plaintext highlighter-rouge">sendMessage</code> method which
+allows you to send messages to the user via in-game chat:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.Minecraft</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+
+<span class="c1">// Pre-1.16 way to send a chat message from the mod to the player</span>
+<span class="nc">Minecraft</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">player</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span><span class="s">"hello, world"</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>But in Minecraft 1.16, this method requires an additional <code class="language-plaintext highlighter-rouge">java.util.UUID</code>
+argument for the UUID of the player sending the chat message.  This argument is
+only used if you are trying to send a message to another remote player
+connected to the current multiplayer game from your mod.  If you are just
+sending a message to the local player represented by an instance of
+<code class="language-plaintext highlighter-rouge">net.minecraft.client.entity.player.ClientPlayerEntity</code>, this argument will be
+ignored, so you can specify whatever value for it, including <code class="language-plaintext highlighter-rouge">null</code>.  If you do
+not like passing in <code class="language-plaintext highlighter-rouge">null</code> arguments, you can use a random UUID returned by
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--"><code class="language-plaintext highlighter-rouge">UUID.randomUUID()</code></a>, or the player’s UUID, as demonstrated in
+the example below:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.Minecraft</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.entity.player.PlayerEntity</span><span class="o">;</span>
+
+<span class="nc">PlayerEntity</span> <span class="n">playerEntity</span> <span class="o">=</span> <span class="nc">Minecraft</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">player</span><span class="o">;</span>
+<span class="n">playerEntity</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span>
+        <span class="k">new</span> <span class="nf">StringTextComponent</span><span class="o">(</span><span class="s">"hello, world"</span><span class="o">),</span>
+        <span class="nc">PlayerEntity</span><span class="o">.</span><span class="na">getUUID</span><span class="o">(</span><span class="n">playerEntity</span><span class="o">.</span><span class="na">getGameProfile</span><span class="o">())</span>
+<span class="o">);</span>
+</code></pre></div></div>
+
+<h2 id="mandatory-license-field-in-modstoml">Mandatory License Field in <code class="language-plaintext highlighter-rouge">mods.toml</code></h2>
+
+<p>Starting from Minecraft Forge 34.1, the <code class="language-plaintext highlighter-rouge">mods.toml</code> file for your mod must
+contain a <code class="language-plaintext highlighter-rouge">license</code> field, whose value is intended to state the name of your
+mod’s license.  You can look at <a href="https://github.com/Leo3418/HBWHelper/commit/71cc524438ec25fbeba8310fe14064465aeabf28">the change to my mod’s <code class="language-plaintext highlighter-rouge">mods.toml</code></a>
+for an example.</p>
+
+<h2 id="more">More</h2>
+
+<p>There must be many other changes to Minecraft 1.16.x and Minecraft Forge that
+require mod developers to patch their mods if they want to migrate to the new
+game version.  This blog surely cannot cover all of them; rather, its intention
+is to share my experience in resolving issue that can happen throughout the
+migration and present to you a solution if you run into an identical problem.
+I hope it is useful to you!  If you need more resource, you can look at the
+<a href="https://github.com/Leo3418/HBWHelper/tree/v1.2.1">source code of version 1.2.1 of my mod for Minecraft 1.16.x</a> for some
+real examples.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#java" class="page__taxonomy-item" rel="tag">Java</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#minecraft-forge" class="page__taxonomy-item" rel="tag">Minecraft Forge</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#blog" class="page__taxonomy-item" rel="tag">Blog</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

@@ -1,0 +1,615 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MC Forge Mod 开发记录：升级到 Minecraft 1.16 - Leo3418 的个人网站</title>
+<meta name="description" content="Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我这个系列上一篇关于我的 mod 的更新的文章发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全反混淆的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="MC Forge Mod 开发记录：升级到 Minecraft 1.16">
+<meta property="og:url" content="https://leo3418.github.io/2021/02/06/forge-mod-migrate-to-1-16.html">
+
+
+  <meta property="og:description" content="Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我这个系列上一篇关于我的 mod 的更新的文章发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全反混淆的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-02-06T00:00:00-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2021/02/06/forge-mod-migrate-to-1-16.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2021/02/06/forge-mod-migrate-to-1-16.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="MC Forge Mod 开发记录：升级到 Minecraft 1.16">
+    <meta itemprop="description" content="Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我这个系列上一篇关于我的 mod 的更新的文章发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全反混淆的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。">
+    <meta itemprop="datePublished" content="2021-02-06T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MC Forge Mod 开发记录：升级到 Minecraft 1.16
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-02-06T00:00:00-06:00">2021-02-06</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#用于图形渲染的各种方法要求额外的-matrixstack-参数">用于图形渲染的各种方法要求额外的 matrixStack 参数</a></li><li><a href="#用于关闭屏幕界面的方法有改动">用于关闭屏幕界面的方法有改动</a></li><li><a href="#用于获取设置选项的名称的方法被删除">用于获取设置选项的名称的方法被删除</a></li><li><a href="#用于读取带格式代码的文本的方法被移除">用于读取带格式代码的文本的方法被移除</a></li><li><a href="#用于发送聊天信息的方法要求额外参数">用于发送聊天信息的方法要求额外参数</a></li><li><a href="#modstoml-中需声明-mod-协议">mods.toml 中需声明 Mod 协议</a></li><li><a href="#更多变动">更多变动</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我<a href="/zh/2020/09/09/forge-mod-config-screen.html">这个系列上一篇关于我的 mod 的更新的文章</a>发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全<em>反混淆</em>的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。</p>
+
+<p>后来，我看到 Forge 出了第一个 1.16 的稳定版后，就将其下载了下来，看了看之前没反混淆的那些方法的名字有没有给改过来。结果是令人十分失望的：所有原来没反混淆的名字，一个都没有变。这样一个在我看来完全算不上是一个稳定版本，Forge 就这么草草发布，贴上了“推荐”的标签，顺带还<a href="https://forums.minecraftforge.net/topic/91710-forge-341-minecraft-1163/">停止了 1.14.x 的支持</a>。停止支持意味着什么呢？意味着如果您在 Forge 官方论坛发帖求助，并且您用的是一个停止支持的版本，<a href="https://forums.minecraftforge.net/topic/97284-forge-1144-sever-help/?do=findComment&amp;comment=442057">就</a><a href="https://forums.minecraftforge.net/topic/97309-help-please/?do=findComment&amp;comment=442112">会</a><a href="https://forums.minecraftforge.net/topic/97311-how-can-i-remove-knockback/?do=findComment&amp;comment=442119">有</a>论坛管理给您扔下一句冷冰冰的“你用的版本已停止支持，请升级以继续获得支持”，然后无情地关闭您的帖子，顺手阻止了其他非管理员的论坛成员提供帮助。好家伙，发布一个未成品，还把一个稳定版本的支持结束了，就是强行让追求稳定的开发者选择 1.15.x 呗？我当时差点就要在这里写一篇檄文，点评 Forge 开发者对“稳定版”的重新定义、以及论坛管理对于有关停止支持的版本的提问的冷淡的处理态度。</p>
+
+<p>于是乎，我决定继续等，等到我认为真正能称得上是稳定版的 Forge 出了再说。但是因为后来就忙了，这一等就是相当长的时间。2020 年 10 月底的时候，反混淆算是<a href="https://github.com/MinecraftForge/MinecraftForge/commit/53eedb0f102bb1d8cf9432fae891730481206bce">基本完成</a>了，我的 mod 的绝大多数代码也相应地被成功迁移到了 Minecraft 1.16 上。唯一没有解决的问题，是 1.16 中对和游戏内文本相关的 API 的重新设计导致我的 mod 中一些模块不兼容。我的 mod 需要通过阅读游戏内聊天信息的方式来检测起床战争游戏开没开始和记录团队升级，并且依赖聊天信息里的<a href="https://minecraft-zh.gamepedia.com/%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81">格式代码</a>来正常工作，但是读取带格式代码的聊天信息的方法在 1.16 里被删除了，所以我就只能自己解析聊天信息对象、自己重建带格式代码的聊天信息。虽然最后写出的解决方案并不复杂，但当时感觉这是个大工程的我决定以后再解决，而这一拖就拖到了最近。</p>
+
+<div class="notice--success">
+
+<p><strong>什么是反混淆？</strong></p>
+
+
+<p>回答这个问题前，我们先看什么是<em>混淆</em>。<a href="https://zh.wikipedia.org/zh-cn/%E4%BB%A3%E7%A0%81%E6%B7%B7%E6%B7%86">混淆</a>是那些急于阻止自己的程序件被逆向工程的软件开发者，为了防止其他人仅从程序的函数名/方法名中获得一点点有关程序内部实现原理的蛛丝马迹，所采取的一种手段。混淆的具体作用，是将函数名/方法名变为毫无意义的名字，这样别人就无法通过函数名/方法名来猜测一个函数/方法是用来干什么的了。</p>
+
+
+<p>Mojang 基本是一直在对 Minecraft 的代码进行混淆，这无疑给想对游戏机制进行修改的 mod 开发者竖起了壁垒。而 <a href="https://docs.spongepowered.org/stable/zh-CN/plugin/internals/mcp.html">Mod Coder Pack</a>（MCP）可以在反编译 Minecraft 的基础上，将反编译出的代码中的混淆后的方法名称，全部一一转换为能表达方法目的且更加友好的名称。这个过程就叫做<strong>反混淆</strong>。</p>
+
+
+<p>全面反混淆 Minecraft 中的方法名称的结果是 <em>MCP 映射</em>，可为 Minecraft 中的方法提供易于理解的命名（<em>MCP 命名</em>），比如 <code class="language-plaintext highlighter-rouge">getMainWindow</code>。但这些命名的产生绝不是无中生有，而是要得益于与 Minecraft mod 相关的开发者们的付出。如果 Minecraft 中的某个方法还没有开发者提供 MCP 命名，那么它就会被分配一个 <em>Searge 映射</em>中的 <em>Searge 命名</em>，例如 <code class="language-plaintext highlighter-rouge">func_228018_at_</code>。在我看来，Searge 映射只能算是<em>不完全</em>的反混淆：虽然一个方法的 Searge 名称跟它在编译后的 Minecraft 二进制文件中的名称是不同的，也就意味着还是实现了初步的反混淆，但是 Searge 名称依然不能告诉我们一个方法的具体用途，所以仍然不能算是最终极的反混淆。</p>
+
+
+<p>如果某个 Minecraft Forge 版本附带的 MCP 中仍然包含许多无意义的 Searge 命名的话，那基于这个 Forge 版本开发 mod 可能就会很艰难。我的 mod 的代码库中的<a href="https://github.com/Leo3418/HBWHelper/commit/ddd6cecfec3c3168aba025a11ccff16583bc9b25">这次提交</a>就是展示这一点的一个很好的例子：这次提交将 Forge 升级到了一个 MCP 映射更完整的版本，带来的直接好处就是我可以把我 mod 中用到 Searge 命名的地方都相应地替换为 MCP 名称了。试问有没有人会倾向于使用 Searge 命名而非清晰易懂的 MCP 命名编程的？这就是我对 Forge 将一个仍有许多尚未完全反混淆的方法名的版本称为稳定版的行为如此不满的原因。如果换做是我的话，我在 MCP 映射都做完之前是绝不会发布 1.16 的 Forge 稳定版的，因为指望着 mod 开发者自己去猜每个方法的用途是一种不负责任的行为。</p>
+
+
+<p><em>P.S. 但愿各位不会以将程序内部实现原理保密为目的而混淆代码，无论是因为上司要求还是完全出于自愿。混淆代码有悖于自由软件精神，损害了他人基本的研究软件的工作原理和根据自己的意愿修改软件的自由。</em></p>
+
+
+</div>
+
+<p>吐槽就到此为止了，接下来我将开始介绍我为了把自己的 mod 更新到 1.16 都做了哪些改动。</p>
+
+<h2 id="用于图形渲染的各种方法要求额外的-matrixstack-参数">用于图形渲染的各种方法要求额外的 <code class="language-plaintext highlighter-rouge">matrixStack</code> 参数</h2>
+
+<p>Minecraft 1.16.x 中许多和图形渲染相关的方法现在都要求一个额外的 <code class="language-plaintext highlighter-rouge">com.mojang.blaze3d.matrix.MatrixStack</code> 类型的参数。如果您在调用图形渲染方法的时候，当前的命名空间（比如当前的类的字段，或者当前方法的参数和本地变量）里已经有了一个 <code class="language-plaintext highlighter-rouge">matrixStack</code> 变量，那么您可以直接将该变量的值用于此参数。如果没有的话，您也可以直接使用 <code class="language-plaintext highlighter-rouge">MatrixStack</code> 类的默认构造器 <code class="language-plaintext highlighter-rouge">new MatrixStack()</code> 创建一个新对象用于此参数。</p>
+
+<p>我们来看下面这段代码，它是一个负责屏幕界面渲染的方法，其中调用了一些其它的渲染界面元素的方法，例如 <code class="language-plaintext highlighter-rouge">renderBackground</code> 绘制界面的背景、<code class="language-plaintext highlighter-rouge">drawCenteredString</code> 绘制文本：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 渲染界面背景</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">();</span>
+    <span class="c1">// 渲染标题</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="n">title</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">color</span><span class="o">);</span>
+    <span class="c1">// 调用父类对应方法，完成渲染</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>到了 Minecraft 1.16.x，这样一个方法就需要改为如下所示的样子了。请注意该方法自己的签名以及它调用的其它图形渲染方法都多了一个 <code class="language-plaintext highlighter-rouge">matrixStack</code> 参数：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="nc">MatrixStack</span> <span class="n">matrixStack</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="n">title</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span> <span class="n">color</span><span class="o">);</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">matrixStack</span><span class="o">,</span> <span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="用于关闭屏幕界面的方法有改动">用于关闭屏幕界面的方法有改动</h2>
+
+<p>在不是 Mojang 员工的情况下，我们能接触到的 Minecraft 的源代码就只有 MCP 反编译出的不带任何文档的源代码，所以我们要想了解 Minecraft API 的话，就只能通过直接阅读和研究源码、以及写一些调用 Minecraft API 的代码来实验和试错等方式了。根据我在开发 mod 的过程中与 Minecraft API 打交道的经验，在以前版本中关闭一个基于 <code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.screen.Screen</code> 类的屏幕界面的原理是这样的：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Screen</code> 类中的 <code class="language-plaintext highlighter-rouge">onClose()</code> 方法里，应该包括当前屏幕将要被关闭时执行清理和收尾工作的代码，然后必须在该方法返回前调用 <code class="language-plaintext highlighter-rouge">net.minecraft.client.Minecraft.displayGuiScreen(Screen)</code> 以切到另一个屏幕界面。</p>
+  </li>
+  <li>
+    <p>默认情况下，如果用户按下了 Esc 键，当前屏幕的 <code class="language-plaintext highlighter-rouge">onClose()</code> 方法就会被调用，所以 <code class="language-plaintext highlighter-rouge">onClose()</code> 就是用来关闭屏幕界面的方法。</p>
+  </li>
+</ul>
+
+<p>但是到了 Minecraft 1.16，<code class="language-plaintext highlighter-rouge">onClose()</code> 的作用就发生了变化：</p>
+
+<ul>
+  <li>
+    <p>用户按下 Esc 键时调用的方法被改为 <code class="language-plaintext highlighter-rouge">closeScreen()</code>——这是 <code class="language-plaintext highlighter-rouge">Screen</code> 类中的一个新方法。<code class="language-plaintext highlighter-rouge">closeScreen()</code> 的默认实现中只有一个 <code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code> 的调用。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">onClose()</code> 里现在<strong>不应该</strong>再包含 <code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code> 的调用了，否则会导致游戏崩溃。现在 <code class="language-plaintext highlighter-rouge">onClose()</code> 当中只应该包含执行清理和收尾工作的代码。</p>
+  </li>
+  <li>
+    <p>因此，在 1.16 中就不能通过调用 <code class="language-plaintext highlighter-rouge">onClose()</code> 来关闭屏幕界面了，而是应该直接调用 <code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code>，或者用更佳的 <code class="language-plaintext highlighter-rouge">closeScreen()</code> 方法。这两个方法都会间接调用 <code class="language-plaintext highlighter-rouge">onClose()</code> 方法。</p>
+  </li>
+</ul>
+
+<p>我们来看看这些修改对 mod 代码产生的实际影响，以下面的代码为例：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 在 1.14.4 和 1.15.x 上可正常运行，但与 1.16.x 不兼容
+ */</span>
+
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.screen.Screen</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.button.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="cm">/** 当前界面的上级界面 */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">(</span><span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 指定此界面的标题</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parentScreen</span> <span class="o">=</span> <span class="n">parentScreen</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+        <span class="c1">// 添加一个用于退出此界面的“完成”按钮</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addButton</span><span class="o">(</span><span class="k">new</span> <span class="nc">Button</span><span class="o">(</span>
+                <span class="n">horizontalPosition</span><span class="o">,</span> <span class="n">verticalPosition</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"gui.done"</span><span class="o">),</span>
+                <span class="c1">// 按钮被点击时执行的操作</span>
+                <span class="n">button</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">onClose</span><span class="o">()</span>
+        <span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** 执行关闭界面前需要运行的任务，然后关闭此界面 */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 保存 mod 配置</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="c1">// 显示上级界面，以关闭当前的界面</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">.</span><span class="na">displayGuiScreen</span><span class="o">(</span><span class="n">parentScreen</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>下面是将这个类移植到 Minecraft 1.16.x 后的代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*
+ * 在 1.16.x 上可正常运行，但与 1.14.4、1.15.x 不兼容
+ */</span>
+
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.screen.Screen</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.button.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">(</span><span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parentScreen</span> <span class="o">=</span> <span class="n">parentScreen</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="o">...</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addButton</span><span class="o">(</span><span class="k">new</span> <span class="nc">Button</span><span class="o">(</span>
+                <span class="n">horizontalPosition</span><span class="o">,</span> <span class="n">verticalPosition</span><span class="o">,</span> <span class="n">width</span><span class="o">,</span> <span class="n">height</span><span class="o">,</span>
+                <span class="c1">// 此处按钮文字参数的类型也发生了变化，从 String 变为 ITextComponent</span>
+                <span class="k">new</span> <span class="nf">TranslationTextComponent</span><span class="o">(</span><span class="s">"gui.done"</span><span class="o">),</span>
+                <span class="c1">// 注意这里用于关闭屏幕的方法的改动</span>
+                <span class="n">button</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">closeScreen</span><span class="o">()</span>
+        <span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** 仅执行关闭界面前需要运行的任务 */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="c1">// 此处不可调用 Minecraft.displayGuiScreen(Screen)！</span>
+    <span class="o">}</span>
+
+    <span class="cm">/** 关闭此界面 (1.16 中的新方法) */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">closeScreen</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 显示上级界面的调用被移到了此处</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">.</span><span class="na">displayGuiScreen</span><span class="o">(</span><span class="n">parentScreen</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="用于获取设置选项的名称的方法被删除">用于获取设置选项的名称的方法被删除</h2>
+
+<p>如果您参考<a href="/zh/2020/09/09/forge-mod-config-screen.html">本系列博客的上一篇文章</a>中介绍的方法创建了一个配置界面的话，那么您需要对每个使用 <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 和 <code class="language-plaintext highlighter-rouge">IteratableOption</code> 的地方进行修改。在该文章中，我使用了 <code class="language-plaintext highlighter-rouge">net.minecraft.client.settings.AbstractOption.getDisplayString()</code> 方法来获取设置选项的显示名称，但在 1.16 中，这个方法变成了另一个 <code class="language-plaintext highlighter-rouge">protected</code> 方法 <code class="language-plaintext highlighter-rouge">getBaseMessageTranslation()</code>，因此现在 <code class="language-plaintext highlighter-rouge">AbstractOption</code> 类中就没有公开的返回选项名称的方法了。如果您还想像在以前版本中那样显示选项名称的话，您需要自行生成名称字符串。具体的方法是将选项名称的翻译键传给 <code class="language-plaintext highlighter-rouge">I18n.format(String)</code> 以获得翻译后的选项名称，然后将其与一个冒号串接起来。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.settings.SliderPercentageOption</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.settings.IteratableOption</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="c1">// SliderPercentageOption</span>
+<span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">SliderPercentageOption</span><span class="o">(</span>
+        <span class="s">"hbwhelper.configGui.hudX.title"</span><span class="o">,</span>
+        <span class="n">min</span><span class="o">,</span> <span class="n">max</span><span class="o">,</span> <span class="n">step</span><span class="o">,</span>
+        <span class="n">unused</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">getHudX</span><span class="o">(),</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setHudX</span><span class="o">(</span><span class="n">newValue</span><span class="o">.</span><span class="na">intValue</span><span class="o">()),</span>
+        <span class="c1">// 返回 "&lt;选项名&gt;: &lt;设定值&gt;" 格式的字符串的 BiFunction</span>
+        <span class="o">(</span><span class="n">gs</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span>
+                <span class="c1">// 使用 I18n.format(String) 查询一个翻译键对应的译文</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"hbwhelper.configGui.hudX.title"</span><span class="o">)</span>
+                <span class="o">+</span> <span class="s">": "</span>
+                <span class="o">+</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">option</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">gs</span><span class="o">)</span>
+        <span class="o">)</span>
+<span class="o">));</span>
+
+<span class="c1">// IteratableOption</span>
+<span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">IteratableOption</span><span class="o">(</span>
+        <span class="s">"hbwhelper.configGui.dreamMode.title"</span><span class="o">,</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span>
+                <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setDreamMode</span><span class="o">(</span><span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">()[</span>
+                        <span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">ordinal</span><span class="o">()</span> <span class="o">+</span> <span class="n">newValue</span><span class="o">)</span>
+                                <span class="o">%</span> <span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">().</span><span class="na">length</span>
+                <span class="o">]),</span>
+        <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"hbwhelper.configGui.dreamMode.title"</span><span class="o">)</span>
+                <span class="o">+</span> <span class="s">": "</span>
+                <span class="o">+</span> <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">getTranslateKey</span><span class="o">())</span>
+        <span class="o">)</span>
+<span class="o">));</span>
+</code></pre></div></div>
+
+<p>这样的改动不可避免地导致了源代码中翻译键的重复，但这是我能想到的最直接的解决方法。毕竟我们选择了使用 Minecraft 内部没有任何文档的 API，也得做好 API 出现各种不兼容的改动的心理准备。</p>
+
+<p>还有一种解决方法，就是继承 <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 和 <code class="language-plaintext highlighter-rouge">IteratableOption</code> 这两个类，就可以使用 <code class="language-plaintext highlighter-rouge">getBaseMessageTranslation()</code> 这个 <code class="language-plaintext highlighter-rouge">protected</code> 方法了。但这也意味着需要为此在 mod 中创建两个新类。</p>
+
+<h2 id="用于读取带格式代码的文本的方法被移除">用于读取带格式代码的文本的方法被移除</h2>
+
+<p>许多 Minecraft 玩家都应该熟悉<a href="https://minecraft-zh.gamepedia.com/%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%BB%A3%E7%A0%81">格式代码</a>，就是以分节符号 <code class="language-plaintext highlighter-rouge">§</code> 开头的代码。格式代码可以用来给文字添加颜色，还可以用来控制粗体、斜体等文字样式。我暂且称这种带格式代码的文本为<em>格式化文本</em>。</p>
+
+<p>Minecraft 中有一个 <code class="language-plaintext highlighter-rouge">net.minecraft.util.text.ITextComponent</code> 接口，是文本要素（text component）对象的统一接口。您在 Minecraft 中看到的几乎所有文字的背后都有一个对应的文本要素对象。本来在 <code class="language-plaintext highlighter-rouge">ITextComponent</code> 接口中是有一个可用于获得一个文本要素所对应的格式化文本的 <code class="language-plaintext highlighter-rouge">getFormattedText()</code> 方法的，但是这个方法在 1.16 中被移除了，导致目前没有方式可以用来方便地从一个文本要素提取格式化文本了。</p>
+
+<p>如果不能提取带格式代码的文本，那我的 mod 的功能就废了一半。我的 mod 通过检查聊天信息里有没有收到 Hypixel 在一局起床战争游戏开始时发送的介绍性文字来<a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/GameDetector.java#L202">检测游戏是否开始</a>，并且通过<a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/game/GameManager.java#L323">持续检测聊天里的提示</a>判断玩家的队伍有没有购买团队升级。当然了，在 1.16 中仍然可以直接获取不带颜色代码的聊天文本，但这会允许了解我的 mod 的工作原理的人对使用我的 mod 的用户进行干扰。比如说，他们在聊天里发一条像“Leo3418 购买了治愈池”这种和 Hypixel 系统提示一样的信息，就能让我的 mod 误以为有人买了治愈池，尽管实际根本没有人买。我的 mod 现在防范这种攻击的措施是检查收到的信息里的格式代码，因为玩家发不了带格式的聊天信息，所有有格式代码的信息都肯定是 Hypixel 的系统提示。</p>
+
+<p>为了解决这个问题，我专门写了一个<a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/TextComponents.java#L68">工具方法</a>，将 <code class="language-plaintext highlighter-rouge">ITextComponent</code> 转换为格式化文本，然后将 mod 代码中使用 <code class="language-plaintext highlighter-rouge">getFormattedText()</code> 的地方全部替换为使用我的工具方法即可。Minecraft 1.16 的 API 中仍然提供了足以允许我手动提取 <code class="language-plaintext highlighter-rouge">ITextComponent</code> 中的格式信息并自行生成格式化文本的方法，只不过步骤有些繁琐，所以我将相关的逻辑封装进了一个方法，以促进代码复用。</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- String formattedMsg = event.getMessage().getFormattedText();
+</span><span class="gi">+ String formattedMsg = TextComponents.toFormattedText(event.getMessage());
+</span></code></pre></div></div>
+
+<p>如果您也与到了相同问题的话，您可以直接把我的 mod 中包含我那个工具方法的文件复制到您自己的 mod 中使用，毕竟我的 mod 是基于带附加权限的 GNU GPLv3+ 授权的自由软件，只要您遵守相关的<a href="https://github.com/Leo3418/HBWHelper/tree/v1.2.1#license">协议条款</a>即可。</p>
+
+<h2 id="用于发送聊天信息的方法要求额外参数">用于发送聊天信息的方法要求额外参数</h2>
+
+<p><code class="language-plaintext highlighter-rouge">net.minecraft.entity.Entity</code> 中的<code class="language-plaintext highlighter-rouge">sendMessage</code> 方法可以用来给玩家发送聊天信息：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.Minecraft</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+
+<span class="c1">// 1.16 以前给玩家发送聊天信息的方法</span>
+<span class="nc">Minecraft</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">player</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="k">new</span> <span class="nc">StringTextComponent</span><span class="o">(</span><span class="s">"hello, world"</span><span class="o">));</span>
+</code></pre></div></div>
+
+<p>在 Minecraft 1.16 中，这个方法需要一个额外的 <code class="language-plaintext highlighter-rouge">java.util.UUID</code> 参数，代表的是发送聊天信息的玩家的 UUID。只有在多人联机时给其他玩家发送聊天信息时才会用到这个 UUID。如果您只是给当前客户端的玩家（也就是一个 <code class="language-plaintext highlighter-rouge">net.minecraft.client.entity.player.ClientPlayerEntity</code> 对象）发送提示信息的话，这个参数实际不会被用到，所以您可以随便指定它的值，连 <code class="language-plaintext highlighter-rouge">null</code> 都可以。但是如果您不喜欢在编程中大量使用 <code class="language-plaintext highlighter-rouge">null</code> 的话，您可以用 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--"><code class="language-plaintext highlighter-rouge">UUID.randomUUID()</code></a> 方法生成一个随机的 UUID，或者可以按照下面的方式使用当前玩家的 UUID：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.Minecraft</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.StringTextComponent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.entity.player.PlayerEntity</span><span class="o">;</span>
+
+<span class="nc">PlayerEntity</span> <span class="n">playerEntity</span> <span class="o">=</span> <span class="nc">Minecraft</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">player</span><span class="o">;</span>
+<span class="n">playerEntity</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span>
+        <span class="k">new</span> <span class="nf">StringTextComponent</span><span class="o">(</span><span class="s">"hello, world"</span><span class="o">),</span>
+        <span class="nc">PlayerEntity</span><span class="o">.</span><span class="na">getUUID</span><span class="o">(</span><span class="n">playerEntity</span><span class="o">.</span><span class="na">getGameProfile</span><span class="o">())</span>
+<span class="o">);</span>
+</code></pre></div></div>
+
+<h2 id="modstoml-中需声明-mod-协议"><code class="language-plaintext highlighter-rouge">mods.toml</code> 中需声明 Mod 协议</h2>
+
+<p>从 Minecraft Forge 34.1 开始，您的 mod 的 <code class="language-plaintext highlighter-rouge">mods.toml</code> 中必须声明 <code class="language-plaintext highlighter-rouge">license</code> 字段，其对应的值就是您的 mod 的许可协议的名称。您可以参考<a href="https://github.com/Leo3418/HBWHelper/commit/71cc524438ec25fbeba8310fe14064465aeabf28">我自己的 mod 的 <code class="language-plaintext highlighter-rouge">mods.toml</code> 中的改动</a>。</p>
+
+<h2 id="更多变动">更多变动</h2>
+
+<p>除了上面提到的改动之外，Minecraft 1.16.x 和 Minecraft Forge 中肯定还有很多别的需要 mod 开发者更新 mod 代码的改动。这篇文章显然不能涵盖所有的改动；它的主要目的是分享我在解决迁移到 1.16 的问题时的经历和经验、以及我找到的解决办法，在您遇到相同问题时可以作为您的参考资料。希望这篇文章对您有所帮助！如果您需要更多相关资源的话，可以参阅<a href="https://github.com/Leo3418/HBWHelper/tree/v1.2.1">我的 mod 的 1.2.1 版本在 Minecraft 1.16.x 分支下的源代码</a>，将其当作一个真实的例子进行参考。</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#java" class="page__taxonomy-item" rel="tag">Java</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#minecraft-forge" class="page__taxonomy-item" rel="tag">Minecraft Forge</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E5%8D%9A%E5%AE%A2" class="page__taxonomy-item" rel="tag">博客</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

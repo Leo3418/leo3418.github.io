@@ -1,0 +1,630 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Host the Site on GitHub Pages - Leo3418’s Personal Site</title>
+<meta name="description" content="After making those enhancements, your site is ready to serve to people using different languages with both the contents and site elements localized. A popular choice of services for hosting a Jekyll site is GitHub Pages, but in our situation, things are going to work a little bit differently. In this section, we will address some issues you might face when you host the site on GitHub Pages.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Host the Site on GitHub Pages">
+<meta property="og:url" content="https://leo3418.github.io/collections/multilingual-jekyll-site/host-on-github-pages">
+
+
+  <meta property="og:description" content="After making those enhancements, your site is ready to serve to people using different languages with both the contents and site elements localized. A popular choice of services for hosting a Jekyll site is GitHub Pages, but in our situation, things are going to work a little bit differently. In this section, we will address some issues you might face when you host the site on GitHub Pages.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/collections/multilingual-jekyll-site/host-on-github-pages">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/collections/multilingual-jekyll-site/host-on-github-pages">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">Build a Multilingual Jekyll Site</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">Toggle menu</label>
+    <ul class="nav__items">
+        <li><a href="/collections/multilingual-jekyll-site">Home</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/set-up-jekyll">Set Up Jekyll</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/choose-multilingual-plugin">Choose a Multilingual Plugin</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/set-up-polyglot">Set Up Polyglot</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/make-a-test-post">Make a Test Post</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/improve-l10n-and-ux">Improve Localization and User Experience</a></li>
+    <li><ul><li><a href="/collections/multilingual-jekyll-site/localize-site-title">Localize Site Title</a></li></ul></li>
+    <li><ul><li><a href="/collections/multilingual-jekyll-site/add-language-switcher">Add a Language Switcher</a></li></ul></li>
+    <li><ul><li><a href="/collections/multilingual-jekyll-site/localize-strings">Localize Strings</a></li></ul></li>
+    <li><ul><li><a href="/collections/multilingual-jekyll-site/add-no-translation-msg">Add a "No Translation" Message</a></li></ul></li>
+    <li><ul><li><a href="/collections/multilingual-jekyll-site/localize-date-format">Localize Date Format</a></li></ul></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/host-on-github-pages" class="active">Host the Site on GitHub Pages</a></li>
+    
+        <li><a href="/collections/multilingual-jekyll-site/closing-words">Closing Words</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Host the Site on GitHub Pages">
+    <meta itemprop="description" content="After making those enhancements, your site is ready to serve to people usingdifferent languages with both the contents and site elements localized. Apopular choice of services for hosting a Jekyll site is GitHubPages, but in our situation, things are going towork a little bit differently. In this section, we will address some issues youmight face when you host the site on GitHub Pages.">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Host the Site on GitHub Pages
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#use-of-unsupported-jekyll-plugins">Use of Unsupported Jekyll Plugins</a></li><li><a href="#set-up-a-github-actions-workflow">Set Up a GitHub Actions Workflow</a><ul><li><a href="#create-a-workflow">Create a Workflow</a></li><li><a href="#enter-the-default-branchs-name">Enter the Default Branch’s Name</a></li><li><a href="#add-step-for-site-uploading">Add Step for Site Uploading</a></li></ul></li><li><a href="#prevent-unauthorized-modifications-to-your-site">Prevent Unauthorized Modifications to Your Site</a></li><li><a href="#set-the-publishing-source-of-github-pages">Set the Publishing Source of GitHub Pages</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>After making those enhancements, your site is ready to serve to people using
+different languages with both the contents and site elements localized. A
+popular choice of services for hosting a Jekyll site is <a href="https://pages.github.com/">GitHub
+Pages</a>, but in our situation, things are going to
+work a little bit differently. In this section, we will address some issues you
+might face when you host the site on GitHub Pages.</p>
+
+<h2 id="use-of-unsupported-jekyll-plugins">Use of Unsupported Jekyll Plugins</h2>
+
+<p>If you want GitHub Pages to automatically build the Jekyll site and host it for
+you, the site must not use any plugin that is <strong>not</strong> on <a href="https://pages.github.com/versions/">this
+list</a>. As of this collection is written,
+Polyglot is not on the list. In this case, GitHub Pages’ <a href="https://help.github.com/en/github/working-with-github-pages/about-github-pages-and-jekyll#plugins">help
+article</a>
+suggests you build your site locally, then push what is under the <code class="language-plaintext highlighter-rouge">_site</code>
+directory to GitHub.</p>
+
+<p>This does not mean the site must be built on your personal computer, however;
+thanks to a lot of continuous integration apps on GitHub, you can set up a CI
+environment to let it build your site every time you push new commits and
+publish the generated static files to GitHub Pages.</p>
+
+<p>Your workflow would not change significantly. Suppose you don’t use unsupported
+plugins for your site so that it can be built by GitHub Pages itself. Once you
+change your site’s source files, you would create commits and push them, then
+the updated site would be available in a moment. If you use CI, then you commit
+and push as usual. All CI services supporting GitHub should be able to capture
+a push event, and if set up properly, build and publish your site automatically
+after the push.</p>
+
+<p>Back in the old days, I would use <a href="https://travis-ci.org/">Travis CI</a> for this
+purpose. Now, GitHub has introduced
+<a href="https://github.com/features/actions">Actions</a>, which has CI capabilities. It
+can be used to complete the job of building and publishing a Jekyll site and is
+a built-in tool of GitHub, so I chose it for my personal site.</p>
+
+<h2 id="set-up-a-github-actions-workflow">Set Up a GitHub Actions Workflow</h2>
+
+<p>A GitHub Actions workflow is like a procedure to complete some tasks. We should
+define a workflow that will build the Jekyll site and push the generated static
+files to GitHub. To create a workflow, first make a <code class="language-plaintext highlighter-rouge">.github/workflows</code>
+directory under your Git repository’s root. Each workflow should have an
+associated YAML file under the directory, which will define its rules,
+environments, and procedures.</p>
+
+<h3 id="create-a-workflow">Create a Workflow</h3>
+
+<p>A good starting point of the workflow for building a Jekyll site is
+<a href="https://github.com/actions/starter-workflows/blob/abf7f258d1d84c79ad067c704e069c8cf7d8d2d0/ci/jekyll.yml">here</a>.
+You may copy the file’s contents into a YAML file under <code class="language-plaintext highlighter-rouge">.github/workflows</code> and
+start customizing it.</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Jekyll site CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span> <span class="nv">$default-branch</span> <span class="pi">]</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span> <span class="nv">$default-branch</span> <span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build the site in the jekyll/builder container</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">docker run \</span>
+        <span class="s">-v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \</span>
+        <span class="s">jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll &amp;&amp; jekyll build --future"</span>
+</code></pre></div></div>
+
+<p>Some important options in this configuration file are:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">on</code>: Defines when the workflow will be triggered.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">jobs</code>: A general task for the workflow. More details can be found
+<a href="https://help.github.com/en/actions/getting-started-with-github-actions/core-concepts-for-github-actions#job">here</a>.
+Note that job executions are isolated, as the GitHub Help article says “each
+job in a workflow runs in a fresh instance of a virtual environment.”</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">steps</code>: Smaller and more specific tasks for a job. Two types of steps can be
+seen here:</p>
+
+    <ol>
+      <li>
+        <p>Reused actions, which have a <code class="language-plaintext highlighter-rouge">uses</code> attribute. The code and scripts for
+the task are packaged into an Action or a Docker image. For instance, the
+<code class="language-plaintext highlighter-rouge">actions/checkout@v2</code> used here is a <a href="https://github.com/marketplace/actions/checkout">packaged
+Action</a> that clones your
+repository to the workflow’s virtual environment instance.</p>
+      </li>
+      <li>
+        <p>User-defined commands, specified with <code class="language-plaintext highlighter-rouge">run</code> attribute. Such step runs one
+or multiple commands in the virtual environment instance.</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p>When used without any modification, the workflow above will check out your
+GitHub repository and run a build of your site using files in that repository
+in a Docker container created from the <a href="https://hub.docker.com/r/jekyll/builder"><code class="language-plaintext highlighter-rouge">jekyll/builder</code>
+image</a>. Since we also want to publish
+the generated site after building it, we need to add another <strong>step</strong> which
+will push the static site files to GitHub. We can’t add a job for this purpose
+because jobs are isolated, so what is built by the <code class="language-plaintext highlighter-rouge">build</code> job cannot be
+accessed from other jobs. The step can simply run a set of commands that push
+the static files to GitHub.</p>
+
+<h3 id="enter-the-default-branchs-name">Enter the Default Branch’s Name</h3>
+
+<p>In the configuration file, <code class="language-plaintext highlighter-rouge">$default-branch</code> should be replaced by the actual
+name of your Git repository’s default branch.</p>
+
+<p>You can use whatever name you prefer for the default branch. For demonstration
+purpose, I would pick <code class="language-plaintext highlighter-rouge">jekyll</code> here.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  on:
+    push:
+<span class="gd">-     branches: [ $default-branch ]
+</span><span class="gi">+     branches: [ jekyll ]
+</span>    pull_request:
+<span class="gd">-     branches: [ $default-branch ]
+</span><span class="gi">+     branches: [ jekyll ]
+</span></code></pre></div></div>
+
+<h3 id="add-step-for-site-uploading">Add Step for Site Uploading</h3>
+
+<p>If you were not using unsupported Jekyll plugins so that you could push your
+site’s static files to GitHub directly and let GitHub Pages build the site, you
+would never see the generated static files of your site. To achieve the same
+effect with the GitHub Actions workflow, we will avoid uploading the static
+files to the default branch of the Git repository for the site, so those files
+will never pop into the working tree that is full of source files.</p>
+
+<p>The most straightforward way of doing this is to dedicate a <code class="language-plaintext highlighter-rouge">gh-pages</code> branch
+for the static files, and let GitHub Pages use that branch as the publishing
+source. Your site’s source files will stay in the default branch, so when
+anyone clones the repository, the Git working tree will consist exclusively of
+the source files, and they can start working on them immediately. As long as
+the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch is not checked out, the generated static files are
+hidden.</p>
+
+<p>If you are familiar with Docker and its command line interface, you will notice
+that the <code class="language-plaintext highlighter-rouge">docker</code> command in the workflow above mounts the <code class="language-plaintext highlighter-rouge">_site</code> directory
+under <code class="language-plaintext highlighter-rouge">github.workspace</code> (which is simply your Git repository’s root) to the
+<code class="language-plaintext highlighter-rouge">_site</code> directory that will be generated during the build in the container,
+which means the site’s static files will be accessible from <code class="language-plaintext highlighter-rouge">${{
+github.workspace }}/_site</code> after the build. So, the following
+commands should push what’s under <code class="language-plaintext highlighter-rouge">_site</code> after the build to your repository’s
+<code class="language-plaintext highlighter-rouge">gh-pages</code> branch:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">${</span><span class="p">{ github.workspace </span><span class="k">}</span><span class="o">}</span>/_site
+git init <span class="nt">-b</span> gh-pages
+git remote add origin https://github.com/<span class="k">${</span><span class="p">{ github.repository </span><span class="k">}</span><span class="o">}</span>.git
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Deploy site built from commit </span><span class="k">${</span><span class="p">{ github.sha </span><span class="k">}</span><span class="s2">}"</span>
+git push <span class="nt">-u</span> origin gh-pages
+</code></pre></div></div>
+
+<p>However, this is not going to work for the following reasons:</p>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">_site</code> directory is created in the Docker container, possibly by a Linux
+user with another user ID, so we might get a “permission denied” error when
+running <code class="language-plaintext highlighter-rouge">git init</code> in it. We need to obtain the permission to that directory.
+In this example, we get the permission by acquiring ownership of the
+directory with <code class="language-plaintext highlighter-rouge">chown</code> to preserve file permission settings.</p>
+  </li>
+  <li>
+    <p>In the virtual environment instance on GitHub Actions, Git user name and
+email are not configured, which will prevent <code class="language-plaintext highlighter-rouge">git commit</code> from running
+successfully.</p>
+  </li>
+  <li>
+    <p>We need to configure GitHub log in credentials to push.</p>
+  </li>
+  <li>
+    <p>Because we initialize a new Git repository under <code class="language-plaintext highlighter-rouge">_site</code>, it does not have
+any commit history. This makes any commit we create in the virtual
+environment instance unrelated to the commit history on GitHub, and our push
+will fail. So, a force push is required.</p>
+  </li>
+</ul>
+
+<p>To solve these issues, we need to add some extra commands to this task and
+change some existing ones:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gi">+ sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
+</span>  cd ${{ github.workspace }}/_site
+  git init -b gh-pages
+<span class="gi">+ git config user.name ${{ github.actor }}
++ git config user.email ${{ github.actor }}@users.noreply.github.com
+</span><span class="gd">- git remote add origin https://github.com/${{ github.repository }}.git
+</span><span class="gi">+ git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+</span>  git add .
+  git commit -m "Deploy site built from commit ${{ github.sha }}"
+<span class="gd">- git push -u origin gh-pages
+</span><span class="gi">+ git push -f -u origin gh-pages
+</span></code></pre></div></div>
+
+<p>By adding <code class="language-plaintext highlighter-rouge">x-access-token:${{ github.token }}</code> before
+GitHub’s domain, a token can be used to authenticate operations on the GitHub
+repository. <code class="language-plaintext highlighter-rouge">github.token</code> gives a temporary token created before the job
+begins. It is the same as the <code class="language-plaintext highlighter-rouge">GITHUB_TOKEN</code>, whose details are available
+<a href="https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token">here</a>.</p>
+
+<p>Once we have come up with all the commands needed to publish the site, we can
+add them to the workflow file:</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build the site in the jekyll/builder container</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">docker run \</span>
+        <span class="s">-v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \</span>
+        <span class="s">jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll &amp;&amp; jekyll build --future"</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push the site to the gh-pages branch</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site</span>
+        <span class="s">cd ${{ github.workspace }}/_site</span>
+        <span class="s">git init -b gh-pages</span>
+        <span class="s">git config user.name ${{ github.actor }}</span>
+        <span class="s">git config user.email ${{ github.actor }}@users.noreply.github.com</span>
+        <span class="s">git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git</span>
+        <span class="s">git add .</span>
+        <span class="s">git commit -m "Deploy site built from commit ${{ github.sha }}"</span>
+        <span class="s">git push -f -u origin gh-pages</span>
+</code></pre></div></div>
+
+<h2 id="prevent-unauthorized-modifications-to-your-site">Prevent Unauthorized Modifications to Your Site</h2>
+
+<p>There is still a fatal vulnerability in the workflow. It can be triggered by a
+pull request, and since it unconditionally publishes the site built from the
+commit triggering it as long as the build is successful, it is possible that
+someone modifies your site merely with a pull request.</p>
+
+<p>Anyone can fork the repository for your GitHub Pages site, modify the contents
+in their fork, send a pull request back to you, which triggers a run of your
+workflow, and the changes they have made are immediately published to your site
+even before you merge the pull request. The best thing that could happen thanks
+to this is that when others fix typos on your site, the correction is
+immediately online; the worst case would be someone posting malicious contents
+on your site.</p>
+
+<p>To prevent such modifications, we can add a condition to the step that pushes
+the generated site to <code class="language-plaintext highlighter-rouge">gh-pages</code> so that it is only performed if the workflow
+run is triggered by a push to the <code class="language-plaintext highlighter-rouge">jekyll</code> branch.</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      - name: Push the site to the gh-pages branch
+<span class="gi">+       if: ${{ github.event_name == 'push' }}
+</span>        run: |
+          sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
+          cd ${{ github.workspace }}/_site
+          git init -b gh-pages
+</code></pre></div></div>
+
+<p>For other kinds of events, including pull requests, the step will be skipped,
+so the published site in the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch is intact.</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/host-on-github-pages/push-not-performed.png" alt="The &quot;push to gh-pages&quot; step is
+skipped" /></p>
+
+<p>At this point, you should have produced a workflow file similar to
+<a href="https://github.com/Leo3418/leo3418.github.io/blob/702a9f5325504606b405ac02086cc2b7940e84d4/.github/workflows/jekyll.yml">mine</a>.
+Now you have a GitHub Actions workflow that allows you to host a Jekyll site
+using unsupported plugins on GitHub Pages with automated builds.</p>
+
+<h2 id="set-the-publishing-source-of-github-pages">Set the Publishing Source of GitHub Pages</h2>
+
+<p>The last step is to tell GitHub Pages to use the files in the <code class="language-plaintext highlighter-rouge">gh-pages</code> branch
+for your site. First, commit your changes and push them to GitHub, and let the
+workflow run so it can push the generated files to <code class="language-plaintext highlighter-rouge">gh-pages</code>.</p>
+
+<p>Next, go to the settings page of your repository on GitHub website, and scroll
+down to the section called “GitHub Pages”. From there, select the <code class="language-plaintext highlighter-rouge">gh-pages</code>
+branch as the source, and then click “Save”.</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/host-on-github-pages/gh-pages-source.png" alt="Choosing GitHub Pages source" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/collections/multilingual-jekyll-site/localize-date-format" class="pagination--pager" title="Localize Date Format
+">
+        <div class="pagination-guide-text">Previous</div>
+        <div class="pagination-title">Localize Date Format
+</div>
+      </a>
+    
+    
+      <a href="/collections/multilingual-jekyll-site/closing-words" class="pagination--pager" title="Closing Words
+">
+        <div class="pagination-guide-text">Next</div>
+        <div class="pagination-title">Closing Words
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

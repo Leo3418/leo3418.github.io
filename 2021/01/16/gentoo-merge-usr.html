@@ -1,0 +1,863 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Merge the /usr Directory of a Gentoo Installation - Leo3418’s Personal Site</title>
+<meta name="description" content="The /usr merge, sometimes also known as /usr move, refers to a process on a Filesystem Hierarchy Standard (FHS) compliant system, which most GNU/Linux distributions are, that moves all contents under /bin, /lib, /lib64 and /sbin into /usr/bin, /usr/lib, /usr/lib64 and /usr/sbin respectively, and then replace each of /bin, /lib, /lib64 and /sbin with a symbolic link to the directory with the same name under /usr.  More information about /usr merge is available on freedesktop.org and Fedora Wiki.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Merge the /usr Directory of a Gentoo Installation">
+<meta property="og:url" content="https://leo3418.github.io/2021/01/16/gentoo-merge-usr.html">
+
+
+  <meta property="og:description" content="The /usr merge, sometimes also known as /usr move, refers to a process on a Filesystem Hierarchy Standard (FHS) compliant system, which most GNU/Linux distributions are, that moves all contents under /bin, /lib, /lib64 and /sbin into /usr/bin, /usr/lib, /usr/lib64 and /usr/sbin respectively, and then replace each of /bin, /lib, /lib64 and /sbin with a symbolic link to the directory with the same name under /usr.  More information about /usr merge is available on freedesktop.org and Fedora Wiki.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-16T00:00:00-06:00">
+
+
+
+  <meta property="article:modified_time" content="2021-03-05T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2021/01/16/gentoo-merge-usr.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2021/01/16/gentoo-merge-usr.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Merge the /usr Directory of a Gentoo Installation">
+    <meta itemprop="description" content="The /usr merge, sometimes also known as /usr move, refers to a processon a Filesystem Hierarchy Standard (FHS) compliant system, which mostGNU/Linux distributions are, that moves all contents under /bin, /lib,/lib64 and /sbin into /usr/bin, /usr/lib, /usr/lib64 and /usr/sbinrespectively, and then replace each of /bin, /lib, /lib64 and /sbinwith a symbolic link to the directory with the same name under /usr.  Moreinformation about /usr merge is available on freedesktop.organd Fedora Wiki.">
+    <meta itemprop="datePublished" content="2021-01-16T00:00:00-06:00">
+    <meta itemprop="dateModified" content="2021-03-05T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Merge the <code class="language-plaintext highlighter-rouge">/usr</code> Directory of a Gentoo Installation
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-01-16T00:00:00-06:00">Jan 16, 2021</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:
+        <time datetime="2021-03-05">Mar  5, 2021</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#variants-of-usr-merge">Variants of /usr Merge</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#merge-during-system-installation">Merge During System Installation</a></li><li><a href="#merge-on-an-installed-system">Merge on an Installed System</a></li><li><a href="#additional-tasks">Additional Tasks</a><ul><li><a href="#permanently-add-usrsbin-to-path">Permanently Add /usr/sbin to PATH</a></li><li><a href="#remove-messages-regarding-symbolic-links-from-emerge">Remove Messages Regarding Symbolic Links from emerge</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>The <em><code class="language-plaintext highlighter-rouge">/usr</code> merge</em>, sometimes also known as <em><code class="language-plaintext highlighter-rouge">/usr</code> move</em>, refers to a process
+on a <a href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">Filesystem Hierarchy Standard (FHS)</a> compliant system, which most
+GNU/Linux distributions are, that moves all contents under <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>,
+<code class="language-plaintext highlighter-rouge">/lib64</code> and <code class="language-plaintext highlighter-rouge">/sbin</code> into <code class="language-plaintext highlighter-rouge">/usr/bin</code>, <code class="language-plaintext highlighter-rouge">/usr/lib</code>, <code class="language-plaintext highlighter-rouge">/usr/lib64</code> and <code class="language-plaintext highlighter-rouge">/usr/sbin</code>
+respectively, and then replace each of <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>, <code class="language-plaintext highlighter-rouge">/lib64</code> and <code class="language-plaintext highlighter-rouge">/sbin</code>
+with a symbolic link to the directory with the same name under <code class="language-plaintext highlighter-rouge">/usr</code>.  More
+information about <code class="language-plaintext highlighter-rouge">/usr</code> merge is available on <a href="https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/">freedesktop.org</a>
+and <a href="https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description">Fedora Wiki</a>.</p>
+
+<p>The trend of <code class="language-plaintext highlighter-rouge">/usr</code> merge in GNU/Linux distributions seemed to be started by
+Fedora in 2012, and then, we can see that many well-known and popular
+distributions, including Debian and Arch Linux, have made the move.  It was
+similar to the wide adoption of systemd in GNU/Linux distributions, both of
+which were started by Red Hat’s desire to shape all modern Linux-based systems
+at <em>their</em> discretion and <a href="http://0pointer.de/blog/projects/the-usr-merge">Lennart Poettering’s support</a>, then
+made their debut in Fedora, and finally accepted by other distributions.</p>
+
+<p>Gentoo, being one of the few distributions that still do not use systemd as the
+default init system, is also absent from the group of distributions that have
+completed the <code class="language-plaintext highlighter-rouge">/usr</code> merge.  By default, in the root file system of a Gentoo
+installation, <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>, <code class="language-plaintext highlighter-rouge">/lib64</code> and <code class="language-plaintext highlighter-rouge">/sbin</code> are still standalone
+directories instead of symbolic links.  But judging from a <a href="https://packages.gentoo.org/useflags/split-usr"><code class="language-plaintext highlighter-rouge">split-usr</code> global
+Portage USE flag</a>, there might have already been plans to merge
+<code class="language-plaintext highlighter-rouge">/usr</code> in Gentoo.  As of the current revision of this post was published, the
+USE flag was forcibly declared, to indicate that <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>, <code class="language-plaintext highlighter-rouge">/lib64</code> and
+<code class="language-plaintext highlighter-rouge">/sbin</code> were still split from <code class="language-plaintext highlighter-rouge">/usr</code>; in the future, the USE flag might become
+optional when Gentoo is fully ready for the <code class="language-plaintext highlighter-rouge">/usr</code> merge.</p>
+
+<p>This article will show you how to merge <code class="language-plaintext highlighter-rouge">/usr</code> on a Gentoo installation now,
+when it is yet to be officially supported.  It is by no means suggesting that
+<code class="language-plaintext highlighter-rouge">/usr</code> split is a definitely beneficial decision, and the advantages of <code class="language-plaintext highlighter-rouge">/usr</code>
+merge are not the subject of discussion here.  The sole purpose of this post is
+to help people who are interested in making the merge to do it.</p>
+
+<p class="notice--danger">Though it is possible, <strong>merging <code class="language-plaintext highlighter-rouge">/usr</code> is not officially supported by Gentoo
+yet!</strong> Unless you are somewhat confident in resolving arbitrary issues on your
+system, particularly those pertinent to system file paths and symbolic links,
+it is not advisable to merge <code class="language-plaintext highlighter-rouge">/usr</code> on Gentoo.</p>
+
+<p class="notice--danger">It is already known that a few packages cannot be installed correctly on a
+Gentoo system with <code class="language-plaintext highlighter-rouge">/usr</code> merged, like <code class="language-plaintext highlighter-rouge">dev-ml/dune</code>.  Fixing those package
+installation issues will typically require you to modify the package’s
+<code class="language-plaintext highlighter-rouge">ebuild</code>, so unless you know how to do this right, merging <code class="language-plaintext highlighter-rouge">/usr</code> is not a good
+idea.</p>
+
+<h2 id="variants-of-usr-merge">Variants of <code class="language-plaintext highlighter-rouge">/usr</code> Merge</h2>
+
+<p>It is worth mentioning that there are two different ways of merging <code class="language-plaintext highlighter-rouge">/usr</code> that
+can be found in various GNU/Linux distributions:</p>
+
+<ol>
+  <li>
+    <p id="usr-merge-variant-1">Merge <code class="language-plaintext highlighter-rouge">/bin</code> into <code class="language-plaintext highlighter-rouge">/usr/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code> into <code class="language-plaintext highlighter-rouge">/usr/lib</code>, <code class="language-plaintext highlighter-rouge">/lib64</code> into
+<code class="language-plaintext highlighter-rouge">/usr/lib64</code>, and <code class="language-plaintext highlighter-rouge">/sbin</code> into <code class="language-plaintext highlighter-rouge">/usr/sbin</code>.  This kind of merge is what
+Fedora and Debian do.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-dl</span> /bin /lib /lib64 /sbin /usr/sbin
+<span class="gp">lrwxrwxrwx 1 root root    7 Dec 13 14:11 /bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root    7 Dec 13 14:11 /lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root    9 Dec 13 14:11 /lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="gp">lrwxrwxrwx 1 root root    8 Dec 13 14:11 /sbin -&gt;</span><span class="w"> </span>usr/sbin
+<span class="go">drwxr-xr-x 1 root root 7006 Dec 26 09:50 /usr/sbin
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p id="usr-merge-variant-2">Perform not only the merges mentioned above but also another one that moves
+contents of <code class="language-plaintext highlighter-rouge">/usr/sbin</code> into <code class="language-plaintext highlighter-rouge">/usr/bin</code>.  Arch Linux merges <code class="language-plaintext highlighter-rouge">/usr</code> in this
+way, and from the <a href="https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192"><code class="language-plaintext highlighter-rouge">ebuild</code> for Gentoo package
+<code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code></a>, which already supports the <code class="language-plaintext highlighter-rouge">split-usr</code>
+USE flag, this is likely to be how Gentoo merges <code class="language-plaintext highlighter-rouge">/usr</code> too.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-dl</span> /bin /lib /lib64 /sbin /usr/sbin
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root 9 Dec 13 14:11 /lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /sbin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root 3 Dec 13 14:11 /usr/sbin -&gt;</span><span class="w"> </span>bin
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p class="notice--info">The command output snippets above are only for demonstrating the difference of
+<code class="language-plaintext highlighter-rouge">/usr/sbin</code> in both methods of merging <code class="language-plaintext highlighter-rouge">/usr</code>; they might slightly differ from
+the actual file system layout you might encounter.</p>
+
+<p>This article will mainly focus on the first way because the resulting merged
+file system layout is what I am personally more familiar with, and I prefer
+that layout because I have used Fedora and Debian, but not Arch Linux.  Even if
+you would like to perform the second type of merge, this should not matter too
+much because it is the way Gentoo devises. Doing the first type of merge, on
+the other hand, is actually a little more complicated because of this.  If I
+provide you a guide for a more difficult goal, then you should be able to use
+it to achieve an easier goal, though you might need to slightly change some
+commands for your special situation.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">/usr</code> merge can be performed either during installation of a new system
+or on an existing installation.  The steps slightly differ, and this article
+will cover both cases in two separate sections.</p>
+  </li>
+  <li>
+    <p id="bootable-drive">Please make sure you have another bootable drive (e.g. a USB drive with
+Gentoo minimal installation CD image applied) available before you start.
+Obviously, if you are installing Gentoo, you must have had such a drive for
+installation.  If you are doing <code class="language-plaintext highlighter-rouge">/usr</code> merge on an existing system, you will
+need to shut down the system and modify file system layout for the merge
+while the system is not running, so you need another bootable media with an
+environment from which you can work on an existing Gentoo installation.</p>
+  </li>
+</ul>
+
+<h2 id="merge-during-system-installation">Merge During System Installation</h2>
+
+<p>The following instruction assumes you are following installation steps outlined
+in the <a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page">Gentoo Handbook</a>.</p>
+
+<ol>
+  <li>
+    <p>After you have <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage#Unpacking_the_stage_tarball">unpacked the stage tarball</a> under the
+“Installing stage3” step, enter the extracted <code class="language-plaintext highlighter-rouge">usr</code> directory, and
+re-extract <code class="language-plaintext highlighter-rouge">./bin</code>, <code class="language-plaintext highlighter-rouge">./lib</code>, <code class="language-plaintext highlighter-rouge">./lib64</code> and <code class="language-plaintext highlighter-rouge">./sbin</code> from the stage tarball.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cd </span>usr
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">tar </span>xpvf ../stage3-<span class="k">*</span>.tar.xz <span class="nt">--xattrs-include</span><span class="o">=</span><span class="s1">'*.*'</span> <span class="nt">--numeric-owner</span> ./<span class="o">{</span>bin,lib,lib64,sbin<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Go back to the parent directory, and replace each of <code class="language-plaintext highlighter-rouge">bin</code>, <code class="language-plaintext highlighter-rouge">lib</code>, <code class="language-plaintext highlighter-rouge">lib64</code>
+and <code class="language-plaintext highlighter-rouge">sbin</code> with symbolic link to the directory under <code class="language-plaintext highlighter-rouge">usr</code> with the same
+name.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">cd</span> ..
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">rm</span> <span class="nt">-rf</span> bin lib lib64 sbin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/bin bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib64 lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/sbin sbin
+</code></pre></div>    </div>
+
+    <div class="notice--primary" id="variant-2-usr-sbin">
+<p>If you wish to have the <a href="#usr-merge-variant-2">second type of <code class="language-plaintext highlighter-rouge">/usr</code>
+merge</a>, you should additionally move everything in
+<code class="language-plaintext highlighter-rouge">usr/sbin</code> into <code class="language-plaintext highlighter-rouge">usr/bin</code> and replace <code class="language-plaintext highlighter-rouge">usr/sbin</code> with a symbolic link to the
+<code class="language-plaintext highlighter-rouge">usr/bin</code> directory:</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cd </span>usr
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">mv </span>sbin/<span class="k">*</span> bin
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">rmdir </span>sbin
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> bin sbin
+</code></pre></div></div>
+
+</div>
+
+    <p>The result of this operation is something like the following.  Note that
+<code class="language-plaintext highlighter-rouge">bin</code>, <code class="language-plaintext highlighter-rouge">lib</code>, <code class="language-plaintext highlighter-rouge">lib64</code> and <code class="language-plaintext highlighter-rouge">sbin</code> are now symbolic links:</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span>
+<span class="go">total 16
+</span><span class="gp">lrwxrwxrwx 1 root root    7 Dec 28 04:07 bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 boot
+drwxr-xr-x 1 root root 1686 Dec 23 05:25 dev
+drwxr-xr-x 1 root root 1546 Dec 23 06:32 etc
+drwxr-xr-x 1 root root   10 Dec 23 05:20 home
+</span><span class="gp">lrwxrwxrwx 1 root root    7 Dec 28 04:07 lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root    9 Dec 28 04:07 lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 media
+drwxr-xr-x 1 root root   10 Dec 23 05:20 mnt
+drwxr-xr-x 1 root root   10 Dec 23 05:20 opt
+drwxr-xr-x 1 root root    0 Dec 23 03:28 proc
+drwx------ 1 root root   10 Dec 23 05:20 root
+drwxr-xr-x 1 root root   10 Dec 23 05:20 run
+</span><span class="gp">lrwxrwxrwx 1 root root    8 Dec 28 04:08 sbin -&gt;</span><span class="w"> </span>usr/sbin
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 sys
+drwxrwxrwt 1 root root   10 Dec 23 06:32 tmp
+drwxr-xr-x 1 root root  128 Dec 23 05:29 usr
+drwxr-xr-x 1 root root   66 Dec 23 05:20 var
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Continue to follow Gentoo Handbook’s instruction, until you have <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Entering_the_new_environment"><code class="language-plaintext highlighter-rouge">chroot</code>ed
+into <code class="language-plaintext highlighter-rouge">/mnt/gentoo</code></a>.</p>
+  </li>
+  <li>
+    <p id="sys-inst-4">Find broken symbolic links under <code class="language-plaintext highlighter-rouge">/usr</code> by using <code class="language-plaintext highlighter-rouge">find -L /usr -type l</code>.
+The command’s output will show all broken links.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span>find <span class="nt">-L</span> /usr <span class="nt">-type</span> l
+<span class="go">/usr/sbin/resolvconf
+/usr/bin/awk
+</span></code></pre></div>    </div>
+
+    <p>Here, <code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code> and <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> are broken links – they
+point to path that does not exist.  This can cause problems when other
+programs and scripts need to use the files pointed by those links.  For
+instance, <code class="language-plaintext highlighter-rouge">awk</code> is a very important program required for compiling many
+other packages; since <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> is a broken symbolic link, the <code class="language-plaintext highlighter-rouge">awk</code>
+command is unavailable, and you might have trouble installing packages that
+require <code class="language-plaintext highlighter-rouge">awk</code> to build.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span>/usr/bin/awk
+<span class="go">bash: /usr/bin/awk: No such file or directory
+</span></code></pre></div>    </div>
+
+    <p>To fix a broken symbolic link, first enter the directory containing it, then
+use <code class="language-plaintext highlighter-rouge">ls -l</code> to find the file that link points to.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span><span class="nb">cd</span> /usr/bin/
+<span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> <span class="nb">awk</span>
+<span class="gp">lrwxrwxrwx 1 root root 15 Dec 23 05:26 awk -&gt;</span><span class="w"> </span>../usr/bin/gawk
+</code></pre></div>    </div>
+
+    <p>The <code class="language-plaintext highlighter-rouge">awk</code> symbolic link was supposed to be under <code class="language-plaintext highlighter-rouge">/bin</code>, and
+<code class="language-plaintext highlighter-rouge">/bin/../usr/bin/gawk</code>, which is equivalent to <code class="language-plaintext highlighter-rouge">/usr/bin/gawk</code>, is a valid
+path.  Because it is now moved to <code class="language-plaintext highlighter-rouge">/usr</code>, and <code class="language-plaintext highlighter-rouge">/usr/bin/../usr/bin/gawk</code>,
+i.e. <code class="language-plaintext highlighter-rouge">/usr/usr/bin/gawk</code>, does not exist, the symbolic link is thus broken.
+To fix it, remove the old link and create a new one with correct target:</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">rm awk</span>
+<span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> gawk <span class="nb">awk</span>
+</code></pre></div>    </div>
+
+    <p>Apply the same procedure for <code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code>:</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span><span class="nb">cd</span> /usr/sbin/
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> resolvconf
+<span class="gp">lrwxrwxrwx 1 root root 21 Dec 23 06:28 resolvconf -&gt;</span><span class="w"> </span>../usr/bin/resolvectl
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">rm </span>resolvconf
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> ../bin/resolvectl resolvconf
+</code></pre></div>    </div>
+
+    <p>If you run <code class="language-plaintext highlighter-rouge">find -L /usr -type l</code> again now, nothing should be printed,
+which indicates that all broken symbolic links have been fixed.</p>
+
+    <div class="notice--success">
+<p><code class="language-plaintext highlighter-rouge">find -L -type l</code> is the panacea for finding broken symbolic links.
+<code class="language-plaintext highlighter-rouge">find</code> is a basic but powerful command that is usually preinstalled on most
+GNU/Linux distributions.  There is no need to install other packages like
+<code class="language-plaintext highlighter-rouge">symlinks</code> for this purpose!</p>
+
+
+<p>The <code class="language-plaintext highlighter-rouge">find(1)</code> manual page says:</p>
+
+        
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        -type c
+            File is of type c:
+
+            l      symbolic link; this is never true if the -L option or the
+                   -follow  option is in effect, unless the symbolic link is
+                   broken.  If you want to search for symbolic links when -L
+                   is in effect, use -xtype.
+</code></pre></div></div>
+
+</div>
+  </li>
+  <li>
+    <p id="sys-inst-5">Mask the <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag, so packages can know the current system has
+its <code class="language-plaintext highlighter-rouge">/usr</code> merged if they support it.  Declaring <code class="language-plaintext highlighter-rouge">-split-usr</code> is not
+sufficient to mask the USE flag because <code class="language-plaintext highlighter-rouge">split-usr</code> is forcibly enabled; you
+need to mask the USE flag in <code class="language-plaintext highlighter-rouge">/etc/portage/profile/use.mask</code> instead:</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/portage/profile/use.mask
+
+# Mask the USE flag for split /usr file system layout
+split-usr
+</code></pre></div>    </div>
+
+    <p>Please visit <a href="https://wiki.gentoo.org/wiki//etc/portage/profile/use.mask">this Gentoo Wiki page</a> for more information.</p>
+  </li>
+  <li>
+    <p>Complete the remaining steps in the Gentoo Handbook as instructed.  Be sure
+to <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Updating_the_.40world_set">update the <code class="language-plaintext highlighter-rouge">@world</code> set</a> to apply the <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag
+change.</p>
+
+    <p>When you run a command installed to <code class="language-plaintext highlighter-rouge">/sbin</code> or <code class="language-plaintext highlighter-rouge">/usr/sbin</code>, you may see a
+“command not found” error message.  For example, if you choose GRUB as the
+bootloader, you will need to run <code class="language-plaintext highlighter-rouge">/usr/sbin/grub-install</code>, but an error will
+occur when it is invoked.  You can use the <code class="language-plaintext highlighter-rouge">whereis</code> program to confirm that
+the command is installed to <code class="language-plaintext highlighter-rouge">/usr/sbin</code>.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>grub-install <span class="nt">--target</span><span class="o">=</span>x86_64-efi <span class="nt">--efi-directory</span><span class="o">=</span>/boot
+<span class="go">bash: grub-install: command not found
+</span><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>whereis grub-install
+<span class="go">grub-install: /usr/sbin/grub-install /usr/share/man/man8/grub-install.8.bz2
+</span></code></pre></div>    </div>
+
+    <p>The reason for this error is that <code class="language-plaintext highlighter-rouge">/usr/sbin</code> is not added to the <code class="language-plaintext highlighter-rouge">PATH</code>
+environment variable:</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">printenv </span>PATH
+<span class="go">/usr/local/bin:/usr/bin:/opt/bin
+</span></code></pre></div>    </div>
+
+    <p>To complete the installation, you can use the quickest way to solve this
+issue, which is to add <code class="language-plaintext highlighter-rouge">/usr/sbin</code> temporarily to <code class="language-plaintext highlighter-rouge">PATH</code> by running <code class="language-plaintext highlighter-rouge">export
+PATH="/usr/sbin:$PATH"</code>.  This needs to be done every time when you start a
+new shell.  For a permanent solution, please look at the <a href="#permanently-add-usrsbin-to-path">“Permanently Add
+<code class="language-plaintext highlighter-rouge">/usr/sbin</code> to <code class="language-plaintext highlighter-rouge">PATH</code>”</a> section below.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/sbin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+<span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">printenv </span>PATH
+<span class="go">/usr/sbin:/usr/local/bin:/usr/bin:/opt/bin
+</span><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>grub-install <span class="nt">--target</span><span class="o">=</span>x86_64-efi <span class="nt">--efi-directory</span><span class="o">=</span>/boot
+<span class="go">Installing for x86_64-efi platform.
+Installation finished. No error reported.
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="merge-on-an-installed-system">Merge on an Installed System</h2>
+
+<ol>
+  <li>
+    <p>Boot your computer from <a href="#bootable-drive">the bootable drive</a> you prepared,
+and <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Mounting_the_root_partition">mount</a> your system’s root partition.  The subsequent steps
+assume your root partition is mounted to <code class="language-plaintext highlighter-rouge">/mnt/gentoo</code>.  Switch to the
+directory where the partition is mounted.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd ~ #</span><span class="w"> </span><span class="nb">cd</span> /mnt/gentoo
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Using the <code class="language-plaintext highlighter-rouge">\cp</code> command with <code class="language-plaintext highlighter-rouge">-r</code>, <code class="language-plaintext highlighter-rouge">--preserve=all</code> and
+<code class="language-plaintext highlighter-rouge">--remove-destination</code> options, copy everything inside <code class="language-plaintext highlighter-rouge">bin</code>, <code class="language-plaintext highlighter-rouge">lib</code>, <code class="language-plaintext highlighter-rouge">lib64</code>
+and <code class="language-plaintext highlighter-rouge">sbin</code> into <code class="language-plaintext highlighter-rouge">usr/bin</code>, <code class="language-plaintext highlighter-rouge">usr/lib</code>, <code class="language-plaintext highlighter-rouge">usr/lib64</code> and <code class="language-plaintext highlighter-rouge">usr/sbin</code>
+respectively.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div>    </div>
+
+    <p class="notice--info">The <code class="language-plaintext highlighter-rouge">-v</code> option for <code class="language-plaintext highlighter-rouge">cp</code> allows you to see the copying progress.  Feel free
+to omit it if you do not need it.</p>
+
+    <div class="notice--info">
+<p>Adding a backslash <code class="language-plaintext highlighter-rouge">\</code> in front of <code class="language-plaintext highlighter-rouge">cp</code> ignores any alias set for <code class="language-plaintext highlighter-rouge">cp</code>.
+If you are using the Gentoo minimal installation CD image, the default alias
+for <code class="language-plaintext highlighter-rouge">cp</code> is <code class="language-plaintext highlighter-rouge">cp -i</code>, which lets <code class="language-plaintext highlighter-rouge">cp</code> ask for your confirmation on every file
+being overwritten.</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd ~ #</span><span class="w"> </span><span class="nb">alias cp</span>
+<span class="go">alias cp='cp -i'
+</span></code></pre></div></div>
+
+
+<p>Using <code class="language-plaintext highlighter-rouge">\cp</code> instead of <code class="language-plaintext highlighter-rouge">cp</code> ignores the alias.  Alternatively, you may
+also use <code class="language-plaintext highlighter-rouge">unalias cp</code> to remove that alias and continue to invoke <code class="language-plaintext highlighter-rouge">cp</code>
+without <code class="language-plaintext highlighter-rouge">\</code> in front, or pipe in a lot of <code class="language-plaintext highlighter-rouge">y</code>’s with <code class="language-plaintext highlighter-rouge">yes | cp ...</code>.</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">unalias cp</span>
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div></div>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div></div>
+
+</div>
+  </li>
+  <li>
+    <p>Replace each of <code class="language-plaintext highlighter-rouge">bin</code>, <code class="language-plaintext highlighter-rouge">lib</code>, <code class="language-plaintext highlighter-rouge">lib64</code> and <code class="language-plaintext highlighter-rouge">sbin</code> with symbolic link to the
+directory under <code class="language-plaintext highlighter-rouge">usr</code> with the same name.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">rm</span> <span class="nt">-rf</span> bin lib lib64 sbin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/bin bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib64 lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/sbin sbin
+</code></pre></div>    </div>
+
+    <p class="notice--primary">If you wish to have the <a href="#usr-merge-variant-2">second type of <code class="language-plaintext highlighter-rouge">/usr</code> merge</a>, you should
+additionally move everything in <code class="language-plaintext highlighter-rouge">sbin</code> and <code class="language-plaintext highlighter-rouge">usr/sbin</code> into <code class="language-plaintext highlighter-rouge">usr/bin</code>, and
+replace <code class="language-plaintext highlighter-rouge">usr/sbin</code> with a symbolic link to the <code class="language-plaintext highlighter-rouge">usr/bin</code> directory.  Please
+see <a href="#variant-2-usr-sbin">here</a> for commands you may use to do this.</p>
+  </li>
+  <li>
+    <p>Restart your computer and boot into your system (not the bootable drive).
+As long as you have correctly copied the contents of <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>,
+<code class="language-plaintext highlighter-rouge">/lib64</code> and <code class="language-plaintext highlighter-rouge">/sbin</code> into <code class="language-plaintext highlighter-rouge">/usr</code> and established the symbolic links, your
+system should boot up normally.</p>
+  </li>
+  <li>
+    <p>Fix broken symbolic links under <code class="language-plaintext highlighter-rouge">/usr</code> by following <a href="#sys-inst-4">step 4</a> for
+the method to merge <code class="language-plaintext highlighter-rouge">/usr</code> during system installation.  However, you do not
+need to manually fix all broken symbolic links:</p>
+
+    <ul>
+      <li>
+        <p>If you use systemd <em>and</em> dracut, you may see some broken links whose names
+are something like <code class="language-plaintext highlighter-rouge">dracut-*.service</code>.  These links can be easily fixed by
+reinstalling <code class="language-plaintext highlighter-rouge">sys-kernel/dracut</code> <strong>after</strong> systemd is rebuilt with
+<code class="language-plaintext highlighter-rouge">split-usr</code> USE flag masked.</p>
+      </li>
+      <li>
+        <p>It should be fine to leave <code class="language-plaintext highlighter-rouge">/usr/lib/modules/*.*.*/build</code> and
+<code class="language-plaintext highlighter-rouge">/usr/lib/modules/*.*.*/source</code> unfixed.</p>
+      </li>
+    </ul>
+
+    <p>Any other broken symbolic links, like <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> and
+<code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code>, still require manual intervention.</p>
+  </li>
+  <li>
+    <p>Mask the <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag by following <a href="#sys-inst-5">step 5</a> for the
+method to merge <code class="language-plaintext highlighter-rouge">/usr</code> during system installation.</p>
+  </li>
+  <li>
+    <p>Update the <code class="language-plaintext highlighter-rouge">@world</code> set of Portage to rebuild packages that had the
+<code class="language-plaintext highlighter-rouge">split-usr</code> USE flag enabled.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>emerge <span class="nt">--ask</span> <span class="nt">--update</span> <span class="nt">--deep</span> <span class="nt">--newuse</span> @world
+</code></pre></div>    </div>
+
+    <p>If you are using systemd and dracut, you can rebuild dracut now to fix the
+broken <code class="language-plaintext highlighter-rouge">dracut-*.service</code> symbolic links.  Run the following command
+<strong>only</strong> if you intend to use dracut, because otherwise it will install
+dracut onto your system.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>emerge <span class="nt">--ask</span> <span class="nt">--oneshot</span> sys-kernel/dracut
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="additional-tasks">Additional Tasks</h2>
+
+<p>After following the steps above, your file system is <code class="language-plaintext highlighter-rouge">/usr</code>-merged, and the
+operating system should still function as if <code class="language-plaintext highlighter-rouge">/usr</code> is not merged.  There are
+some additional tasks which would not cause system to malfunction if you chose
+not to perform them, but they fix minor issues which would arise after <code class="language-plaintext highlighter-rouge">/usr</code>
+merge.</p>
+
+<h3 id="permanently-add-usrsbin-to-path">Permanently Add <code class="language-plaintext highlighter-rouge">/usr/sbin</code> to <code class="language-plaintext highlighter-rouge">PATH</code></h3>
+
+<p class="notice--primary">This task is not required if you are using the <a href="#usr-merge-variant-2">second variant of <code class="language-plaintext highlighter-rouge">/usr</code>
+merge</a>.</p>
+
+<p>As mentioned briefly when <a href="#usr-merge-variant-2">discussing how Gentoo intends to merge
+<code class="language-plaintext highlighter-rouge">/usr</code></a>, <code class="language-plaintext highlighter-rouge">/usr/sbin</code> is planned to be merged into <code class="language-plaintext highlighter-rouge">/usr/bin</code>.  If
+you look carefully at the <a href="https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192"><code class="language-plaintext highlighter-rouge">ebuild</code> for <code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code></a>, you
+may find that when the <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag is disabled, <code class="language-plaintext highlighter-rouge">/usr/sbin</code> is removed
+from the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable, because every file that was supposed to
+be under <code class="language-plaintext highlighter-rouge">/usr/sbin</code> is now in <code class="language-plaintext highlighter-rouge">/usr/bin</code>, which is already in <code class="language-plaintext highlighter-rouge">PATH</code>.</p>
+
+<p>However, if you are doing the <a href="#usr-merge-variant-1">first kind of <code class="language-plaintext highlighter-rouge">/usr</code> merge</a>, this is
+not the desired result.  Executables under <code class="language-plaintext highlighter-rouge">/usr/sbin</code> are not moved in this
+case, but <code class="language-plaintext highlighter-rouge">/usr/sbin</code> is removed from <code class="language-plaintext highlighter-rouge">PATH</code> if we disable the <code class="language-plaintext highlighter-rouge">split-usr</code> USE
+flag, so we cannot directly invoke any command installed to that location
+without prepending <code class="language-plaintext highlighter-rouge">/usr/sbin/</code> to the front of the command name!</p>
+
+<p>The way I suggest to add <code class="language-plaintext highlighter-rouge">/usr/sbin</code> back to <code class="language-plaintext highlighter-rouge">PATH</code> is to define it globally
+with a file under <code class="language-plaintext highlighter-rouge">/etc/env.d</code>.  Create a file with any name you like (e.g.
+<code class="language-plaintext highlighter-rouge">50baselayout-sbin</code>) under that path, and add the following <code class="language-plaintext highlighter-rouge">PATH</code> and
+<code class="language-plaintext highlighter-rouge">ROOTPATH</code> definitions:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># /etc/env.d/50baselayout-sbin</span>
+
+<span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/local/sbin:/usr/sbin"</span>
+<span class="nv">ROOTPATH</span><span class="o">=</span><span class="s2">"/usr/local/sbin:/usr/sbin"</span>
+</code></pre></div></div>
+
+<p>In this example, I have added not only <code class="language-plaintext highlighter-rouge">/usr/sbin</code> but also <code class="language-plaintext highlighter-rouge">/usr/local/sbin</code>
+to <code class="language-plaintext highlighter-rouge">PATH</code> because <code class="language-plaintext highlighter-rouge">/usr/local/sbin</code> is removed from <code class="language-plaintext highlighter-rouge">PATH</code> if <code class="language-plaintext highlighter-rouge">split-usr</code> is
+disabled for <code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code> too.</p>
+
+<p>Then, update your environment to apply the change:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>/usr/sbin/env-update
+<span class="gp">$</span><span class="w"> </span><span class="nb">source</span> /etc/profile
+</code></pre></div></div>
+
+<p>For more information about using the <code class="language-plaintext highlighter-rouge">/etc/env.d</code> directory, please refer to
+<a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/EnvVar#Defining_variables_globally">this Gentoo Handbook section covering it</a>.</p>
+
+<h3 id="remove-messages-regarding-symbolic-links-from-emerge">Remove Messages Regarding Symbolic Links from <code class="language-plaintext highlighter-rouge">emerge</code></h3>
+
+<p>You may see a warning message like the following one when you update or
+uninstall a package with <code class="language-plaintext highlighter-rouge">emerge</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> * One or more symlinks to directories have been preserved in order to
+ * ensure that files installed via these symlinks remain accessible. This
+ * indicates that the mentioned symlink(s) may be obsolete remnants of an
+ * old install, and it may be appropriate to replace a given symlink with
+ * the directory that it points to.
+ *
+ * 	/bin
+ * 	/lib64
+ * 	/sbin
+ *
+</code></pre></div></div>
+
+<p>This kind of messages is expected, because <code class="language-plaintext highlighter-rouge">/bin</code>, <code class="language-plaintext highlighter-rouge">/lib</code>, <code class="language-plaintext highlighter-rouge">/lib64</code> and <code class="language-plaintext highlighter-rouge">/sbin</code>
+are indeed symbolic links rather than directories now.</p>
+
+<p>If you are interested in suppressing those messages, you may add the following
+line to <code class="language-plaintext highlighter-rouge">/etc/portage/make.conf</code>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">UNINSTALL_IGNORE</span><span class="o">=</span><span class="s2">"/bin /lib /lib64 /sbin"</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#gentoo" class="page__taxonomy-item" rel="tag">Gentoo</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

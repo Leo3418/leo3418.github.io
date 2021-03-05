@@ -1,0 +1,402 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>用 grep 替代 cat - Leo3418 的个人网站</title>
+<meta name="description" content="我遇到了一篇很有趣的英文文章 Unix Recovery Legend，讲的是一群人拯救一个被 rm -rf / 毁坏的系统的故事。几十年前，在电脑还没发展到人手一台，一台电脑要给好几个人同时使用，每个人自己只有一个终端的年代的某一天，与该文章作者同处一间办公室的同事发现邮件发不出去了，作者就前去帮忙检查，发现 ls 命令和 /etc 目录被删了，于是就去找系统管理员，发现管理员的屏幕上赫然显示着这么两行文字：">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="用 grep 替代 cat">
+<meta property="og:url" content="https://leo3418.github.io/2020/06/21/grep-as-cat.html">
+
+
+  <meta property="og:description" content="我遇到了一篇很有趣的英文文章 Unix Recovery Legend，讲的是一群人拯救一个被 rm -rf / 毁坏的系统的故事。几十年前，在电脑还没发展到人手一台，一台电脑要给好几个人同时使用，每个人自己只有一个终端的年代的某一天，与该文章作者同处一间办公室的同事发现邮件发不出去了，作者就前去帮忙检查，发现 ls 命令和 /etc 目录被删了，于是就去找系统管理员，发现管理员的屏幕上赫然显示着这么两行文字：">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-21T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2020/06/21/grep-as-cat.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2020/06/21/grep-as-cat.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="用 grep 替代 cat">
+    <meta itemprop="description" content="我遇到了一篇很有趣的英文文章 Unix Recovery Legend，讲的是一群人拯救一个被 rm -rf / 毁坏的系统的故事。几十年前，在电脑还没发展到人手一台，一台电脑要给好几个人同时使用，每个人自己只有一个终端的年代的某一天，与该文章作者同处一间办公室的同事发现邮件发不出去了，作者就前去帮忙检查，发现 ls 命令和 /etc 目录被删了，于是就去找系统管理员，发现管理员的屏幕上赫然显示着这么两行文字：">
+    <meta itemprop="datePublished" content="2020-06-21T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">用 <code class="language-plaintext highlighter-rouge">grep</code> 替代 <code class="language-plaintext highlighter-rouge">cat</code>
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-06-21T00:00:00-05:00">2020-06-21</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#使用-grep-创建和写入文件">使用 grep 创建和写入文件</a></li><li><a href="#使用-grep-查找空行">使用 grep 查找空行</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>我遇到了一篇很有趣的英文文章 <a href="https://www.ee.ryerson.ca/~elf/hack/recovery.html">Unix Recovery Legend</a>，讲的是一群人拯救一个被 <code class="language-plaintext highlighter-rouge">rm -rf /</code> 毁坏的系统的故事。几十年前，在电脑还没发展到人手一台，一台电脑要给好几个人同时使用，每个人自己只有一个终端的年代的某一天，与该文章作者同处一间办公室的同事发现邮件发不出去了，作者就前去帮忙检查，发现 <code class="language-plaintext highlighter-rouge">ls</code> 命令和 <code class="language-plaintext highlighter-rouge">/etc</code> 目录被删了，于是就去找系统管理员，发现管理员的屏幕上赫然显示着这么两行文字：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span><span class="nb">cd</span>
+<span class="gp">#</span><span class="w"> </span><span class="nb">rm</span> <span class="nt">-rf</span> <span class="k">*</span>
+</code></pre></div></div>
+
+<p>由于是以超级用户身份执行的，第一行命令，<code class="language-plaintext highlighter-rouge">cd</code>，把工作目录切到了根目录 <code class="language-plaintext highlighter-rouge">/</code>（在现在的 GNU/Linux 环境中这么做则会切到 <code class="language-plaintext highlighter-rouge">/root</code> 目录下），然后第二行命令就删除了 <code class="language-plaintext highlighter-rouge">/</code> 下的所有目录和文件，效果等同于 <code class="language-plaintext highlighter-rouge">rm -rf /</code>。好在这条指令在把硬盘清光之前被强行停止了，虽然 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/dev</code>、<code class="language-plaintext highlighter-rouge">/etc</code> 和 <code class="language-plaintext highlighter-rouge">/lib</code> 被删，但是 <code class="language-plaintext highlighter-rouge">/tmp</code>、<code class="language-plaintext highlighter-rouge">/usr</code> 和 <code class="language-plaintext highlighter-rouge">/users</code>（相当于现在的 <code class="language-plaintext highlighter-rouge">/home</code>）逃过一劫。<code class="language-plaintext highlighter-rouge">/bin</code> 下都是命令，所以 <code class="language-plaintext highlighter-rouge">ls</code> 和 <code class="language-plaintext highlighter-rouge">ps</code> 等程序没法使用；<code class="language-plaintext highlighter-rouge">/dev</code> 下是设备对应的文件，由于被删了，磁带机这样的存储设备无法使用；<code class="language-plaintext highlighter-rouge">/etc</code> 下则是有各种配置文件，包括网络配置，所以也无法通过网络连接机器。这几重因素造成了即使这些人有磁带备份也难以恢复系统的窘境。</p>
+
+<p>好在，有几个关键的实用程序还是可以用的。首先是文本编辑器，由于作者自己的终端上还开着 GNU Emacs，编辑器的代码已经被读入了内存，所以即使硬盘上的编辑器程序已经被删了，程序仍然可以正常运行。然后，因为 <code class="language-plaintext highlighter-rouge">/usr</code> 被救了下来，<code class="language-plaintext highlighter-rouge">/usr/bin</code> 中的程序也可以使用。<code class="language-plaintext highlighter-rouge">/bin</code> 和 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 中都有安装命令，所以即使 <code class="language-plaintext highlighter-rouge">/bin</code> 没了，仍然有部分命令是可以用的。最后，这帮人用汇编语言写了一个创建 <code class="language-plaintext highlighter-rouge">/etc</code> 目录的程序（因为 <code class="language-plaintext highlighter-rouge">mkdir</code> 命令也没了），在别的机器上编译之后转成十六进制，用 Emacs 输进要恢复的机器里再转回二进制。之后他们就可以继续用文本编辑器重写 <code class="language-plaintext highlighter-rouge">/etc</code> 下的配置文件，然后就成功恢复了备份。</p>
+
+<p>文章的最后，作者提出了一个技巧：如果 <code class="language-plaintext highlighter-rouge">/bin/cat</code> 被删，但 <code class="language-plaintext highlighter-rouge">/usr/bin/grep</code> 还在，可以用 <code class="language-plaintext highlighter-rouge">grep</code> 替代 <code class="language-plaintext highlighter-rouge">cat</code>。看到这，我陷入了沉思：这是怎么做到的呢？</p>
+
+<p>我们首先来看看 <code class="language-plaintext highlighter-rouge">grep</code> 和 <code class="language-plaintext highlighter-rouge">cat</code> 的作用都是什么。<code class="language-plaintext highlighter-rouge">grep</code> 可以在给定的输入文本中搜索正则表达式的匹配，然后将有匹配的行全部输出，没有匹配的行会被过滤掉；而 <code class="language-plaintext highlighter-rouge">cat</code> 则是将输入的文本全部原封不动地输出。对于同样的输入内容，<code class="language-plaintext highlighter-rouge">grep</code> 的输出是 <code class="language-plaintext highlighter-rouge">cat</code> 输出的子集。如果我们能想办法不让 <code class="language-plaintext highlighter-rouge">grep</code> 过滤任何输入的内容，让它输出全部文本，那它和 <code class="language-plaintext highlighter-rouge">cat</code> 的效果就一样了。</p>
+
+<p>最直接的让 <code class="language-plaintext highlighter-rouge">grep</code> 不过滤掉任何文本的方法就是给它一个空的正则表达式，也就是空字符串。<strong>在用作正则表达式时，空字符串将匹配所有字符串</strong>。既然每一个字符串都被匹配了，那么所有的文本就都可以被输出了。</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/grep-read-file.cast" poster="npt:3.2" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>所以，<code class="language-plaintext highlighter-rouge">grep ""</code> 可以用来取代 <code class="language-plaintext highlighter-rouge">cat</code> 的最基础用法。</p>
+
+<h2 id="使用-grep-创建和写入文件">使用 <code class="language-plaintext highlighter-rouge">grep</code> 创建和写入文件</h2>
+
+<p><code class="language-plaintext highlighter-rouge">cat</code> 命令最常见的用法就是直接从终端查看一个文件的内容，但是它同样可以被用来直接从命令行界面写文件，不需要任何文本编辑器。网上有许多教程都会在需要建立新文件的时候用 <code class="language-plaintext highlighter-rouge">cat</code> 命令写入文件的内容。</p>
+
+<p>如果您直接运行 <code class="language-plaintext highlighter-rouge">cat</code> 命令，不指定任何文件的话，那么 <code class="language-plaintext highlighter-rouge">cat</code> 会读取标准输入（也就是键盘），然后将您输入的任何内容直接输出。<del>（<code class="language-plaintext highlighter-rouge">cat</code> 的本质是复读机）</del></p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/cat-echo.cast" poster="npt:2" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>这么个复读机程序有什么卵用吗？然而，利用 Unix 的<strong>输出重定向</strong>，<code class="language-plaintext highlighter-rouge">cat</code> 的复读机行为就可以发挥真正的作用。默认情况下，<code class="language-plaintext highlighter-rouge">cat</code> 的标准输出是终端；如果把输出重定向到一个文件，那么 <code class="language-plaintext highlighter-rouge">cat</code> 就可以把您输入的内容写到文件里，不再愚蠢地复读了。</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/cat-write-file.cast" poster="npt:4" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p><strong>提示</strong>：当您完成输入后，可以按 Ctrl-D，发送“文件结尾”（EOF）字符。绝大多数的 Unix 程序通过检测 EOF 字符来查看用户是否已经结束了输入；收到 EOF 后，程序就可以开始处理用户输入的内容了。<code class="language-plaintext highlighter-rouge">cat</code> 在遇到 EOF 时，会将其读取到的内容写入到输出中，然后退出。</p>
+
+<p><code class="language-plaintext highlighter-rouge">cat</code> 可以用来写入文件，那 <code class="language-plaintext highlighter-rouge">grep ""</code> 行吗？答案是肯定的，因为 <code class="language-plaintext highlighter-rouge">grep</code> 在用户没有指定文件名时也会从标准输入来读取文本，和 <code class="language-plaintext highlighter-rouge">cat</code> 一样（尽管有些选项，比如 <code class="language-plaintext highlighter-rouge">-r</code>，可以改变此行为）。</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/grep-echo.cast" poster="npt:2.1" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/grep-write-file.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="使用-grep-查找空行">使用 <code class="language-plaintext highlighter-rouge">grep</code> 查找空行</h2>
+
+<p>既然空的正则表达式匹配任何字符串，那么如果真的想要搜索空行的话，应该用什么正则表达式呢？</p>
+
+<p>正则表达式的语法中有两个特殊字符 <code class="language-plaintext highlighter-rouge">^</code> 和 <code class="language-plaintext highlighter-rouge">$</code>，分别对应一个字符串的开始和结尾。比如说，正则表达式 <code class="language-plaintext highlighter-rouge">^grep$</code> 只会匹配 <code class="language-plaintext highlighter-rouge">grep</code>，不会匹配 <code class="language-plaintext highlighter-rouge">egrep</code>，<code class="language-plaintext highlighter-rouge">grep -E</code> 或者 <code class="language-plaintext highlighter-rouge">fgreping</code>。所以，正则表达式 <code class="language-plaintext highlighter-rouge">^$</code> 可以用来查找空字符串，故如果想用 <code class="language-plaintext highlighter-rouge">grep</code> 搜索空行，只需使用 <code class="language-plaintext highlighter-rouge">grep "^$"</code> 即可。</p>
+
+<p><code class="language-plaintext highlighter-rouge">grep</code> 还提供一个 <code class="language-plaintext highlighter-rouge">-x</code> 选项，其效果等同于在正则表达式前后加上 <code class="language-plaintext highlighter-rouge">^</code> 和 <code class="language-plaintext highlighter-rouge">$</code>。因此，<code class="language-plaintext highlighter-rouge">grep -x ""</code> 和 <code class="language-plaintext highlighter-rouge">grep "^$"</code> 的作用是一样的，都可以用来寻找空行。</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-06-21-grep-as-cat/grep-empty-line.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#unix-%E7%A8%8B%E5%BA%8F" class="page__taxonomy-item" rel="tag">Unix 程序</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E6%8A%80%E5%B7%A7" class="page__taxonomy-item" rel="tag">技巧</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

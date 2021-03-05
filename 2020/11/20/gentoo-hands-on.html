@@ -1,0 +1,741 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>My Gentoo Hands-on Experience - Leo3418’s Personal Site</title>
+<meta name="description" content="It has been six weeks since I published the last post on this site.  Myriad new topics and ideas to write about have accumulated in my drafts for new articles, but I was too busy to find enough time for converting them into high-quality articles I have been endeavored to deliver.  Now, as I finally have got some free time, I want to talk about one of the things I did during the past period: trying out Gentoo, a source-based GNU/Linux distribution famous for letting its users compile almost every component of the operating system, including the Linux kernel.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="My Gentoo Hands-on Experience">
+<meta property="og:url" content="https://leo3418.github.io/2020/11/20/gentoo-hands-on.html">
+
+
+  <meta property="og:description" content="It has been six weeks since I published the last post on this site.  Myriad new topics and ideas to write about have accumulated in my drafts for new articles, but I was too busy to find enough time for converting them into high-quality articles I have been endeavored to deliver.  Now, as I finally have got some free time, I want to talk about one of the things I did during the past period: trying out Gentoo, a source-based GNU/Linux distribution famous for letting its users compile almost every component of the operating system, including the Linux kernel.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-11-20T00:00:00-06:00">
+
+
+
+  <meta property="article:modified_time" content="2021-02-23T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/11/20/gentoo-hands-on.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/11/20/gentoo-hands-on.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="My Gentoo Hands-on Experience">
+    <meta itemprop="description" content="It has been six weeks since I published the last post on this site.  Myriad newtopics and ideas to write about have accumulated in my drafts for new articles,but I was too busy to find enough time for converting them into high-qualityarticles I have been endeavored to deliver.  Now, as I finally have got somefree time, I want to talk about one of the things I did during the past period:trying out Gentoo, a source-based GNU/Linux distribution famous forletting its users compile almost every component of the operating system,including the Linux kernel.">
+    <meta itemprop="datePublished" content="2020-11-20T00:00:00-06:00">
+    <meta itemprop="dateModified" content="2021-02-23T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">My Gentoo Hands-on Experience
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-11-20T00:00:00-06:00">Nov 20, 2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:
+        <time datetime="2021-02-23">Feb 23, 2021</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#background">Background</a></li><li><a href="#installation">Installation</a><ul><li><a href="#tinkering-with-kernel-configuration">Tinkering with Kernel Configuration</a></li></ul></li><li><a href="#interacting-with-ebuild-files">Interacting with ebuild Files</a></li><li><a href="#recommendation">Recommendation</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>It has been six weeks since I published the last post on this site.  Myriad new
+topics and ideas to write about have accumulated in my drafts for new articles,
+but I was too busy to find enough time for converting them into high-quality
+articles I have been endeavored to deliver.  Now, as I finally have got some
+free time, I want to talk about one of the things I did during the past period:
+trying out <a href="https://gentoo.org/">Gentoo</a>, a <em>source-based</em> GNU/Linux distribution famous for
+letting its users compile almost every component of the operating system,
+including the Linux kernel.</p>
+
+<h2 id="background">Background</h2>
+
+<p>I have been using Fedora for more than two years and satisfied with it, but my
+roommate’s recent hop to Arch Linux drew my attention to other GNU/Linux
+distributions that I had been aware of but had not bothered to research.  He
+showed me a part of the installation progress, including creating disk
+partitions with command-line programs, and installing the most basic set of
+software enough to let the system boot entirely on its own (“<em>bootstrapping</em>”).
+Although I roughly learned the underlying steps of a general GNU/Linux
+installation process from Debian and Fedora’s installers, the idea of manually
+invoking the commands for those tasks hence control the entire system
+installation process sounded very cool.</p>
+
+<p>So, I found myself looking at Gentoo’s website, because it shares some traits
+with Arch Linux: both are rolling-release distributions, do not provide an
+official graphical installer, require users to perform the bulk of installation
+tasks manually with commands but reward them with plenty of space for choosing
+most of the system components at their own discretion.  That said, I favored
+Gentoo over Arch Linux for some other reasons.  First, compiling packages on my
+own looked challenging but still manageable, given that I had successfully
+<a href="/2020/07/27/compile-vcgencmd-on-fedora.html">compiled a utility for Raspberry Pi and created an RPM package for
+it</a>.  Second, I found some positive reviews and comments on Portage,
+Gentoo’s package manager, for features like maintaining a plain-text file
+<code class="language-plaintext highlighter-rouge">world</code> that records every package the user explicitly asks it to install and
+can be used to duplicate a system with the same set of installed packages.</p>
+
+<p>Because I was tasked with an assignment that required use of a messily-packaged
+tool, the desire to keep my daily-driver system tidy made me sacrifice a system
+installed on a virtual machine to run it.  With such a great interest in
+Gentoo, I chose it for the new virtual machine.</p>
+
+<p>The goal of the system was just to provide a minimal command-line environment
+with software I would need.  That tool was solely based on command-line, and I
+was fine with working in a terminal, so a graphical environment was not
+essential.  In contrast, because Gentoo is a source-based distribution,
+installing a desktop environment would mean significantly longer installation
+time spent on compiling it.  Plus, this was the first time I carried out an
+advanced manual GNU/Linux installation, so I wanted to start with just the
+minimum.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>The <a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page">Gentoo Handbook</a> was my primary installation guide as I
+basically followed every step it instructed.  I made the following
+customizations that required some extra tasks documented in not the Handbook
+itself, but other articles in the Gentoo Wiki:</p>
+
+<ul>
+  <li>
+    <p>I only created a single big partition and applied Btrfs to it, except the EFI
+System Partition (ESP) required for an UEFI installation (my virtual machine
+was configured to use UEFI).  The Handbook suggested creating multiple
+partitions for boot partition, swap partition, and the root file system
+itself, but by using Btrfs subvolumes to isolate boot, home and root, this
+was unnecessary.  For swap partition, I chose to go with <a href="https://wiki.gentoo.org/wiki/Zram">zram</a>, which
+is what Fedora uses since Fedora 33.</p>
+
+    <p>From system recovery perspective, Btrfs is a great file system choice for a
+system based on a rolling distribution, because it supports <a href="https://fedoramagazine.org/btrfs-snapshots-backup-incremental/">file system
+snapshots</a>, which eases recovery of the system to a previous
+working state when an update breaks something.  Alternatively, LVM snapshots
+can be used for this purpose, but I felt <a href="/2020/10/08/fedora-raw-image-btrfs.html#reasons-to-use-btrfs">a Btrfs volume would be easier to
+manage than an LVM volume group</a>.</p>
+  </li>
+  <li>
+    <p>Gentoo suggested using the kernel source with its own modifications and
+patches (<a href="https://packages.gentoo.org/packages/sys-kernel/gentoo-sources"><code class="language-plaintext highlighter-rouge">sys-kernel/gentoo-sources</code></a>), but I was more
+interested in compiling the vanilla kernel
+(<a href="https://packages.gentoo.org/packages/sys-kernel/vanilla-sources"><code class="language-plaintext highlighter-rouge">sys-kernel/vanilla-sources</code></a>). Isn’t it cool that when
+you run <code class="language-plaintext highlighter-rouge">uname -r</code>, all you see is just the kernel version itself, without
+any <a href="https://www.kernel.org/category/releases.html#distribution-kernels">extra labels added by your distribution vendor</a>?</p>
+  </li>
+  <li>
+    <p>I wished to use the latest stable kernel (5.9) instead of the latest LTS
+kernel (5.4) Gentoo would install by default.  To do this, I had to define a
+rule in <code class="language-plaintext highlighter-rouge">/etc/portage/package.accept_keywords</code> to use latest kernel versions
+that were not marked as stable by Gentoo.  It is advisable to ensure the
+Linux kernel headers package <code class="language-plaintext highlighter-rouge">sys-kernel/linux-headers</code> is on the latest
+version in companion, too.  Because I was using Btrfs, the file system tools
+<code class="language-plaintext highlighter-rouge">btrfs-progs</code> should be on the latest version as well in order to <a href="https://btrfs.wiki.kernel.org/index.php/FAQ#Do_I_have_to_keep_my_btrfs-progs_at_the_same_version_as_my_kernel.3F">use
+bleeding-edge Btrfs features offered by the latest kernel</a>.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/portage/package.accept_keywords
+
+# Use the latest upstream stable kernel
+sys-kernel/vanilla-sources
+
+# Use the latest kernel headers in companion
+sys-kernel/linux-headers
+
+# Use the latest btrfs-progs in companion
+sys-fs/btrfs-progs
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Although Gentoo’s default init system is OpenRC, which might be easier to
+configure for a first-time installer like me, I wanted to use systemd because
+it supports <a href="https://wiki.archlinux.org/index.php/systemd/User">user services</a> and I could not find the
+equivalent thing for OpenRC.</p>
+
+    <p>The Handbook fairly mentioned some caveats and steps specific to systemd, but
+it was easy to forget enabling some basic services for vital system
+functionality:</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) #</span><span class="w"> </span>systemctl preset-all
+</code></pre></div>    </div>
+
+    <p>I forgot to do this before rebooting into the installed system, and the
+system could not connect to network due to disabled
+<code class="language-plaintext highlighter-rouge">systemd-networkd.service</code>.</p>
+  </li>
+</ul>
+
+<h3 id="tinkering-with-kernel-configuration">Tinkering with Kernel Configuration</h3>
+
+<p>I found the most time-consuming step in system installation being compiling the
+kernel.  After all, there could be some performance penalty in a virtual
+machine which caused kernel compilation to be longer than usual.  The most
+effective way to reduce kernel build time is to deactivate irrelevant kernel
+configuration options, like hardware support for hardware not installed on your
+system.</p>
+
+<p>However, the prodigious amount of kernel configuration options and obscurity of
+the options’ effects can make this difficult.  I was impressed by the countless
+models of hardware supported by Linux, but disabling <em>every</em> single option for
+hardware I did not have would be an ordeal.  I was not sure about whether some
+options could be safely disabled either, because their purposes were not fully
+understood by me.</p>
+
+<p>So, I ended up deactivating only the options that would add very much compile
+time if enabled <em>and</em> were for something I was sure I did not need, like the
+following for instance:</p>
+
+<ul>
+  <li>
+    <p>GPU support (<code class="language-plaintext highlighter-rouge">i915</code> for Intel iGPUs, <code class="language-plaintext highlighter-rouge">radeon</code>, <code class="language-plaintext highlighter-rouge">amdgpu</code> and <code class="language-plaintext highlighter-rouge">nouveau</code> for
+NVIDIA GPUs).  Every module listed here would take a while to compile. The
+virtual machine would not directly interface with my computer’s physical GPU;
+it would use the virtualization software’s graphics card, which was supported
+by other kernel modules.  Note that when compiling a kernel to be directly
+used on a physical computer, you might need to enable some of them, depending
+on what GPU is installed.</p>
+  </li>
+  <li>
+    <p><a href="https://en.wikipedia.org/wiki/InfiniBand">InfiniBand</a>.  I had not even heard of this until I saw it in
+kernel configuration, so I supposed I did not need it.  However, this
+heuristic is probably not applicable to other types of kernel configuration
+options.  For example, there were some options for additional system calls
+activated by default, but I would not deactivate them only because I have not
+heard about them, since some programs might have dependency on them that is
+beyond my ken.</p>
+  </li>
+</ul>
+
+<p>You might be able to disable some other hardware options without degrading
+system functionality.  On a desktop PC without wireless connectivity, options
+for Wi-Fi, Bluetooth, NFC and other hardware alike can be safely deactivated.
+If your computer is so old that it does not support NVMe, NVMe options may be
+disabled as well.</p>
+
+<p><del>But, if I am not mistaken, it seems that kernel compilation on recent CPUs,
+including even some old Intel dual-core laptop CPUs, can <a href="https://openbenchmarking.org/test/pts/build-linux-kernel">complete within ten
+minutes</a>.  I have not tried building a kernel on a system
+physically installed on my computer instead of a virtual machine yet, so I
+cannot imagine completing the build in such a short time.</del>  (<strong>Edit:</strong> Well, I
+did make a mistake here.  the kernel build times concerned in the linked
+webpage is only for building the kernel itself (i.e. the runtime of <code class="language-plaintext highlighter-rouge">make
+vmlinux</code> or a similar command); the bulk of the kernel building process would
+be compiling the kernel modules if a generic kernel configuration is used.  In
+fact, I have tried to compile the kernel natively on my laptop with a dual-core
+Intel Core i5-7200U, which could build the kernel itself in about 9 minutes but
+would spend nearly an hour building the enabled kernel modules.)  If this is
+the case, the time spent going through the endless kernel configuration list is
+very likely to exceed compile time saved by deactivating some options, so you
+can simply use a kernel configuration with best compatibility, such as the one
+created by <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel"><code class="language-plaintext highlighter-rouge">genkernel</code></a>.</p>
+
+<h2 id="interacting-with-ebuild-files">Interacting with <code class="language-plaintext highlighter-rouge">ebuild</code> Files</h2>
+
+<p>An <a href="https://wiki.gentoo.org/wiki/Ebuild"><code class="language-plaintext highlighter-rouge">ebuild</code></a> file defines a Portage package.  It is similar to
+<code class="language-plaintext highlighter-rouge">PKGBUILD</code> in Arch Linux’s pacman and RPM SPEC file in Fedora, CentOS, RHEL,
+etc.  I have not tried to write a custom <code class="language-plaintext highlighter-rouge">ebuild</code> for package not in Gentoo’s
+official package catalog like I did for <a href="/2020/07/27/compile-vcgencmd-on-fedora.html#use-dnf-to-install-the-program">Raspberry Pi’s <code class="language-plaintext highlighter-rouge">userland</code> package on
+Fedora</a>, but I found it very pleasant to work with existing ones
+provided by Gentoo packagers.</p>
+
+<p>Since I was using Btrfs and wanted to use snapshots for quicker system
+recovery, I planned to install <a href="https://packages.gentoo.org/packages/app-backup/snapper">Snapper</a>.  It came to my
+attention that the latest upstream version of Snapper was 0.8.14, but the
+latest <code class="language-plaintext highlighter-rouge">ebuild</code> in Gentoo’s official repository was for 0.8.9.</p>
+
+<p>My experience in maintaining the <code class="language-plaintext highlighter-rouge">userland</code> package and some other RPM SPECs I
+wrote for desktop GUI programs told me that when the upstream released a new
+version of the program, I could usually just bump the version number in the RPM
+SPEC and rebuild the updated package without problems.  To my surprise, for
+Gentoo’s <code class="language-plaintext highlighter-rouge">ebuild</code>, the file itself need not be changed at all in most cases,
+because a Portage package’s version is defined in its <em>file name</em>.  This meant
+that all I needed to do in order to build Snapper 0.8.14 was to simply rename
+<code class="language-plaintext highlighter-rouge">snapper-0.8.9-r1.ebuild</code> to <code class="language-plaintext highlighter-rouge">snapper-0.8.14.ebuild</code>!</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-11-20-gentoo-hands-on/custom-ebuild.cast" poster="npt:31" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>On Fedora, if I want to install a custom package like a normal package shipped
+by Fedora, I will build the package from the RPM SPEC I have written and copy
+it to a custom repository designated for my self-built packages.  I must save
+the RPM SPEC file somewhere else because it is not included in the generated
+package.  Should I want to change the SPEC file, I need to find the saved SPEC
+file, modify it, rebuild the package, and copy it to my RPM repository again.</p>
+
+<p>On Gentoo, the whole process is more streamlined: after I am satisfied with my
+custom <code class="language-plaintext highlighter-rouge">ebuild</code> file, I only need to drop the <code class="language-plaintext highlighter-rouge">ebuild</code>, instead of a prebuilt
+package in any form, into my own repository.  If I want to make changes to the
+package later, I can modify the <code class="language-plaintext highlighter-rouge">ebuild</code> at the same place, without reaching
+out to a file stored somewhere else.  All files required to build and install
+the package can be maintained within a single location, which is my own custom
+<code class="language-plaintext highlighter-rouge">ebuild</code> repository.</p>
+
+<p>Below is a table comparing the experience of maintaining a self-defined package
+on Fedora and Gentoo.  Thanks to Portage being designed as a package manager
+for a source-based distribution, no extra step is required for building the
+package on Gentoo.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Task</th>
+      <th style="text-align: center">On Fedora</th>
+      <th style="text-align: center">On Gentoo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Define package metadata and how the package is built</td>
+      <td style="text-align: center">Write an RPM SPEC</td>
+      <td style="text-align: center">Write an <code class="language-plaintext highlighter-rouge">ebuild</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Build the package</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rpmbuild -bb SPEC</code></td>
+      <td style="text-align: center"><strong>Not necessary</strong><br />(Performed automatically when installing the package with <code class="language-plaintext highlighter-rouge">emerge</code>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Add the package to custom software repository</td>
+      <td style="text-align: center">Copy the generated RPM to the repository</td>
+      <td style="text-align: center">Copy the <code class="language-plaintext highlighter-rouge">ebuild</code> to the repository</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Install the package</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">dnf install PKG</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">emerge --ask PKG</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Bump package version</td>
+      <td style="text-align: center">Modify package version in RPM SPEC</td>
+      <td style="text-align: center">Rename the <code class="language-plaintext highlighter-rouge">ebuild</code> file</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Build updated package</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">rpmbuild -bb SPEC</code></td>
+      <td style="text-align: center"><strong>Not necessary</strong><br />(Performed automatically when updating the package with <code class="language-plaintext highlighter-rouge">emerge</code>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Update the package in custom software repository</td>
+      <td style="text-align: center">Copy the new RPM to the repository</td>
+      <td style="text-align: center"><strong>Already done</strong><br />(When the <code class="language-plaintext highlighter-rouge">ebuild</code> file was renamed)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Install the updated package</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">dnf upgrade PKG</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">emerge --ask --update PKG</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>More information about creating a custom <code class="language-plaintext highlighter-rouge">ebuild</code> repository can be found in
+<a href="https://wiki.gentoo.org/wiki/Custom_ebuild_repository">this Gentoo Wiki article</a>.  The <a href="https://wiki.gentoo.org/wiki/Custom_ebuild_repository#Simple_version_bump_of_an_ebuild_in_the_local_repository">“simple version bump”
+section</a> precisely describes how I installed Snapper 0.8.14
+when the latest version distributed by Gentoo was just 0.8.9.  You might also
+wish to <a href="https://wiki.gentoo.org/wiki/Ebuild_repository#Priorities">assign your own custom repository a higher
+priority</a> so Portage will prefer packages in it to those
+in the official Gentoo repository.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/portage/repos.conf/local.conf
+
+[local]
+location = /var/db/repos/local
+priority = -999  # Gentoo's repository has a priority of -1000
+</code></pre></div></div>
+
+<h2 id="recommendation">Recommendation</h2>
+
+<p>I am probably not able to give complete and responsible advice about what kind
+of people should use Gentoo, because I have neither used it as a daily driver
+nor installed some popular applications on it except Git, Vim and tmux.  But I
+still hope my ephemeral experience with it can give some ideas about the group
+of users Gentoo is most suitable for.</p>
+
+<p>Gentoo is a great distribution for the following kinds of users:</p>
+
+<ul>
+  <li>
+    <p>People who need to build a lot of programs that are not packaged by common
+GNU/Linux distributions and/or the bleeding-edge version of packages, and
+want to manage these programs with the system’s package manager.  For
+example, the author of <a href="http://rglinuxtech.com/">http://rglinuxtech.com/</a>, which I discovered when
+searching for a solution to <a href="/2020/09/21/raspi4-fedora-usb-complex.html">the Raspberry Pi USB issue</a>, seems to
+enjoy building the <code class="language-plaintext highlighter-rouge">rc</code> versions of Linux kernel.  If he would like to let
+the system’s package mamager take care of the <code class="language-plaintext highlighter-rouge">rc</code> kernels, then Gentoo would
+be the distribution for him.</p>
+
+    <p>Of course, you may choose to manage self-built programs on your own, but
+chances are it is hard to maintain the list of files that belong to each
+program, which may lead to leftover files after you uninstall a program.  One
+possible solution is <a href="https://www.gnu.org/software/stow/">GNU Stow</a>, but you must remember to run it every
+time you modify an installed program.  Portage and custom <code class="language-plaintext highlighter-rouge">ebuild</code> files can
+streamline the entire maintenance process: write the <code class="language-plaintext highlighter-rouge">ebuild</code> (which is very
+similar to a shell script that builds and installs the program), run
+<code class="language-plaintext highlighter-rouge">emerge</code>, and let Portage handle everything else.</p>
+  </li>
+  <li>
+    <p>Any users who are familiar with a distribution alike, e.g. Arch Linux, but
+want to fine-tune compiler options to get the best performance, or want to
+get rid of systemd and use OpenRC instead.  systemd has taken over the
+majority of popular GNU/Linux distributions, including Arch Linux, which
+claims that it only officially supports systemd despite being a distribution
+strived to give user eclectic choices on packages.</p>
+  </li>
+  <li>
+    <p>People with a good foundation of knowledge on GNU/Linux and want to learn
+more about the internals of the operating system.  Speaking of myself, I
+learned about Linux kernel’s capabilities and knowledge about kernel modules
+in the process of configuring the kernel, and perhaps no other mainstream
+GNU/Linux distribution could offer me the incentive to delve into this realm.</p>
+  </li>
+</ul>
+
+<p>These kinds of users should think twice before deciding to use Gentoo:</p>
+
+<ul>
+  <li>
+    <p>Users who are choosing a distribution for a computer with constrained
+hardware resources.  On weak CPUs, including the ARM chip on my Raspberry Pi
+and the virtualized CPU of my virtual machine, kernel compilation can take
+hours, if not forever.  Source code of programs you have built can also
+occupy a few gigabytes that might be precious space if your disk is not
+large.  On my Gentoo installation with only a few user-installed programs and
+no desktop environment, the size of source code archives for all installed
+packages is 1223 MiB, and Linux 5.9.8’s source tree takes 1074 MiB.  More
+space would be occupied if I had installed a desktop environment.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">du</span> <span class="nt">-s</span> <span class="nt">-B</span> M /var/cache/distfiles /usr/src/linux-5.9.8
+<span class="go">1223M	/var/cache/distfiles
+1074M	/usr/src/linux-5.9.8
+</span></code></pre></div>    </div>
+
+    <p>Gentoo leaves the job of building software packages to users themselves,
+whereas other binary-based distributions compile the programs for the users.
+By choosing a binary-based distribution, you can have some other people
+complete the performance-hungry job for you, which might be preferable if
+your computer is not a powerful one.</p>
+  </li>
+  <li>
+    <p>People who are still new to GNU/Linux and/or building software from source.
+You can definitely learn a lot from configuring and using Gentoo, but it
+requires some basic knowledge, skills, and understanding of GNU/Linux.  I
+would suggest starting with another distribution that is more easy to set up
+and maintain, then consider switching to Gentoo only when you are confident
+about installing Arch Linux.</p>
+  </li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#gentoo" class="page__taxonomy-item" rel="tag">Gentoo</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#blog" class="page__taxonomy-item" rel="tag">Blog</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

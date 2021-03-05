@@ -1,0 +1,821 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MC Forge Mod 开发记录：加入配置界面 - Leo3418 的个人网站</title>
+<meta name="description" content="Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="MC Forge Mod 开发记录：加入配置界面">
+<meta property="og:url" content="https://leo3418.github.io/2020/09/09/forge-mod-config-screen.html">
+
+
+  <meta property="og:description" content="Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-09-09T00:00:00-05:00">
+
+
+
+  <meta property="article:modified_time" content="2021-02-06T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2020/09/09/forge-mod-config-screen.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2020/09/09/forge-mod-config-screen.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="MC Forge Mod 开发记录：加入配置界面">
+    <meta itemprop="description" content="Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。">
+    <meta itemprop="datePublished" content="2020-09-09T00:00:00-05:00">
+    <meta itemprop="dateModified" content="2021-02-06T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MC Forge Mod 开发记录：加入配置界面
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-09-09T00:00:00-05:00">2020-09-09</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:
+        <time datetime="2021-02-06">2021-02-06</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#系列前言">系列前言</a></li><li><a href="#动机">动机</a></li><li><a href="#计划">计划</a></li><li><a href="#步骤">步骤</a><ul><li><a href="#为配置界面创建类">为配置界面创建类</a></li><li><a href="#注册配置界面工厂">注册配置界面工厂</a></li><li><a href="#添加基本-ui-元素">添加基本 UI 元素</a></li><li><a href="#添加操纵选项的控件">添加操纵选项的控件</a><ul><li><a href="#booleanoption">BooleanOption</a></li><li><a href="#sliderpercentageoption">SliderPercentageOption</a></li><li><a href="#iteratableoption">IteratableOption</a></li><li><a href="#保存配置">保存配置</a></li></ul></li><li><a href="#正确地返回到上级界面">正确地返回到上级界面</a></li></ul></li><li><a href="#更多资源">更多资源</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>Minecraft Forge 本来有一个允许 mod 创建自己的配置界面的框架，但是该框架在 Minecraft 1.13 的时候被移除了，之后也一直没有被加回来。这篇文章中所记载的就是我如何在不使用该框架的情况下，直接用 Minecraft 的 API 来写一个类似的 mod 配置界面。</p>
+
+<p>本文描述的方法适用于 Minecraft 1.14.4 和 1.15.x。如果您是在 1.16.x 上的话，您仍然可以参考本文中的步骤，但<strong>请务必仔细阅读关于 1.16 的特别说明</strong>。该方法可能也适用于 Minecraft 1.13.x 和 1.14 系列的老版本，不过因为这些版本没有 Minecraft Forge 的稳定版，我并没有进行验证。一般还是推荐用稳定版的 Forge 来进行 mod 开发。</p>
+
+<p>如果是 Minecraft 1.12.2 或者之前的版本的话，要想使用本文描述的方法，可能需要对给出的代码示例进行大量修改；但是，在这些 Minecraft 老版本上可以直接使用 Forge 的配置界面框架，所以无需依照本篇文章的描述用 Minecraft 的 API 来替代。</p>
+
+<h2 id="系列前言">系列前言</h2>
+
+<p>最近我萌生了一个想法，写一些记录我开发 Minecraft Forge 模组（mod）的过程、和我维护时长两年半的个人 mod 项目 <a href="https://github.com/Leo3418/HBWHelper">Hypixel 起床战争助手</a>（HBW Helper）之间的故事的文章。这么做的目的主要有两个：首先是对我个人而言，可以有一个记录下我如何作出 mod 开发过程中的一些关键决定、遇到 mod 开发问题时的解决思路以及解决方案的地方，可供日后温习；其次是为屏幕前的您和其他的读者朋友，在遇到与我类似的情况时，提供一个参考内容。</p>
+
+<p>我之所以没有用“教程”这个名字而是使用了“记录”，是因为我想记录下来的主要是我如何解决我个人遇到的具体问题，而不是一个宽泛的问题的通用解决方案。当然，我还是会尝试尽可能对具体的解决方案进行概括。尽管如此，在运用此系列文章中提及的知识、执行列出的步骤的时候，仍然需要您拥有举一反三、灵活变通的能力；无脑的复制粘贴在某些情况下可能无助于问题的解决。正因如此，我并没有使用“教程”这一要求更加严格的称谓，而是使用了显得比较随意的“记录”一词。</p>
+
+<p>Hypixel 起床战争助手是专为在 Hypixel 上玩起床战争的玩家设计的一款 mod。它可以将您在游戏中购买的升级、下一次钻石和绿宝石的刷新时间、以及其它一些关键的游戏信息直接显示在屏幕上，一目了然。两年半前，我为了解决自己想方便查看一局起床中哪些升级已经购买的需求开发了这个 mod；现在虽然我已经不玩起床了，但依然会每年对这个 mod 进行数次维护。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/hud.png" alt="Hypixel 起床战争助手的用户界面" /></p>
+
+<p>首篇 mod 开发记录便是关于我在最新版本的 Minecraft 和 Minecraft Forge 之上研究和开发 mod 选项界面的心得，也正好是伴随着我的 mod 近期 1.2.0 更新中新加入的配置界面的推出。</p>
+
+<h2 id="动机">动机</h2>
+
+<p>Minecraft Forge 允许每个 mod 拥有自己的配置，以允许向玩家提供自定义 mod 选项的功能。例如，Hypixel 起床战争助手在游戏画面上显示游戏信息的位置就支持自定义。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/custom.png" alt="移动游戏信息的显示位置" /></p>
+
+<p>为了允许玩家自定义游戏信息的显示位置，我提供了几个相关的配置选项。在此基础上，还需要给玩家提供一种调整设置的机制。我在 2018 年上旬开始开发这个 mod 时，Minecraft 最新版本还是 1.12.2，当时的 Forge 里有一个配置界面框架，mod 开发者可以用它来制作一个允许玩家调整 mod 设置的界面。研究了一下之后，我感觉还行，就在这个框架的基础上做了我的 mod 的配置界面。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/forge-config-gui.png" alt="Forge 自己的配置界面" /></p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/mod-config-gui-forge.png" alt="我的 mod 的配置界面" /></p>
+
+<p>几个月后，Minecraft 1.13 横空出世。Mojang 在 1.13 内部调整了许多东西，导致 Minecraft Forge 开发组的跟进进度异常迟缓，直到 1.14 出了都未能完善，以至于 1.13.x 到最后没有 Forge 的稳定版。</p>
+
+<p>直到 1.14.4 的时候，Forge 开发组终于推出了新的稳定版本。自 Minecraft 本身在 1.13 的大重构之后，Minecraft Forge 也经历了很大的变化：许多类被重命名，接口被更改，然而最显著的变化可能就是 mod 配置界面框架没有了。也许是因为 Minecraft 本身被大规模重构，Forge 的许多现有框架也需要随之重写，但是开发者把旧的代码移除了之后，一直没有重写新的代码。连 Forge 自己的配置界面都被迫随之删除了，在 mod 列表里看 Forge 的“配置”按钮是灰色的。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/forge-no-config.png" alt="自 1.14.4 起，Minecraft Forge 自己的配置界面都没有了" /></p>
+
+<p>我在 2019 年 8 月<a href="https://github.com/Leo3418/HBWHelper/commit/c082844786a1a1dff9cca29f2ffe2f1219537966">把我的 mod 移植到 Minecraft 1.14.4</a> 时发觉到了这个问题。我选择的解决方案是提供一个可以修改 mod 配置的命令。当时想着这个框架只是因为 Forge 开发者为了清理过时代码而删除的，因为需要先重写其它更加关键的组件，分身乏术，一时还没有时间和精力重新加回来，以后肯定会逐渐完善，所以就先弄了命令这么一个短期的解决方案。命令行使用起来不如图形界面易用，但是心想着等 Forge 开发组重写了框架就能回到原来的配置界面，所以就无所谓了。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/config-command.png" alt="配置命令" /></p>
+
+<p>这一等就是一年，Forge 都发布三个稳定版了，新的配置界面框架却还没完成，目前仅有的进度还是一个<a href="https://github.com/MinecraftForge/MinecraftForge/pull/6467">外部开发者提交的尚未完工的 pull request</a>。当时我写的只准备用来熬到框架完成的 mod 配置命令，已经不能指望着用来糊弄了，而且继续等下去也是个无底洞，所以我放弃了无止境的等待，研究如何不用 Forge 的框架来做配置界面。我估计，如果不是这名外部开发者做了一些东西提交了个 pull request，Forge 的核心开发者可能已经忘了他们有东西删了后没加回来，甚至可能都不准备重写了，让 Forge 就这么一个个地失去本来有的功能，继续发布功能残缺的稳定版，逐渐退化下去。</p>
+
+<h2 id="计划">计划</h2>
+
+<p>新的配置界面不一定必须复刻之前 Forge 风格的配置界面，“撤销更改”和“重置为默认值”这些功能一来不好弄，二来可能没必要；一个配置界面只要允许玩家轻松修改设置就基本可以了，比如 Minecraft 自己的设置界面。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/mc-video-settings.png" alt="Minecraft 设置界面" /></p>
+
+<p>在配置 Minecraft Forge 开发环境的时候，会自动安装 Mod Coder Pack (MCP)。MCP 可以反编译 Minecraft，然后以一个程序库的形式提供反编译后的代码，这样一来 Forge mod 就可以直接使用 Minecraft 的 API，与之进行交互。也正是因为如此，我们可以仿照 Minecraft 设置界面的风格，利用 Minecraft 的 API 来做一个 mod 的配置界面。</p>
+
+<p>在上面 Minecraft 设置界面的截图中，我们可以找到三种类型的控件：</p>
+
+<ul>
+  <li>滑块，用来调整数值选项，例如最高帧率</li>
+  <li>开关按钮，用来调整布尔值选项</li>
+  <li>在多个选项设定值中滚动切换的按钮，比如界面尺寸（自动、小、中、大）和攻击指示器样式（关、十字准星、快捷栏）</li>
+</ul>
+
+<p>恰好，Hypixel 起床战争助手的所有选项都在这三种类型的选项当中，意味着我可以直接用 Minecraft 中和设置界面相关的工具来创建 mod 配置界面，不需要自己再造任何额外的轮子。</p>
+
+<h2 id="步骤">步骤</h2>
+
+<p>在 Minecraft 1.14.4 和更高版本上为一个 Minecraft Forge mod 做配置界面的步骤大致分为：为配置界面创建一个类、注册配置界面工厂、添加配置界面上要显示的元素、以及将配置界面前端和 mod 配置后端连接起来。</p>
+
+<h3 id="为配置界面创建类">为配置界面创建类</h3>
+
+<p>Minecraft 当中有一个 <code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.screen.Screen</code> 类被设计为所有游戏内屏幕界面的父类，因此我的 mod 的配置界面也将成为它的子类。</p>
+
+<p><code class="language-plaintext highlighter-rouge">Screen</code> 类中有如下重要成员，子类可能往往会覆写或调用：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">protected Screen(ITextComponent title)</code>：唯一的构造器</li>
+  <li><code class="language-plaintext highlighter-rouge">protected void init()</code>：执行屏幕界面初始化任务</li>
+  <li><code class="language-plaintext highlighter-rouge">public void render(int mouseX, int mouseY, float partialTicks)</code>：渲染屏幕界面</li>
+  <li><code class="language-plaintext highlighter-rouge">public void onClose()</code>：关闭屏幕界面，并执行清理任务</li>
+</ul>
+
+<p>于是，我首先写了一个简单的 <code class="language-plaintext highlighter-rouge">ConfigScreen</code> 类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.gui.screen.Screen</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.util.text.TranslationTextComponent</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="cm">/** 从屏幕顶部到此界面标题的距离 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">TITLE_HEIGHT</span> <span class="o">=</span> <span class="mi">8</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 通过父类构造器指定此界面的标题</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 首先渲染界面背景</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">();</span>
+        <span class="c1">// 渲染标题</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">.</span><span class="na">getFormattedText</span><span class="o">(),</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="no">TITLE_HEIGHT</span><span class="o">,</span> <span class="mh">0xFFFFFF</span><span class="o">);</span>
+        <span class="c1">// 调用父类对应方法，完成渲染</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p class="notice--warning"><strong>关于 Minecraft 1.16.x 的特别说明：</strong><code class="language-plaintext highlighter-rouge">render</code>方法的签名及其它与图形渲染相关的方法的签名发生了变化。请参阅我另一篇关于 Minecraft 1.16.x 中的变化的文章中的<a href="/zh/2021/02/06/forge-mod-migrate-to-1-16#用于图形渲染的各种方法要求额外的-matrixstack-参数">此章节</a>以了解具体的细节。</p>
+
+<h3 id="注册配置界面工厂">注册配置界面工厂</h3>
+
+<p>配置界面类创建好了，但现在还需要一个能创建它的实例的入口，用户才能打开这个界面来修改设置。下面要做的就是向 Minecraft Forge 注册可以创建新的配置界面实例的工厂。注册了工厂，mod 列表中的“配置”按钮就会亮起，用户点击它就可以进入配置界面了。</p>
+
+<p>配置界面工厂的注册操作应在 mod 主类（也就是有 <code class="language-plaintext highlighter-rouge">@Mod</code> 标注的类）的公有构造器中完成：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraftforge.fml.ExtensionPoint</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraftforge.fml.ModLoadingContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraftforge.fml.common.Mod</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext</span><span class="o">;</span>
+
+<span class="nd">@Mod</span><span class="o">(</span><span class="nc">HbwHelper</span><span class="o">.</span><span class="na">MOD_ID</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">HbwHelper</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">NAME</span> <span class="o">=</span> <span class="s">"HBW Helper"</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">MOD_ID</span> <span class="o">=</span> <span class="s">"hbwhelper"</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">HbwHelper</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">FMLJavaModLoadingContext</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">getModEventBus</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">addListener</span><span class="o">(</span><span class="k">this</span><span class="o">::</span><span class="n">clientSetup</span><span class="o">);</span>
+        <span class="c1">// 注册配置界面工厂</span>
+        <span class="nc">ModLoadingContext</span><span class="o">.</span><span class="na">get</span><span class="o">().</span><span class="na">registerExtensionPoint</span><span class="o">(</span>
+                <span class="nc">ExtensionPoint</span><span class="o">.</span><span class="na">CONFIGGUIFACTORY</span><span class="o">,</span>
+                <span class="o">()</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">mc</span><span class="o">,</span> <span class="n">screen</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">ConfigScreen</span><span class="o">()</span>
+        <span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">clientSetup</span><span class="o">(</span><span class="nc">FMLClientSetupEvent</span> <span class="n">event</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这个用来注册工厂的 <a href="https://github.com/MinecraftForge/MinecraftForge/blob/d5cb0935e9758e1ae62dadf4535a12a5fda8e9f1/src/main/java/net/minecraftforge/fml/ModLoadingContext.java#L57"><code class="language-plaintext highlighter-rouge">registerExtensionPoint</code> 方法</a>调用有些复杂，我们来仔细看一下。这个方法的签名如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="kt">void</span> <span class="nf">registerExtensionPoint</span><span class="o">(</span><span class="nc">ExtensionPoint</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">point</span><span class="o">,</span>
+                                       <span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">extension</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>这个方法的第一个参数要求一个 <code class="language-plaintext highlighter-rouge">ExtensionPoint&lt;T&gt;</code> 类型的对象。看过这个类的<a href="https://github.com/MinecraftForge/MinecraftForge/blob/31.2/src/main/java/net/minecraftforge/fml/ExtensionPoint.java">源代码</a>后，您会发现它里面有三个这个类的实例，各自存在一个常量中，然后还有一个私有构造器，防止更多的实例被创建。这样的设计模式和一个有三个常量的枚举类很相似，然而因为枚举类不可以是泛型类，设计这个 <code class="language-plaintext highlighter-rouge">ExtensionPoint</code> 类时就不得不用这种方式来曲线救国，来模拟一个泛型枚举类。</p>
+
+<p><code class="language-plaintext highlighter-rouge">ExtensionPoint</code> 的 <code class="language-plaintext highlighter-rouge">CONFIGGUIFACTORY</code> 常量，顾名思义就是用来注册配置界面工厂的：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span>
+<span class="nc">ExtensionPoint</span><span class="o">&lt;</span><span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">Minecraft</span><span class="o">,</span> <span class="nc">Screen</span><span class="o">,</span> <span class="nc">Screen</span><span class="o">&gt;&gt;</span> <span class="no">CONFIGGUIFACTORY</span>
+        <span class="o">=</span> <span class="k">new</span> <span class="nc">ExtensionPoint</span><span class="o">&lt;&gt;();</span>
+</code></pre></div></div>
+
+<p>在这个常量的声明中，<code class="language-plaintext highlighter-rouge">ExtensionPoint</code> 的类型参数 <code class="language-plaintext highlighter-rouge">&lt;T&gt;</code> 是 <code class="language-plaintext highlighter-rouge">BiFunction&lt;Minecraft, Screen, Screen&gt;</code>。<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiFunction.html"><code class="language-plaintext highlighter-rouge">BiFunction</code></a> 是 Java API 中的一个类，作为 lambda 表达式支持的一部分，在 Java 8 里新加入的。此接口用来代表一个接受两个输入值，然后输出一个结果的函数。</p>
+
+<p><code class="language-plaintext highlighter-rouge">BiFunction&lt;Minecraft, Screen, Screen&gt;</code> 在这里的实际用途是配置界面工厂的类型。在需要创建一个配置界面实例的时候，Minecraft Forge 会给工厂一个 <code class="language-plaintext highlighter-rouge">Minecraft</code> 实例和启动配置界面的屏幕的对象，然后从工厂获得创建的配置界面实例。工厂既可以选择不理会 Forge 提供的参数，直接返回一个普通的配置界面实例，也可以依据参数的具体情况来创建一个特殊的配置界面。我这里使用的工厂 <code class="language-plaintext highlighter-rouge">(mc, screen) -&gt; new
+ConfigScreen()</code> 就是一个不理会参数的工厂。这里顺带用到了 <em>lambda 表达式</em>；如果不熟悉的话，可以在网上查阅相关资料。</p>
+
+<p>而同样的类型也成为了 <code class="language-plaintext highlighter-rouge">registerExtensionPoint</code> 方法的类型参数 <code class="language-plaintext highlighter-rouge">&lt;T&gt;</code>，意味着这个方法的第二个参数——<code class="language-plaintext highlighter-rouge">extension</code>——被要求的类型是 <code class="language-plaintext highlighter-rouge">Supplier&lt;BiFunction&lt;Minecraft, Screen, Screen&gt;</code>，也就是配置界面工厂的提供者。此处用到的 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html"><code class="language-plaintext highlighter-rouge">Supplier</code></a> 接口用来代表一个不接受任何输入、直接返回结果的函数。只需要再写一个直接返回我刚才提到的工厂的 lambda 表达式 <code class="language-plaintext highlighter-rouge">() -&gt; (mc, screen) -&gt; new ConfigScreen()</code>，这个参数就解决了。</p>
+
+<h3 id="添加基本-ui-元素">添加基本 UI 元素</h3>
+
+<p>成功注册配置界面的工厂，并且工厂可以正常地创建配置界面的实例后，我们就可以在 mod 列表点击“配置”按钮进入配置界面了。不过，因为目前只添加并渲染了屏幕标题，进去后会发现配置界面除了标题外空空如也，而且除非按 Esc 键，否则也没办法退出。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/blank-config-screen.png" alt="空白的配置界面" /></p>
+
+<p>要想模仿一个 Minecraft 原生风格的配置界面，我们需要创建一个在屏幕中间包含配置所有选项用的控件的容器、以及屏幕底部的“完成”按钮。控件容器的背后是一个 <code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.widget.list.OptionsRowList</code> 对象。从 <code class="language-plaintext highlighter-rouge">OptionsRowList</code> 这个名字里可以看出，它就是用来存储 Minecraft 设置界面里一行一行选项的列表。至于“完成”按钮，Minecraft 中有一个 <code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.widget.button.Button</code> 类，可以用来创建各种按钮。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.button.Button</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.gui.widget.list.OptionsRowList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">net.minecraft.client.resources.I18n</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">...</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="cm">/** 从屏幕顶部到选项列表顶端的距离 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">OPTIONS_LIST_TOP_HEIGHT</span> <span class="o">=</span> <span class="mi">24</span><span class="o">;</span>
+    <span class="cm">/** 从屏幕底部到选项列表底端的距离 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">OPTIONS_LIST_BOTTOM_OFFSET</span> <span class="o">=</span> <span class="mi">32</span><span class="o">;</span>
+    <span class="cm">/** 选项列表里每个选项的高度 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">OPTIONS_LIST_ITEM_HEIGHT</span> <span class="o">=</span> <span class="mi">25</span><span class="o">;</span>
+
+    <span class="cm">/** 按钮宽度 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">BUTTON_WIDTH</span> <span class="o">=</span> <span class="mi">200</span><span class="o">;</span>
+    <span class="cm">/** 按钮高度 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">BUTTON_HEIGHT</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+    <span class="cm">/** 从屏幕底部到“完成”按钮顶端的距离 */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">DONE_BUTTON_TOP_OFFSET</span> <span class="o">=</span> <span class="mi">26</span><span class="o">;</span>
+
+    <span class="cm">/** 选项列表 */</span>
+    <span class="c1">// 如下所述，此字段无法在对象构造时初始化，故无法使用 'final' 关键字</span>
+    <span class="kd">private</span> <span class="nc">OptionsRowList</span> <span class="n">optionsRowList</span><span class="o">;</span>
+
+    <span class="o">...</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 创建选项列表</span>
+        <span class="c1">// 如果不在这里创建，而在构造器里创建的话，会造成选项列表渲染错误</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OptionsRowList</span><span class="o">(</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">height</span><span class="o">,</span>
+                <span class="no">OPTIONS_LIST_TOP_HEIGHT</span><span class="o">,</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">height</span> <span class="o">-</span> <span class="no">OPTIONS_LIST_BOTTOM_OFFSET</span><span class="o">,</span>
+                <span class="no">OPTIONS_LIST_ITEM_HEIGHT</span>
+        <span class="o">);</span>
+
+        <span class="c1">// 将选项列表加入到此界面的子元素中</span>
+        <span class="c1">// 如果不加，用户就无法点击列表中的元素</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">children</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">);</span>
+
+        <span class="c1">// 添加“完成”按钮</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addButton</span><span class="o">(</span><span class="k">new</span> <span class="nc">Button</span><span class="o">(</span>
+                <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">width</span> <span class="o">-</span> <span class="no">BUTTON_WIDTH</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">height</span> <span class="o">-</span> <span class="no">DONE_BUTTON_TOP_OFFSET</span><span class="o">,</span>
+                <span class="no">BUTTON_WIDTH</span><span class="o">,</span> <span class="no">BUTTON_HEIGHT</span><span class="o">,</span>
+                <span class="c1">// 按钮上显示的文字</span>
+                <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"gui.done"</span><span class="o">),</span>
+                <span class="c1">// 按钮被点击时执行的操作</span>
+                <span class="n">button</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">onClose</span><span class="o">()</span>
+        <span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">render</span><span class="o">(</span><span class="kt">int</span> <span class="n">mouseX</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mouseY</span><span class="o">,</span> <span class="kt">float</span> <span class="n">partialTicks</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">renderBackground</span><span class="o">();</span>
+        <span class="c1">// 为避免显示错乱，需要在这个时机渲染选项列表</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">drawCenteredString</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">font</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">title</span><span class="o">.</span><span class="na">getFormattedText</span><span class="o">(),</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">width</span> <span class="o">/</span> <span class="mi">2</span><span class="o">,</span> <span class="no">TITLE_HEIGHT</span><span class="o">,</span> <span class="mh">0xFFFFFF</span><span class="o">);</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">render</span><span class="o">(</span><span class="n">mouseX</span><span class="o">,</span> <span class="n">mouseY</span><span class="o">,</span> <span class="n">partialTicks</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>我在上面代码里加的注释应该可以解释这些类的用法和注意事项，不过还是有必要再额外说一下 <code class="language-plaintext highlighter-rouge">Button</code> 构造器的最后一个参数。这个参数的类型是 <code class="language-plaintext highlighter-rouge">Button.IPressable</code>，是一个接口，定义如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IPressable</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">onPress</span><span class="o">(</span><span class="nc">Button</span> <span class="n">button</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这个接口代表了按钮被按下时的回调函数。实现这个接口，在它唯一的 <code class="language-plaintext highlighter-rouge">onPress</code> 方法的实现中插入按钮被按下时要执行的代码，然后在用户点击按钮时，<code class="language-plaintext highlighter-rouge">onPress</code> 方法就会被调用，<code class="language-plaintext highlighter-rouge">button</code> 参数的值也就是该按钮对应的 <code class="language-plaintext highlighter-rouge">Button</code> 对象。</p>
+
+<p>作为一个“完成”按钮，我们希望在用户按下它时将配置界面关闭，所以我在回调函数中调用了 <code class="language-plaintext highlighter-rouge">Screen.onClose</code> 方法来关闭界面。此外，作为只有一个抽象方法的接口，<code class="language-plaintext highlighter-rouge">IPressable</code> 也是一个<em>函数式接口</em>，因此可以直接用 lambda 表达式 <code class="language-plaintext highlighter-rouge">button -&gt; this.onClose()</code> 来实现它。</p>
+
+<p class="notice--warning"><strong>关于 Minecraft 1.16.x 的特别说明：</strong><code class="language-plaintext highlighter-rouge">this.onClose()</code> 不能再用于关闭当前的屏幕界面了。请参阅<a href="/zh/2021/02/06/forge-mod-migrate-to-1-16#用于关闭屏幕界面的方法有改动">此章节</a>以了解关闭界面的新方法。</p>
+
+<p>现在配置界面最基础的结构就完成了，可以开始添加用来操纵选项的控件了。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/basic-config-screen.png" alt="基本配置界面" /></p>
+
+<h3 id="添加操纵选项的控件">添加操纵选项的控件</h3>
+
+<p>我的 mod 的选项的值都是布尔值、数值或者枚举常量。对于每种数据类型，Minecraft 的 <code class="language-plaintext highlighter-rouge">net.minecraft.client.settings</code> 程序包中都有对应的控件：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">BooleanOption</code> 用于布尔值选项，也就是只有“开”和“关”两种状态的选项。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 用于数值选项。虽然它的名字叫“percentage”，也就是百分比，但它的用途并不局限于百分比，可以用来调整任意范围的数值。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">IteratableOption</code> 用于多选一的选项，也就是允许的所有设定值都在一个序列中的选项，例如从一个存有多个字符串的数组中选择一项、或者从一个枚举类的常量中选择一个的选项。</p>
+  </li>
+</ul>
+
+<h4 id="booleanoption"><code class="language-plaintext highlighter-rouge">BooleanOption</code></h4>
+
+<p>我们从最简单的 <code class="language-plaintext highlighter-rouge">BooleanOption</code> 入手。<code class="language-plaintext highlighter-rouge">BooleanOption</code> 类唯一构造器的签名如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">BooleanOption</span><span class="o">(</span><span class="nc">String</span> <span class="n">translationKey</span><span class="o">,</span>
+                     <span class="nc">Predicate</span><span class="o">&lt;</span><span class="nc">GameSetting</span><span class="o">&gt;</span> <span class="n">getter</span><span class="o">,</span>
+                     <span class="nc">BiConsumer</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">Boolean</span><span class="o">&gt;</span> <span class="n">setter</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>想要创建一个 <code class="language-plaintext highlighter-rouge">BooleanOption</code> 很简单，只需指定该选项名称的翻译键、获取该选项当前值的方法（“getter”）、以及为该选项设定新的值的方法（“setter”）即可。然而，这里的 getter 和 setter 要求的数据类型比较特殊，我们来仔细看一下。</p>
+
+<p>此处定义的 getter 和 setter 都用到了泛型，并且包含类型参数 <code class="language-plaintext highlighter-rouge">net.minecraft.client.GameSettings</code>——这是 Minecraft 用来代表游戏设置的类。Getter 是一个 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html"><code class="language-plaintext highlighter-rouge">Predicate</code></a>，接受一个某种类型的数值然后返回一个 <code class="language-plaintext highlighter-rouge">boolean</code> 值；setter 是一个 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/BiConsumer.html"><code class="language-plaintext highlighter-rouge">BiConsumer</code></a>，接受两个值，然后可能使用它们进行一些操作，但不返回任何值。</p>
+
+<p>两个参数的类型参数里都有 Minecraft 的 <code class="language-plaintext highlighter-rouge">GameSettings</code> 类，这个 <code class="language-plaintext highlighter-rouge">BooleanOption</code> 类的主要设计意图显然是对 Minecraft 自己的游戏设置进行操作。Getter 会接受一个 <code class="language-plaintext highlighter-rouge">GameSettings</code> 对象，从中读取一项 Minecraft 游戏设定的当前值然后返回；setter 把新的设定值写入接受的 <code class="language-plaintext highlighter-rouge">GameSettings</code> 对象，达到更改游戏设置的效果。<code class="language-plaintext highlighter-rouge">GameSettings</code> 类中有许多和 Minecraft 游戏设置相关的字段，故无法被用来表示一个 mod 的设定；但是我们可以忽略所有和 <code class="language-plaintext highlighter-rouge">GameSettings</code> 有关的参数，让 getter 和 setter 直接访问 mod 自己的配置。</p>
+
+<p>在下面的示例中，假设 mod 有一个包含读取和修改 mod 配置的静态方法的 <code class="language-plaintext highlighter-rouge">ModSettings</code> 类。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">OptionsRowList</span><span class="o">(</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">width</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">height</span><span class="o">,</span>
+                <span class="no">OPTIONS_LIST_TOP_HEIGHT</span><span class="o">,</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">height</span> <span class="o">-</span> <span class="no">OPTIONS_LIST_BOTTOM_OFFSET</span><span class="o">,</span>
+                <span class="no">OPTIONS_LIST_ITEM_HEIGHT</span>
+        <span class="o">);</span>
+
+        <span class="c1">// 创建完选项列表后，添加选项控件</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">BooleanOption</span><span class="o">(</span>
+                <span class="s">"hbwhelper.configGui.showArmorInfo.title"</span><span class="o">,</span>
+                <span class="c1">// GameSettings 参数被忽略</span>
+                <span class="n">unused</span> <span class="o">-&gt;</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">getShowArmorInfo</span><span class="o">(),</span>
+                <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setShowArmorInfo</span><span class="o">(</span><span class="n">newValue</span><span class="o">)</span>
+        <span class="o">));</span>
+
+        <span class="k">this</span><span class="o">.</span><span class="na">children</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">);</span>
+
+        <span class="o">...</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="sliderpercentageoption"><code class="language-plaintext highlighter-rouge">SliderPercentageOption</code></h4>
+
+<p><code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 类就有点复杂了，从它的构造器的参数数量和类型上就可以看出来：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">SliderPercentageOption</span><span class="o">(</span><span class="nc">String</span> <span class="n">translationKey</span><span class="o">,</span>
+                              <span class="kt">double</span> <span class="n">minValue</span><span class="o">,</span>
+                              <span class="kt">double</span> <span class="n">maxValue</span><span class="o">,</span>
+                              <span class="kt">float</span> <span class="n">stepSize</span><span class="o">,</span>
+                              <span class="nc">Function</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">Double</span><span class="o">&gt;</span> <span class="n">getter</span><span class="o">,</span>
+                              <span class="nc">BiConsumer</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">Double</span><span class="o">&gt;</span> <span class="n">setter</span><span class="o">,</span>
+                              <span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">SliderPercentageOption</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">getDisplayString</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p>对 <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 而言，getter 和 setter 的思路和 <code class="language-plaintext highlighter-rouge">BooleanOption</code> 是相似的。不过，<code class="language-plaintext highlighter-rouge">Predicate&lt;GameSettings&gt;</code> 到这里变成了 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html"><code class="language-plaintext highlighter-rouge">Function&lt;GameSettings,
+Double&gt;</code></a>。其实，<code class="language-plaintext highlighter-rouge">Predicate&lt;GameSettings&gt;</code> 基本上就是个 <code class="language-plaintext highlighter-rouge">Function&lt;GameSettings, Boolean&gt;</code>，如果这么看的话，这一处不同就可以很容易地解释和理解了。</p>
+
+<p>至于其它的不同点，<code class="language-plaintext highlighter-rouge">minValue</code> 和 <code class="language-plaintext highlighter-rouge">maxValue</code> 指定选项数值允许的范围。它们的数据类型都是 <code class="language-plaintext highlighter-rouge">double</code>，因此这个类可同时用于整数值和小数值的选项。<code class="language-plaintext highlighter-rouge">stepSize</code> 参数决定用户在配置界面上拖动滑块时，设定值最小可以变更的量是多大。如果某个选项的值必须是整数的话，在这里指定 <code class="language-plaintext highlighter-rouge">1.0F</code> 就可以达到限制的效果。</p>
+
+<p>最有意思的参数当属 <code class="language-plaintext highlighter-rouge">getDisplayString</code>，一个返回此选项的字符串表示的 <code class="language-plaintext highlighter-rouge">BiFunction</code>。这个 <code class="language-plaintext highlighter-rouge">BiFunction</code> 返回的字符串将会被显示在配置界面上。<code class="language-plaintext highlighter-rouge">BooleanOption</code> 的构造器是没有这个参数的，因为那个类它自己定义了默认的字符串表示方式，也就是 <code class="language-plaintext highlighter-rouge">&lt;选项名&gt;: [开|关]</code>。然而，<code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 没有类似的默认定义，需要程序员来指定怎么以字符串来表示一个选项。我这里用的返回格式相似的字符串表示的 <code class="language-plaintext highlighter-rouge">BiFunction</code> 是 <code class="language-plaintext highlighter-rouge">(gs,
+option) -&gt; option.getDisplayString() + option.get(gs)</code>。</p>
+
+<p class="notice--warning"><strong>关于 Minecraft 1.16.x 的特别说明：</strong>此处用到的 <code class="language-plaintext highlighter-rouge">getDisplayString()</code> 方法在 1.16 中被删除了。请参阅<a href="/zh/2021/02/06/forge-mod-migrate-to-1-16#用于获取设置选项的名称的方法被删除">此章节</a>以了解代替的方法。</p>
+
+<p>在下面的示例中，假设 <code class="language-plaintext highlighter-rouge">ModSettings.getHudX</code> 返回 <code class="language-plaintext highlighter-rouge">int</code>，并且 <code class="language-plaintext highlighter-rouge">ModSettings.setHudX</code> 需要一个 <code class="language-plaintext highlighter-rouge">int</code> 参数。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c1">// 添加整数值选项</span>
+        <span class="c1">// 如果需要小数值选项的话，需要移除类型转换，并按需调整步进值</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">SliderPercentageOption</span><span class="o">(</span>
+                <span class="s">"hbwhelper.configGui.hudX.title"</span><span class="o">,</span>
+                <span class="c1">// 范围：0 到当前窗口宽度</span>
+                <span class="mf">0.0</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">width</span><span class="o">,</span>
+                <span class="c1">// 由于是整数值，使用整数步进</span>
+                <span class="mf">1.0</span><span class="no">F</span><span class="o">,</span>
+                <span class="c1">// Getter 和 setter 指定方法与 BooleanOption 类似</span>
+                <span class="n">unused</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">double</span><span class="o">)</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">getHudX</span><span class="o">(),</span>
+                <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setHudX</span><span class="o">(</span><span class="n">newValue</span><span class="o">.</span><span class="na">intValue</span><span class="o">()),</span>
+                <span class="c1">// 返回 "&lt;选项名&gt;: &lt;设定值&gt;" 格式的字符串的 BiFunction</span>
+                <span class="o">(</span><span class="n">gs</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">option</span><span class="o">.</span><span class="na">getDisplayString</span><span class="o">()</span> <span class="o">+</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span> <span class="n">option</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">gs</span><span class="o">)</span>
+        <span class="o">));</span>
+</code></pre></div></div>
+
+<h4 id="iteratableoption"><code class="language-plaintext highlighter-rouge">IteratableOption</code></h4>
+
+<p><code class="language-plaintext highlighter-rouge">IteratableOption</code> 的构造器和 <code class="language-plaintext highlighter-rouge">BooleanOption</code> 的很像，不过请注意一点，那就是 getter 和 setter 的位置被调换了。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">IteratableOption</span><span class="o">(</span><span class="nc">String</span> <span class="n">translationKey</span><span class="o">,</span>
+                        <span class="nc">BiConsumer</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">setter</span><span class="o">,</span>
+                        <span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">GameSettings</span><span class="o">,</span> <span class="nc">IteratableOption</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">getter</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">IteratableOption</code> 类并不关心这个选项允许的值的类型；它只关心被选定的选项在允许的设定值序列中的下标。这也是为什么它的 setter 接受的是一个整数，而不是一个泛型对象。因此，如果要使用 <code class="language-plaintext highlighter-rouge">IteratableOption</code> 的话，需要明确定义每个允许的设定值的下标。如果允许的设定值都被存在一个数组或者列表里的话，直接用数组或列表的下标就可以了；如果是枚举类常量，可以将 <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html#ordinal--"><code class="language-plaintext highlighter-rouge">Enum.ordinal()</code></a> 方法返回的序数用作下标。</p>
+
+<p>当选项被更改时，setter 会被传入一个整数值。把这个值和当前设定在允许的设定值序列中的下标相加，在一般情况下就会得到新设定值的下标。这个计算操作是需要由 setter 负责的；特别需要注意的是，如果越过了序列的结尾，回到了序列的开头，必须小心处理下标的计算，及时将下标归零，避免越界。</p>
+
+<p>至于 getter 方面，它是一个返回字符串而非整数的 <code class="language-plaintext highlighter-rouge">BiFunction</code>，数据类型和 setter 出现了偏差。<code class="language-plaintext highlighter-rouge">IteratableOption</code> 的 getter 的作用和上文中 <code class="language-plaintext highlighter-rouge">SliderPercentageOption</code> 构造器的 <code class="language-plaintext highlighter-rouge">getDisplayString</code> 是一样的，都是返回直接显示在配置界面上的文字，而非代表当前设定值的对象，甚至不是下标。</p>
+
+<p>这样的设计可能让 API 难以理解和使用，不过倒是允许 <code class="language-plaintext highlighter-rouge">IteratableOption</code> 忽略所有与合法设定值相关的信息。比如，像总共有多少个不同的合法设定值、以及每个设定值如何用字符串表示这些信息，<code class="language-plaintext highlighter-rouge">IteratableOption</code> 都不需要知道。</p>
+
+<p>下面的示例演示了如何添加一个允许的设定值来自枚举类常量的选项。用到的枚举类是我的 mod 的 <code class="language-plaintext highlighter-rouge">DreamMode</code> 类，可以在<a href="https://github.com/Leo3418/HBWHelper/blob/v1.2.0/src/main/java/io/github/leo3418/hbwhelper/game/DreamMode.java">此处</a>找到它的源代码。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c1">// 添加允许的设定值来自枚举类常量的选项</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">optionsRowList</span><span class="o">.</span><span class="na">addOption</span><span class="o">(</span><span class="k">new</span> <span class="nc">IteratableOption</span><span class="o">(</span>
+                <span class="s">"hbwhelper.configGui.dreamMode.title"</span><span class="o">,</span>
+                <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">newValue</span><span class="o">)</span> <span class="o">-&gt;</span>
+                        <span class="c1">// 每个枚举类都有一个编译器生成的 'values()' 静态方法，</span>
+                        <span class="c1">// 返回存有该枚举类所有常量的数组</span>
+                        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">setDreamMode</span><span class="o">(</span><span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">()[</span>
+                                <span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">ordinal</span><span class="o">()</span> <span class="o">+</span> <span class="n">newValue</span><span class="o">)</span>
+                                    <span class="c1">// 处理从序列结尾回到开头的特殊情况</span>
+                                        <span class="o">%</span> <span class="nc">DreamMode</span><span class="o">.</span><span class="na">values</span><span class="o">().</span><span class="na">length</span>
+                        <span class="o">]),</span>
+                <span class="o">(</span><span class="n">unused</span><span class="o">,</span> <span class="n">option</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">option</span><span class="o">.</span><span class="na">getDisplayString</span><span class="o">()</span> <span class="o">+</span>
+                        <span class="nc">I18n</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="nc">ModSettings</span><span class="o">.</span><span class="na">getDreamMode</span><span class="o">().</span><span class="na">getTranslateKey</span><span class="o">())</span>
+        <span class="o">));</span>
+</code></pre></div></div>
+
+<p class="notice--warning"><strong>关于 Minecraft 1.16.x 的特别说明：</strong>此示例中用到的 <code class="language-plaintext highlighter-rouge">getDisplayString()</code> 方法在 1.16 中被删除了。请参阅<a href="/zh/2021/02/06/forge-mod-migrate-to-1-16#用于获取设置选项的名称的方法被删除">此章节</a>以了解代替的方法。</p>
+
+<h4 id="保存配置">保存配置</h4>
+
+<p>如果 mod 的配置需要通过调用某个方法来手动保存，那么应该覆写 <code class="language-plaintext highlighter-rouge">Screen.onClose</code> 方法，在其中调用保存配置文件的方法：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">...</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="o">...</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 保存 mod 配置</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onClose</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="正确地返回到上级界面">正确地返回到上级界面</h3>
+
+<p>添加完所有选项后，看一下 mod 配置界面，现在应该就有模有样了。</p>
+
+<p><img src="/assets/img/posts/2020-09-09-forge-mod-config-screen/zh/complete-config-screen.png" alt="完整的配置界面" /></p>
+
+<p>看完之后，觉得不错，点击“完成”按钮准备退出……等一下，明明是从 mod 列表进来的配置界面，怎么直接被送回到游戏主界面去了？</p>
+
+<p>如果不适应这样的行为的话，可以在配置界面被构造时保存上级界面，然后在退出时重新显示上级界面，即可避免直接返回游戏主菜单。</p>
+
+<p>保存上级界面的方法是在配置界面类的构造器中添加一个 <code class="language-plaintext highlighter-rouge">Screen</code> 类型的参数，然后将其保存到一个字段当中。当配置界面被关闭时，显示上级界面。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">...</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ConfigScreen</span> <span class="kd">extends</span> <span class="nc">Screen</span> <span class="o">{</span>
+    <span class="o">...</span>
+
+    <span class="cm">/** 当前界面的上级界面 */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ConfigScreen</span><span class="o">(</span><span class="nc">Screen</span> <span class="n">parentScreen</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="k">new</span> <span class="nc">TranslationTextComponent</span><span class="o">(</span><span class="s">"hbwhelper.configGui.title"</span><span class="o">,</span>
+                <span class="nc">HbwHelper</span><span class="o">.</span><span class="na">NAME</span><span class="o">));</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">parentScreen</span> <span class="o">=</span> <span class="n">parentScreen</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="o">...</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClose</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">ModSettings</span><span class="o">.</span><span class="na">save</span><span class="o">();</span>
+        <span class="c1">// 显示上级界面</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">minecraft</span><span class="o">.</span><span class="na">displayGuiScreen</span><span class="o">(</span><span class="n">parentScreen</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p class="notice--warning"><strong>关于 Minecraft 1.16.x 的特别说明：</strong>在 <code class="language-plaintext highlighter-rouge">onClose()</code> 中调用 <code class="language-plaintext highlighter-rouge">Minecraft.displayGuiScreen(Screen)</code> 会导致游戏崩溃。在写 1.16 的 mod 时，您应该移除该调用。欲了解详情，请参考<a href="/zh/2021/02/06/forge-mod-migrate-to-1-16#用于关闭屏幕界面的方法有改动">此章节</a>。</p>
+
+<p>除此以外，因为构造器签名的变动，调用配置界面类构造器的地方也需要进行修改，比如配置界面工厂：</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>          ModLoadingContext.get().registerExtensionPoint(
+                  ExtensionPoint.CONFIGGUIFACTORY,
+<span class="gd">-                 () -&gt; (mc, screen) -&gt; new ConfigScreen()
+</span><span class="gi">+                 () -&gt; (mc, screen) -&gt; new ConfigScreen(screen)
+</span>          );
+</code></pre></div></div>
+
+<h2 id="更多资源">更多资源</h2>
+
+<p>如果您想找个用此文章记载的方法创建的配置界面的完整例子，可以在<a href="https://github.com/Leo3418/HBWHelper/blob/f13354adeeca6618f8047477fe20f121043f61c8/src/main/java/io/github/leo3418/hbwhelper/gui/ConfigScreen.java">这里</a>找到我的 mod 的配置界面类。</p>
+
+<p>您还可以在 IDE 中打开下面列出的类，阅读它们的源代码，学习更多此文章中提及的 API 的用法示例。这些源代码都是在配置 mod 开发环境时反编译 Minecraft 得到的。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">net.minecraft.client.gui.screen.VideoSettingsScreen</code></li>
+  <li><code class="language-plaintext highlighter-rouge">net.minecraft.client.settings.AbstractOption</code></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#java" class="page__taxonomy-item" rel="tag">Java</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#minecraft-forge" class="page__taxonomy-item" rel="tag">Minecraft Forge</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E5%8D%9A%E5%AE%A2" class="page__taxonomy-item" rel="tag">博客</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

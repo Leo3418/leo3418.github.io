@@ -1,0 +1,342 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Nexus 6/9 及以后的 Nexus 设备的 Bootloader 解锁机制及问题 - Leo3418 的个人网站</title>
+<meta name="description" content="如果您给谷歌与设备制造商合作设计制造的 Nexus 系列设备刷机，那么您一定不会对 Bootloader 锁（以下简称 BL 锁）和 fastboot 工具陌生。作为从 Nexus One 就开始引入的机制，如果希望在 Nexus 设备上刷写任何固件，包括官方的以及非官方的，都需要先使用 fastboot 解开 BL 锁才可以刷，否则无法刷入。（XDA 论坛上有人说在一些早期型号的 Nexus 上无须解锁也可以刷入谷歌放出的原厂固件，但因为我也没有那些老设备，无法考证）">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="Nexus 6/9 及以后的 Nexus 设备的 Bootloader 解锁机制及问题">
+<meta property="og:url" content="https://leo3418.github.io/2016/10/08/nexus-bl.html">
+
+
+  <meta property="og:description" content="如果您给谷歌与设备制造商合作设计制造的 Nexus 系列设备刷机，那么您一定不会对 Bootloader 锁（以下简称 BL 锁）和 fastboot 工具陌生。作为从 Nexus One 就开始引入的机制，如果希望在 Nexus 设备上刷写任何固件，包括官方的以及非官方的，都需要先使用 fastboot 解开 BL 锁才可以刷，否则无法刷入。（XDA 论坛上有人说在一些早期型号的 Nexus 上无须解锁也可以刷入谷歌放出的原厂固件，但因为我也没有那些老设备，无法考证）">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2016-10-08T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2016/10/08/nexus-bl.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2016/10/08/nexus-bl.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Nexus 6/9 及以后的 Nexus 设备的 Bootloader 解锁机制及问题">
+    <meta itemprop="description" content="如果您给谷歌与设备制造商合作设计制造的 Nexus 系列设备刷机，那么您一定不会对 Bootloader 锁（以下简称 BL 锁）和 fastboot 工具陌生。作为从 Nexus One 就开始引入的机制，如果希望在 Nexus 设备上刷写任何固件，包括官方的以及非官方的，都需要先使用 fastboot 解开 BL 锁才可以刷，否则无法刷入。（XDA 论坛上有人说在一些早期型号的 Nexus 上无须解锁也可以刷入谷歌放出的原厂固件，但因为我也没有那些老设备，无法考证）">
+    <meta itemprop="datePublished" content="2016-10-08T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Nexus 6/9 及以后的 Nexus 设备的 Bootloader 解锁机制及问题
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2016-10-08T00:00:00-05:00">2016-10-08</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+<p>如果您给谷歌与设备制造商合作设计制造的 Nexus 系列设备刷机，那么您一定不会对 Bootloader 锁（以下简称 BL 锁）和 fastboot 工具陌生。作为从 Nexus One 就开始引入的机制，如果希望在 Nexus 设备上刷写任何固件，包括官方的以及非官方的，都需要先使用 fastboot 解开 BL 锁才可以刷，否则无法刷入。（XDA 论坛上有人说在一些早期型号的 Nexus 上无须解锁也可以刷入谷歌放出的原厂固件，但因为我也没有那些老设备，无法考证）</p>
+
+<p>直到 Nexus 5，解 BL 锁都只有一个大步骤：在设备进入了 fastboot 模式并连接到电脑的前提下，电脑上使用 fastboot 工具输入简简单单的一行解锁命令，设备就解锁了。</p>
+
+<p>从 Nexus 6 和 Nexus 9 这一代设备开始，解锁的步骤就又加了一步：需要先在系统中的开发者选项里勾选一个叫做“允许 OEM 解锁”的选项，然后才能按照以前的步骤解锁。如果没勾选这个选项，解锁请求是会被拒绝的。此外，也没有任何其它方法能够调用这个选项。</p>
+
+<p><img src="/assets/img/posts/2016-10-08-nexus-bl/enable-oem-unlock.jpg" alt="开发者选项中的“允许 OEM 解锁”选项" /></p>
+
+<p>谷歌设计这个机制的一大目的就是为了提高“安全性”：假如用户的设备丢失或被盗，他人获得设备后，只要机主设了密码而且没有在开发者选项中勾选允许 OEM 解锁，就不能对设备进行刷机或任何修改。毕竟不能进入设置应用开启这个选项，也不能解 BL 锁。加上从 Android 5.1 开始引入的设备保护机制，在重置设备后，需要用重置前在设备上登录的帐户来激活设备才能使用，因此获得设备的人恢复出厂设置也不能使用设备。因此，就算设备丢失或被盗，也不能被重新使用。</p>
+
+<p>您可能觉得，谷歌新设计的解锁步骤也就是先在系统里勾一个选项再解锁吗，不算麻烦啊。当然了，并不是说这有多麻烦，而是谷歌设计的这种解锁机制造成了不少人的手机变砖。</p>
+
+<h2 id="变砖">变砖</h2>
+
+<p>自从 Android 5.0 起，Nexus 设备 OTA 更新失败变砖的事故数量也开始不断上升了。有一些用户反映，他们在设备上接到 OTA 更新之后，重启安装时出现错误，显示安卓机器人倒地、肚子上有一个红色感叹号三角的图标。出现错误后，系统也无法正常启动。</p>
+
+<p>关于这个错误的原因，现在还无法确定。有的人（主要是谷歌脑残粉等）否认正常接收 OTA 变砖的事实，称所有这种变砖都是因为，在墙内更新重启后，开机没有第一时间翻出去墙，然后又收到了相同的更新，下载后重启。假设我们正在安装 6.0 到 6.0.1 的更新吧，下载的更新包是只能从 6.0 更新到 6.0.1 的，在系统已经是 6.0.1 的情况下再安装到 6.0.1 的更新，就产生了错误，然后变砖。但是，在老外的 XDA 论坛上，也有不少有这问题的。显然他们在开机后可以第一时间直接连接谷歌的服务器，但依然还有不少设备出现这种问题的人，更何况很多都是并没有重复更新，只是点一次更新就砖了。我们也很难确定到底是什么原因造成 OTA 更新变砖。</p>
+
+<p>倘若用户在更新变砖前没有勾选“允许 OEM 解锁”，他们就不能解开设备的 BL 锁，因为无法进入系统勾选这个选项。</p>
+
+<p>除此之外，还有一部分人，已经正确地解锁设备后，将设备重新上了 BL 锁后，无法启动系统。这种情况一般发生在重新上 BL 锁前设备上刷入了第三方 recovery 的机器。倘若用户在重锁前取消勾选了“允许 OEM 解锁”选项，又在上述情况下锁了 BL，那么他们就无法进入系统勾选允许解锁的选项，也无法再重新解锁。这是因为，从 Nexus 6/9 这一代开始，重锁 BL 和解锁一样，也将强制清除数据。清除数据的指令只有原生的 recovery 才能正确识别并执行，TWRP 等第三方 recovery 无法执行；在没有完成数据清除前，不会启动系统，也就不能再去勾选允许解锁的选项，更不能重新解锁 BL 救砖。</p>
+
+<p>绝大多数的变砖、无限重启等，都可以通过刷入谷歌官方的原厂固件来救回。但是，请注意这样做的前提条件：Bootloader 必须已解锁。上述的设备变砖的情况，因为用户没有勾选开发者选项里的允许解锁，进入 fastboot 后输入解锁指令会被拒绝，不能解锁；又没法进入系统勾选该选项，也没有任何其它办法来调用该选项。</p>
+
+<p>本来是为了所谓的“安全性”考量，结果导致用户遇到问题时不能恢复设备的固件。更可怕的是，这些问题在用户正常使用设备，不刷机不折腾，正常更新系统，完全遵循保修条款的情况下，都会出现。</p>
+
+<p>幸好，谷歌后来在网站上放出了可用于救砖的完整 OTA 更新包，无须解锁，只需要一根数据线，进入设备自带的 recovery，就可以救砖了。</p>
+
+<h2 id="救砖">救砖</h2>
+
+<p>在<a href="https://developers.google.com/android/nexus/ota">这里</a>下载适用于您的设备的<strong>最新</strong>的完整 OTA 更新包，然后进入设备的 recovery，使用 adb sideload 重新安装一遍系统更新即可。具体的过程，网上有很多教程都有介绍，这里也不再赘述。此过程不会导致设备上的数据丢失。</p>
+
+<p><strong>注意：完整 OTA 更新包不支持系统降级。如果您尝试刷入的系统比当前设备上的系统旧，设备会报错无法刷入。因此，请记得下载最新的更新包。</strong></p>
+
+<h2 id="预防">预防</h2>
+
+<p>在谷歌释出完整 OTA 更新包前，此问题几乎是无解的。但现在可以轻松恢复系统，数据也不会受到影响，因此没有必要采取预防措施。</p>
+
+<p>对于已经解锁的用户：<strong>请不要轻易重新给您设备的 Bootloader 上锁，除非您清楚究竟该怎么做才能确保重上 BL 锁后不会导致设备变砖。</strong>XDA 论坛上有人在没有正确重锁 BL 后遭遇设备不能启动还不能解锁的惨痛经历，都是血淋淋的教训。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

@@ -1,0 +1,537 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Install Raspberry Pi’s vcgencmd on Fedora - Leo3418’s Personal Site</title>
+<meta name="description" content="This post is a continuation of my previous one about setting up a cluster of Raspberry Pis running Fedora. After I got the cluster to compute something, @ColsonXu, the cluster’s owner, asked me if I could monitor the CPU temperature of each Raspberry Pi by running this command:">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Install Raspberry Pi’s vcgencmd on Fedora">
+<meta property="og:url" content="https://leo3418.github.io/2020/07/27/compile-vcgencmd-on-fedora.html">
+
+
+  <meta property="og:description" content="This post is a continuation of my previous one about setting up a cluster of Raspberry Pis running Fedora. After I got the cluster to compute something, @ColsonXu, the cluster’s owner, asked me if I could monitor the CPU temperature of each Raspberry Pi by running this command:">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-27T00:00:00-05:00">
+
+
+
+  <meta property="article:modified_time" content="2020-11-09T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/07/27/compile-vcgencmd-on-fedora.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/07/27/compile-vcgencmd-on-fedora.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Install Raspberry Pi’s vcgencmd on Fedora">
+    <meta itemprop="description" content="This post is a continuation of my previousone about setting up a cluster ofRaspberry Pis running Fedora. After I got the cluster to compute something,@ColsonXu, the cluster’s owner, asked me ifI could monitor the CPU temperature of each Raspberry Pi by running thiscommand:">
+    <meta itemprop="datePublished" content="2020-07-27T00:00:00-05:00">
+    <meta itemprop="dateModified" content="2020-11-09T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Install Raspberry Pi’s <code class="language-plaintext highlighter-rouge">vcgencmd</code> on Fedora
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-07-27T00:00:00-05:00">Jul 27, 2020</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:
+        <time datetime="2020-11-09">Nov  9, 2020</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#build-and-install-the-program">Build and Install the Program</a></li><li><a href="#tell-the-system-about-optvc">Tell the System About /opt/vc</a></li><li><a href="#configure-device-permissions-and-user-group">Configure Device Permissions and User Group</a></li><li><a href="#use-dnf-to-install-the-program">Use DNF to Install the Program</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>This post is a continuation of my <a href="/2020/07/24/fedora-raspi-cluster.html">previous
+one</a> about setting up a cluster of
+Raspberry Pis running Fedora. After I got the cluster to compute something,
+<a href="https://github.com/ColsonXu"><strong>@ColsonXu</strong></a>, the cluster’s owner, asked me if
+I could monitor the CPU temperature of each Raspberry Pi by running this
+command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>/opt/vc/bin/vcgencmd measure_temp
+</code></pre></div></div>
+
+<p>The <a href="https://www.raspberrypi.org/documentation/raspbian/applications/vcgencmd.md"><code class="language-plaintext highlighter-rouge">vcgencmd</code>
+program</a>
+is included in Raspberry Pi OS (formerly called Raspbian) as a utility for
+retrieving information about Raspberry Pi’s hardware. However, it is not
+included in Fedora’s software repositories. Luckily though, the source code of
+<code class="language-plaintext highlighter-rouge">vcgencmd</code>, along with the entire <a href="https://github.com/raspberrypi/userland"><code class="language-plaintext highlighter-rouge">userland</code>
+package</a> that contains the program, is
+available, so we can compile it on our own.</p>
+
+<h2 id="build-and-install-the-program">Build and Install the Program</h2>
+
+<ol>
+  <li>
+    <p>Install the required compilers and build tools, and Git for retrieving the
+source code.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>cmake gcc gcc-c++ make git
+</code></pre></div>    </div>
+
+    <p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/install-deps.cast" poster="npt:9" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+  </li>
+  <li>
+    <p>Clone the <code class="language-plaintext highlighter-rouge">userland</code> package’s source code, then enter its directory.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>git clone https://github.com/raspberrypi/userland.git
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>userland
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Use <code class="language-plaintext highlighter-rouge">./buildme --aarch64</code> to compile the program for the <code class="language-plaintext highlighter-rouge">aarch64</code>
+architecture Fedora runs on and install it.</p>
+
+    <p>After the compilation completes and before the installation, you might see
+a prompt from <code class="language-plaintext highlighter-rouge">sudo</code> that demands your password. Enter it to proceed.</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>./buildme <span class="nt">--aarch64</span>
+</code></pre></div>    </div>
+
+    <p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/build-and-install.cast" poster="npt:16.5" theme="tango" font-size="small" speed="1" start-at="10"></asciinema-player></p>
+  </li>
+</ol>
+
+<p>After this command completes, you will find the <code class="language-plaintext highlighter-rouge">vcgencmd</code> program under
+<code class="language-plaintext highlighter-rouge">/opt/vc/bin</code>.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/after-install.cast" poster="npt:6" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="tell-the-system-about-optvc">Tell the System About <code class="language-plaintext highlighter-rouge">/opt/vc</code></h2>
+
+<p>When you run <code class="language-plaintext highlighter-rouge">vcgencmd</code> now, you will see the following error message:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>/opt/vc/bin/vcgencmd
+<span class="go">/opt/vc/bin/vcgencmd: error while loading shared libraries: libvchiq_arm.so: cannot open shared object file: No such file or directory
+</span></code></pre></div></div>
+
+<p>This error is caused by the operating system not knowing where to find the
+shared object file <code class="language-plaintext highlighter-rouge">libvchiq_arm.so</code>. That file does exist under <code class="language-plaintext highlighter-rouge">/opt/vc/lib</code>,
+but the system is not told to find the file from that directory. To solve this
+issue, create a file whose name ends with <code class="language-plaintext highlighter-rouge">.conf</code> under the <code class="language-plaintext highlighter-rouge">/etc/ld.so.conf.d</code>
+directory, and add the following line to the file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/vc/lib
+</code></pre></div></div>
+
+<p>Then, run the following command to apply the change:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>ldconfig
+</code></pre></div></div>
+
+<p>Running <code class="language-plaintext highlighter-rouge">/opt/vc/bin/vcgencmd</code> now should no longer get you the error message.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/ldconfig.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>It can be tedious when you have to type in the full path to the <code class="language-plaintext highlighter-rouge">vcgencmd</code>
+program in order to run it. To save yourself from the torture, you can add
+<code class="language-plaintext highlighter-rouge">/opt/vc/bin</code> to the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable by editing <code class="language-plaintext highlighter-rouge">~/.bashrc</code>:</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  # User specific environment
+  if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+  then
+      PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+  fi
+<span class="gi">+ PATH="/opt/vc/bin:$PATH"
+</span>  export PATH
+</code></pre></div></div>
+
+<p>Then, run the following command for the change to take effect:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/add-to-path.cast" poster="npt:17" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="configure-device-permissions-and-user-group">Configure Device Permissions and User Group</h2>
+
+<p>At this point, if you attempt to use <code class="language-plaintext highlighter-rouge">vcgencmd</code> to read hardware information as
+a normal user, you might get the <code class="language-plaintext highlighter-rouge">VCHI initialization failed</code> error.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/init-failed.cast" poster="npt:7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Most solutions to this issue you can find online would tell you to add the user
+to the <code class="language-plaintext highlighter-rouge">video</code> group. However, they typically assume you are running <code class="language-plaintext highlighter-rouge">vcgencmd</code>
+under Raspberry Pi OS. On Fedora, doing only this will not suffice. You need to
+configure the VCHI device so that <code class="language-plaintext highlighter-rouge">video</code> group users can access it. This is
+done by adding a new <a href="https://wiki.archlinux.org/index.php/udev#About_udev_rules">udev
+rule</a> shown
+<a href="https://github.com/sakaki-/genpi64-overlay/blob/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules">here</a>,
+published by GitHub user <a href="https://github.com/sakaki-"><strong>@sakaki-</strong></a>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cd</span> /usr/lib/udev/rules.d/
+<span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>curl <span class="nt">-O</span> https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
+</code></pre></div></div>
+
+<p>Once the udev rule is copied to the correct location, you may apply it
+immediately without a reboot by using <code class="language-plaintext highlighter-rouge">udevadm</code>:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>udevadm trigger /dev/vchiq
+</code></pre></div></div>
+
+<p>To see if the rule is in effect, check the permission settings for the VCHI
+device file <code class="language-plaintext highlighter-rouge">/dev/vchiq</code>. If its group is <code class="language-plaintext highlighter-rouge">video</code>, then the udev rule has been
+successfully activated.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> /dev/vchiq
+<span class="go">crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
+</span></code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/udev-rule.cast" poster="npt:11" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Once this is done, any user in the <code class="language-plaintext highlighter-rouge">video</code> group can invoke <code class="language-plaintext highlighter-rouge">vcgencmd</code> without
+getting the same error. You can use the following command to add your own user
+account to the <code class="language-plaintext highlighter-rouge">video</code> group; however, <strong>you must re-login to let the change
+take effect</strong>.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>usermod <span class="nt">-aG</span> video <span class="nv">$USER</span>
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/add-to-group.cast" poster="npt:7.2" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="use-dnf-to-install-the-program">Use DNF to Install the Program</h2>
+
+<p>Don’t want to build <code class="language-plaintext highlighter-rouge">vcgencmd</code> by yourself? I have made an RPM package for
+<code class="language-plaintext highlighter-rouge">userland</code> and uploaded it to a <a href="https://copr.fedorainfracloud.org/coprs/leo3418/raspberrypi-userland/">Copr
+repository</a>,
+so you can get <code class="language-plaintext highlighter-rouge">vcgencmd</code> working by simply running the following DNF commands:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf copr <span class="nb">enable </span>leo3418/raspberrypi-userland
+<span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>raspberrypi-userland
+</code></pre></div></div>
+
+<p>With this installation method, you can skip all the building and installation
+steps described above, including creating a <code class="language-plaintext highlighter-rouge">.conf</code> file under
+<code class="language-plaintext highlighter-rouge">/etc/ld.so.conf.d</code>, modifying <code class="language-plaintext highlighter-rouge">~/.bashrc</code>, and installing the udev rule. The
+only thing you must do is to add your user account to the <code class="language-plaintext highlighter-rouge">video</code> group.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/dnf.cast" poster="npt:3.8" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>You can also build the RPM packages for <code class="language-plaintext highlighter-rouge">userland</code> by yourself from the SPEC
+file I wrote for it. For this one, I will only give you a demo of how to build
+the RPM packages instead of detailed instructions.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-27-compile-vcgencmd-on-fedora/build-rpm.cast" poster="data:text/plain,RPM Build Demo" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#raspberry-pi" class="page__taxonomy-item" rel="tag">Raspberry Pi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

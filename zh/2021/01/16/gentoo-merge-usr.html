@@ -1,0 +1,712 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>合并 Gentoo 上的 /usr 目录 - Leo3418 的个人网站</title>
+<meta name="description" content="/usr 合并是指在诸如 GNU/Linux 等的遵循文件系统层次结构标准（FHS）的系统上，将 /bin、/lib、/lib64 和 /sbin 中的内容分别迁移至 /usr/bin、/usr/lib、/usr/lib64 和 /usr/sbin 中，然后把 /bin、/lib、/lib64 和 /sbin 改成指向 /usr 中同名目录的符号链接（symbolic link）。如果想了解有关 /usr 合并的更多信息，可以参阅 freedesktop.org 和 Fedora Wiki 中的相关页面（皆为英文页面）。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="合并 Gentoo 上的 /usr 目录">
+<meta property="og:url" content="https://leo3418.github.io/2021/01/16/gentoo-merge-usr.html">
+
+
+  <meta property="og:description" content="/usr 合并是指在诸如 GNU/Linux 等的遵循文件系统层次结构标准（FHS）的系统上，将 /bin、/lib、/lib64 和 /sbin 中的内容分别迁移至 /usr/bin、/usr/lib、/usr/lib64 和 /usr/sbin 中，然后把 /bin、/lib、/lib64 和 /sbin 改成指向 /usr 中同名目录的符号链接（symbolic link）。如果想了解有关 /usr 合并的更多信息，可以参阅 freedesktop.org 和 Fedora Wiki 中的相关页面（皆为英文页面）。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-16T00:00:00-06:00">
+
+
+
+  <meta property="article:modified_time" content="2021-03-05T00:00:00-06:00">
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2021/01/16/gentoo-merge-usr.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2021/01/16/gentoo-merge-usr.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="合并 Gentoo 上的 /usr 目录">
+    <meta itemprop="description" content="/usr 合并是指在诸如 GNU/Linux 等的遵循文件系统层次结构标准（FHS）的系统上，将 /bin、/lib、/lib64 和 /sbin 中的内容分别迁移至 /usr/bin、/usr/lib、/usr/lib64 和 /usr/sbin 中，然后把 /bin、/lib、/lib64 和 /sbin 改成指向 /usr 中同名目录的符号链接（symbolic link）。如果想了解有关 /usr 合并的更多信息，可以参阅 freedesktop.org 和 Fedora Wiki 中的相关页面（皆为英文页面）。">
+    <meta itemprop="datePublished" content="2021-01-16T00:00:00-06:00">
+    <meta itemprop="dateModified" content="2021-03-05T00:00:00-06:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">合并 Gentoo 上的 <code class="language-plaintext highlighter-rouge">/usr</code> 目录
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-01-16T00:00:00-06:00">2021-01-16</time>
+      </span>
+    
+
+    <span class="page__meta-sep"></span>
+    
+
+    
+      <span class="page__meta-date">
+        <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:
+        <time datetime="2021-03-05">2021-03-05</time>
+      </span>
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#不同的-usr-合并方法">不同的 /usr 合并方法</a></li><li><a href="#前提条件">前提条件</a></li><li><a href="#在系统安装时合并">在系统安装时合并</a></li><li><a href="#在已安装好的系统上合并">在已安装好的系统上合并</a></li><li><a href="#附加步骤">附加步骤</a><ul><li><a href="#将-usrsbin-永久添加到-path-中">将 /usr/sbin 永久添加到 PATH 中</a></li><li><a href="#移除-emerge-关于符号链接的提示信息">移除 emerge 关于符号链接的提示信息</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><em><code class="language-plaintext highlighter-rouge">/usr</code> 合并</em>是指在诸如 GNU/Linux 等的遵循<a href="https://zh.wikipedia.org/zh-cn/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E6%A0%87%E5%87%86">文件系统层次结构标准（FHS）</a>的系统上，将 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 中的内容分别迁移至 <code class="language-plaintext highlighter-rouge">/usr/bin</code>、<code class="language-plaintext highlighter-rouge">/usr/lib</code>、<code class="language-plaintext highlighter-rouge">/usr/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 中，然后把 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 改成指向 <code class="language-plaintext highlighter-rouge">/usr</code> 中同名目录的符号链接（symbolic link）。如果想了解有关 <code class="language-plaintext highlighter-rouge">/usr</code> 合并的更多信息，可以参阅 <a href="https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/">freedesktop.org</a> 和 <a href="https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description">Fedora Wiki</a> 中的相关页面（皆为英文页面）。</p>
+
+<p>现在绝大多数主流 GNU/Linux 发行版中的 <code class="language-plaintext highlighter-rouge">/usr</code> 合并大趋势应该是由 Fedora 在 2012 年牵头开始的；之后，包括 Debian 和 Arch Linux 在内的许多常见的发行版也都相应地完成了 <code class="language-plaintext highlighter-rouge">/usr</code> 合并。说起来这和 systemd 在 GNU/Linux 社区中的侵蚀也有点类似，都是由 Red Hat 想按照自己的方式定型当代 GNU/Linux 发行版的野心和 <a href="http://0pointer.de/blog/projects/the-usr-merge">Lennart Poettering 大肆为其背书</a>开始、在 Fedora 上首秀，然后逐渐被其它发行版采纳。</p>
+
+<p>而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，更没有跟随合并 <code class="language-plaintext highlighter-rouge">/usr</code> 的大势。目前，按照默认方式安装 Gentoo 后，<code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 仍然是独立的目录，而不是像其它发行版改成了符号链接。虽说如此，Gentoo 应该还是有实现 <code class="language-plaintext highlighter-rouge">/usr</code> 合并的计划的，因为他们在 Portage 中定义了一个 <a href="https://packages.gentoo.org/useflags/split-usr"><code class="language-plaintext highlighter-rouge">split-usr</code> USE flag</a>。现在这个 USE flag 是强制启用的，因为目前 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 这些目录还未合并，也就是分离（split）的状态；如果日后有一天 Gentoo 官方可以完全支持 <code class="language-plaintext highlighter-rouge">/usr</code> 合并了，那届时就可以让 <code class="language-plaintext highlighter-rouge">split-usr</code> 变成一个可选的 USE flag。</p>
+
+<p>这篇文章将向您展示的是，在目前 Gentoo 官方尚未支持的情况下，如何合并 <code class="language-plaintext highlighter-rouge">/usr</code>。我的旨意并不是说 <code class="language-plaintext highlighter-rouge">/usr</code> 合并有很多好处，<code class="language-plaintext highlighter-rouge">/usr</code> 合并的优点也不在本文的讨论范围之内。这篇文章唯一的目的是给那些知道自己想要合并 <code class="language-plaintext highlighter-rouge">/usr</code>、却不知道该怎么弄的用户提供一个教程。</p>
+
+<p class="notice--danger">虽然目前可以在 Gentoo 上合并 <code class="language-plaintext highlighter-rouge">/usr</code>，但请铭记，<strong>目前 Gentoo 官方尚未支持 <code class="language-plaintext highlighter-rouge">/usr</code> 合并！</strong>如果您不擅长处理系统问题，尤其是和符号链接相关的问题的话，那么不推荐合并 <code class="language-plaintext highlighter-rouge">/usr</code>。</p>
+
+<p class="notice--danger">目前已知有些软件包在 <code class="language-plaintext highlighter-rouge">/usr</code> 合并后的 Gentoo 系统上无法正常安装，例如 <code class="language-plaintext highlighter-rouge">dev-ml/dune</code>。此类安装问题通常需要修改软件包的 <code class="language-plaintext highlighter-rouge">ebuild</code> 来解决，因此除非您了解相关的流程，否则不建议合并 <code class="language-plaintext highlighter-rouge">/usr</code>。</p>
+
+<h2 id="不同的-usr-合并方法">不同的 <code class="language-plaintext highlighter-rouge">/usr</code> 合并方法</h2>
+
+<p>在开始前，有必要介绍一下目前 GNU/Linux 发行版中常见的两种不同的合并 <code class="language-plaintext highlighter-rouge">/usr</code> 的方式：</p>
+
+<ol>
+  <li>
+    <p id="usr-merge-variant-1">将 <code class="language-plaintext highlighter-rouge">/bin</code> 并入 <code class="language-plaintext highlighter-rouge">/usr/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code> 并入 <code class="language-plaintext highlighter-rouge">/usr/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 并入 <code class="language-plaintext highlighter-rouge">/usr/lib64</code>、<code class="language-plaintext highlighter-rouge">/sbin</code> 并入 <code class="language-plaintext highlighter-rouge">/usr/sbin</code>。这是 Fedora 和 Debian 采用的方式。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-dl</span> /bin /lib /lib64 /sbin /usr/sbin
+<span class="gp">lrwxrwxrwx 1 root root    7 Dec 13 14:11 /bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root    7 Dec 13 14:11 /lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root    9 Dec 13 14:11 /lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="gp">lrwxrwxrwx 1 root root    8 Dec 13 14:11 /sbin -&gt;</span><span class="w"> </span>usr/sbin
+<span class="go">drwxr-xr-x 1 root root 7006 Dec 26 09:50 /usr/sbin
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p id="usr-merge-variant-2">在上述合并的基础上，再将 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 并入 <code class="language-plaintext highlighter-rouge">/usr/bin</code>。Arch Linux 目前采用这种方式；从已经支持 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 的 Gentoo 软件包 <a href="https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192"><code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code> 的 <code class="language-plaintext highlighter-rouge">ebuild</code></a> 来看，Gentoo 应该也是准备采取这种方案。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-dl</span> /bin /lib /lib64 /sbin /usr/sbin
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root 9 Dec 13 14:11 /lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="gp">lrwxrwxrwx 1 root root 7 Dec 13 14:11 /sbin -&gt;</span><span class="w"> </span>usr/bin
+<span class="gp">lrwxrwxrwx 1 root root 3 Dec 13 14:11 /usr/sbin -&gt;</span><span class="w"> </span>bin
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p class="notice--info">上面的命令输出只是用于演示两种不同的合并 <code class="language-plaintext highlighter-rouge">/usr</code> 方法下的 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 的区别，可能会与您实际遇到的目录布局有所偏差。</p>
+
+<p>本文将主要使用第一种方法，因为我用过 Fedora 和 Debian，对这种方法产生的文件系统布局更熟悉，而 Arch Linux 我还没用过。不过，即使您准备采取第二种方法，也可以参阅本教程。第二种是 Gentoo 合并 <code class="language-plaintext highlighter-rouge">/usr</code> 所计划采用的方式，因此使用该方法会稍微简单些，反倒是第一种方法略微复杂。如果这篇教程介绍的是完成一种更复杂的方案的步骤，那借助它来做一件更简单的事应该不在话下。虽说如此，您仍然需要能触类旁通，适当修改此教程中提到的命令，以满足您自己的情况和需求。</p>
+
+<h2 id="前提条件">前提条件</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">/usr</code> 合并既可以在新系统安装时完成，也可以在一个已经安装好的系统上进行。这两种情况下的操作步骤有所不同，本文将会在两个不同的小节中分别讨论。</p>
+  </li>
+  <li>
+    <p id="bootable-drive">在开始之前，您需要准备一个启动盘（例如用 Gentoo 安装光盘 ISO 映像制作的 USB 启动盘）。如果您是在安装新的 Gentoo 系统，那您肯定已经有了一个 Gentoo 安装盘；但是如果您准备在一个已经装好的系统上合并 <code class="language-plaintext highlighter-rouge">/usr</code> 的话，就需要找一个启动盘或者做一个了，因为有些步骤需要在您的系统不在运行时进行，此时就需要有另一个允许您对您的 Gentoo 系统进行任意操作的环境。</p>
+  </li>
+</ul>
+
+<h2 id="在系统安装时合并">在系统安装时合并</h2>
+
+<p>以下步骤假设您是遵循 <a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page/zh-cn">Gentoo 手册</a>的步骤安装的系统。</p>
+
+<ol>
+  <li>
+    <p>完成“安装 stage3”中的 <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage/zh-cn#.E8.A7.A3.E5.8E.8Bstage.E5.8E.8B.E7.BC.A9.E5.8C.85">stage 压缩包的解压</a>后，进入解压出的 <code class="language-plaintext highlighter-rouge">usr</code> 目录，然后从 stage 压缩包中重新解压 <code class="language-plaintext highlighter-rouge">./bin</code>、<code class="language-plaintext highlighter-rouge">./lib</code>、<code class="language-plaintext highlighter-rouge">./lib64</code> 和 <code class="language-plaintext highlighter-rouge">./sbin</code>。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cd </span>usr
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">tar </span>xpvf ../stage3-<span class="k">*</span>.tar.xz <span class="nt">--xattrs-include</span><span class="o">=</span><span class="s1">'*.*'</span> <span class="nt">--numeric-owner</span> ./<span class="o">{</span>bin,lib,lib64,sbin<span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>回到上层目录，然后将 <code class="language-plaintext highlighter-rouge">bin</code>、<code class="language-plaintext highlighter-rouge">lib</code>、<code class="language-plaintext highlighter-rouge">lib64</code> 和 <code class="language-plaintext highlighter-rouge">sbin</code> 替换为指向 <code class="language-plaintext highlighter-rouge">usr</code> 下同名目录的符号链接。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">cd</span> ..
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">rm</span> <span class="nt">-rf</span> bin lib lib64 sbin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/bin bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib64 lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/sbin sbin
+</code></pre></div>    </div>
+
+    <div class="notice--primary" id="variant-2-usr-sbin">
+<p>如果您准备采用<a href="#usr-merge-variant-2">第二种 <code class="language-plaintext highlighter-rouge">/usr</code> 合并方案</a>，您应该在此基础上，将 <code class="language-plaintext highlighter-rouge">usr/sbin</code> 中的所有内容移到 <code class="language-plaintext highlighter-rouge">usr/bin</code> 中，然后把 <code class="language-plaintext highlighter-rouge">usr/sbin</code> 替换成指向 <code class="language-plaintext highlighter-rouge">usr/bin</code> 的符号链接：</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cd </span>usr
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">mv </span>sbin/<span class="k">*</span> bin
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">rmdir </span>sbin
+<span class="gp">livecd /mnt/gentoo/usr #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> bin sbin
+</code></pre></div></div>
+
+</div>
+
+    <p>如下所示，这样操作的结果是 <code class="language-plaintext highlighter-rouge">bin</code>、<code class="language-plaintext highlighter-rouge">lib</code>、<code class="language-plaintext highlighter-rouge">lib64</code> 和 <code class="language-plaintext highlighter-rouge">sbin</code> 变为符号链接：</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span>
+<span class="go">total 16
+</span><span class="gp">lrwxrwxrwx 1 root root    7 Dec 28 04:07 bin -&gt;</span><span class="w"> </span>usr/bin
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 boot
+drwxr-xr-x 1 root root 1686 Dec 23 05:25 dev
+drwxr-xr-x 1 root root 1546 Dec 23 06:32 etc
+drwxr-xr-x 1 root root   10 Dec 23 05:20 home
+</span><span class="gp">lrwxrwxrwx 1 root root    7 Dec 28 04:07 lib -&gt;</span><span class="w"> </span>usr/lib
+<span class="gp">lrwxrwxrwx 1 root root    9 Dec 28 04:07 lib64 -&gt;</span><span class="w"> </span>usr/lib64
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 media
+drwxr-xr-x 1 root root   10 Dec 23 05:20 mnt
+drwxr-xr-x 1 root root   10 Dec 23 05:20 opt
+drwxr-xr-x 1 root root    0 Dec 23 03:28 proc
+drwx------ 1 root root   10 Dec 23 05:20 root
+drwxr-xr-x 1 root root   10 Dec 23 05:20 run
+</span><span class="gp">lrwxrwxrwx 1 root root    8 Dec 28 04:08 sbin -&gt;</span><span class="w"> </span>usr/sbin
+<span class="go">drwxr-xr-x 1 root root   10 Dec 23 05:20 sys
+drwxrwxrwt 1 root root   10 Dec 23 06:32 tmp
+drwxr-xr-x 1 root root  128 Dec 23 05:29 usr
+drwxr-xr-x 1 root root   66 Dec 23 05:20 var
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>继续按照 Gentoo 手册中的指示操作，直到您 <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base/zh-cn#.E8.BF.9B.E5.85.A5.E6.96.B0.E7.8E.AF.E5.A2.83"><code class="language-plaintext highlighter-rouge">chroot</code> 进了 <code class="language-plaintext highlighter-rouge">/mnt/gentoo</code></a>。</p>
+  </li>
+  <li>
+    <p id="sys-inst-4">使用 <code class="language-plaintext highlighter-rouge">find -L /usr -type l</code> 命令找出 <code class="language-plaintext highlighter-rouge">/usr</code> 下所有损坏的符号链接。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span>find <span class="nt">-L</span> /usr <span class="nt">-type</span> l
+<span class="go">/usr/sbin/resolvconf
+/usr/bin/awk
+</span></code></pre></div>    </div>
+
+    <p>上面的例子中，<code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code> 和 <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> 是损坏的符号链接，也就是说它们所指向的路径不存在。如果其它程序和脚本需要使用这些符号链接指向的文件时，就会出现错误。例如，许多软件包的构建都需要用到 <code class="language-plaintext highlighter-rouge">awk</code> 命令，而 <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> 符号链接断了，就会导致 <code class="language-plaintext highlighter-rouge">awk</code> 命令不可用，您在安装需要 <code class="language-plaintext highlighter-rouge">awk</code> 的软件包时就会遇到问题。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span>/usr/bin/awk
+<span class="go">bash: /usr/bin/awk: No such file or directory
+</span></code></pre></div>    </div>
+
+    <p>若要修复一个损坏的符号链接，首先切换到该链接所在的目录，然后用 <code class="language-plaintext highlighter-rouge">ls -l</code> 查看它所指向的路径。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span><span class="nb">cd</span> /usr/bin/
+<span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> <span class="nb">awk</span>
+<span class="gp">lrwxrwxrwx 1 root root 15 Dec 23 05:26 awk -&gt;</span><span class="w"> </span>../usr/bin/gawk
+</code></pre></div>    </div>
+
+    <p>因为 <code class="language-plaintext highlighter-rouge">awk</code> 符号链接本来应该是在 <code class="language-plaintext highlighter-rouge">/bin</code> 下的，它就会被解析到 <code class="language-plaintext highlighter-rouge">/bin/../usr/bin/gawk</code>，也就是 <code class="language-plaintext highlighter-rouge">/usr/bin/gawk</code>，是一个合法路径。但是现在挪到 <code class="language-plaintext highlighter-rouge">/usr</code> 后，它被解析到 <code class="language-plaintext highlighter-rouge">/usr/bin/../usr/bin/gawk</code>，也就是 <code class="language-plaintext highlighter-rouge">/usr/usr/bin/gawk</code>，就是个不存在的路径，导致链接断开。修复起来也不难，将原来的链接删除，然后重新连到正确的目标即可：</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">rm awk</span>
+<span class="gp">(chroot) livecd /usr/bin #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> gawk <span class="nb">awk</span>
+</code></pre></div>    </div>
+
+    <p>对于 <code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code> 来说，也是同样的操作：</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd / #</span><span class="w"> </span><span class="nb">cd</span> /usr/sbin/
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">ls</span> <span class="nt">-l</span> resolvconf
+<span class="gp">lrwxrwxrwx 1 root root 21 Dec 23 06:28 resolvconf -&gt;</span><span class="w"> </span>../usr/bin/resolvectl
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">rm </span>resolvconf
+<span class="gp">(chroot) livecd /usr/sbin #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> ../bin/resolvectl resolvconf
+</code></pre></div>    </div>
+
+    <p>如果您现在再运行 <code class="language-plaintext highlighter-rouge">find -L /usr -type l</code> 的话，该命令应该不再输出任何内容，意味着所有损坏的符号链接都已被成功修复。</p>
+
+    <div class="notice--success">
+<p>实际上，<code class="language-plaintext highlighter-rouge">find -L -type l</code> 可以用来在各种情景下搜索损坏的符号链接。<code class="language-plaintext highlighter-rouge">find</code> 虽说是个很基础的命令，但是非常强大，在各路 GNU/Linux 发行版上基本也都是预装。因此，完全没有必要安装任何诸如 <code class="language-plaintext highlighter-rouge">symlinks</code> 的其它软件包来寻找损坏的符号链接。</p>
+
+
+<p><code class="language-plaintext highlighter-rouge">find(1)</code> 手册页面对此的描述如下：</p>
+
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        -type c
+            File is of type c:
+
+            l      symbolic link; this is never true if the -L option or the
+                   -follow  option is in effect, unless the symbolic link is
+                   broken.  If you want to search for symbolic links when -L
+                   is in effect, use -xtype.
+</code></pre></div></div>
+
+</div>
+  </li>
+  <li>
+    <p id="sys-inst-5">屏蔽 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag，让支持区分 <code class="language-plaintext highlighter-rouge">/usr</code> 合并后的系统的软件包在构建时可以为合并后的文件系统进行构建。由于 <code class="language-plaintext highlighter-rouge">split-usr</code> 是强制启用的 USE flag，仅仅声明 <code class="language-plaintext highlighter-rouge">-split-usr</code> 是不够的；您需要在 <code class="language-plaintext highlighter-rouge">/etc/portage/profile/use.mask</code> 中屏蔽 `split-usr。</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/portage/profile/use.mask
+
+# 屏蔽分离式 /usr 布局的 USE flag
+split-usr
+</code></pre></div>    </div>
+
+    <p>如果想了解更多的话，请参阅<a href="https://wiki.gentoo.org/wiki//etc/portage/profile/use.mask">相关的 Gentoo Wiki 条目</a>。</p>
+  </li>
+  <li>
+    <p>按照 Gentoo 手册中的步骤，完成剩余的安装步骤。请记得<a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base/zh-cn#.E6.9B.B4.E6.96.B0.40world.E9.9B.86.E5.90.88">更新 <code class="language-plaintext highlighter-rouge">@world</code> 集合</a>以应用 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 的改动。</p>
+
+    <p>当您运行安装在 <code class="language-plaintext highlighter-rouge">/sbin</code> 或 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 中的命令时，您可能会遇到“command not found”的错误提示。例如，如果您准备安装 GRUB，那么在运行 <code class="language-plaintext highlighter-rouge">/usr/sbin/grub-install</code> 的时候就会碰到该错误。您可以用 <code class="language-plaintext highlighter-rouge">whereis</code> 确认您要运行的命令确实在 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 下。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>grub-install <span class="nt">--target</span><span class="o">=</span>x86_64-efi <span class="nt">--efi-directory</span><span class="o">=</span>/boot
+<span class="go">bash: grub-install: command not found
+</span><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>whereis grub-install
+<span class="go">grub-install: /usr/sbin/grub-install /usr/share/man/man8/grub-install.8.bz2
+</span></code></pre></div>    </div>
+
+    <p>导致这个问题的原因是 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 从 <code class="language-plaintext highlighter-rouge">PATH</code> 环境变量中消失了：</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">printenv </span>PATH
+<span class="go">/usr/local/bin:/usr/bin:/opt/bin
+</span></code></pre></div>    </div>
+
+    <p>为了能完成系统安装，最简便、最快速的解决方法是使用 <code class="language-plaintext highlighter-rouge">export PATH="/usr/sbin:$PATH"</code>，暂时将 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 加到 <code class="language-plaintext highlighter-rouge">PATH</code> 中。但是，每次打开一个新的 shell 的时候都需要运行一次这个命令。要永久解决这个问题的话，请参阅下面的<a href="#将-usrsbin-永久添加到-path-中">“将 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 永久添加到 <code class="language-plaintext highlighter-rouge">PATH</code> 中”</a>小节。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/sbin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+<span class="gp">(chroot) livecd ~ #</span><span class="w"> </span><span class="nb">printenv </span>PATH
+<span class="go">/usr/sbin:/usr/local/bin:/usr/bin:/opt/bin
+</span><span class="gp">(chroot) livecd ~ #</span><span class="w"> </span>grub-install <span class="nt">--target</span><span class="o">=</span>x86_64-efi <span class="nt">--efi-directory</span><span class="o">=</span>/boot
+<span class="go">Installing for x86_64-efi platform.
+Installation finished. No error reported.
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="在已安装好的系统上合并">在已安装好的系统上合并</h2>
+
+<ol>
+  <li>
+    <p>从您准备的<a href="#bootable-drive">启动盘</a>启动您的电脑，然后<a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks/zh-cn#.E6.8C.82.E8.BD.BD_root_.E5.88.86.E5.8C.BA">挂载</a>您系统的 root 分区。以下步骤假设您将 root 分区挂载到了 <code class="language-plaintext highlighter-rouge">/mnt/gentoo</code> 下。切换到您分区被挂载的位置。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd ~ #</span><span class="w"> </span><span class="nb">cd</span> /mnt/gentoo
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>使用 <code class="language-plaintext highlighter-rouge">\cp</code> 命令和 <code class="language-plaintext highlighter-rouge">-r</code>、<code class="language-plaintext highlighter-rouge">--preserve=all</code> 和 <code class="language-plaintext highlighter-rouge">--remove-destination</code> 选项，将 <code class="language-plaintext highlighter-rouge">bin</code>、<code class="language-plaintext highlighter-rouge">lib</code>、<code class="language-plaintext highlighter-rouge">lib64</code> 和 <code class="language-plaintext highlighter-rouge">sbin</code> 中的内容分别复制到 <code class="language-plaintext highlighter-rouge">usr/bin</code>、<code class="language-plaintext highlighter-rouge">usr/lib</code>、<code class="language-plaintext highlighter-rouge">usr/lib64</code> 和 <code class="language-plaintext highlighter-rouge">usr/sbin</code> 中。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="se">\c</span>p <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div>    </div>
+
+    <p class="notice--info"><code class="language-plaintext highlighter-rouge">cp</code> 的 <code class="language-plaintext highlighter-rouge">-v</code> 选项允许您查看复制进度。如果不需要，可以省略该选项。</p>
+
+    <div class="notice--info">
+<p>在 <code class="language-plaintext highlighter-rouge">cp</code> 前面加一个反斜杠 <code class="language-plaintext highlighter-rouge">\</code> 可以忽略为 <code class="language-plaintext highlighter-rouge">cp</code> 设置的别名。如果您使用的是 Gentoo 安装光盘映像，那么 <code class="language-plaintext highlighter-rouge">cp</code> 默认的别称是 <code class="language-plaintext highlighter-rouge">cp -i</code>；这个 <code class="language-plaintext highlighter-rouge">-i</code> 选项会导致 <code class="language-plaintext highlighter-rouge">cp</code> 在每次覆写文件前都要求您手动确认。</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd ~ #</span><span class="w"> </span><span class="nb">alias cp</span>
+<span class="go">alias cp='cp -i'
+</span></code></pre></div></div>
+
+
+<p>如果使用 <code class="language-plaintext highlighter-rouge">\cp</code> 而非 <code class="language-plaintext highlighter-rouge">cp</code>，就可以忽略该别名。您也可以用 <code class="language-plaintext highlighter-rouge">unalias cp</code> 移除该别名，然后不加 <code class="language-plaintext highlighter-rouge">\</code>、正常调用 <code class="language-plaintext highlighter-rouge">cp</code>；也可以利用 <code class="language-plaintext highlighter-rouge">yes</code> 程序，使用 <code class="language-plaintext highlighter-rouge">yes | cp ... </code> 向 <code class="language-plaintext highlighter-rouge">cp</code> 的标准输入传递一大堆 <code class="language-plaintext highlighter-rouge">y</code>，自动确认每个要覆写的文件。</p>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">unalias cp</span>
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div></div>
+
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> bin/<span class="k">*</span> usr/bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib/<span class="k">*</span> usr/lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> lib64/<span class="k">*</span> usr/lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">yes</span> | <span class="nb">cp</span> <span class="nt">-rv</span> <span class="nt">--preserve</span><span class="o">=</span>all <span class="nt">--remove-destination</span> sbin/<span class="k">*</span> usr/sbin
+</code></pre></div></div>
+
+
+</div>
+  </li>
+  <li>
+    <p>将 <code class="language-plaintext highlighter-rouge">bin</code>、<code class="language-plaintext highlighter-rouge">lib</code>、<code class="language-plaintext highlighter-rouge">lib64</code> 和 <code class="language-plaintext highlighter-rouge">sbin</code> 替换为指向 <code class="language-plaintext highlighter-rouge">usr</code> 下同名目录的符号链接。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">rm</span> <span class="nt">-rf</span> bin lib lib64 sbin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/bin bin
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib lib
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/lib64 lib64
+<span class="gp">livecd /mnt/gentoo #</span><span class="w"> </span><span class="nb">ln</span> <span class="nt">-s</span> usr/sbin sbin
+</code></pre></div>    </div>
+
+    <p class="notice--primary">如果您准备采用<a href="#usr-merge-variant-2">第二种 <code class="language-plaintext highlighter-rouge">/usr</code> 合并方案</a>，您应该在此基础上，将 <code class="language-plaintext highlighter-rouge">usr/sbin</code> 中的所有内容移到 <code class="language-plaintext highlighter-rouge">usr/bin</code> 中，然后把 <code class="language-plaintext highlighter-rouge">usr/sbin</code> 替换成指向 <code class="language-plaintext highlighter-rouge">usr/bin</code> 的符号链接。点击<a href="#variant-2-usr-sbin">此处</a>查看相关的命令。</p>
+  </li>
+  <li>
+    <p>重启电脑，进入到您的系统中（不是启动盘）。只要您把 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 中的文件正确地复制到了 <code class="language-plaintext highlighter-rouge">/usr</code> 中、并正确地建立了符号链接，您的系统就应该能正常启动。</p>
+  </li>
+  <li>
+    <p>修复 <code class="language-plaintext highlighter-rouge">/usr</code> 下损坏的符号链接，具体的步骤和在安装时合并 <code class="language-plaintext highlighter-rouge">/usr</code> 步骤中的<a href="#sys-inst-4">第 4 步</a>相同。不过，有一些符号链接是可以不用手动修复的：</p>
+
+    <ul>
+      <li>
+        <p>如果您同时使用 systemd 和 dracut，您可能会遇到一些名称类似 <code class="language-plaintext highlighter-rouge">dracut-*.service</code> 的链接。此种链接不需要手动修复，只需在屏蔽 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 并重新编译 systemd <strong>之后</strong>重新安装 <code class="language-plaintext highlighter-rouge">sys-kernel/dracut</code> 即可。</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">/usr/lib/modules/*.*.*/build</code> 和 <code class="language-plaintext highlighter-rouge">/usr/lib/modules/*.*.*/source</code> 也可以不修复。</p>
+      </li>
+    </ul>
+
+    <p>而其余的符号链接，如 <code class="language-plaintext highlighter-rouge">/usr/bin/awk</code> 和 <code class="language-plaintext highlighter-rouge">/usr/sbin/resolvconf</code>，就需要手动干预修复了。</p>
+  </li>
+  <li>
+    <p>屏蔽 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag，具体的步骤和在安装时合并 <code class="language-plaintext highlighter-rouge">/usr</code> 步骤中的<a href="#sys-inst-5">第 5 步</a>相同。</p>
+  </li>
+  <li>
+    <p>更新 Portage 的 <code class="language-plaintext highlighter-rouge">@world</code> 集合，重新构建原本启用了 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 的软件包，以应用新的 USE flag 变动。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>emerge <span class="nt">--ask</span> <span class="nt">--update</span> <span class="nt">--deep</span> <span class="nt">--newuse</span> @world
+</code></pre></div>    </div>
+
+    <p>如果您同时使用 systemd 和 dracut，您现在就可以运行下面的命令重新安装 dracut，从而修复损坏的 <code class="language-plaintext highlighter-rouge">dracut-*.service</code> 符号链接了。如果您不使用 dracut，<strong>请勿</strong>运行下面的命令，因为它会安装 dracut。</p>
+
+    <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>emerge <span class="nt">--ask</span> <span class="nt">--oneshot</span> sys-kernel/dracut
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="附加步骤">附加步骤</h2>
+
+<p>完成上述步骤后，您的系统的 <code class="language-plaintext highlighter-rouge">/usr</code> 目录就成功合并了，并且运行起来基本上应该和没合并前一样。虽说如此，但现在系统仍然有一些对正常运行没有大影响的小瑕疵，可以通过执行下面的附加步骤来解决。</p>
+
+<h3 id="将-usrsbin-永久添加到-path-中">将 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 永久添加到 <code class="language-plaintext highlighter-rouge">PATH</code> 中</h3>
+
+<p class="notice--primary">如果您使用的是<a href="#usr-merge-variant-2">第二种 <code class="language-plaintext highlighter-rouge">/usr</code> 合并方式</a>的话，那么无需执行此步骤。</p>
+
+<p>之前推测 <a href="#usr-merge-variant-2">Gentoo 会如何完成 <code class="language-plaintext highlighter-rouge">/usr</code> 合并</a>的时候简单提及过，<code class="language-plaintext highlighter-rouge">/usr/sbin</code> 会被合并到 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 中。如果仔细看 <a href="https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192"><code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code> 的 <code class="language-plaintext highlighter-rouge">ebuild</code></a> 的话，您也许会发现，如果 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 被禁用的话，<code class="language-plaintext highlighter-rouge">/usr/sbin</code> 会被从 <code class="language-plaintext highlighter-rouge">PATH</code> 环境变量中移除，毕竟所有本该在 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 里的命令都被挪到 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 里了，而 <code class="language-plaintext highlighter-rouge">/usr/bin</code> 是在 <code class="language-plaintext highlighter-rouge">PATH</code> 里面的。</p>
+
+<p>但是，如果您使用的是<a href="#usr-merge-variant-1">第一种 <code class="language-plaintext highlighter-rouge">/usr</code> 合并方式</a>，那么这样就会出现问题了。这种方式中，<code class="language-plaintext highlighter-rouge">/usr/sbin</code> 里的命令仍在原处，但在禁用了 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 后 <code class="language-plaintext highlighter-rouge">PATH</code> 里就没有了 <code class="language-plaintext highlighter-rouge">/usr/sbin</code>，导致任何 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 中的命令都无法被直接调用，除非您在命令前面加上 <code class="language-plaintext highlighter-rouge">/usr/sbin/</code>。</p>
+
+<p>我推荐的解决方式是在在 <code class="language-plaintext highlighter-rouge">/etc/env.d</code> 中创建一个文件，把 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 加回 <code class="language-plaintext highlighter-rouge">PATH</code>，就可以在系统全局层面解决这个问题。选择一个文件名（例如 <code class="language-plaintext highlighter-rouge">50baselayout-sbin</code>），然后在文件中写入如下的 <code class="language-plaintext highlighter-rouge">PATH</code> 和 <code class="language-plaintext highlighter-rouge">ROOTPATH</code> 定义：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># /etc/env.d/50baselayout-sbin</span>
+
+<span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/local/sbin:/usr/sbin"</span>
+<span class="nv">ROOTPATH</span><span class="o">=</span><span class="s2">"/usr/local/sbin:/usr/sbin"</span>
+</code></pre></div></div>
+
+<p>这里我不仅把 <code class="language-plaintext highlighter-rouge">/usr/sbin</code> 加了回来，还添上了 <code class="language-plaintext highlighter-rouge">/usr/local/sbin</code>，因为这个路径在 <code class="language-plaintext highlighter-rouge">sys-apps/baselayout</code> 的 <code class="language-plaintext highlighter-rouge">split-usr</code> USE flag 被禁用时也会被从 <code class="language-plaintext highlighter-rouge">PATH</code> 中移除。</p>
+
+<p>随后，重新加载环境设置以应用更改：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>/usr/sbin/env-update
+<span class="gp">$</span><span class="w"> </span><span class="nb">source</span> /etc/profile
+</code></pre></div></div>
+
+<p>如需关于使用 <code class="language-plaintext highlighter-rouge">/etc/env.d</code> 目录的更多信息，您可以参阅 <a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/EnvVar/zh-cn#.E5.85.A8.E5.B1.80.E5.8F.98.E9.87.8F.E7.9A.84.E5.AE.9A.E4.B9.89">Gentoo 手册中的相关部分</a>。</p>
+
+<h3 id="移除-emerge-关于符号链接的提示信息">移除 <code class="language-plaintext highlighter-rouge">emerge</code> 关于符号链接的提示信息</h3>
+
+<p>您在使用 <code class="language-plaintext highlighter-rouge">emerge</code> 更新或卸载软件时可能会遇到如下的提示信息：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> * One or more symlinks to directories have been preserved in order to
+ * ensure that files installed via these symlinks remain accessible. This
+ * indicates that the mentioned symlink(s) may be obsolete remnants of an
+ * old install, and it may be appropriate to replace a given symlink with
+ * the directory that it points to.
+ *
+ * 	/bin
+ * 	/lib64
+ * 	/sbin
+ *
+</code></pre></div></div>
+
+<p>这是正常现象，毕竟 <code class="language-plaintext highlighter-rouge">/bin</code>、<code class="language-plaintext highlighter-rouge">/lib</code>、<code class="language-plaintext highlighter-rouge">/lib64</code> 和 <code class="language-plaintext highlighter-rouge">/sbin</code> 在 <code class="language-plaintext highlighter-rouge">/usr</code> 被合并后的确不再是目录，而是符号链接了。</p>
+
+<p>如果您想移除这些提示的话，可以在 <code class="language-plaintext highlighter-rouge">/etc/portage/make.conf</code> 中添加如下一行：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">UNINSTALL_IGNORE</span><span class="o">=</span><span class="s2">"/bin /lib /lib64 /sbin"</span>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#gentoo" class="page__taxonomy-item" rel="tag">Gentoo</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E6%95%99%E7%A8%8B" class="page__taxonomy-item" rel="tag">教程</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

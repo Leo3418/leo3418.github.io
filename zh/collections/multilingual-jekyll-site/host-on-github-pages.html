@@ -1,0 +1,525 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>在 GitHub Pages 上托管网站 - Leo3418 的个人网站</title>
+<meta name="description" content="完成上述改进后，您的网站从内容到网页元素都支持了本地化，可以准备发布了。对于 Jekyll 网站而言，许多人都喜欢使用 GitHub Pages 来托管，但是我们的多语言 Jekyll 网站如果想在 GitHub Pages 上托管的话需要一些特殊的步骤。这部分将要介绍的就是如何解决您在 GitHub Pages 上托管您的网站时可能遇到的一些问题。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="在 GitHub Pages 上托管网站">
+<meta property="og:url" content="https://leo3418.github.io/collections/multilingual-jekyll-site/host-on-github-pages">
+
+
+  <meta property="og:description" content="完成上述改进后，您的网站从内容到网页元素都支持了本地化，可以准备发布了。对于 Jekyll 网站而言，许多人都喜欢使用 GitHub Pages 来托管，但是我们的多语言 Jekyll 网站如果想在 GitHub Pages 上托管的话需要一些特殊的步骤。这部分将要介绍的就是如何解决您在 GitHub Pages 上托管您的网站时可能遇到的一些问题。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/collections/multilingual-jekyll-site/host-on-github-pages">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/collections/multilingual-jekyll-site/host-on-github-pages">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">建立多语言 Jekyll 网站</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">切换菜单</label>
+    <ul class="nav__items">
+        <li><a href="/zh/collections/multilingual-jekyll-site">主页</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-jekyll">配置 Jekyll</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/choose-multilingual-plugin">挑选多语言插件</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-polyglot">配置 Polyglot</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/make-a-test-post">新建一篇测试帖</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/improve-l10n-and-ux">改善本地化与用户体验</a></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-site-title">本地化网站标题</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-language-switcher">添加语言切换器</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-strings">本地化字符串</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-no-translation-msg">添加“无翻译”提示信息</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-date-format">本地化日期格式</a></li></ul></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/host-on-github-pages" class="active">在 GitHub Pages 上托管网站</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/closing-words">结束语</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="在 GitHub Pages 上托管网站">
+    <meta itemprop="description" content="完成上述改进后，您的网站从内容到网页元素都支持了本地化，可以准备发布了。对于 Jekyll 网站而言，许多人都喜欢使用 GitHubPages 来托管，但是我们的多语言 Jekyll 网站如果想在 GitHub Pages 上托管的话需要一些特殊的步骤。这部分将要介绍的就是如何解决您在 GitHub Pages 上托管您的网站时可能遇到的一些问题。">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">在 GitHub Pages 上托管网站
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#不支持的-jekyll-插件">不支持的 Jekyll 插件</a></li><li><a href="#配置-github-actions-流程">配置 GitHub Actions 流程</a><ul><li><a href="#创建流程">创建流程</a></li><li><a href="#输入默认分支的名称">输入默认分支的名称</a></li><li><a href="#添加上传网站的步骤">添加上传网站的步骤</a></li></ul></li><li><a href="#防止您的网站被未经授权地修改">防止您的网站被未经授权地修改</a></li><li><a href="#选择-github-pages-的发布源">选择 GitHub Pages 的发布源</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>完成上述改进后，您的网站从内容到网页元素都支持了本地化，可以准备发布了。对于 Jekyll 网站而言，许多人都喜欢使用 <a href="https://pages.github.com/">GitHub
+Pages</a> 来托管，但是我们的多语言 Jekyll 网站如果想在 GitHub Pages 上托管的话需要一些特殊的步骤。这部分将要介绍的就是如何解决您在 GitHub Pages 上托管您的网站时可能遇到的一些问题。</p>
+
+<h2 id="不支持的-jekyll-插件">不支持的 Jekyll 插件</h2>
+
+<p>如果您想让 GitHub Pages 直接自动构建并托管您的 Jekyll 网站，那么该网站不能使用不在<a href="https://pages.github.com/versions/">此列表</a>上的插件。此篇文章被撰写之时，Polyglot 是不在该列表上的，意味着其不受 GitHub Pages 支持。这种情况下，GitHub Pages 的<a href="https://help.github.com/en/github/working-with-github-pages/about-github-pages-and-jekyll#plugins">帮助文章</a>推荐先在本地构建网站的静态文件，然后直接将静态文件——而不是 Jekyll 源文件——上传到 GitHub。</p>
+
+<p>尽管如此，“本地”并不一定必须是您自己的电脑。GitHub 上有许多持续集成（CI）服务的支持，所以您可以选择一个 CI 服务作为“本地”来构建您的 Jekyll 网站。CI 都支持在您向 GitHub 推送了新的提交后自动运行 Jekyll 网站的构建，并且在构建结束后，可以将生成的静态文件发布到您指定的位置。</p>
+
+<p>您的工作流程不会因为使用 CI 受到太大的影响。假设您不需要使用 GitHub Pages 不支持的插件，您的 Jekyll 网站就可以直接被 GitHub Pages 构建。当您修改完您的网站的源文件后，会创建新的提交推送给 GitHub，然后 GitHub Pages 就会构建并发布您的网站。如果使用 CI 的话，您还是可以正常地提交和推送更改。此时 CI 检测到您推送了新的提交，在配置正确的情况下也是可以构建并发布您的网站的。换言之，除了网站的构建者发生了变化外，其它的流程都是一样的。</p>
+
+<p>如果是以前的话，我可能会用 <a href="https://travis-ci.org/">Travis CI</a> 来完成这一任务；现在 GitHub 有了 <a href="https://github.com/features/actions">Actions</a>，同样有一定的 CI 功能。因为是 GitHub 本身自带的工具，所以我就选用了它。</p>
+
+<h2 id="配置-github-actions-流程">配置 GitHub Actions 流程</h2>
+
+<p>一个 GitHub Actions 流程会指定完成一系列任务的具体步骤。如果要用 GitHub Actions 的话，我们要做的就是写一个构建 Jekyll 网站并将生成的静态文件发布到 GitHub 的流程。创建流程的第一件事是在您网站的 Git 仓库下的根目录创建一个 <code class="language-plaintext highlighter-rouge">.github/workflows</code> 文件夹。每个流程对应该文件夹下的一个 YAML 文件，在该文件中定义有关的规则、环境、步骤、以及要运行的命令。</p>
+
+<h3 id="创建流程">创建流程</h3>
+
+<p>您可以从<a href="https://github.com/actions/starter-workflows/blob/abf7f258d1d84c79ad067c704e069c8cf7d8d2d0/ci/jekyll.yml">此处</a>的文件入手创建一个构建 Jekyll 网站的 GitHub Actions 流程。将该文件的内容复制到 <code class="language-plaintext highlighter-rouge">.github/workflows</code> 下的一个 YAML 文件中，然后进行自定义。</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">Jekyll site CI</span>
+
+<span class="na">on</span><span class="pi">:</span>
+  <span class="na">push</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span> <span class="nv">$default-branch</span> <span class="pi">]</span>
+  <span class="na">pull_request</span><span class="pi">:</span>
+    <span class="na">branches</span><span class="pi">:</span> <span class="pi">[</span> <span class="nv">$default-branch</span> <span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+
+    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build the site in the jekyll/builder container</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">docker run \</span>
+        <span class="s">-v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \</span>
+        <span class="s">jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll &amp;&amp; jekyll build --future"</span>
+</code></pre></div></div>
+
+<p>这里有几个比较重要的选项：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">on</code>：定义此流程在什么条件下会被触发。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">jobs</code>: 此流程的一项任务。要了解更多信息的话可以参阅<a href="https://help.github.com/en/actions/getting-started-with-github-actions/core-concepts-for-github-actions#job">此处</a>。需要注意的一点是，每项任务都是独立隔离执行的，任务之间不能互相访问彼此的文件。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">steps</code>: 一项任务中的一个具体步骤。这里总共使用了两种不同的步骤：</p>
+
+    <ol>
+      <li>
+        <p>用 <code class="language-plaintext highlighter-rouge">uses</code> 属性指定的现成的动作。这类步骤的代码和脚本都是其他人写完包装好后在 GitHub Actions 上发布的。比如，此处使用的 <code class="language-plaintext highlighter-rouge">actions/checkout@v2</code> 就是在<a href="https://github.com/marketplace/actions/checkout">这里</a>发布的动作，可供所有人使用。它的作用是将您的 Git 仓库下载到运行此流程的虚拟机实例中。</p>
+      </li>
+      <li>
+        <p>用 <code class="language-plaintext highlighter-rouge">run</code> 属性指定的用户自定义的命令。这类步骤会直接在虚拟机实例中运行。</p>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p>如果不作任何修改、直接使用的话，上面的流程会下载您 GitHub 上的仓库，从 <a href="https://hub.docker.com/r/jekyll/builder"><code class="language-plaintext highlighter-rouge">jekyll/builder</code> Docker 映像</a> 创建一个 Docker 容器，然后在该容器中使用下载的文件构建您的网站。因为我们还想将构建好的网站发布，所以需要再加一个将生成的静态文件推送到 GitHub 的<strong>步骤</strong>。这里加的必须是一个步骤 <code class="language-plaintext highlighter-rouge">step</code> 而不是任务 <code class="language-plaintext highlighter-rouge">job</code>，因为任务之间是彼此隔离的，<code class="language-plaintext highlighter-rouge">build</code> 任务构建好的文件是没法被其它任务访问的。新加的步骤要做的就是把生成的静态文件发布到 GitHub 上。</p>
+
+<h3 id="输入默认分支的名称">输入默认分支的名称</h3>
+
+<p>在上面的配置文件中，您应该将所有 <code class="language-plaintext highlighter-rouge">$default-branch</code> 都替换为您的 Git 仓库的默认分支的名字。分支想叫什么名字都可以；在下面的示例中，我将使用 <code class="language-plaintext highlighter-rouge">jekyll</code> 作为默认分支的名称。</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  on:
+    push:
+<span class="gd">-     branches: [ $default-branch ]
+</span><span class="gi">+     branches: [ jekyll ]
+</span>    pull_request:
+<span class="gd">-     branches: [ $default-branch ]
+</span><span class="gi">+     branches: [ jekyll ]
+</span></code></pre></div></div>
+
+<h3 id="添加上传网站的步骤">添加上传网站的步骤</h3>
+
+<p>假如您没有使用不受支持的 Jekyll 插件，因此可以直接将您网站的静态文件上传到 GitHub，然后让 GitHub Pages 构建网站的话，您是永远不会直接看到您的网站的静态文件的。如果想用 GitHub Actions 达到同样的效果的话，我们应该避免将 GitHub Actions 流程构建的静态文件上传到 Git 仓库的默认分支，这样默认分支里就只有源文件了。</p>
+
+<p>如果想达到这样的效果的话，最直接的方式就是新建一个 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支，在里面存放构建过程中生成的静态文件，然后让 GitHub Pages 从该分支发布网站。您的网站的源文件依旧在默认分支中，因此有人下载您的 Git 仓库时，默认签出的就是只存放源文件的分支。只要不在本地签出 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支，就看不到生成的静态文件。</p>
+
+<p>如果您熟悉 Docker 和它的命令行的话，您可以注意到上面的流程中的 <code class="language-plaintext highlighter-rouge">docker</code> 命令会将 <code class="language-plaintext highlighter-rouge">github.workspace</code> 变量对应的路径（也就是您的 Git 仓库的根目录）中的 <code class="language-plaintext highlighter-rouge">_site</code> 文件夹挂载到网站构建过程中 Docker 容器内的 <code class="language-plaintext highlighter-rouge">_site</code> 文件夹。这就意味着在构建完成后，可以在 <code class="language-plaintext highlighter-rouge">${{ github.workspace }}/_site</code> 下找到构建过程中创建的网站静态文件。因此，理论上来说，使用下列的一系列命令就可以将构建完成后 <code class="language-plaintext highlighter-rouge">_site</code> 文件夹中的内容发布到 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支中：</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> <span class="k">${</span><span class="p">{ github.workspace </span><span class="k">}</span><span class="o">}</span>/_site
+git init <span class="nt">-b</span> gh-pages
+git remote add origin https://github.com/<span class="k">${</span><span class="p">{ github.repository </span><span class="k">}</span><span class="o">}</span>.git
+git add <span class="nb">.</span>
+git commit <span class="nt">-m</span> <span class="s2">"Deploy site built from commit </span><span class="k">${</span><span class="p">{ github.sha </span><span class="k">}</span><span class="s2">}"</span>
+git push <span class="nt">-u</span> origin gh-pages
+</code></pre></div></div>
+
+<p>然而，这些命令存在着如下问题：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">_site</code> 文件夹是在 Docker 容器内创建的，而 Docker 容器中的 Linux 用户的用户 ID 和运行 GitHub Actions 流程的虚拟机实例的用户 ID 可能不同，因此可能会出现文件权限问题。所以，我们需要获取该文件夹的权限。下面的例子中，我们将通过使用 <code class="language-plaintext highlighter-rouge">chown</code> 修改文件拥有者的方式来获取权限，这样可以维持生成的静态文件原有的权限设置。</p>
+  </li>
+  <li>
+    <p>运行 GitHub Actions 流程的虚拟机实例中的 Git 用户名和邮箱默认是没有被设置的，将会影响 <code class="language-plaintext highlighter-rouge">git commit</code> 的运行。</p>
+  </li>
+  <li>
+    <p>因为要发布文件到 GitHub 上，所以需要设置 GitHub 登录凭据。</p>
+  </li>
+  <li>
+    <p>如果直接在 <code class="language-plaintext highlighter-rouge">_site</code> 文件夹下创建新的 Git 仓库的话，新创建的仓库是没有提交历史的，所以我们在虚拟机实例中创建的提交会和 GitHub 上已有的提交历史无关，影响网站的发布。解决的方法就是添加 <code class="language-plaintext highlighter-rouge">-f</code> 选项，强制推送新的提交。</p>
+  </li>
+</ul>
+
+<p>要解决上述的问题的话，我们需要添加一些额外的命令，并对一些现有的命令进行调整：</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gi">+ sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
+</span>  cd ${{ github.workspace }}/_site
+  git init -b gh-pages
+<span class="gi">+ git config user.name ${{ github.actor }}
++ git config user.email ${{ github.actor }}@users.noreply.github.com
+</span><span class="gd">- git remote add origin https://github.com/${{ github.repository }}.git
+</span><span class="gi">+ git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+</span>  git add .
+  git commit -m "Deploy site built from commit ${{ github.sha }}"
+<span class="gd">- git push -u origin gh-pages
+</span><span class="gi">+ git push -f -u origin gh-pages
+</span></code></pre></div></div>
+
+<p>通过在 GitHub 的域名前添加 <code class="language-plaintext highlighter-rouge">x-access-token:${{ github.token }}</code>，我们可以使用令牌来验证 Git 操作。<code class="language-plaintext highlighter-rouge">github.token</code> 可用于获取一个 GitHub Actions 在运行流程前临时创建的令牌，使用该令牌进行验证即可拥有对 GitHub 上的仓库的控制权限。它和 <code class="language-plaintext highlighter-rouge">GITHUB_TOKEN</code> 差不多，后者的信息可以在<a href="https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token">此处</a>查看。</p>
+
+<p>写好所有发布网站所需要的命令后，我们就可以把它们添加到流程配置文件中了：</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="na">steps</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v2</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Build the site in the jekyll/builder container</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">docker run \</span>
+        <span class="s">-v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \</span>
+        <span class="s">jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll &amp;&amp; jekyll build --future"</span>
+    <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">Push the site to the gh-pages branch</span>
+      <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="s">sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site</span>
+        <span class="s">cd ${{ github.workspace }}/_site</span>
+        <span class="s">git init -b gh-pages</span>
+        <span class="s">git config user.name ${{ github.actor }}</span>
+        <span class="s">git config user.email ${{ github.actor }}@users.noreply.github.com</span>
+        <span class="s">git remote add origin https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git</span>
+        <span class="s">git add .</span>
+        <span class="s">git commit -m "Deploy site built from commit ${{ github.sha }}"</span>
+        <span class="s">git push -f -u origin gh-pages</span>
+</code></pre></div></div>
+
+<h2 id="防止您的网站被未经授权地修改">防止您的网站被未经授权地修改</h2>
+
+<p>这个流程仍然有一处致命的缺陷。它可以被 pull request 触发，而由于只要构建成功，它就会无条件地将构建好的网站发布，其他人就可以仅凭一个 pull request 修改并覆写您的网站。</p>
+
+<p>首先，所有人都可以 fork 一份您的网站的仓库，在他们自己的 fork 中修改您网站的内容，然后向您发一个 pull request，同时触发 GitHub Actions 流程。该流程会使用他们修改过的网站源文件来生成静态文件，然后只要构建成功，还未等到您接受他们的 pull request，包含他们所做的修改的静态文件就会被发布到您的网站上。这样的最好结果是别人替您修正了一处录入错误，不需要等您接受他们的 pull request 就可以修正您网站上的内容，但最坏的后果则是别人写一些有害的内容，然后给您发了 pull request。</p>
+
+<p>为防止这类修改，我们可以给将网站上传到 <code class="language-plaintext highlighter-rouge">gh-pages</code> 的步骤添加条件，只有因 <code class="language-plaintext highlighter-rouge">jekyll</code> 分支有新的提交触发此流程时才运行该步骤。</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code>      - name: Push the site to the gh-pages branch
+<span class="gi">+       if: ${{ github.event_name == 'push' }}
+</span>        run: |
+          sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
+          cd ${{ github.workspace }}/_site
+          git init -b gh-pages
+</code></pre></div></div>
+
+<p>对于任何其它类型的事件，包括 pull request，这一步骤就会被跳过，构建好的网站也就不会被发布到 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支上。</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/host-on-github-pages/push-not-performed.png" alt="将网站发布到 gh-pages 分支的步骤被略过" /></p>
+
+<p>到此，您就做好了一个类似于<a href="https://github.com/Leo3418/leo3418.github.io/blob/702a9f5325504606b405ac02086cc2b7940e84d4/.github/workflows/jekyll.yml">我使用的流程</a>的配置文件。有了可以自动构建并发布 Jekyll 网站的 GitHub Actions 流程后，您就可以在您的网站上使用不支持的插件了。</p>
+
+<h2 id="选择-github-pages-的发布源">选择 GitHub Pages 的发布源</h2>
+
+<p>整套操作的最后一部是告诉 GitHub Pages 使用您的 Git 仓库的 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支中的文件来发布网站。首先，提交您的 GitHub Actions 流程配置文件，将其推送至 GitHub，然后让该流程运行一次，以构建您的网站并上传到 <code class="language-plaintext highlighter-rouge">gh-pages</code> 分支。</p>
+
+<p>接着，在 GitHub 网站上，打开您的仓库的设置，然后向下找到名为“GitHub Pages”的部分，在“Source”的“Branch”中选择 <code class="language-plaintext highlighter-rouge">gh-pages</code>，然后点击“Save”保存。</p>
+
+<p><img src="/assets/img/collections/multilingual-jekyll-site/host-on-github-pages/gh-pages-source.png" alt="选择 GitHub Pages 的发布源" /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/zh/collections/multilingual-jekyll-site/localize-date-format" class="pagination--pager" title="本地化日期格式
+">
+        <div class="pagination-guide-text">上一页</div>
+        <div class="pagination-title">本地化日期格式
+</div>
+      </a>
+    
+    
+      <a href="/zh/collections/multilingual-jekyll-site/closing-words" class="pagination--pager" title="结束语
+">
+        <div class="pagination-guide-text">下一页</div>
+        <div class="pagination-title">结束语
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

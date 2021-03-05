@@ -1,0 +1,817 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Set Up Fedora on a Raspberry Pi Cluster - Leo3418’s Personal Site</title>
+<meta name="description" content="First and foremost, I would like to thank @ColsonXu for giving me this opportunity to play with some Raspberry Pis. He had got a few Raspberry Pi 4’s and built a cluster with them for computing purposes, but there was nothing to compute until the morning when @mrdarcychen found an article about running Rosetta@home on Raspberry Pi from Fedora Magazine, and Colson approved the plan. I was able to take the job of installing software required to run Rosetta@home on the Raspberry Pis.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Set Up Fedora on a Raspberry Pi Cluster">
+<meta property="og:url" content="https://leo3418.github.io/2020/07/24/fedora-raspi-cluster.html">
+
+
+  <meta property="og:description" content="First and foremost, I would like to thank @ColsonXu for giving me this opportunity to play with some Raspberry Pis. He had got a few Raspberry Pi 4’s and built a cluster with them for computing purposes, but there was nothing to compute until the morning when @mrdarcychen found an article about running Rosetta@home on Raspberry Pi from Fedora Magazine, and Colson approved the plan. I was able to take the job of installing software required to run Rosetta@home on the Raspberry Pis.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-07-24T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/2020/07/24/fedora-raspi-cluster.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/2020/07/24/fedora-raspi-cluster.html">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="Set Up Fedora on a Raspberry Pi Cluster">
+    <meta itemprop="description" content="First and foremost, I would like to thank@ColsonXu for giving me this opportunity toplay with some Raspberry Pis. He had got a few Raspberry Pi 4’s and built acluster with them for computing purposes, but there was nothing to computeuntil the morning when @mrdarcychen foundan article about running Rosetta@home on RaspberryPifrom Fedora Magazine, and Colson approved the plan. I was able to take the jobof installing software required to run Rosetta@home on the Raspberry Pis.">
+    <meta itemprop="datePublished" content="2020-07-24T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Set Up Fedora on a Raspberry Pi Cluster
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2020-07-24T00:00:00-05:00">Jul 24, 2020</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#the-hardware">The Hardware</a></li><li><a href="#fedora-vs-raspberry-pi-os">Fedora vs. Raspberry Pi OS</a></li><li><a href="#install-fedora">Install Fedora</a></li><li><a href="#boot-into-fedora">Boot Into Fedora</a></li><li><a href="#change-host-name">Change Host Name</a></li><li><a href="#connect-to-wi-fi">Connect to Wi-Fi</a></li><li><a href="#set-static-ip-address">Set Static IP Address</a></li><li><a href="#configure-firewall">Configure Firewall</a></li><li><a href="#create-a-new-account-for-daily-use">Create a New Account for Daily Use</a></li><li><a href="#install-mpi">Install MPI</a></li><li><a href="#remove-password-prompt-of-sudo">Remove Password Prompt of sudo</a></li><li><a href="#repeat-the-above-steps-on-every-remaining-node">Repeat the Above Steps on Every Remaining Node</a></li><li><a href="#create-and-copy-ssh-keys">Create and Copy SSH Keys</a></li><li><a href="#done">Done!</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>First and foremost, I would like to thank
+<a href="https://github.com/ColsonXu"><strong>@ColsonXu</strong></a> for giving me this opportunity to
+play with some Raspberry Pis. He had got a few Raspberry Pi 4’s and built a
+cluster with them for computing purposes, but there was nothing to compute
+until the morning when <a href="https://github.com/mrdarcychen"><strong>@mrdarcychen</strong></a> found
+<a href="https://fedoramagazine.org/running-rosettahome-on-a-raspberry-pi-with-fedora-iot/">an article about running Rosetta@home on Raspberry
+Pi</a>
+from Fedora Magazine, and Colson approved the plan. I was able to take the job
+of installing software required to run Rosetta@home on the Raspberry Pis.</p>
+
+<p>I did not ask Colson about this, but it seemed like he followed <a href="https://magpi.raspberrypi.org/articles/build-a-raspberry-pi-cluster-computer">this MagPi
+article</a>
+to set up the cluster. That post is good for people who want to use the
+official Raspberry Pi OS (formerly called Raspbian), but it is not applicable
+to Raspberry Pis that run Fedora. In this article, I will explain the
+equivalent ways of doing the tasks listed in that MagPi post on Fedora.</p>
+
+<h2 id="the-hardware">The Hardware</h2>
+
+<p>The cluster consisted of four Rasiberry Pi 4 Model B’s. They were connected to
+each other through an Ethernet switch, which supported <a href="https://en.wikipedia.org/wiki/Power_over_Ethernet">Power over
+Ethernet</a> (PoE), so USB-C
+power supplies were no longer necessary, and an Ethernet cable was the only
+cable connection needed for each Raspberry Pi. PoE on Raspberry Pi required an
+additional expansion HAT, and a PoE Ethernet switch was more expensive than an
+ordinary one, both of which increased the cost of the build but also made cable
+management easier.</p>
+
+<p><img src="/assets/img/posts/2020-07-24-fedora-raspi-cluster/hardware-setup.png" alt="The cluster set up with PoE" /></p>
+
+<h2 id="fedora-vs-raspberry-pi-os">Fedora vs. Raspberry Pi OS</h2>
+
+<p>When the cluster was given to me, the Raspberry Pis were running the Raspberry
+Pi OS, which was essentially Debian GNU/Linux with tweaks and customizations
+for Raspberry Pi.</p>
+
+<p>The article about running Rosetta@home on Raspberry Pi was on Fedora Magazine,
+so of course it would use Fedora in the demo. The author was using Podman, Red
+Hat’s version of Docker, to run containers created from the <a href="https://hub.docker.com/r/boinc/client">BOINC client
+image</a>. But I could use Docker to
+replace Podman, and Docker supported Raspberry Pi OS, so instead of installing
+Fedora, the first thing I did was to set up Docker on the existing operating
+system and run BOINC client in a container.</p>
+
+<p>The problem is, Rosetta@home required a 64-bit environment. As of this article
+was written, the 64-bit version of Raspberry Pi OS was still under testing, and
+all nodes of the cluster were running the 32-bit version. Therefore,
+Rosetta@home complained about unsupported CPU architecture, although Raspberry
+Pi 4’s processor supports 64-bit.</p>
+
+<p>For this reason, I decided to replace the Raspberry Pi OS installations with
+Fedora <code class="language-plaintext highlighter-rouge">aarch64</code> releases. Any GNU/Linux distribution that was supporting the
+<code class="language-plaintext highlighter-rouge">aarch64</code> architecture should work, but I selected Fedora because of my
+familiarity with it.</p>
+
+<h2 id="install-fedora">Install Fedora</h2>
+
+<p>The Fedora Project had not officially stated that they support Raspberry Pi 4,
+but I was able to install and boot the Fedora 32 Minimal <code class="language-plaintext highlighter-rouge">aarch64</code> image on it.
+You can download the image
+<a href="https://download.fedoraproject.org/pub/fedora-secondary/releases/32/Spins/aarch64/images/Fedora-Minimal-32-1.6.aarch64.raw.xz">here</a>.</p>
+
+<p>Because I had been using Fedora on my personal computer, I could use Fedora’s
+<code class="language-plaintext highlighter-rouge">arm-image-installer</code> to write the image to SD cards. If you are using a
+different operating system, don’t worry, there are still some options for you:</p>
+
+<ul>
+  <li>
+    <p>Follow <a href="https://docs.fedoraproject.org/en-US/quick-docs/raspberry-pi/">this
+guide</a> in
+Fedora’s documentation. It contains instructions for non-Fedora users.</p>
+  </li>
+  <li>
+    <p>If you are an advanced user and use another GNU/Linux distribution, you can
+download unpackaged <code class="language-plaintext highlighter-rouge">arm-image-installer</code> from
+<a href="https://pagure.io/arm-image-installer/releases">here</a> and run it.</p>
+  </li>
+</ul>
+
+<p>Both the Fedora Magazine article and Fedora documentation have detailed
+instructions to use <code class="language-plaintext highlighter-rouge">arm-image-installer</code>, so I will not go into too many
+details. Here is the command I used to write the image:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>arm-image-installer <span class="nt">--image</span> Fedora-Minimal-32-1.6.aarch64.raw.xz <span class="se">\</span>
+    <span class="nt">--target</span><span class="o">=</span>rpi4 <span class="nt">--media</span><span class="o">=</span>/dev/sdX <span class="nt">--resizefs</span> <span class="nt">--norootpass</span> <span class="se">\</span>
+    <span class="nt">--addkey</span> ~/.ssh/id_rsa.pub
+</code></pre></div></div>
+
+<p>Explanations on some command-line options:</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">--target=rpi4</code> specifies that the installed image is to be used on a
+Raspberry Pi 4.</p>
+  </li>
+  <li>
+    <p>The <code class="language-plaintext highlighter-rouge">--norootpass</code> and <code class="language-plaintext highlighter-rouge">--addkey</code> options allow you to remotely log into the
+system as <code class="language-plaintext highlighter-rouge">root</code> with your SSH key while preventing <code class="language-plaintext highlighter-rouge">root</code> logins with
+password. If you don’t have an SSH key on your machine yet, you can generate
+one by running <code class="language-plaintext highlighter-rouge">ssh-keygen</code>.</p>
+  </li>
+</ul>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/arm-image-installer.cast" poster="npt:6" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Don’t forget to write the image to every SD card you are using for the cluster!</p>
+
+<h2 id="boot-into-fedora">Boot Into Fedora</h2>
+
+<p>After writing the image, insert the SD card into a Raspberry Pi. If you want to
+view the video output, connect the Raspberry Pi to a display now. Then, power
+up the board, and follow the on-screen instructions to log in.</p>
+
+<p>If you decide to manage the cluster as a headless system as I did, which means
+you are not connecting it to a monitor, then just power up Raspberry Pi,
+connect it to Ethernet, and wait for about one minute to let it boot into the
+system. Fedora enables SSH by default, so as long as you know the IP address of
+the Raspberry Pi, you can log in remotely.</p>
+
+<p>Most home routers allow you to see a list of connected devices in their
+configuration interface, and you can usually find the Raspberry Pi’s IP address
+over there. A piece of advice I would give to anyone who depend on this method
+to get the IP address is that you power up only one Raspberry Pi at a time, or
+else you will find multiple new IP addresses but cannot map them to the nodes
+in the cluster.</p>
+
+<p><img src="/assets/img/posts/2020-07-24-fedora-raspi-cluster/router-config.png" alt="The configuration interface of my router" /></p>
+
+<p>Once you get the Raspberry Pi’s IP address, log in via SSH using the <code class="language-plaintext highlighter-rouge">root</code>
+user.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/init-ssh-con.cast" poster="npt:5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="change-host-name">Change Host Name</h2>
+
+<p>The MagPi article recommends setting a unique host name for each node in the
+cluster. With host names, you can not only easily identify your Raspberry Pis
+from other devices in the same network but also know which specific node you
+have connected to.</p>
+
+<p>One way to change the host name on Fedora is to edit the file <code class="language-plaintext highlighter-rouge">/etc/hostname</code>
+and change its content to the host name you want to use.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/hostname.cast" poster="npt:4.8" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Before I had overwritten the Raspberry Pi OS on the SD cards, the host names
+had been set to <code class="language-plaintext highlighter-rouge">Summit0</code>, <code class="language-plaintext highlighter-rouge">Summit1</code>, <code class="language-plaintext highlighter-rouge">Summit2</code> and <code class="language-plaintext highlighter-rouge">Summit3</code>, so I preserved
+those names here. You can pick whatever host name you like and elect to number
+the nodes from 1 rather than 0 as described by the MagPi article.</p>
+
+<h2 id="connect-to-wi-fi">Connect to Wi-Fi</h2>
+
+<p>Fedora uses <code class="language-plaintext highlighter-rouge">NetworkManager</code> as the tool for managing both wired and wireless
+network connections. To connect to a Wi-Fi network, first scan available Wi-Fi
+connections with <code class="language-plaintext highlighter-rouge">nmcli dev wifi</code>. Press <code class="language-plaintext highlighter-rouge">Q</code> to quit the Wi-Fi network list,
+and then connect to your Wi-Fi using this command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>nmcli dev wifi connect &lt;SSID&gt; password &lt;PASSWD&gt;
+</code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">&lt;SSID&gt;</code> with the name of your Wi-Fi and <code class="language-plaintext highlighter-rouge">&lt;PASSWD&gt;</code> with its password.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/wifi-con.cast" poster="npt:4.7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>If you need to connect to a hidden Wi-Fi network, use this command instead:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>nmcli dev wifi connect &lt;SSID&gt; password &lt;PASSWD&gt; hidden <span class="nb">yes</span>
+</code></pre></div></div>
+
+<h2 id="set-static-ip-address">Set Static IP Address</h2>
+
+<p>The MagPi article suggests configuring the nodes to use static IP addresses in
+the <code class="language-plaintext highlighter-rouge">10.0.0.0/24</code> subnet. This might be unnecessary if you can connect the
+Raspberry Pi cluster to your router with a cable, but I will show you how to
+accomplish this on Fedora anyway.</p>
+
+<p><strong>Note: It is strongly recommended that your Raspberry Pi has been already
+connected to a Wi-Fi network prior to this step.</strong> If you don’t have a monitor,
+and your Raspberry Pi is not connected to Wi-Fi, then you will lose access to
+the device. And, even if you have a monitor, reserving an IP address that is
+not in your router’s subnet prevents your Raspberry Pi from connecting to the
+network through Ethernet, so the Raspberry Pi will depend on Wi-Fi for Internet
+connection.</p>
+
+<p>The following commands let Raspberry Pi use a static IPv4 address in
+<code class="language-plaintext highlighter-rouge">10.0.0.0/24</code> for Ethernet connection. Remember to change <code class="language-plaintext highlighter-rouge">X</code> in the IP address
+within the first command to a suitable value.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>nmcli con mod <span class="s1">'Wired connection 1'</span> ipv4.address 10.0.0.X/24 
+<span class="gp">#</span><span class="w"> </span>nmcli con mod <span class="s1">'Wired connection 1'</span> ipv4.method manual
+</code></pre></div></div>
+
+<p>From now on, if you want to connect to the Raspberry Pi via SSH, you need to
+use the IP address obtained by the <code class="language-plaintext highlighter-rouge">wlan0</code> interface, which is the Wi-Fi
+adapter. You may check the wireless connection’s IP address either from your
+router or with the <code class="language-plaintext highlighter-rouge">ip addr</code> command:</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/view-ip-addr.cast" poster="npt:23.7" theme="tango" font-size="small" speed="1" start-at="20"></asciinema-player></p>
+
+<p>In the output, under <code class="language-plaintext highlighter-rouge">wlan0</code>, I could see a new IP address <code class="language-plaintext highlighter-rouge">192.168.1.160</code>,
+which I should use for subsequent SSH connections.</p>
+
+<p>Once you have the IP address for the Wi-Fi adapter, reboot the Raspberry Pi. If
+you use SSH, try to connect to it using the new IP address.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/connect-via-wifi.cast" poster="npt:2.7" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="configure-firewall">Configure Firewall</h2>
+
+<p>This step is not required for Raspberry Pi OS and is thus not mentioned in the
+MagPi article. But, because Fedora’s default firewall, <code class="language-plaintext highlighter-rouge">firewalld</code>, is more
+restrictive, you need to add an exception rule here to prevent the firewall
+from blocking communications between your Raspberry Pis.</p>
+
+<p>Run</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>firewall-cmd <span class="nt">--zone</span><span class="o">=</span>trusted <span class="nt">--add-source</span><span class="o">=</span>10.0.0.0/24 <span class="nt">--permanent</span>
+</code></pre></div></div>
+<p>to add the <code class="language-plaintext highlighter-rouge">10.0.0.0/24</code> subnet to the <code class="language-plaintext highlighter-rouge">trusted</code> zone of <code class="language-plaintext highlighter-rouge">firewalld</code>.
+Connections in the <code class="language-plaintext highlighter-rouge">trusted</code> zone will always be accepted, so the nodes in your
+cluster can communicate with each other.</p>
+
+<p>After that, run</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>systemctl restart firewalld
+</code></pre></div></div>
+<p>to restart the firewall. You may check if the rule takes effect with</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>firewall-cmd <span class="nt">--zone</span><span class="o">=</span>trusted <span class="nt">--list-all</span>
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/firewall.cast" poster="npt:15" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="create-a-new-account-for-daily-use">Create a New Account for Daily Use</h2>
+
+<p>At this point, you have completed all of the networking set-up tasks, which
+require <code class="language-plaintext highlighter-rouge">root</code> privilege. Using the <code class="language-plaintext highlighter-rouge">root</code> account for those tasks has helped
+you avoid adding <code class="language-plaintext highlighter-rouge">sudo</code> before commands. However, using <code class="language-plaintext highlighter-rouge">root</code> for daily system
+administration tasks is not recommended; a normal user account which can run
+<code class="language-plaintext highlighter-rouge">sudo</code> is more preferable. Let us create a user called <code class="language-plaintext highlighter-rouge">pi</code> for this purpose.</p>
+
+<p>Execute the following commands to add the new user and set a password for it:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>useradd pi
+<span class="gp">#</span><span class="w"> </span>passwd pi
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/create-user.cast" poster="npt:17" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>On Fedora, allowing a user to run commands with <code class="language-plaintext highlighter-rouge">sudo</code> is as easy as adding the
+user to the <code class="language-plaintext highlighter-rouge">wheel</code> group:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>usermod <span class="nt">-aG</span> wheel pi
+</code></pre></div></div>
+
+<p>Now, try to log in with the new <code class="language-plaintext highlighter-rouge">pi</code> user and run a command with <code class="language-plaintext highlighter-rouge">sudo</code> to see
+if your configuration is correct.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/allow-sudo.cast" poster="npt:8" theme="tango" font-size="small" speed="1" start-at="8"></asciinema-player></p>
+
+<h2 id="install-mpi">Install MPI</h2>
+
+<p>Since the MagPi article uses <a href="https://en.wikipedia.org/wiki/Message_Passing_Interface">Message Passing
+Interface</a> (MPI) for
+parallel computing on the Raspberry Pi cluster, I am going to introduce how to
+install it on Fedora as well. Fedora offers two implementations of MPI: Open
+MPI and MPICH, both of which provides the <code class="language-plaintext highlighter-rouge">mpiexec</code> program for running a
+command in parallel on multiple machines. I picked Open MPI by accident and
+thus will show how to install <em>it</em>, but the installation steps should be the
+same for MPICH.</p>
+
+<p>The following command installs Open MPI itself:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>opemmpi
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/install-mpi.cast" poster="npt:5.3" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>If you also want the Python bindings of MPI, then use this command instead:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>openmpi python3-mpi4py-openmpi
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">mpiexec</code> program is installed into <code class="language-plaintext highlighter-rouge">/usr/lib64/openmpi/bin</code>, a directory
+that is not in the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable, instead of <code class="language-plaintext highlighter-rouge">/usr/bin</code>. This
+means that you must type in the full path to the program when you want to use
+it, which is not convenient at all. To solve this problem, you can simply add
+<code class="language-plaintext highlighter-rouge">/usr/lib64/openmpi/bin</code> to <code class="language-plaintext highlighter-rouge">PATH</code> by adding the following line to <code class="language-plaintext highlighter-rouge">~/.bashrc</code>:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/lib64/openmpi/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>After you have made the edit, apply the change with:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">source</span> ~/.bashrc
+</code></pre></div></div>
+
+<p>Now you should be able to run <code class="language-plaintext highlighter-rouge">mpiexec</code> directly, without typing in the full
+path to the program.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/set-mpi-path.cast" poster="npt:10.5" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>If you wish to use MPICH in place of Open MPI, then simply replace all
+occurrences of <code class="language-plaintext highlighter-rouge">openmpi</code> above with <code class="language-plaintext highlighter-rouge">mpich</code>:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>mpich
+</code></pre></div></div>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>dnf <span class="nb">install </span>mpich python3-mpi4py-mpich
+</code></pre></div></div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/lib64/mpich/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>After a brief trial of MPICH, I still preferred Open MPI to it because the
+<code class="language-plaintext highlighter-rouge">mpiexec</code> program in Open MPI had clearer error messages.</p>
+
+<h2 id="remove-password-prompt-of-sudo">Remove Password Prompt of <code class="language-plaintext highlighter-rouge">sudo</code></h2>
+
+<p>When <code class="language-plaintext highlighter-rouge">sudo</code> is run, it asks you to enter your password and reads the keyboard
+input from the terminal, unless if you have just run it a few minutes before.
+Because <code class="language-plaintext highlighter-rouge">mpiexec</code> does not pass terminal input to the programs you run with it,
+when you execute a <code class="language-plaintext highlighter-rouge">sudo</code> command using <code class="language-plaintext highlighter-rouge">mpiexec</code>, it cannot read your
+password.</p>
+
+<p>The workaround to this issue is allowing <code class="language-plaintext highlighter-rouge">sudo</code> to run commands without
+password authentication. To do this, you need to modify <code class="language-plaintext highlighter-rouge">sudo</code>’s configuration
+file by running</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">sudo </span>visudo
+</code></pre></div></div>
+<p>and then making the following change:</p>
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ## Allows people in group wheel to run all commands
+<span class="gd">-%wheel        ALL=(ALL)        ALL
+</span><span class="gi">+# %wheel        ALL=(ALL)        ALL
+</span>
+ ## Same thing without a password
+<span class="gd">-# %wheel        ALL=(ALL)        NOPASSWD: ALL
+</span><span class="gi">+%wheel        ALL=(ALL)        NOPASSWD: ALL
+</span></code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/rm-sudo-passwd.cast" poster="npt:13" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>On Fedora, <code class="language-plaintext highlighter-rouge">visudo</code> uses <code class="language-plaintext highlighter-rouge">vi</code> as the text editor by default. In case you are
+not familiar with <code class="language-plaintext highlighter-rouge">vi</code>, here are the operations for making the change:</p>
+
+<ol>
+  <li>
+    <p>Type <code class="language-plaintext highlighter-rouge">/wheel</code> and press <code class="language-plaintext highlighter-rouge">Enter</code>. This takes you to the line above the first
+line you should edit.</p>
+  </li>
+  <li>
+    <p>Press <code class="language-plaintext highlighter-rouge">j</code> to move the cursor down by one line, then press <code class="language-plaintext highlighter-rouge">Shift-I</code> to go
+to the front of the line and start editing it. At this moment, you should
+see the <strong><code class="language-plaintext highlighter-rouge">-- INSERT --</code></strong> indicator at the bottom of the terminal.</p>
+  </li>
+  <li>
+    <p>Enter <code class="language-plaintext highlighter-rouge">#</code> so that the current line becomes a comment line. Now, press
+<code class="language-plaintext highlighter-rouge">Esc</code>, and the <strong><code class="language-plaintext highlighter-rouge">-- INSERT --</code></strong> indicator should disappear.</p>
+  </li>
+  <li>
+    <p>Press <code class="language-plaintext highlighter-rouge">j</code> three times to go down three lines, then press <code class="language-plaintext highlighter-rouge">0</code> to move the
+cursor to the line’s beginning. Now, press <code class="language-plaintext highlighter-rouge">x</code> twice to remove the <code class="language-plaintext highlighter-rouge">#</code> so
+the current line is no longer a comment.</p>
+  </li>
+  <li>
+    <p>Type <code class="language-plaintext highlighter-rouge">:wq</code> and press <code class="language-plaintext highlighter-rouge">Enter</code> to save the file and exit the editor.</p>
+  </li>
+</ol>
+
+<h2 id="repeat-the-above-steps-on-every-remaining-node">Repeat the Above Steps on Every Remaining Node</h2>
+
+<p>You have now finished the initial set-up tasks for a single node.
+Unfortunately, these steps need to be done on every node in your cluster. To
+review what you have performed, here is a summary of the set-up tasks:</p>
+
+<ol>
+  <li>Write Fedora’s image to an SD card</li>
+  <li>Boot the Raspberry Pi and obtain its IP address</li>
+  <li>Connect the Raspberry Pi to a Wi-Fi network</li>
+  <li>Set a static IP address</li>
+  <li>Configure firewall on the Raspberry Pi</li>
+  <li>Create a user account and add it to the <code class="language-plaintext highlighter-rouge">wheel</code> group</li>
+  <li>Install MPI and set the <code class="language-plaintext highlighter-rouge">PATH</code> environment variable</li>
+  <li>Remove <code class="language-plaintext highlighter-rouge">sudo</code>’s password prompt</li>
+</ol>
+
+<p>Please pay attention to the following things when you repeat those steps, as
+they will vary from node to node:</p>
+
+<ul>
+  <li>The IP addresses of your Raspberry Pi might change</li>
+  <li>You should use different host names for different nodes</li>
+  <li>You also need to assign different static IP addresses to different nodes</li>
+</ul>
+
+<p>When you are done, test if the Raspberry Pis can <code class="language-plaintext highlighter-rouge">ping</code> each other. If they
+can, then those nodes have been successfully configured so they can
+communicate, and you are ready to move on to the last step.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/ping.cast" poster="npt:6" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="create-and-copy-ssh-keys">Create and Copy SSH Keys</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">mpiexec</code> program partly relies on SSH to communicate with other nodes in a
+parallel job. When you connect to a remote host with the <code class="language-plaintext highlighter-rouge">ssh</code> command, you can
+use your password for authentication if the host accepts it. For <code class="language-plaintext highlighter-rouge">mpiexec</code>,
+however, it does not make sense to ask for your password. Suppose <code class="language-plaintext highlighter-rouge">mpiexec</code>
+would let you enter your password, then for a Raspberry Pi cluster with four
+nodes, you would have to type in your password three times; if you had more
+nodes, the process would be even more tedious. To work around this issue, you
+can generate some SSH keys and use them for authentication in place of
+passwords.</p>
+
+<p>First, select a node as the manager of the cluster. The rest of the nodes then
+become the workers. The MagPi article suggests using the first node, whose IP
+address is <code class="language-plaintext highlighter-rouge">10.0.0.1</code>, as the manager node.</p>
+
+<p>For each worker node, connect to it from the manager via SSH, and run the
+following commands:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>ssh-keygen
+<span class="gp">$</span><span class="w"> </span>ssh-copy-id 10.0.0.1
+</code></pre></div></div>
+
+<p>Press <code class="language-plaintext highlighter-rouge">Enter</code> for all questions asked by <code class="language-plaintext highlighter-rouge">ssh-keygen</code> so that the default
+option will be used. In particular, do not set a passphrase for the key.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/ssh-key-w2m.cast" poster="npt:16" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>Next, on the manager node, execute <code class="language-plaintext highlighter-rouge">ssh-keygen</code> once as you did on the worker
+nodes, and then run <code class="language-plaintext highlighter-rouge">ssh-copy-id</code> multiple times to copy the manager’s key to
+each worker. Here are the commands I ran on the manager of this particular
+cluster I was setting up. If you have assigned different IP addresses to your
+Raspberry Pis or have a different number of nodes, then you should change these
+commands accordingly.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>ssh-keygen
+<span class="gp">$</span><span class="w"> </span>ssh-copy-id 10.0.0.2
+<span class="gp">$</span><span class="w"> </span>ssh-copy-id 10.0.0.3
+<span class="gp">$</span><span class="w"> </span>ssh-copy-id 10.0.0.4
+</code></pre></div></div>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/ssh-key-m2w.cast" poster="npt:15" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<h2 id="done">Done!</h2>
+
+<p>Now that the SSH keys are successfully created and configured, you are finally
+ready to run programs in parallel with <code class="language-plaintext highlighter-rouge">mpiexec</code>. To test it, you can run the
+following command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>mpiexec <span class="nt">-n</span> 4 <span class="nt">--host</span> 10.0.0.1,10.0.0.2,10.0.0.3,10.0.0.4 <span class="nb">hostname</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">-n</code> option sets the number of nodes, and <code class="language-plaintext highlighter-rouge">--host</code> specifies the IP
+addresses or host names of the nodes that will run the program. If you have a
+different number of nodes or an alternative IP address configuration, then you
+need to change the command based on your setup.</p>
+
+<p>The expected output of the command is a list of your Raspberry Pis’ host names.
+The order of the host names are not deterministic, which is completely normal.
+As long as you can find all host names in any order, your configuration is
+correct.</p>
+
+<p><asciinema-player src="/assets/res/posts/2020-07-24-fedora-raspi-cluster/run-mpiexec.cast" poster="npt:21" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags#fedora" class="page__taxonomy-item" rel="tag">Fedora</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags#raspberry-pi" class="page__taxonomy-item" rel="tag">Raspberry Pi</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories#tutorial" class="page__taxonomy-item" rel="tag">Tutorial</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

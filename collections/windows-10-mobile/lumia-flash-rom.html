@@ -1,0 +1,387 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Nokia/Microsoft Lumia 使用 FFUTool 刷机教程 - Leo3418’s Personal Site</title>
+<meta name="description" content="安卓可以刷机这一事实，许多人都应该是知道的。比如说我们买了一部国行的 Samsung Galaxy S6，但不喜欢冗余的预装软件，或者是想使用 Google Play 服务，我们可以通过刷个港版、美版固件的方式来从另一种方式去解决。或者对于那些有第三方 ROM 的手机，我们还可以选择一个自己喜欢的 ROM 去刷入。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Leo3418's Personal Site">
+<meta property="og:title" content="Nokia/Microsoft Lumia 使用 FFUTool 刷机教程">
+<meta property="og:url" content="https://leo3418.github.io/collections/windows-10-mobile/lumia-flash-rom">
+
+
+  <meta property="og:description" content="安卓可以刷机这一事实，许多人都应该是知道的。比如说我们买了一部国行的 Samsung Galaxy S6，但不喜欢冗余的预装软件，或者是想使用 Google Play 服务，我们可以通过刷个港版、美版固件的方式来从另一种方式去解决。或者对于那些有第三方 ROM 的手机，我们还可以选择一个自己喜欢的 ROM 去刷入。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/collections/windows-10-mobile/lumia-flash-rom">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418's Personal Site Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Leo3418's Personal Site
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/tags">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories">Categories</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">Switch language</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+    <li class="lang-option-active masthead__menu-item">English</li>
+        
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/zh/collections/windows-10-mobile/lumia-flash-rom">
+            简体中文
+        </a>
+    </li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">Windows 10 Mobile 系列文章</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">Toggle menu</label>
+    <ul class="nav__items">
+        <li><a href="/collections/windows-10-mobile">Home</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/enable-burn-in-protection">打开 Windows 10 Mobile 烧屏保护功能的方法</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/lumia-flash-rom" class="active">Nokia/Microsoft Lumia 使用 FFUTool 刷机教程</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/stay-on-10586">让 Windows 10 Mobile 停留在 10586.545 不再更新的方法</a></li>
+    
+        <li><a href="/collections/windows-10-mobile/toggle-full-fs-access">打开与关闭 Windows 10 Mobile 完整文件系统访问权限的方法</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+<div class="notice--warning" id="no-translation-msg">
+    Sorry, this page is not available in English yet.
+</div>
+    <meta itemprop="headline" content="Nokia/Microsoft Lumia 使用 FFUTool 刷机教程">
+    <meta itemprop="description" content="安卓可以刷机这一事实，许多人都应该是知道的。比如说我们买了一部国行的 Samsung Galaxy S6，但不喜欢冗余的预装软件，或者是想使用 Google Play 服务，我们可以通过刷个港版、美版固件的方式来从另一种方式去解决。或者对于那些有第三方 ROM 的手机，我们还可以选择一个自己喜欢的 ROM 去刷入。">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Nokia/Microsoft Lumia 使用 FFUTool 刷机教程
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        
+<p>安卓可以刷机这一事实，许多人都应该是知道的。比如说我们买了一部国行的 Samsung Galaxy S6，但不喜欢冗余的预装软件，或者是想使用 Google Play 服务，我们可以通过刷个港版、美版固件的方式来从另一种方式去解决。或者对于那些有第三方 ROM 的手机，我们还可以选择一个自己喜欢的 ROM 去刷入。</p>
+
+<p>而对于 Windows Phone，我们显然不能刷入其它的 ROM，比如刷个安卓什么的，肯定不行。但我们可以像刚才叙述的前者那样，刷个其它地区的固件。Windows Phone 上的刷机一词就是指代这种刷机的方法。</p>
+
+<p>之前就有过给我的 Lumia 535 刷一个港版 ROM 的念头。当时刷机文件都下好了，唯独找不到刷机工具，被迫放弃。后来，我发现了 FFUTool，可以给所有 Lumia 手机（预装 Windows Phone 8 及以上者）刷机，又尝试了一下，终于成功告别坑爹的国行 ROM，刷入港版 ROM！想到找到这个方法也不容易（尽管现在网上已经能找到挺多教程了），于是决定写篇教程，介绍一下如何使用 FFUTool 给包括 Lumia 535 在内的所有 Lumia 设备刷机。</p>
+
+<h2 id="准备">准备</h2>
+
+<p>您需要：</p>
+<ul>
+  <li>一台 Lumia 设备</li>
+  <li>一根适合您手机的 USB 数据线</li>
+  <li>一台运行 Windows 的可以联网的电脑</li>
+</ul>
+
+<h2 id="步骤">步骤</h2>
+
+<ol>
+  <li>
+    <p><strong>下载固件。</strong>去找一个您想刷入的 ROM，扩展名是 .ffu。如果您不知道哪里可以下载，可以前往 <a href="http://www.lumiafirmware.com/">LumiaFirmware</a>。</p>
+  </li>
+  <li>
+    <p><strong>下载刷机工具 FFUTool。</strong>这是一个基于命令行的刷机软件，不过操作也相当简单。</p>
+  </li>
+  <li>
+    <p><strong>备份您手机上所有希望保留的文件。</strong>刷机会清除您手机上所有的文件，包括图片、音乐、视频，以及系统设置、联系人、短信、通话记录等。请务必备份所有您希望保留的文件。</p>
+  </li>
+  <li>
+    <p><strong>进入刷机模式。</strong>首先将手机关机。按住<strong>音量加键</strong>不放，然后按住<strong>电源键</strong>到手机震动后立即松开，但此时仍不要松开音量加键。等到手机显示如下画面的时候，就可以松开音量加键了。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/lumia-flash-rom/step4.jpg" alt="手机处于刷机模式下的屏幕画面" class="half" /></p>
+  </li>
+  <li>
+    <p><strong>连接手机并安装驱动。</strong>使用 USB 线将手机与电脑连接。看系统有没有提示正在安装驱动程序。在 Windows 7 及以前的版本上，系统会提示是否成功安装驱动程序。</p>
+
+    <p>如果连接后，系统没有发出任何提示，那么请更换 USB 插口或数据线。如果无法安装驱动，请先确保电脑已经联网，已经启用了 Windows Update，并且允许系统自动下载驱动程序软件，如果不行则更换电脑、换用不同操作系统。</p>
+  </li>
+  <li>
+    <p><strong>启动 FFUTool。</strong>在文件资源管理器里，找到 FFUTool 所在的文件夹，按下 <strong>Shift + F10</strong>，然后点击<strong>“在此处打开命令窗口”</strong>。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/lumia-flash-rom/step6.jpg" alt="在文件资源管理器中打开命令窗口" /></p>
+  </li>
+  <li>
+    <p><strong>检查电脑是否能识别手机。</strong>输入命令 <code class="language-plaintext highlighter-rouge">ffutool -list</code>，然后按下 Enter 键。只要看得到 <code class="language-plaintext highlighter-rouge">Devices found: 1</code>，就说明手机已经正确连接，准备好刷机了。如果没有类似的提示，请重新执行第 5 步。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/lumia-flash-rom/step7.jpg" alt="手机正确连接后命令行输出内容" /></p>
+  </li>
+  <li>
+    <p><strong>刷入固件。</strong>输入命令 <code class="language-plaintext highlighter-rouge">ffutool -flash [path]</code>，其中 <code class="language-plaintext highlighter-rouge">[path]</code>  是您下载的 FFU 文件所在的路径，然后按下 Enter 键。例如，我将 FFU 文件存储在了 F 盘的根目录下，文件名叫 RM1090.ffu，那么我就输入 <code class="language-plaintext highlighter-rouge">ffutool -flash F:\RM1090.ffu</code>。</p>
+
+    <p>输入命令后，会出现进度条、完成百分比和刷入速度。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/lumia-flash-rom/step8.jpg" alt="刷机过程中命令行输出内容" /></p>
+  </li>
+  <li>
+    <p><strong>等待刷机完成。</strong>等到进度条走满时，刷机就完成了，手机会自动重启，启动刷好的系统。</p>
+
+    <p><img src="/assets/img/collections/windows-10-mobile/lumia-flash-rom/step9.jpg" alt="刷机完成后命令行输出内容" /></p>
+  </li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/collections/windows-10-mobile/enable-burn-in-protection" class="pagination--pager" title="打开 Windows 10 Mobile 烧屏保护功能的方法
+">
+        <div class="pagination-guide-text">Previous</div>
+        <div class="pagination-title">打开 Windows 10 Mobile 烧屏保护功能的方法
+</div>
+      </a>
+    
+    
+      <a href="/collections/windows-10-mobile/stay-on-10586" class="pagination--pager" title="让 Windows 10 Mobile 停留在 10586.545 不再更新的方法
+">
+        <div class="pagination-guide-text">Next</div>
+        <div class="pagination-title">让 Windows 10 Mobile 停留在 10586.545 不再更新的方法
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="Build status" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            Site built on 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        Powered by:
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

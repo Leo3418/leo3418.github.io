@@ -1,0 +1,463 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>通过 Portage 打补丁以修复上游软件 Bug - Leo3418 的个人网站</title>
+<meta name="description" content="如果您经常关注与自由软件相关的一手资讯，您肯定或多或少地读到过某款软件的 bug 最近被修复、或者某款软件有了什么新功能和改进的新闻，然后发现这些 bug 修复和新功能在一段时间内无非就是空气，因为实际收到包含这些修复或者改进的新版本的时候往往可能已经过了很长时间。当一个修复 bug 或者添加新功能的补丁被完成后，需要先提交给上游开发者进行审核、测试和整合，然后要等上游发布下个版本的时候才能正式生效，最后还要等您的发行版将新的上游版本添加到发行版自己的软件仓库，您才能收到包含该 bug 修复或新功能的更新。比如说，我们假设可能在今年 3 月发布的 GNOME 40 里包含一项 bug 修复。如果您使用的是 Fedora Workstation，您需要等到大概 4 月底，Fedora 34 推出的时候才能收到这项 bug 修复。如果是 Gentoo 的话，那我估计起码得等到今年下半年了，因为最近几次 GNOME 更新，Gentoo 都是在上游推出新版本之后过了将近半年才推送给用户的。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="通过 Portage 打补丁以修复上游软件 Bug">
+<meta property="og:url" content="https://leo3418.github.io/2021/03/01/portage-user-patches.html">
+
+
+  <meta property="og:description" content="如果您经常关注与自由软件相关的一手资讯，您肯定或多或少地读到过某款软件的 bug 最近被修复、或者某款软件有了什么新功能和改进的新闻，然后发现这些 bug 修复和新功能在一段时间内无非就是空气，因为实际收到包含这些修复或者改进的新版本的时候往往可能已经过了很长时间。当一个修复 bug 或者添加新功能的补丁被完成后，需要先提交给上游开发者进行审核、测试和整合，然后要等上游发布下个版本的时候才能正式生效，最后还要等您的发行版将新的上游版本添加到发行版自己的软件仓库，您才能收到包含该 bug 修复或新功能的更新。比如说，我们假设可能在今年 3 月发布的 GNOME 40 里包含一项 bug 修复。如果您使用的是 Fedora Workstation，您需要等到大概 4 月底，Fedora 34 推出的时候才能收到这项 bug 修复。如果是 Gentoo 的话，那我估计起码得等到今年下半年了，因为最近几次 GNOME 更新，Gentoo 都是在上游推出新版本之后过了将近半年才推送给用户的。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-01T00:00:00-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/2021/03/01/portage-user-patches.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+<link rel="stylesheet"
+      href="/assets/css/asciinema-player.css">
+<script type="text/javascript"
+        src="/assets/js/asciinema-player.js"></script>
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/2021/03/01/portage-user-patches.html">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="通过 Portage 打补丁以修复上游软件 Bug">
+    <meta itemprop="description" content="如果您经常关注与自由软件相关的一手资讯，您肯定或多或少地读到过某款软件的 bug 最近被修复、或者某款软件有了什么新功能和改进的新闻，然后发现这些 bug 修复和新功能在一段时间内无非就是空气，因为实际收到包含这些修复或者改进的新版本的时候往往可能已经过了很长时间。当一个修复 bug 或者添加新功能的补丁被完成后，需要先提交给上游开发者进行审核、测试和整合，然后要等上游发布下个版本的时候才能正式生效，最后还要等您的发行版将新的上游版本添加到发行版自己的软件仓库，您才能收到包含该 bug 修复或新功能的更新。比如说，我们假设可能在今年 3 月发布的 GNOME 40 里包含一项 bug 修复。如果您使用的是 Fedora Workstation，您需要等到大概 4 月底，Fedora 34 推出的时候才能收到这项 bug 修复。如果是 Gentoo 的话，那我估计起码得等到今年下半年了，因为最近几次 GNOME 更新，Gentoo 都是在上游推出新版本之后过了将近半年才推送给用户的。">
+    <meta itemprop="datePublished" content="2021-03-01T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">通过 Portage 打补丁以修复上游软件 Bug
+</h1>
+          
+
+  <p class="page__meta">
+    
+      
+      <span class="page__meta-date">
+        <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
+        <time datetime="2021-03-01T00:00:00-06:00">2021-03-01</time>
+      </span>
+    
+
+    
+
+    
+
+    
+
+    
+  </p>
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> 目录</h4></header>
+              <ul class="toc__menu"><li><a href="#systemd-rfkill-单元启动失败">systemd-rfkill 单元启动失败</a></li><li><a href="#gnome-和-systemd-用户单元造成关机-2-分钟延迟">GNOME 和 systemd 用户单元造成关机 2 分钟延迟</a></li><li><a href="#使用-amd-锐龙-4000-系列-cpu-的笔记本运行-linux-511-时关机后自动重新开机">使用 AMD 锐龙 4000 系列 CPU 的笔记本运行 Linux 5.11 时关机后自动重新开机</a></li><li><a href="#总结">总结</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        
+<p>如果您经常关注与自由软件相关的一手资讯，您肯定或多或少地读到过某款软件的 bug 最近被修复、或者某款软件有了什么新功能和改进的新闻，然后发现这些 bug 修复和新功能在一段时间内无非就是空气，因为实际收到包含这些修复或者改进的新版本的时候往往可能已经过了很长时间。当一个修复 bug 或者添加新功能的补丁被完成后，需要先提交给上游开发者进行审核、测试和整合，然后要等上游发布下个版本的时候才能正式生效，最后还要等您的发行版将新的上游版本添加到发行版自己的软件仓库，您才能收到包含该 bug 修复或新功能的更新。比如说，我们假设可能在今年 3 月发布的 GNOME 40 里包含一项 bug 修复。如果您使用的是 Fedora Workstation，您需要等到大概 4 月底，Fedora 34 推出的时候才能收到这项 bug 修复。如果是 Gentoo 的话，那我估计起码得等到今年下半年了，因为最近几次 GNOME 更新，Gentoo 都是在上游推出新版本之后过了将近半年才推送给用户的。</p>
+
+<p>作为一名普通用户，对于软件上游的新版本，我们能做的似乎只有等待。但是这一等很可能就是好几个月。如果您遇到了妨碍您系统的正常运行和使用的 bug，那么上游推出 bug 的修复补丁之后，您肯定是希望立刻应用该补丁。对于一个严重影响日常使用的 bug，这几个月的更新推送耗时可能根本等不起。</p>
+
+<p>但是，如果您使用 Gentoo 的话，得益于大部分软件包都需要自己编译的特点，您可以在编译的时候自行将上游补丁应用到被编译的软件源码，从而在 Gentoo 推送包含该补丁的更新之前就解决该 bug。Portage 的<a href="https://wiki.gentoo.org/wiki//etc/portage/patches">用户补丁</a>（英文网页）功能允许用户轻松地在通过系统软件包管理器安装软件时应用自己的补丁。</p>
+
+<p>上周五，我在进行每周例行的系统更新的时候，竟然一连串遇到三个来自不同软件包的 bug！这些 bug 其实都已经有了来自上游的修复补丁，但是因为上面描述的由上游新版本发布以及发行版方面造成的延迟，如果我自己什么也不做的话，那估计就要过好几周乃至好几个月才能接收到相关的软件更新了。我在这篇文章里就将以这三个 bug 为例，演示如何借助 Portage 的用户补丁功能，自行应用上游补丁，即刻修复软件 bug。妈妈再也不用担心我每天盼星星盼月亮，就是盼不来软件 bug 修复的推送了。</p>
+
+<h2 id="systemd-rfkill-单元启动失败"><code class="language-plaintext highlighter-rouge">systemd-rfkill</code> 单元启动失败</h2>
+
+<ul>
+  <li>受影响的软件包：<a href="https://packages.gentoo.org/packages/sys-apps/systemd"><code class="language-plaintext highlighter-rouge">sys-apps/systemd</code></a></li>
+  <li>Bug 报告：<a href="https://github.com/systemd/systemd/issues/18677">https://github.com/systemd/systemd/issues/18677</a></li>
+  <li>修复补丁：<a href="https://github.com/systemd/systemd/pull/18679">https://github.com/systemd/systemd/pull/18679</a></li>
+</ul>
+
+<p>这次系统更新中，systemd 被从 246 升级到了 247。更新完后，我就在开机时留意到了一个一闪而过的单元失败提示；进入系统后一查，发现是 <code class="language-plaintext highlighter-rouge">systemd-rfkill.service</code>：</p>
+
+<p><img src="/assets/img/posts/2021-03-01-portage-user-patches/rfkill-5.11.png" alt="Linux 5.11 上 systemd-rfkill.service 的状态" /></p>
+
+<p>我一开始自然以为是 systemd 更新造成的问题，于是回滚到了 systemd 246，但是问题依然存在。这样看来，这个错误的始作俑者并不是新的 systemd 版本中的退化，而多半是其它近期有变化的系统组件。于是我想到了内核，因为近期我也是刚从 5.10 的内核升级到了 5.11。我恰巧留了一个之前编译的 5.10 内核，于是就用 5.10.17 的内核加 systemd 247 启动了系统，看还会不会发生同样的错误。这次，虽然 <code class="language-plaintext highlighter-rouge">systemd-rfkill.service</code> 不再失败了，但是当我查看它的详细状态的时候，还是看到了几条错误信息。也就是说，其实这个问题在我还在用 5.10 内核的时候就有了，只不过当时并没有明显的报错，所以我一直没有注意到罢了。</p>
+
+<p><img src="/assets/img/posts/2021-03-01-portage-user-patches/rfkill-5.10.png" alt="Linux 5.10 上 systemd-rfkill.service 的状态" /></p>
+
+<p>我就把这些错误信息拿到网上搜索了一下，于是就来到了上面链接对应的 GitHub 上的 bug 报告。报告里描述的错误信息和我看到的错误完全一致。幸运的是，那个 GitHub issue 正好有一个对应的 pull request，而且还已经被合并了，所以我决定应用一下那个 pull request 里的补丁，来尝试解决这个问题。</p>
+
+<p>那么问题来了，怎样把一个 GitHub pull request 变成一个补丁呢？无独有偶，我当时看这个 pull request 的时候，网页下方正好有一个完美回答我的问题的提示，说是直接往网址后面加 <code class="language-plaintext highlighter-rouge">.patch</code> 后缀即可：</p>
+
+<p><img src="/assets/img/posts/2021-03-01-portage-user-patches/github-pr-to-patch.jpg" alt="如何下载 GitHub pull request 对应的补丁的小提示" /></p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- https://github.com/systemd/systemd/pull/18679
+</span><span class="gi">+ https://github.com/systemd/systemd/pull/18679.patch
+</span></code></pre></div></div>
+
+<p>这个补丁是要应用给 <code class="language-plaintext highlighter-rouge">sys-apps/systemd</code> 的，因此应该被放置在 <code class="language-plaintext highlighter-rouge">/etc/portage/patches/sys-apps/systemd</code> 路径下。您还可以在路径后面<a href="https://wiki.gentoo.org/wiki//etc/portage/patches#Adding_user_patches">加上版本号信息</a>，可以只对 systemd 247 应用该补丁，不过这不是必须的。我就选择了不指定具体的版本，因为我实测这个补丁与 systemd 246 和 247 都兼容。不过，这也意味着等到 Gentoo 推送了来自上游的新 systemd 版本，并且该版本中已经应用了这个补丁的时候，我需要将该补丁删除。</p>
+
+<p><asciinema-player src="/assets/res/posts/2021-03-01-portage-user-patches/portage-add-patch.cast" poster="data:text/plain,从命令行添加用户补丁" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>补丁就位后，需要重新构建软件包，才能将其应用：</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>emerge <span class="nt">--ask</span> <span class="nt">--oneshot</span> sys-apps/systemd
+</code></pre></div></div>
+
+<p>如果 <code class="language-plaintext highlighter-rouge">emerge</code> 命令输出中有“User patches applied”字样，就说明补丁成功应用了：</p>
+
+<p><asciinema-player src="/assets/res/posts/2021-03-01-portage-user-patches/emerge-patch-applied.cast" poster="data:text/plain,重新构建软件包
+            \x1b[G
+            \x1b[G注意：我这里为了精简命令输出，用了 '--quiet' 选项，但这个选项不是必须的" theme="tango" font-size="small" speed="1" start-at="0"></asciinema-player></p>
+
+<p>重新构建完 systemd 后，我重启了系统，<code class="language-plaintext highlighter-rouge">systemd-rfkill.service</code> 就不再报错，可以正常启动了。</p>
+
+<h2 id="gnome-和-systemd-用户单元造成关机-2-分钟延迟">GNOME 和 systemd 用户单元造成关机 2 分钟延迟</h2>
+
+<ul>
+  <li>受影响的软件包：<a href="https://packages.gentoo.org/packages/gnome-base/gnome-session"><code class="language-plaintext highlighter-rouge">gnome-base/gnome-session</code></a></li>
+  <li>Bug 报告：<a href="https://gitlab.gnome.org/GNOME/gnome-session/-/issues/74">https://gitlab.gnome.org/GNOME/gnome-session/-/issues/74</a></li>
+  <li>修复补丁：<a href="https://gitlab.gnome.org/GNOME/gnome-session/-/merge_requests/55">https://gitlab.gnome.org/GNOME/gnome-session/-/merge_requests/55</a></li>
+</ul>
+
+<p>其实 <code class="language-plaintext highlighter-rouge">systemd-rfkill.service</code> 启动失败并没有造成明显的问题，所以即使我一时修复不了也罢，系统仍然能正常使用。但是另一个问题在关机的时候出现了：一个关机任务会卡住。尽管系统会给它 2 分钟的时间让它完成，但它是彻底卡住了，根本无法在给定的时间内完成，所以一直都是 2 分钟过后，这个任务因为超时被强制结束，关机过程才得以继续。这样一来，实际就相当于关机时间被强制加长了 2 分钟，可以说是已经影响到了日常的使用，必须尽快解决。</p>
+
+<p><img src="/assets/img/posts/2021-03-01-portage-user-patches/poweroff-delay.jpg" alt="系统关机时卡在一个关机任务上" class="half" /></p>
+
+<p>与前面服务启动失败的 bug 不同，这个问题在我回滚到 systemd 246 后就消失了，所以很可能是 systemd 247 中的什么变动导致了它的出现。因此，我在网上搜索“<em>systemd 247 a stop job is running for user manager for uid</em>”，然后就找到了上面链接对应的 GNOME GitLab 上的 bug 报告。从报告里面用户和开发者之间的讨论来看，这个 bug 会在用户使用 GNOME 和 <a href="https://wiki.archlinux.org/index.php/Systemd_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)/User_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">systemd 用户单元</a>时出现，并且的确是 systemd 247 中的一项更改造成的，不过 bug 的修复却是在 GNOME 中进行的。</p>
+
+<p>同样地，这个 bug 报告也有一个关联的 merge request（GitLab 对 pull request 的叫法）。GitLab 把下载 merge request 对应的补丁的功能设计得更明显，页面上直接放了一个下载按钮。这里无论是下载“Email patches”还是“Plain diff”都可以，Portage 都会接受，但我推荐“Email patches”，因为它带 Git 提交信息，在日后您忘了这个补丁是干什么的时候可以帮您回想起它的作用。</p>
+
+<p><img src="/assets/img/posts/2021-03-01-portage-user-patches/gitlab-mr-to-patch.png" alt="下载 GitLab merge request 对应的补丁" /></p>
+
+<p>安装这个补丁的方法和上一节中介绍的方法一样。我重新构建了软件包之后，第一次关机仍然会有这 2 分钟的延迟，但是之后再关机就非常顺畅了，没有任何问题。</p>
+
+<p>那如果我不通过 Portage 自己应用修复这个 bug 的补丁，而是等更新到 GNOME 40 来解决这个问题的话，大概要等多久呢？现在最新的 GNOME 上游版本，也就是 GNOME 3.38，在 Gentoo 上仍然还没有推出呢。目前 Gentoo 自带的最新版本是 3.36，是 2020 年 8 月正式推送给 Gentoo 用户的，也就是上游发布后过了近 5 个月才推送的。因此，我估计要直到今年 9 月份才能收到这个 bug 的修复，也就意味着接下来 6 个月我都得忍受这个关机延迟 2 分钟的问题。</p>
+
+<h2 id="使用-amd-锐龙-4000-系列-cpu-的笔记本运行-linux-511-时关机后自动重新开机">使用 AMD 锐龙 4000 系列 CPU 的笔记本运行 Linux 5.11 时关机后自动重新开机</h2>
+
+<ul>
+  <li>受影响的软件包：Linux 内核</li>
+  <li>Bug 报告：<a href="https://gitlab.freedesktop.org/drm/amd/-/issues/1499">https://gitlab.freedesktop.org/drm/amd/-/issues/1499</a></li>
+  <li>修复补丁：<a href="https://gitlab.freedesktop.org/drm/amd/uploads/b7b5a131c5df5143cb37cc6f9b784871/0001-drm-amdgpu-fix-shutdown-with-s0ix.patch">https://gitlab.freedesktop.org/drm/amd/uploads/b7b5a131c5df5143cb37cc6f9b784871/0001-drm-amdgpu-fix-shutdown-with-s0ix.patch</a></li>
+</ul>
+
+<p>说实话，其实关机 2 分钟延迟也不是完全不能忍，用这个时间起来活动一下筋骨、放松一会儿，也挺好的。但是这 2 分钟熬过去就算完了吗？并没有：当系统完成关机、我笔记本的电源指示灯熄灭后，没几秒钟，笔记本竟然在没有任何操控的情况下，自己重新开机了！</p>
+
+<p>这个现象只会在 Linux 5.11 上出现，我用 5.10 内核启动就不会遇到这个问题。和前面两个 bug 一样，我依然找到了一个这个 bug 的报告。报告者反映称其一台宏碁 SF314-42 笔记本，配置 Ryzen 5 4500U、运行 Linux 5.11 内核，在关机时会卡住或者自动重启。我的配置是惠普 Envy x360 13-ay0000 和 Ryzen 7 4700U，并且我是只看到过自动重启。不过，报告者和我用的内核版本一样，并且我们的笔记本上的 CPU 还都是 Renoir 架构的锐龙 4000 系笔记本 CPU 系列。报告者还试图找出是 5.11 内核中的哪个改动造成了这个问题，最后发现是一个和 AMD 平台 <a href="https://www.phoronix.com/scan.php?page=news_item&amp;px=AMD-S2idle-ACPI-Linux-5.11">s0ix 睡眠支持</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup>相关的 Git 提交背锅。我本来寄希望于 Linux 5.11 来解决 Renoir 平台上存在已久、并且我已面对多时的 s0ix 睡眠问题，但是很遗憾，正如<a href="https://gitlab.freedesktop.org/drm/amd/-/issues/1230">用户所反馈的</a>，新版本的内核不仅没能解决这个问题，还加剧了不稳定性。</p>
+
+<p>Bug 报告中一名内核开发者提供的补丁成功地消除了这个问题：我启动应用该补丁的内核后，关机功能就能恢复正常，不再自动重启了。s0ix 睡眠和 Linux 5.9 与 5.10 时一样，依然存在问题，但至少没有任何其它的退化了。除了要等到 5.13 才能看到下次对 s0ix 问题的修复外，我也没什么可抱怨的了。</p>
+
+<p>我相信这个补丁很快就会被并入 Linux 5.11 了。现在这个补丁只是<a href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=b092b19602cfd47de1eeeb3a1b03822afd86b136">出现</a>在了 Linux 5.12-rc1 的改动中，还没被应用到 5.11，也就意味着在 5.11.1 和 5.11.2 上还是有这个 bug 的。不过，一个已经被并入 RC 版本内核的更改应该也会被很快被移植到稳定版本内核分支中的。</p>
+
+<p>由于 Gentoo 提供好几个不同的内核软件包，根据您选用的内核包的不同，补丁安装路径也不同。我个人用的是 <a href="https://packages.gentoo.org/packages/sys-kernel/vanilla-kernel"><code class="language-plaintext highlighter-rouge">sys-kernel/vanilla-kernel</code></a>，补丁就应该放在 <code class="language-plaintext highlighter-rouge">/etc/portage/patches/sys-kernel/vanilla-kernel</code> 中。如果您使用的内核包不一样，您也应相应地将该补丁放在不同的路径下。如果您用的是已经预编译的发行版内核 <a href="https://packages.gentoo.org/packages/sys-kernel/gentoo-kernel-bin"><code class="language-plaintext highlighter-rouge">sys-kernel/gentoo-kernel-bin</code></a>，您就得换用一个需要您自己编译内核的软件包才能应用自己的内核补丁。</p>
+
+<h2 id="总结">总结</h2>
+
+<p>可以看出，这次系统更新中升级的几个软件包的确造成了系统不稳定，以至于我需要给三个不同的软件包打额外的补丁，才能回到和以前一样稳定的状态。但应用了补丁之后，这些 bug 都能立即得到有效解决，我也不需要苦等软件上游发布新版本、或者发行版推送新版本了。如果我用的是一个普通的基于二进制软件包的发行版，我就得依赖发行版的维护人员及时推送包含 bug 修复的更新才能解决这类 bug 了，因为把用户自己的补丁整合进发行版提供的软件包是项困难的工作。但是在 Gentoo 上，我就可以利用 Portage 的用户补丁功能，通过软件包管理器来修改安装在我系统上的程序，整个过程也既简单又流畅。</p>
+
+<p>这篇文章应该能让您大致体会到为运行在各种不同平台的自由软件项目寻找并下载补丁的过程是什么样的了。首先要做的应该是确定是哪个软件的什么版本导致的问题。究竟是系统内核，init，还是用户层的程序？回滚到上一个版本后，问题是会消失还是依旧存在？接下来就可以善用搜索引擎，用软件包名称、出问题的版本以及几个概括问题情况的关键词来搜索。如果别人也碰到了同样的问题，您就应该能看到相关的 bug 报告。然后，您就可以留意一下有没有相关的补丁、pull request 或者 merge request。这篇文章里举的三个例子恰好也分别展示了怎么从一个 GitHub pull request、一个 GitLab merge request 以及一个 URL 链接下载补丁。</p>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+
+      <p>s0ix 是微软大力推广的一种新型睡眠机制，被微软称为“<a href="https://docs.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby">Modern Standby</a>”。我在微软自己的文档网站上并没有找到它的官方中文译名。如果您愿意坐和放宽的话，您可以点击<a href="https://docs.microsoft.com/zh-cn/windows-hardware/design/device-experiences/modern-standby">这个链接</a>，来看什么是微软的机器翻译对这一个概念，这通常不会太久。我在 B 站随便点了几个提到这项机制的视频，他们都管这项技术叫“快速唤醒”，那我就姑且先用这个名字了。快速唤醒的目的就是让笔记本的睡眠表现更加接近智能手机。</p>
+
+      <p>过去二十多年中，笔记本和许多台式机都是通过进入 <a href="https://zh.wikipedia.org/zh-cn/%E9%AB%98%E7%BA%A7%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%94%B5%E6%BA%90%E6%8E%A5%E5%8F%A3#%E5%85%A8%E5%B1%80%E7%8A%B6%E6%80%81%EF%BC%88Global_System_States%EF%BC%8CG-State%EF%BC%89">ACPI S3 状态</a>实现的睡眠。在 S3 状态下，包括 CPU 和网卡在内的硬件的电源都会被断开，只有内存的供电会被保持。这样的睡眠机制并不能让笔记本像手机那样，待机的时候仍然能继续接收推送消息、以及播放音乐等，毕竟 CPU 和网卡之类的硬件都被关闭了。但是，在 s0ix 状态下，CPU 不会被完全关闭，顶多是进入低功耗模式；包括网卡在内的一些其它硬件也会保持在运行状态。这样一来，笔记本就能在睡眠时保持网络连接，继续接收消息推送了。</p>
+
+      <p>作为一个历史悠久的标准，Linux 对 ACPI S3 的支持肯定没有任何问题。而 s0ix 睡眠仍然是个比较新的概念，而且基本是一个微软闭门造车的产物，并不是作为一个通用标准开发的，所以 Linux 对其支持很差。</p>
+
+      <p>更为雪上加霜的是，s0ix 和 S3 从技术上就是互不兼容的。许多笔记本厂商都买了微软的账，在他们的产品上使用了 s0ix 睡眠方案；因为 s0ix 和 S3 相斥，所以这些产品一般都不支持 S3。这对 GNU/Linux 用户造成了相当大的不便。有些厂商就很好，在 BIOS 里提供了一个允许在 S3 和 s0ix 间切换的选项，但并不是所有厂商都这么良心。所以，如果您购买的机型使用的是 s0ix 睡眠，并且 BIOS 设置里不提供这样的切换选项的话，您应做好接受 Linux 睡眠问题的准备。 <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/tags#gentoo" class="page__taxonomy-item" rel="tag">Gentoo</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/zh/tags#gnu-linux" class="page__taxonomy-item" rel="tag">GNU/Linux</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/zh/categories#%E5%8D%9A%E5%AE%A2" class="page__taxonomy-item" rel="tag">博客</a>
+    
+    </span>
+  </p>
+
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>

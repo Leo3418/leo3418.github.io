@@ -1,0 +1,409 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>配置 Polyglot - Leo3418 的个人网站</title>
+<meta name="description" content="配置 Polyglot 的第一步是安装它，安装操作和普通的 Jekyll 插件是一样的，没有什么特别之处。Polyglot 的 gem 叫做 jekyll-polyglot。">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh">
+<meta property="og:site_name" content="Leo3418 的个人网站">
+<meta property="og:title" content="配置 Polyglot">
+<meta property="og:url" content="https://leo3418.github.io/collections/multilingual-jekyll-site/set-up-polyglot">
+
+
+  <meta property="og:description" content="配置 Polyglot 的第一步是安装它，安装操作和普通的 Jekyll 插件是一样的，没有什么特别之处。Polyglot 的 gem 叫做 jekyll-polyglot。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-03-05T15:44:59-06:00">
+
+
+
+
+
+
+<link rel="canonical" href="https://leo3418.github.io/zh/collections/multilingual-jekyll-site/set-up-polyglot">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": null,
+      "url": "https://leo3418.github.io/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+  <link href="/zh/feed.xml" type="application/atom+xml" rel="alternate" title="Leo3418 的个人网站 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">跳转链接</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">转到主导航栏</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">转到内容</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">转到底部</a></li>
+  </ul>
+</nav>
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/zh/">
+          Leo3418 的个人网站
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/zh/tags">标签</a>
+            </li><li class="masthead__menu-item">
+              <a href="/zh/categories">分类</a>
+            </li></ul>
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">切换菜单</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zm0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1zM3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu hidden-links hidden"></ul>
+        
+        <button class="lang-switcher-toggle" type="button">
+          <span class="visually-hidden">切换语言</span>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0V0z" fill="none"/><path d="M12.65 15.67c.14-.36.05-.77-.23-1.05l-2.09-2.06.03-.03c1.74-1.94 2.98-4.17 3.71-6.53h1.94c.54 0 .99-.45.99-.99v-.02c0-.54-.45-.99-.99-.99H10V3c0-.55-.45-1-1-1s-1 .45-1 1v1H1.99c-.54 0-.99.45-.99.99 0 .55.45.99.99.99h10.18C11.5 7.92 10.44 9.75 9 11.35c-.81-.89-1.49-1.86-2.06-2.88-.16-.29-.45-.47-.78-.47-.69 0-1.13.75-.79 1.35.63 1.13 1.4 2.21 2.3 3.21L3.3 16.87c-.4.39-.4 1.03 0 1.42.39.39 1.02.39 1.42 0L9 14l2.02 2.02c.51.51 1.38.32 1.63-.35zM17.5 10c-.6 0-1.14.37-1.35.94l-3.67 9.8c-.24.61.22 1.26.87 1.26.39 0 .74-.24.88-.61l.89-2.39h4.75l.9 2.39c.14.36.49.61.88.61.65 0 1.11-.65.88-1.26l-3.67-9.8c-.22-.57-.76-.94-1.36-.94zm-1.62 7l1.62-4.33L19.12 17h-3.24z"/>
+          </svg>
+        </button>
+        <ul class="floating-menu lang-switcher hidden">
+            <li class="lang-option-inactive masthead__menu-item">
+        <a href="/collections/multilingual-jekyll-site/set-up-polyglot">
+            English
+        </a>
+    </li>
+        
+    <li class="lang-option-active masthead__menu-item">简体中文</li>
+        </ul>
+
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  <nav class="nav__list">
+    <h3 class="nav__title" style="padding-left: 0;">建立多语言 Jekyll 网站</h3>
+    <input id="ac-toc" name="accordion-toc" type="checkbox" />
+    <label for="ac-toc">切换菜单</label>
+    <ul class="nav__items">
+        <li><a href="/zh/collections/multilingual-jekyll-site">主页</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-jekyll">配置 Jekyll</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/choose-multilingual-plugin">挑选多语言插件</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/set-up-polyglot" class="active">配置 Polyglot</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/make-a-test-post">新建一篇测试帖</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/improve-l10n-and-ux">改善本地化与用户体验</a></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-site-title">本地化网站标题</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-language-switcher">添加语言切换器</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-strings">本地化字符串</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/add-no-translation-msg">添加“无翻译”提示信息</a></li></ul></li>
+    <li><ul><li><a href="/zh/collections/multilingual-jekyll-site/localize-date-format">本地化日期格式</a></li></ul></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/host-on-github-pages">在 GitHub Pages 上托管网站</a></li>
+    
+        <li><a href="/zh/collections/multilingual-jekyll-site/closing-words">结束语</a></li>
+    </ul>
+</nav>
+
+  </div>
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <meta itemprop="headline" content="配置 Polyglot">
+    <meta itemprop="description" content="配置 Polyglot 的第一步是安装它，安装操作和普通的 Jekyll 插件是一样的，没有什么特别之处。Polyglot 的 gem 叫做 jekyll-polyglot。">
+    <meta itemprop="datePublished" content="2021-03-05T15:44:59-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">配置 Polyglot
+</h1>
+          
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>配置 Polyglot 的第一步是安装它，安装操作和普通的 Jekyll 插件是一样的，没有什么特别之处。Polyglot 的 gem 叫做 <code class="language-plaintext highlighter-rouge">jekyll-polyglot</code>。</p>
+
+<p>以下是几种常见的安装 Jekyll 插件的方法：</p>
+
+<ol>
+  <li>
+    <p>直接将插件的 gem 名称加入网站的 <code class="language-plaintext highlighter-rouge">Gemfile</code> 文件当中：</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s2">"jekyll-polyglot"</span>
+</code></pre></div>    </div>
+
+    <p>然后在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中启用插件：</p>
+
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-polyglot</span>
+</code></pre></div>    </div>
+
+    <p>最后再运行一下 <code class="language-plaintext highlighter-rouge">bundle install</code> 即可。</p>
+
+    <p>如果您要在不同的机器和环境中编辑、构建和维护您的网站，比如说好几台电脑上，您自己的电脑和一台服务器，或者自己的电脑和 CI 环境这些场景，那么推荐使用这种方法安装插件。</p>
+  </li>
+  <li>
+    <p>在 <code class="language-plaintext highlighter-rouge">Gemfile</code> 里新建一个名叫 <code class="language-plaintext highlighter-rouge">:jekyll_plugins</code> 的 Bundle 组，然后在其中加入插件的名称：</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="ss">:jekyll_plugins</span> <span class="k">do</span>
+    <span class="n">gem</span> <span class="s2">"jekyll-polyglot"</span>
+<span class="k">end</span>
+</code></pre></div>    </div>
+
+    <p>如果采用这种方法的话，就不需要修改 <code class="language-plaintext highlighter-rouge">_config.yml</code> 了，直接运行 <code class="language-plaintext highlighter-rouge">bundle install</code> 就可以完成安装。</p>
+
+    <p>用这种方法需要注意的一点是，即使使用 <code class="language-plaintext highlighter-rouge">--safe</code> 参数以安全模式启动 Jekyll，以此法安装的插件仍然会被加载。</p>
+  </li>
+  <li>
+    <p>仅在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中注册插件：</p>
+
+    <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-polyglot</span>
+</code></pre></div>    </div>
+
+    <p>然后使用 <code class="language-plaintext highlighter-rouge">gem install jekyll-polyglot</code> 命令安装。</p>
+
+    <p>这种安装方式的缺点是，您在别的机器上运行 <code class="language-plaintext highlighter-rouge">bundle</code> 的时候不会自动安装插件，必须重新运行 <code class="language-plaintext highlighter-rouge">gem</code> 命令才能安装。</p>
+  </li>
+</ol>
+
+<p>安装好插件后，在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中加入 Polyglot 的配置选项：</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">languages</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">en"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">zh"</span><span class="pi">]</span>
+<span class="na">default_lang</span><span class="pi">:</span> <span class="s2">"</span><span class="s">en"</span>
+<span class="na">exclude_from_localization</span><span class="pi">:</span> <span class="pi">[</span><span class="s2">"</span><span class="s">assets/css"</span><span class="pi">,</span> <span class="s2">"</span><span class="s">assets/img"</span><span class="pi">]</span>
+<span class="na">parallel_localization</span><span class="pi">:</span> <span class="no">true</span>
+
+<span class="na">sass</span><span class="pi">:</span>
+  <span class="na">sourcemap</span><span class="pi">:</span> <span class="s">never</span>
+</code></pre></div></div>
+
+<p>最开始的四行是 Polyglot 的选项：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">languages</code> 是包含您网站支持的语言的数组；语言使用 <a href="https://zh.wikipedia.org/wiki/ISO_639-1%E4%BB%A3%E7%A0%81%E8%A1%A8">ISO 639-1 代码</a>表示。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">default_lang</code> 是您网站的默认语言的语言代码。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">exclude_from_localization</code> 是所有不需要本地化的文件路径的数组。建议至少在这里加入您网站存放图片的路径，这样就不需要为每种语言都单独复制一份图片了，节省空间。</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">parallel_localization</code> 用于设定在生成网站时是否多线程并发生成。根据 <a href="https://github.com/untra/polyglot/blob/1.3.2/README.md#compatibility">Polyglot 文档</a>的描述，在 Windows 上可能需要把此选项设为 <code class="language-plaintext highlighter-rouge">false</code>。</p>
+  </li>
+</ul>
+
+<p>至于 <code class="language-plaintext highlighter-rouge">sass.sourcemap</code> 选项，是 Polyglot 和 Jekyll 4.0 的一处不兼容 bug 的<a href="https://github.com/untra/polyglot/issues/107#issuecomment-598274075">临时解决方案</a>。虽然我不知道那个 bug 到底是怎么回事，也不清楚添加这么一条设定会起什么效果，但我用这个选项有一段时间了，尚未遇到明显问题。</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+      </footer>
+
+      
+
+      
+
+  <nav class="pagination">
+    
+      <a href="/zh/collections/multilingual-jekyll-site/choose-multilingual-plugin" class="pagination--pager" title="挑选多语言插件
+">
+        <div class="pagination-guide-text">上一页</div>
+        <div class="pagination-title">挑选多语言插件
+</div>
+      </a>
+    
+    
+      <a href="/zh/collections/multilingual-jekyll-site/make-a-test-post" class="pagination--pager" title="新建一篇测试帖
+">
+        <div class="pagination-guide-text">下一页</div>
+        <div class="pagination-title">新建一篇测试帖
+</div>
+      </a>
+    
+  </nav>
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <div class="custom-footer"><div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="构建状态" src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push" />
+            </a>
+        </p>
+        <p class="build-time">
+            构建于 2021-03-05 15:44:59 -0600
+        </p>
+    </div>
+    <div class="powered-by">
+        此网站由以下技术驱动：
+        <ul>
+            <li><a href="https://jekyllrb.com/">Jekyll</a></li>
+            <li><a href="https://github.com/untra/polyglot/">jekyll-polyglot</a></li>
+            <li><a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes</a></li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>
+<div class="license footer-block" id="cc-by-sa-4_0">
+    <p class="license-logo">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="知识共享许可协议"
+                 style="border-width:0"
+                 src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
+        </a>
+    </p>
+    <p class="license-desc">
+        此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。
+    </p>
+</div>
+</div>
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>关注:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/Leo3418/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    
+      <li><a href="/zh/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/main.js"></script>
+  
+
+
+  </body>
+</html>
