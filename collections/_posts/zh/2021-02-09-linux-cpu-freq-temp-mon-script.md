@@ -78,7 +78,7 @@ echo "cpu temperature : ${cpu_temp}"
 
 {% include asciinema-player.html name="intel-7200u.cast" poster="npt:7.5" %}
 
-我甚至还在几台 `aarch64` 设备上测试了这个脚本。CPU 频率无法读取，但 CPU 温度仍然能正常显示。我测试的设备为运行 Fedora 的 Linux 5.10.9 内核的树莓派 4、和装了 [Gentoo Android][gentoo-android] 的跑着第三方 ROM 的 3.10 内核的 Nexus 9 平板。
+我甚至还在几台 `aarch64` 设备上测试了这个脚本。CPU 频率无法读取，但 CPU 温度仍然能正常显示。我测试的设备为运行 Fedora 33 的 Linux 5.10.9 内核的树莓派 4、和装了 [Gentoo Android][gentoo-android] 的跑着第三方 ROM 的 3.10 内核的 Nexus 9 平板。
 
 [gentoo-android]: https://wiki.gentoo.org/wiki/Project:Android
 
