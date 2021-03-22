@@ -188,6 +188,10 @@ p, a, li, figcaption, td {
     background: $masthead-background-color;
 }
 
+.masthead {
+    border-bottom: 1px solid $masthead-border-color;
+}
+
 .greedy-nav {
     a, svg.icon {
         color: $masthead-link-color;

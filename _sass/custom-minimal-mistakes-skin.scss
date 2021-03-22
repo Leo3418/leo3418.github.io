@@ -9,6 +9,7 @@ $link-color-hover: mix(#fff, $link-color, 25%) !default;
 $link-color-visited: mix(#000, $link-color, 25%) !default;
 
 $masthead-background-color: $primary-color !default;
+$masthead-border-color: $masthead-background-color !default;
 $masthead-menu-border-color: mix(#fff, $masthead-background-color, 20%) !default;
 
 $masthead-link-color: #eaeaea !default;
