@@ -7,6 +7,7 @@ tags:
 categories:
   - 博客
 toc: true
+last_modified_at: 2021-03-21
 ---
 
 Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我[这个系列上一篇关于我的 mod 的更新的文章][config-screen]发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全*反混淆*的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。
@@ -258,21 +259,18 @@ import net.minecraft.util.text.StringTextComponent;
 Minecraft.getInstance().player.sendMessage(new StringTextComponent("hello, world"));
 ```
 
-在 Minecraft 1.16 中，这个方法需要一个额外的 `java.util.UUID` 参数，代表的是发送聊天信息的玩家的 UUID。只有在多人联机时给其他玩家发送聊天信息时才会用到这个 UUID。如果您只是给当前客户端的玩家（也就是一个 `net.minecraft.client.entity.player.ClientPlayerEntity` 对象）发送提示信息的话，这个参数实际不会被用到，所以您可以随便指定它的值，连 `null` 都可以。但是如果您不喜欢在编程中大量使用 `null` 的话，您可以用 [`UUID.randomUUID()`][random-uuid] 方法生成一个随机的 UUID，或者可以按照下面的方式使用当前玩家的 UUID：
+在 Minecraft 1.16 中，这个方法需要一个额外的 `java.util.UUID` 参数，代表的是发送聊天信息的玩家的 UUID。只有在多人联机时给其他玩家发送聊天信息时才会用到这个 UUID。如果您只是给当前客户端的玩家（也就是一个 `net.minecraft.client.entity.player.ClientPlayerEntity` 对象）发送提示信息的话，这个参数实际不会被用到，所以您可以随便指定它的值，连 `null` 都可以。但是如果您不喜欢在编程中大量使用 `null` 的话，您可以使用 Minecraft 提供的 `NIL_UUID`（这也是 Minecraft 自己调用这个方法时使用的参数）：
 
 ```java
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.entity.player.PlayerEntity;
 
-PlayerEntity playerEntity = Minecraft.getInstance().player;
-playerEntity.sendMessage(
+Minecraft.getInstance().player.sendMessage(
         new StringTextComponent("hello, world"),
-        PlayerEntity.getUUID(playerEntity.getGameProfile())
+        Util.NIL_UUID
 );
 ```
-
-[random-uuid]: https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--
 
 ## `mods.toml` 中需声明 Mod 协议
 

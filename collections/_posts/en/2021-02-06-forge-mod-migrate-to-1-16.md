@@ -7,6 +7,7 @@ tags:
 categories:
   - Blog
 toc: true
+last_modified_at: 2021-03-21
 ---
 
 It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, as
@@ -420,23 +421,20 @@ connected to the current multiplayer game from your mod.  If you are just
 sending a message to the local player represented by an instance of
 `net.minecraft.client.entity.player.ClientPlayerEntity`, this argument will be
 ignored, so you can specify whatever value for it, including `null`.  If you do
-not like passing in `null` arguments, you can use a random UUID returned by
-[`UUID.randomUUID()`][random-uuid], or the player's UUID, as demonstrated in
-the example below:
+not like passing in `null` arguments, you can follow Minecraft's practice of
+using this method of its own, which is supplying the `NIL_UUID` constant for
+the argument:
 
 ```java
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.entity.player.PlayerEntity;
 
-PlayerEntity playerEntity = Minecraft.getInstance().player;
-playerEntity.sendMessage(
+Minecraft.getInstance().player.sendMessage(
         new StringTextComponent("hello, world"),
-        PlayerEntity.getUUID(playerEntity.getGameProfile())
+        Util.NIL_UUID
 );
 ```
-
-[random-uuid]: https://docs.oracle.com/javase/8/docs/api/java/util/UUID.html#randomUUID--
 
 ## Mandatory License Field in `mods.toml`
 
