@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 If you want to make posts on your site or to record when a page is published,
 you might also wish to put the date onto the webpage. Not only are your
 contents translated into other languages, but you should also take into account

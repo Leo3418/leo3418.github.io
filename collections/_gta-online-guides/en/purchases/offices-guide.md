@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 In GTA Online, there are four purchasable Office properties, each of which
 grants you the ability to register as a CEO and access to Special Cargo and
 Import/Export business.

@@ -1,10 +1,16 @@
 ---
-title: "Perform Manual 'dnf history undo'"
+title: "Perform Manual `dnf history undo`"
 lang: en
+tags:
+  - Fedora
+  - Unix Programs
+  - GNU/Linux
+categories:
+  - Tutorial
 asciinema-player: true
+toc: true
 ---
 {% include res-path.liquid %}
-
 My choices of GNU/Linux distributions are Fedora for desktop computers and
 CentOS for servers. Both of them feature DNF - Red Hat's package manager
 front-end for RPM, which is the primary reason I use these distributions.

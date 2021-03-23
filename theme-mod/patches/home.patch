@@ -1,0 +1,25 @@
+--- _layouts/home.html
++++ _layouts/home.html
+@@ -12,13 +12,21 @@
+   {% assign posts = site.posts %}
+ {% endif %}
+ 
++{% assign l10n_posts = posts | where: "lang", site.active_lang %}
++
+ {% assign entries_layout = page.entries_layout | default: 'list' %}
+ <div class="entries-{{ entries_layout }}">
+-  {% for post in posts %}
++  {% for post in l10n_posts %}
+     {% include archive-single.html type=entries_layout %}
+   {% endfor %}
+ </div>
+ 
++{% if paginator and l10n_posts != posts %}
++<div class="untranslated-posts-hidden-msg">
++  {{ site.data.strings.untranslated_posts_hidden | default: "Untranslated posts are hidden" }}
++</div>
++{% endif %}
++
+ {% include paginator.html %}
+ 
+ {%- comment -%} patched-theme-file {%- endcomment -%}

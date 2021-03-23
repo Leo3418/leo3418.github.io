@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 A Jekyll theme is likely to have non-content strings on certain webpages. These
 strings are usually hard-coded in the theme's files so you cannot modify them
 without overriding the theme. For instance, Minima puts "Posts" above the list
@@ -39,11 +38,11 @@ should be put. We can make a copy of `_layouts/home.html` for every language
 and translate the string directly in the layout file. But, unless we are
 planning to define different layouts for different languages, this is not a
 good practice. If we want to change the layout for all languages later, we will
-have to modify all of the copies rather than just one file. 
+have to modify all of the copies rather than just one file.
 
 My solution is to maintain a file which stores all translated strings for each
 language, similar to how we manage localized site titles. In each directory
-under `_data`, create a file named `strings.yml`: 
+under `_data`, create a file named `strings.yml`:
 
 ```console
 site-root/_data$ ls *
@@ -81,12 +80,12 @@ the URL:
 
        {%- endfor -%}
      </ul>
- 
+
 -    <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | relative_url }}">via RSS</a></p>
 +    {%- assign feed_url = "/feed.xml" | relative_url -%}
 +    <p class="rss-subscribe">{{ site.data.strings.rss_subscribe | replace: "$url", feed_url }}</p>
    {%- endif -%}
- 
+
  </div>
 ```
 {% endraw %}
@@ -144,13 +143,13 @@ page to use the default value, and you may remove the original `index.md` if
 you have a separate copy for your site's default language.
 
 ```console
-site-root$ cat index-en.md 
+site-root$ cat index-en.md
 ---
 layout: home
 permalink: "/"
 lang: en
 ---
-site-root$ cat index-zh.md 
+site-root$ cat index-zh.md
 ---
 layout: home
 list_title: "帖子列表"

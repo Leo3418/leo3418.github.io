@@ -1,5 +1,18 @@
-@import "minima";
+$terminal-background-color: #121314;
 
-.asciinema-player-wrapper {
-    margin-bottom: $spacing-unit / 2;
+// Adjust the style of selected text
+.asciinema-player *::selection {
+    background-color: #ffffff;
+    color: $terminal-background-color;
+}
+
+// Disable text animations in asciinema terminals
+.asciinema-terminal span {
+    -webkit-transition: unset;
+    transition: unset;
+}
+
+// Unset the style of play button
+.play-button .icon {
+    all: unset;
 }

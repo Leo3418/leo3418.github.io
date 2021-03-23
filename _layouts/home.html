@@ -1,37 +1,32 @@
 ---
-layout: default
+layout: archive
 ---
 
-<div class="home">
-    {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-    {%- endif -%}
+{{ content }}
 
-    {{ content }}
+<h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
 
-    <h2 class="post-list-heading">{{ page.list_title | default: "Posts" }}</h2>
-    {%- if site.posts.size > 0 -%}
-    <ul class="post-list">
-        {%- for post in site.posts -%}
-            {%- if post.lang == site.active_lang -%}
-            <li>
-                {%- assign date_format = site.data.l10n.date_format | default: "%b %-d, %Y" -%}
-                <span class="post-meta">{{ post.date | date: date_format }}</span>
-                <h3>
-                    <a class="post-link" href="{{ post.url | relative_url }}">
-                        {{ post.title | escape }}
-                    </a>
-                </h3>
-                {%- if site.show_excerpts -%}
-                {{ post.excerpt }}
-                {%- endif -%}
-            </li>
-            {%- endif -%}
-        {%- endfor -%}
-    </ul>
+{% if paginator %}
+  {% assign posts = paginator.posts %}
+{% else %}
+  {% assign posts = site.posts %}
+{% endif %}
 
-    {%- else -%}
-    <div id="no-posts-msg">{{ site.data.strings.no_posts }}</div>
-    {%- endif -%}
+{% assign l10n_posts = posts | where: "lang", site.active_lang %}
 
+{% assign entries_layout = page.entries_layout | default: 'list' %}
+<div class="entries-{{ entries_layout }}">
+  {% for post in l10n_posts %}
+    {% include archive-single.html type=entries_layout %}
+  {% endfor %}
 </div>
+
+{% if paginator and l10n_posts != posts %}
+<div class="untranslated-posts-hidden-msg">
+  {{ site.data.strings.untranslated_posts_hidden | default: "Untranslated posts are hidden" }}
+</div>
+{% endif %}
+
+{% include paginator.html %}
+
+{%- comment -%} patched-theme-file {%- endcomment -%}

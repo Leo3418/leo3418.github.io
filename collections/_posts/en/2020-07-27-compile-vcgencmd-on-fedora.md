@@ -1,38 +1,15 @@
 ---
-title: "Compile Raspberry Pi's 'vcgencmd' on Fedora"
+title: "Install Raspberry Pi's `vcgencmd` on Fedora"
 lang: en
+tags:
+  - Raspberry Pi
+  - Fedora
+  - GNU/Linux
+categories:
+  - Tutorial
 asciinema-player: true
----
-
-## Updates
-
-### {{ "2020-07-29" | date: site.data.l10n.date_format }}
-
-So, only one day after this post was published, the Raspberry Pi software
-maintainers made a
-[patch](https://github.com/raspberrypi/userland/commit/fdc2102ccf94a397661d495c6942eb834c66ee28)
-that allowed `vcgencmd` to be compiled directly on Fedora without any
-workaround. As a result, **you may now build `vcgencmd` on Fedora with simply
-`./buildme --aarch64`**.
-
-The building method described in this post still works after the patch, but it
-is no longer necessary. You can definitely use it without any issues, but just
-remember that `./buildme --aarch64` is now working fine and is probably the
-easier way to compile `vcgencmd`.
-
-`./buildme --aarch64` replaces the following commands:
-
-```console
-$ cmake -DARM64=ON .
-$ make -j 4
-$ sudo make install
-```
-
-The remaining instructions in this post are still accurate and working. In
-addition, you always have the option to [install my `vcgencmd` build with
-DNF](#use-dnf-to-install-the-program) if you are not a fan of building software
-packages yourself.
-
+toc: true
+last_modified_at: 2020-11-09
 ---
 
 This post is a continuation of my [previous
@@ -55,34 +32,7 @@ included in Fedora's software repositories. Luckily though, the source code of
 package](https://github.com/raspberrypi/userland) that contains the program, is
 available, so we can compile it on our own.
 
-## ~~Challenge~~
-
-{: .message-box}
-**Update**: the issue described in this section has been fixed by the upstream.
-
-You probably have already tried to build a software package distributed by
-others. High-quality packages contain build instruction which makes the
-building process as easy as copy-pasting some commands. Although the `userland`
-package's build instruction is not very clear, at least it tells you to build
-with the `buildme` script and include the `--aarch64` flag if you are compiling
-the package for 64-bit ARM. ~~Unfortunately, `buildme --aarch64` will fail on
-Fedora, as shown below.~~
-
-{% include asciinema-player.html name="build-failure.cast"
-    poster="data:text/plain,Presentation of the issue, which has been fixed" %}
-
-So, I spent about an hour figuring out what the `buildme` script would do and
-how the package could be built without errors. I was able to find a solution,
-which I will introduce in the rest of this post.
-
-Multiple tickets concerning the inability to compile `userland` on Fedora have
-been opened ([GH-631](https://github.com/raspberrypi/userland/issues/631),
-[GH-635](https://github.com/raspberrypi/userland/issues/635)). They suggested
-that this problem was related to GCC 10. The solution I am giving here does not
-require downgrading GCC, so you can stick with the latest version of GCC
-shipped with Fedora.
-
-## Build the Program
+## Build and Install the Program
 
 1.  Install the required compilers and build tools, and Git for retrieving the
     source code.
@@ -100,33 +50,25 @@ shipped with Fedora.
     $ cd userland
     ```
 
-3.  This is the most important step in the building process. Use the following
-    commands ~~instead of `./buildme --aarch64`~~ to compile the program:
+3.  Use `./buildme --aarch64` to compile the program for the `aarch64`
+    architecture Fedora runs on and install it.
+
+    After the compilation completes and before the installation, you might see
+    a prompt from `sudo` that demands your password. Enter it to proceed.
 
     ```console
-    $ cmake -DARM64=ON .
-    $ make -j 4
+    $ ./buildme --aarch64
     ```
 
-    {% include asciinema-player.html name="compile.cast" poster="npt:17.5"
-    start_at="14" %}
-
-## Install the Program
-
-Now that the `vcgencmd` program, along with the `userland` package, has been
-compiled without errors, it is time to install it to the system. Like many
-other software packages, the command to install `userland` is `make install`.
-The package is always copied into `/opt/vc`. Because the `/opt` directory is
-usually only writable by `root`, you need to run the command with `sudo`:
-
-```console
-$ sudo make install
-```
+    {% include asciinema-player.html name="build-and-install.cast"
+    poster="npt:16.5" start_at="10" %}
 
 After this command completes, you will find the `vcgencmd` program under
 `/opt/vc/bin`.
 
-{% include asciinema-player.html name="make-install.cast" %}
+{% include asciinema-player.html name="after-install.cast" poster="npt:6" %}
+
+## Tell the System About `/opt/vc`
 
 When you run `vcgencmd` now, you will see the following error message:
 
@@ -160,13 +102,13 @@ program in order to run it. To save yourself from the torture, you can add
 `/opt/vc/bin` to the `PATH` environment variable by editing `~/.bashrc`:
 
 ```diff
- # User specific environment
- if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
- then
-     PATH="$HOME/.local/bin:$HOME/bin:$PATH"
- fi
-+PATH="/opt/vc/bin:$PATH"
- export PATH
+  # User specific environment
+  if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
+  then
+      PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+  fi
++ PATH="/opt/vc/bin:$PATH"
+  export PATH
 ```
 
 Then, run the following command for the change to take effect:
@@ -177,16 +119,55 @@ $ source ~/.bashrc
 
 {% include asciinema-player.html name="add-to-path.cast" poster="npt:17" %}
 
-## Invoke the Program
+## Configure Device Permissions and User Group
 
-On Fedora, if you attempt to use `vcgencmd` to read hardware information as a
-normal user, you might get the `VCHI initialization failed` error. Most
-solutions to this issue you can find online would tell you to add the user to
-the `video` group, but in my testing this did not work on Fedora.
+At this point, if you attempt to use `vcgencmd` to read hardware information as
+a normal user, you might get the `VCHI initialization failed` error.
 
-The easiest workaround is to **run `vcgencmd` with `sudo`**.
+{% include asciinema-player.html name="init-failed.cast" poster="npt:7" %}
 
-{% include asciinema-player.html name="run-with-sudo.cast" poster="npt:9.7" %}
+Most solutions to this issue you can find online would tell you to add the user
+to the `video` group. However, they typically assume you are running `vcgencmd`
+under Raspberry Pi OS. On Fedora, doing only this will not suffice. You need to
+configure the VCHI device so that `video` group users can access it. This is
+done by adding a new [udev
+rule](https://wiki.archlinux.org/index.php/udev#About_udev_rules) shown
+[here](https://github.com/sakaki-/genpi64-overlay/blob/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules),
+published by GitHub user [**@sakaki-**](https://github.com/sakaki-).
+
+```console
+$ cd /usr/lib/udev/rules.d/
+$ sudo curl -O https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
+```
+
+Once the udev rule is copied to the correct location, you may apply it
+immediately without a reboot by using `udevadm`:
+
+```console
+$ sudo udevadm trigger /dev/vchiq
+```
+
+To see if the rule is in effect, check the permission settings for the VCHI
+device file `/dev/vchiq`. If its group is `video`, then the udev rule has been
+successfully activated.
+
+```console
+$ ls -l /dev/vchiq
+crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
+```
+
+{% include asciinema-player.html name="udev-rule.cast" poster="npt:11" %}
+
+Once this is done, any user in the `video` group can invoke `vcgencmd` without
+getting the same error. You can use the following command to add your own user
+account to the `video` group; however, **you must re-login to let the change
+take effect**.
+
+```console
+$ sudo usermod -aG video $USER
+```
+
+{% include asciinema-player.html name="add-to-group.cast" poster="npt:7.2" %}
 
 ## Use DNF to Install the Program
 
@@ -202,8 +183,8 @@ $ sudo dnf install raspberrypi-userland
 
 With this installation method, you can skip all the building and installation
 steps described above, including creating a `.conf` file under
-`/etc/ld.so.conf.d` and modifying `~/.bashrc`. However, you still have to run
-`vcgencmd` with `sudo`.
+`/etc/ld.so.conf.d`, modifying `~/.bashrc`, and installing the udev rule. The
+only thing you must do is to add your user account to the `video` group.
 
 {% include asciinema-player.html name="dnf.cast" poster="npt:3.8" %}
 

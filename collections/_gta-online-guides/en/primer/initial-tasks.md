@@ -2,6 +2,7 @@
 title: "Initial Tasks"
 ordinal: 400
 lang: en
+toc: false
 ---
 
 In the next part of this collection, I will introduce some tasks you can

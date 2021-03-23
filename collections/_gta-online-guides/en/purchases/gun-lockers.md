@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 At the very beginning of this collection, I suggested avoiding unnecessary
 weapons. Later, in the weapons guide, I described the problem on GTA Online's
 weapon system to show the reason behind this suggestion. Now, we will come to

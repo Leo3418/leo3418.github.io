@@ -1,0 +1,54 @@
+/* Colors */
+
+$background-color: #ffffff !default;
+$text-color: #3d4144 !default;
+$primary-color: #242424 !default;
+$code-background-color: #eeeeee !default;
+$link-color: #2068c5 !default;
+$link-color-hover: mix(#fff, $link-color, 25%) !default;
+$link-color-visited: mix(#000, $link-color, 25%) !default;
+
+$masthead-background-color: $primary-color !default;
+$masthead-border-color: $masthead-background-color !default;
+$masthead-menu-border-color: mix(#fff, $masthead-background-color, 20%) !default;
+
+$masthead-link-color: #eaeaea !default;
+$masthead-link-color-hover: mix(#fff, $primary-color, 70%) !default;
+$navicon-link-color-hover: mix(#fff, $masthead-background-color, 15%) !default;
+
+$base00: #252525 !default;
+
+/* Dimensions */
+
+$max-width: 1400px !default;
+
+/* Styles */
+
+// Add animations to icons in the masthead
+.greedy-nav button {
+    svg.icon, &:hover svg.icon {
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+
+    &:hover svg.icon {
+        color: $masthead-link-color-hover;
+    }
+}
+
+// Change pagination pager colors
+.pagination li a, .pagination--pager {
+    &:not(.disabled) {
+        &:not(:hover) {
+            &, &:visited {
+                color: $text-color;
+            }
+        }
+
+        &:hover {
+            // Make color change smoother in animation
+            background-color: $primary-color;
+            color: $background-color;
+        }
+    }
+}

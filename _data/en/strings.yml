@@ -1,14 +1,12 @@
+home: "Home"
+no_more_articles: "No more articles"
+switch_language: "Switch language"
+untranslated_posts_hidden: "Untranslated posts are hidden"
+
 build_status: "Build status"
 build_time: "Site built on $time"
-no_posts: "No posts"
 no_translation: "Sorry, this page is not available in English yet."
 powered_by: "Powered by:"
-rss_subscribe: "Subscribe via RSS"
 
 cc_license: "Creative Commons License"
 cc_by_sa_4_0: 'Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.'
-
-collection_nav:
-  home: "<< Back to collection home: $collection"
-  prev: "< Previous: $title"
-  next: "Next: $title >"

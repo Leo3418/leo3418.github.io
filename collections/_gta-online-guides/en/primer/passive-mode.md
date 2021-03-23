@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 By enabling Passive Mode, you can prevent contacts and most attacks from other
 players. While you are in Passive Mode, you will appear as a ghost to other
 players. Your model, and the model of any vehicle you drive when the Passive

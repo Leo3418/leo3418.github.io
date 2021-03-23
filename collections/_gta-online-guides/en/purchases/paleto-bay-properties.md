@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 This has been mentioned more or less in the previous parts of this collection,
 but it is worth emphasizing it again since it is a mistake that so many players
 will make:

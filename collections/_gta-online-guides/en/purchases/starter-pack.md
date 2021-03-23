@@ -4,7 +4,6 @@ ordinal: 700
 lang: en
 ---
 {% include img-path.liquid %}
-
 The Criminal Enterprise Starter Pack is a paid add-on to GTA Online that gives
 the owner GTA$1M and the ability to claim some properties, vehicles, weapons
 and cosmetic items for free. Rockstar's advertisement claims that all the items

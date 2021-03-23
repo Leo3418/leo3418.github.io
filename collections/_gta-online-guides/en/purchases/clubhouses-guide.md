@@ -3,10 +3,10 @@ title: "Clubhouses Guide"
 ordinal: 640
 level: 2
 lang: en
+toc: false
 ---
 
 {% include img-path.liquid %}
-
 Clubhouses in GTA Online offer the ability to do the following things to their
 owner:
 

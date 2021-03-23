@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 Daily Objectives are three tasks that change every day and give you $30,000
 cash and 5,000 RP reward upon completion of all of them.
 

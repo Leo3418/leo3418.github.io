@@ -1,0 +1,13 @@
+--- _includes/tag-list.html
++++ _includes/tag-list.html
+@@ -12,7 +12,9 @@
+     <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> {{ site.data.ui-text[site.active_lang].tags_label | default: "Tags:" }} </strong>
+     <span itemprop="keywords">
+     {% for tag_word in tags_sorted %}
+-      <a href="{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path | relative_url }}" class="page__taxonomy-item" rel="tag">{{ tag_word }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
++      {% capture tag_url %}{{ tag_word | slugify | prepend: path_type | prepend: site.tag_archive.path }}{% endcapture %}
++      {% capture l10n_url %}{% if site.active_lang != site.default_lang %}{{ site.active_lang | prepend: "/" }}{% endif %}{{ tag_url }}{% endcapture %}
++      <a href="{{ l10n_url | relative_url }}" class="page__taxonomy-item" rel="tag">{{ tag_word }}</a>{% unless forloop.last %}<span class="sep">, </span>{% endunless %}
+     {% endfor %}
+     </span>
+   </p>

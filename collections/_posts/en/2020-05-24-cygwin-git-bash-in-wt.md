@@ -1,9 +1,13 @@
 ---
 title: "Use Cygwin's Shell or Git Bash in Windows Terminal"
 lang: en
+tags:
+  - Windows
+categories:
+  - Tutorial
+toc: true
 ---
 {% include img-path.liquid %}
-
 Recently, Microsoft has made the first stable release of Windows Terminal, a
 new terminal program for Windows 10. Windows Terminal allows you to add and use
 multiple shells, like Windows PowerShell, the old command prompt, and any shell

@@ -46,17 +46,16 @@ site](https://jekyllrb.com/docs/structure/) with a few variations.
   - `_posts/<lang>/`: Posts written in a language
   - `_<collection-name>/<lang>/`: Documents in a collection, in the specified
     language
-  - `<collection-name>-<lang>.md`: Home page for a collection, in the specified 
-    language
 - `_data/`: Data files
   - `<lang>/`: Localized data files for a language
     - `l10n.yml`: Properties for the language and localized site variables
     - `strings.yml`: Translated strings
 - `_includes/`: Partials that can be included in other files, usually layouts
 - `_layouts/`: Templates that wrap posts
+- `pages/<lang>/`: Top-level pages for the specified language
 - `_sass/`: Sass partials to be included by the SCSS files
+- `theme-mod/`: Scripts and patches for modifying the theme this site uses
 - `_config.yml`: Jekyll configuration file
-- `<page-name>-<lang>.md`: Top level page written in the specified language
 
 ## Generating Static Files
 
@@ -93,8 +92,8 @@ compare those versions with the following commands:
    used for this site:
 
    ```console
-   $ grep -o "jekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
-   jekyll (x.y.z)
+   $ grep -o "\sjekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
+    jekyll (x.y.z)
    ```
 
 If the version numbers in the output of those commands are identical, then you

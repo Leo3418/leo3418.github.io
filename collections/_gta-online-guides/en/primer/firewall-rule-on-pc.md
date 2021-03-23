@@ -5,7 +5,6 @@ level: 4
 lang: en
 ---
 {% include img-path.liquid %}
-
 The method to make a Solo Public Session by right-clicking on the title bar
 introduced in the [last
 article](solo-public-sessions#right-clicking-on-the-title-bar) cannot

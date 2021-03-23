@@ -31,11 +31,11 @@ More information about the values accepted by each parameter can be found in
 {%- include res-path.liquid -%}
 {%- endunless -%}
 
-<asciinema-player
+<p><asciinema-player
     src="{{ res_path }}/{{ include.name }}"
     poster="{{ include.poster | default: 'npt:0' }}"
     theme="{{ include.theme | default: 'tango' }}"
     font-size="{{ include.font_size | default: 'small' }}"
     speed="{{ include.speed | default: 1 }}"
     start-at="{{ include.start_at | default: 0 }}"
-></asciinema-player>
+></asciinema-player></p>

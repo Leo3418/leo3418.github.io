@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 GTA Online has several one-time rewards that can be completed at any Rank,
 which are good ways for new players to get the money they need to begin their
 career. By doing all of them, you can earn GTA$1,250,000 in total, which is a

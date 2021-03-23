@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 This guide contains information about Apartments in GTA Online and my comments
 on some popular Apartments.
 

@@ -1,39 +1,21 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    {% if site.data.ui-text[site.active_lang].follow_label %}
+      <li><strong>{{ site.data.ui-text[site.active_lang].follow_label }}</strong></li>
+    {% endif %}
 
-  <div class="wrapper">
+    {% if site.footer.links %}
+      {% for link in site.footer.links %}
+        {% if link.label and link.url %}
+          <li><a href="{{ link.url }}" rel="nofollow noopener noreferrer"><i class="{{ link.icon | default: 'fas fa-link' }}" aria-hidden="true"></i> {{ link.label }}</a></li>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
 
-    <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">
-            {%- if site.author -%}
-              {{ site.author | escape }}
-            {%- else -%}
-              {{ site.data.l10n.title | escape }}
-            {%- endif -%}
-            </li>
-            {%- if site.email -%}
-            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {%- endif -%}
-        </ul>
-        <p class="rss-subscribe">
-            <a href="{{ "/feed.xml" | relative_url }}">{{ site.data.strings.rss_subscribe }}</a>
-        </p>
-        {%- if page.license -%}
-        {%- include {{ page.license }}.html -%}
-        {%- endif -%}
-      </div>
+    {% unless site.atom_feed.hide %}
+      <li><a href="{% if site.atom_feed.path %}{{ site.atom_feed.path }}{% else %}{{ '/feed.xml' | relative_url }}{% endif %}"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> {{ site.data.ui-text[site.active_lang].feed_label | default: "Feed" }}</a></li>
+    {% endunless %}
+  </ul>
+</div>
 
-      <div class="footer-col footer-col-2">
-        {%- include social.html -%}
-      </div>
-
-      <div class="footer-col footer-col-3">
-        {%- include site-info.html -%}
-      </div>
-    </div>
-
-  </div>
-
-</footer>
+{%- comment -%} patched-theme-file {%- endcomment -%}

@@ -1,10 +1,35 @@
 ---
 title: "MC Forge Mod Dev Blog: Adding a Configuration GUI"
 lang: en
+tags:
+  - Minecraft Forge
+  - Java
+categories:
+  - Blog
+toc: true
+last_modified_at: 2021-02-06
 ---
 {% include img-path.liquid %}
+Minecraft Forge had been shipping a configuration GUI framework which mods
+could use to provide customization options, but the framework has been gone
+since Minecraft 1.13. This post describes how I created a mod configuration GUI
+without using that framework by directly using APIs of Minecraft.
 
-## Preamble
+The procedure shown in this post are applicable to Minecraft 1.14.4 and 1.15.x.
+You can also follow this post to create the same configuration GUI on 1.16.x,
+but **please be sure to read any additional notes** about how things can be
+different in 1.16.  I did not check its correctness on Minecraft 1.13.x and old
+1.14.x releases since those Minecraft versions do not have stable Minecraft
+Forge builds, but chances are the majority of the steps are also applicable to
+those versions.  Nevertheless, I would recommend developing mods using only
+stable Minecraft Forge releases.
+
+For Minecraft 1.12.2 and earlier versions, you will need to rewrite the code in
+some of the examples. However, on those Minecraft versions, you can use the
+framework in Minecraft Forge directly, so there is no need to follow this post
+and create a configuration GUI with Minecraft's API in this case.
+
+## Preamble for the Series
 
 In this Minecraft Forge Mod Development Blog series, I will write some stories
 in the development process of my 2-year-old Minecraft Forge mod project,
@@ -52,6 +77,7 @@ configuration GUI with it.
 
 ![Forge's own configuration GUI built upon the
 framework]({{ img_path_l10n }}/forge-config-gui.png)
+
 ![My mod's settings screen]({{ img_path_l10n }}/mod-config-gui-forge.png)
 
 A few months later, Minecraft 1.13 was launched. Mojang changed lots of
@@ -172,6 +198,14 @@ public final class ConfigScreen extends Screen {
     }
 }
 ```
+
+{: .notice--warning}
+**Additional Note for Minecraft 1.16.x:** The signatures of the `render` method
+and many other methods pertinent to GUI rendering are different.  Please refer
+to [this section][render-matrixstack] in another post of mine covering changes
+in Minecraft 1.16.x.
+
+[render-matrixstack]: /2021/02/06/forge-mod-migrate-to-1-16#additional-matrix-stack-parameter-of-gui-rendering-methods
 
 ### Register a Configuration GUI Factory
 
@@ -383,6 +417,13 @@ callback function's body. In addition, `IPressable` is effectively a
 *functional interface* because it has only one abstract method, so I can
 implement it easily with a lambda expression `button -> this.onClose()`.
 
+{: .notice--warning}
+**Additional Note for Minecraft 1.16.x:** `this.onClose()` can no longer be
+used to close the current screen.  Please see [this section][close-screen] for
+the new way of closing a screen.
+
+[close-screen]: /2021/02/06/forge-mod-migrate-to-1-16#new-method-for-closing-a-screen
+
 The configuration GUI screen now has a complete skeleton, so it is time to add
 the widgets for options.
 
@@ -503,6 +544,13 @@ representation and relies on the programmer to determine one. The `BiFunction`
 I came up with to generate the same style of string representation is `(gs,
 option) -> option.getDisplayString() + option.get(gs)`.
 
+{: .notice--warning}
+**Additional Note for Minecraft 1.16.x:** The `getDisplayString()` method used
+here is no longer available in 1.16.  Please see [this
+section][option-display-string] for an alternative.
+
+[option-display-string]: /2021/02/06/forge-mod-migrate-to-1-16#removed-method-for-getting-a-settings-options-display-string
+
 For the example below, assume `ModSettings.getHudX` returns an `int`, and
 `ModSettings.setHudX` requires an `int` argument.
 
@@ -587,6 +635,11 @@ can be found
         ));
 ```
 
+{: .notice--warning}
+**Additional Note for Minecraft 1.16.x:** The `getDisplayString()` method used
+in this example is no longer available in 1.16.  Please see [this
+section][option-display-string] for an alternative.
+
 #### Saving the Options
 
 If the mod's configuration needs to be saved manually by calling a method, then
@@ -651,6 +704,12 @@ public final class ConfigScreen extends Screen {
 }
 ```
 
+{: .notice--warning}
+**Additional Note for Minecraft 1.16.x:** Calling
+`Minecraft.displayGuiScreen(Screen)` in `onClose()` can cause an error.  You
+should remove this call if you are working on Minecraft 1.16.x.  For more
+details, please consult [this section][close-screen].
+
 After this change is made, do not forget to change the configuration GUI
 factory as well, because the constructor's signature has been altered:
 
@@ -661,17 +720,6 @@ factory as well, because the constructor's signature has been altered:
 +                 () -> (mc, screen) -> new ConfigScreen(screen)
           );
 ```
-
-## Summary
-
-Minecraft Forge had been shipping a configuration GUI framework which mods
-could use to provide customization options, but the framework has been gone
-since Minecraft 1.13. This post describes how to create a mod configuration GUI
-when the framework is still absent by directly using APIs of Minecraft.
-
-Note that the things described in this post are not necessary for Minecraft
-1.12.2 and earlier versions. On those versions, you can simply use that Forge's
-GUI framework.
 
 ## More Resources
 

@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 You have got some cash to start your GTA Online career, but your Rank might
 still be very low. In GTA Online, you need higher Ranks to unlock more weapons,
 vehicle modifications, abilities, Missions, and other miscellaneous activities.

@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 Before talking about what weapons to purchase, it might be a good idea to know
 how weapon selection works in GTA Online, so you can get a motivation for
 decreasing the number of weapons you should own.

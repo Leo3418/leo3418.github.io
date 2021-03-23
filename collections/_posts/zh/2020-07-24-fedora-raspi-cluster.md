@@ -1,17 +1,23 @@
 ---
 title: "在树莓派集群上配置 Fedora"
 lang: zh
+tags:
+  - 树莓派
+  - Fedora
+  - GNU/Linux
+categories:
+  - 教程
 asciinema-player: true
+toc: true
 ---
 {% include img-path.liquid %}
-
 在开始之前，我首先要感谢考森同志 [**@ColsonXu**](https://github.com/ColsonXu) 给了我一个折腾树莓派的机会。他买了几个树莓派 4，准备组一个计算用的集群，可是建好后却没什么可计算的，没什么用场。直到一天早晨，达西 [**@mrdarcychen**](https://github.com/mrdarcychen) 在 Fedora 杂志上发现了一篇[在树莓派上跑 Rosetta@home 的文章](https://fedoramagazine.org/running-rosettahome-on-a-raspberry-pi-with-fedora-iot/)，于是就问考森要不要搞。在他同意之后，我便开始着手配置他的树莓派集群。
 
 我拿到这堆树莓派的时候，集群已经设置好了。尽管我并没有问过机主本人他当时集群是怎么弄的，但他应该是按照[这篇 MagPi 杂志文章](https://magpi.raspberrypi.org/articles/build-a-raspberry-pi-cluster-computer)配置的。这篇文章里用的是树莓派 OS（旧称 Raspbian）而非 Fedora；如果想弄一个运行 Fedora 的树莓派集群，大体的流程还是相同的，但是具体的步骤和运行的命令有些不一样。接下来我将具体地介绍如何在 Fedora 上完成同样的集群配置步骤。
 
 ## 硬件
 
-这个集群由四块树莓派 4 Model B 组成，用支持[以太网供电](https://zh.wikipedia.org/wiki/%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BE%9B%E7%94%B5)（PoE）的交换机连接。PoE 的好处就是供电也可以用网线顺便解决了，不用每个树莓派都弄一条电源线。尽管支持 PoE 的交换机不便宜，而且每个树莓派还得加一个 PoE 板，增加了成本，但好处是没有那么多线缆，相当整洁。
+这个集群由四块树莓派 4 Model B 组成，用支持[以太网供电](https://zh.wikipedia.org/zh-cn/%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BE%9B%E7%94%B5)（PoE）的交换机连接。PoE 的好处就是供电也可以用网线顺便解决了，不用每个树莓派都弄一条电源线。尽管支持 PoE 的交换机不便宜，而且每个树莓派还得加一个 PoE 板，增加了成本，但好处是没有那么多线缆，相当整洁。
 
 ![用 PoE 供电的集群]({{ img_path }}/hardware-setup.png)
 

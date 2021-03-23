@@ -16,21 +16,31 @@ collections:
     output: true
     permalink: /collections/:collection/:name
 
+# Permalink for a post
+permalink: /:year/:month/:day/:title:output_ext
+
 defaults:
   - # Default
     scope:
       path: ""
     values:
-      layout: "page"
+      layout: "single"
       license: "cc-by-sa-4_0"
+      toc_sticky: true
+  - # Top-level Pages
+    scope:
+      path: "pages"
+    values:
+      layout: "archive"
+      license: false
   - # Posts
     scope:
       path: ""
       type: "posts"
     values:
-      layout: "post"
       author: "Leo"
       license: "cc-by-sa-4_0"
+      show_date: true
   - # Images
     scope:
       path: "assets/img"
@@ -41,26 +51,32 @@ defaults:
       path: ""
       type: "gta-online-guides"
     values:
-      layout: "collection-nav"
-      tags: "gta-online"
-  -
-    scope:
-      path: ""
-      type: "multilingual-jekyll-site"
-    values:
-      layout: "collection-nav"
-      tags: "jekyll"
+      toc: true
 
 exclude:
   - "README.md"
+  - "theme-mod"
 
-theme: minima
+theme: minimal-mistakes-jekyll
 
-# minima
-github_username: "Leo3418"
+# minimal-mistakes-jekyll
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/Leo3418/"
+tag_archive:
+  type: "liquid"
+  path: "/tags"
+category_archive:
+  type: "liquid"
+  path: "/categories"
+after_footer_scripts:
+  - "/assets/js/main.js"
 
 plugins:
   - jekyll-polyglot
+  - jekyll-paginate-v2
 
 # jekyll-polyglot
 languages: ["en", "zh"]
@@ -73,3 +89,11 @@ exclude_from_localization:
 parallel_localization: true
 sass: # https://github.com/untra/polyglot/issues/107#issuecomment-598274075
   sourcemap: never
+
+# jekyll-paginate-v2
+pagination:
+  enabled: true
+  per_page: 10
+  title: ":title"
+  permalink: "/page:num.html"
+  sort_reverse: true

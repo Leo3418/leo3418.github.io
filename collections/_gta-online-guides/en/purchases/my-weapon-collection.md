@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 In the following articles, I will introduce the weapon loadout I an using in
 GTA Online. You can regard this as a weapon recommendation, but if you choose
 to follow the advice to keep your arsenal small, perhaps the weapons

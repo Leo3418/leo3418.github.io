@@ -1,7 +1,13 @@
 ---
-title: "Use 'grep' as a Substitute for 'cat'"
+title: "Use `grep` as a Substitute for `cat`"
 lang: en
+tags:
+  - Unix Programs
+  - GNU/Linux
+categories:
+  - Tricks
 asciinema-player: true
+toc: true
 ---
 
 I came across a fascinating and educative article, [Unix Recovery

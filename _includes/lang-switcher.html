@@ -1,9 +1,15 @@
-{%- for lang in site.languages -%}
-    {%- assign lang_name = site.data[lang].l10n.lang_name -%}
-    {% if lang == site.active_lang %}
-        <span class="lang-option-active page-link">{{ lang_name }}</span>
-    {% else %}
-        {% capture url %} {% if lang == site.default_lang %}{{ page.url }}{% else %}/{{ lang }}{{ page.url }}{% endif %} {%- endcapture -%}
-        <a class="lang-option-inactive page-link" href="{{ url }}">{{ lang_name }}</a>
-    {% endif %}
-{%- endfor -%}
+<ul class="floating-menu lang-switcher hidden">
+    {%- for lang in site.languages -%}
+        {%- assign lang_name = site.data[lang].l10n.lang_name -%}
+        {% if lang == site.active_lang %}
+    <li class="lang-option-active masthead__menu-item">{{ lang_name }}</li>
+        {% else %}
+            {% capture url %}{% if lang != site.default_lang %}{{ lang | prepend: "/" }}{% endif %}{{ page.url }}{%- endcapture -%}
+    <li class="lang-option-inactive masthead__menu-item">
+        <a {% static_href %}href="{{ url | relative_url }}"{% endstatic_href %}>
+            {{ lang_name }}
+        </a>
+    </li>
+        {% endif %}
+    {%- endfor -%}
+</ul>

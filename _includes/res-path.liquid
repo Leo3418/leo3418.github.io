@@ -1,3 +1,18 @@
+{%- comment -%}
+
+This file provides a 'res_path' variable for getting paths to the resources for
+the current page.
+
+To use the variable, use the 'include' tag to include this file, and that
+variable will then become available after the 'include' statement.
+
+Note: if the 'include' statement is placed between the front matter and the
+body in a Markdown file, then to let Jekyll generate excerpt for that document
+correctly, there must be no empty lines between the 'include' statement and the
+body.
+
+{%- endcomment -%}
+
 {%- capture res_path -%}
     {%- if page.draft -%}
         /assets/res/drafts/{{ page.slug }}

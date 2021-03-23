@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 The Hangars in GTA Online allow you to store aircraft and run an Air Freight
 Cargo business.
 

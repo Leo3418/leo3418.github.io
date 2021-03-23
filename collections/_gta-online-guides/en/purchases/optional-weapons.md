@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 The weapons listed here are not as important as the essential weapons in the
 previous page, but they can still be useful in a few occasions.
 

@@ -29,7 +29,7 @@ en:
 
 zh:
 2020-04-26-test-post.md
-site-root/_posts$ cat en/2020-04-26-test-post.md 
+site-root/_posts$ cat en/2020-04-26-test-post.md
 ---
 layout: default
 title: "Test Post"
@@ -37,7 +37,7 @@ lang: en
 ---
 
 This is a test post.
-site-root/_posts$ cat zh/2020-04-26-test-post.md 
+site-root/_posts$ cat zh/2020-04-26-test-post.md
 ---
 layout: default
 title: "测试帖"
@@ -87,7 +87,7 @@ By examing the generated HTML files for the posts, we can see that Polyglot
 works! (The actual contents of the generated files depend on your theme)
 
 ```console
-site-root$ cat _site/2020/04/26/test-post.html 
+site-root$ cat _site/2020/04/26/test-post.html
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
@@ -101,7 +101,7 @@ site-root$ cat _site/2020/04/26/test-post.html
 
   </body>
 </html>
-site-root$ cat _site/zh/2020/04/26/test-post.html 
+site-root$ cat _site/zh/2020/04/26/test-post.html
 <!DOCTYPE html>
 <html lang="en-US">
   <head>

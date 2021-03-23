@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 Your businesses can be raided when certain conditions are met. The exact
 conditions vary according to the business, but they boil down to these general
 criteria:

@@ -3,6 +3,7 @@ title: "Tips for Properties"
 ordinal: 660
 level: 2
 lang: en
+toc: false
 ---
 
 In the upcoming set of articles, I would point out some common mistakes,

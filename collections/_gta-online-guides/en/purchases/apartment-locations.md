@@ -5,7 +5,6 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-
 GTA Online offers 17 high-end Apartment locations and 35 different high-end
 Apartments. 7 locations are Apartment buildings, each of which offers multiple
 suites available for purchase, and 10 locations are Stilt Apartments, which are

@@ -5,7 +5,6 @@ level: 2
 lang: en
 ---
 {% include img-path.liquid %}
-
 This article introduces things you should look for in most cases when selecting
 locations of your business properties. They are not absolute rules that you
 must follow; in fact, these things are only general guidances for businesses

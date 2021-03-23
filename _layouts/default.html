@@ -1,23 +1,44 @@
-<!DOCTYPE html>
-<html lang="{{ page.lang | default: site.active_lang | default: "en" }}">
+---
+---
 
-    {%- include head.html -%}
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.22.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="{{ site.active_lang | slice: 0,2 | default: "en" }}" class="no-js">
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+  </head>
 
-    <body>
+  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
+    {% include skip-links.html %}
+    {% include browser-upgrade.html %}
+    {% include masthead.html %}
 
-        {%- include header.html -%}
+    <div class="initial-content">
+      {{ content }}
+    </div>
 
-        <main class="page-content" aria-label="Content">
-            <div class="wrapper">
-                {%- if page.lang != site.active_lang -%}
-                    {%- include no-translation.html -%}
-                {%- endif -%}
-                {{ content }}
-            </div>
-        </main>
+    {% if site.search == true %}
+      <div class="search-content">
+        {% include search/search_form.html %}
+      </div>
+    {% endif %}
 
-        {%- include footer.html -%}
+    <div id="footer" class="page__footer">
+      <footer>
+        {% include footer/custom.html %}
+        {% include footer.html %}
+      </footer>
+    </div>
 
-    </body>
+    {% include scripts.html %}
 
+  </body>
 </html>
+
+{%- comment -%} patched-theme-file {%- endcomment -%}

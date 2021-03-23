@@ -3,9 +3,9 @@ title: "Add a Language Switcher"
 ordinal: 52
 level: 2
 lang: en
+toc: true
 ---
 {% include img-path.liquid %}
-
 Your site is now serving in more than one language, and each version can be
 accessed by appending the language code to your site's domain. When people want
 to change to another language, they must edit the URL manually and go to that
@@ -170,7 +170,7 @@ appropriate:
 +          {%- include lang-switcher.html -%}
 +        </div>
        </div>
- 
+
        <div class="footer-col footer-col-2">
 ```
 {% endraw %}
@@ -180,4 +180,5 @@ each option in the language switcher. You should see the contents changing to
 another language but you are still staying on the same page.
 
 ![Changing language to English]({{ img_path }}/footer-en.png)
+
 ![Changing language to Chinese]({{ img_path }}/footer-zh.png)
