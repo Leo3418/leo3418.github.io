@@ -90,21 +90,17 @@ weapons is important.
 I will introduce a good minimal collection of weapons I use
 [here](my-weapon-collection).
 
-## Criminal Enterprise Starter Pack: Claim Included Items Judiciously
+## Claim Criminal Enterprise Starter Pack Items Judiciously
 
-Some players might choose to purchase the game bundled with the [Criminal
+If you have purchased GTA V after January 2021 on Steam, Epic Games,
+PlayStation Store or Microsoft Store, your game comes with the [Criminal
 Enterprise Starter Pack](https://www.rockstargames.com/GTAOnline/starterpack).
-The Starter Pack is not necessary for joining GTA Online or a successful GTA
-Online career, but it does offer you some helpful resources to get a head
-start, so it is your choice on whether to buy it or not. Personally, I have
-mixed opinions on the Starter Pack.
-
-If you decide to buy the Starter Pack or have already purchased it, please do
-keep in mind that **it is not wise to claim everything in it**. For example,
-the Paleto Forest Bunker is something you must avoid under all possible
-conditions. Some of the weapons included in the pack have alternatives with
-better performance; once you claim them, you might never be able to get rid of
-them based on the reasons discussed in the section above.
+The Starter Pack allows you to claim some in-game items for free; however, **it
+is not wise to claim everything in it**. For example, the Paleto Forest Bunker
+is something you must avoid under all possible conditions. Some of the weapons
+included in the pack have alternatives with better performance; once you claim
+them, you might never be able to get rid of them based on the reasons discussed
+in the section above.
 
 For more comments on items included in the Starter Pack, you can read other
 articles in this collection discussing [itself in more details](starter-pack)

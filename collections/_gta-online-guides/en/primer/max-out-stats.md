@@ -95,18 +95,23 @@ is a motorcycle, not an aircraft.
 
 ### Lung Capacity
 
-This stat can only be boosted manually by diving into the water. In fact, don't
-feel obligated to boost lung capacity because it only affects how long you can
-stay submerged before drowning, and missions that require underwater works will
+This stat can only be boosted by diving into the water. In fact, don't feel
+obligated to boost lung capacity because it only affects how long you can stay
+submerged before drowning, and missions that require underwater works will
 provide scuba gears or rebreathers. There is no clear evidence showing that
 lung capacity influences your character's running or cycling performance.
 
-If you want to boost it, you can buy the scuba gear from a clothes shop for
-$155,000, then dive into water and stay submerged. The scuba suit will allow
-you to dive underwater indefinitely. If you don't want to spend that money, you
-may still go under water and stay submerged until the oxygen bar below the
-radar flashes in red, then come up, rebreathe, dive into the water again, and
-repeat the process.
+One effective way of expanding lung capacity is to play The Cayo Perico Heist,
+and use entry and escape routes that require swimming. Make sure your character
+stays submerged for as long as possible. The lung capacity should gradually
+increase while you are grinding The Cayo Perico Heist.
+
+If you want to manually boost it, you can buy the scuba gear from a clothes
+shop for $155,000, then dive into water and stay submerged. The scuba suit will
+allow you to dive underwater indefinitely. If you don't want to spend that
+money, you may still go under water and stay submerged until the oxygen bar
+below the radar flashes in red, then come up, rebreathe, dive into the water
+again, and repeat the process.
 
 ### Strength
 

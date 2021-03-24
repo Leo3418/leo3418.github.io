@@ -172,6 +172,32 @@ important take-aways and implications of those events.
   role of giving access to six new *A Superyacht Life* Missions that featured a
   brief story line.
 
+- December 15: *The Cayo Perico Heist* update was released. The Cayo Perico
+  Heist is the first Heist in GTA Online that can be completed entirely by a
+  single player, including the Finale. With easy Prep Missions and high payout,
+  The Cayo Perico Heist has been recognized as the fastest and most hassle-free
+  way for money grinding.
+
+### 2021
+
+- February 28: A GTA Online player, *t0st*, published [an
+  article](https://nee.lv/2021/02/28/How-I-cut-GTA-Online-loading-times-by-70/)
+  documenting his research on the infamous long loading times issue of GTA
+  Online on PC. He determined that the causes of long loading times were
+  inefficient parsing of game data files and redundant item duplication checks,
+  and his experiments on reducing the loading time supported his hypothesis. On
+  his own machine, t0st observed a decrease in loading time from about 6
+  minutes to less than 2 minutes. This result shocked the GTA Online community
+  because nobody could imagine that the endless loading process could be fixed
+  so easily and effectively like this. By applying the fixes proposed by t0st,
+  other players were also able to reproduce similarly significant loading
+  speed-up.
+
+- March 16: Rockstar had affirmed t0st's findings on long loading times and
+  released an update addressing the issue, which had existed in GTA Online on
+  PC for almost 6 years. Rockstar also awarded t0st with $10,000 for his
+  contributions.
+
 ## Corollaries and Implications
 
 - Don't bother getting Gold Medals in the Flight School of GTA Online until you
@@ -187,26 +213,32 @@ important take-aways and implications of those events.
   should do and merrily join and play them after you have completed the GTA
   Online Tutorial.
 
-- There are three sets of Heists in GTA Online: the original Heists released in
-  2015, The Doomsday Heists, and The Diamond Casino Heist. If you wish to
-  complete all the Heists in increasing difficulty, you might want to do them
-  in the chronological order of their releases. The original Heists were a lot
-  more easier than The Doomsday Heists; some aspects of mission design in The
-  Doomsday Heists were intended to prevent players from reusing the tricks that
-  could make the original Heists easy.
+- In general, a trend towards more relaxed design and mechanism can be observed
+  in Heists of GTA Online. The bulk of the original Heists require four
+  players, which is strict for people without reliable teammates. Then, for The
+  Doomsday Heists, Rockstar improved the principle of design of the missions so
+  that only two players are mandatory for Setups and Finales. For both original
+  Heists and The Doomsday Heists, the missions require the team to follow a
+  fixed set of objectives, and failure to comply with some restrictions (e.g.
+  remain undetected) halts the mission. The Diamond Casino Heist relaxes the
+  requirements in number of players further so the Finale is the only part that
+  needs more than one player, and the Finale can still continue if the crew is
+  spotted by the enemy or breaks the disguise. The Cayo Perico Heist does not
+  require multiple players at all and is thus more friendly to lone-wolf
+  players.
 
 - Every set of Heists has some requirements to be unlocked, but the original
   Heists' prerequisites are easier to satisfy. They only require reaching Rank
   12 (which is easy) and owning a high-end Apartment (which can be purchased
-  with as little as $200,000). Both The Doomsday Heists and The Diamond Casino
-  Heist require being a VIP, CEO, or MC President, and a specialized property
-  whose price starts from $1.2M.
+  with as little as $200,000). The Doomsday Heists, The Diamond Casino Heist
+  and The Cayo Perico Heist all require being a VIP, CEO, or MC President, and
+  a specialized property whose price starts from $1.2M.
 
   The original Heists were released in March 2015, months before Rockstar added
   VIP as the first type of organizations a player can register. Since CEOs and
   MCs were introduced in 2016, every new major activity added to GTA Online
-  required being a VIP, CEO, or MC President, including The Doomsday Heists and
-  The Diamond Casino Heist.
+  required being a VIP, CEO, or MC President, including The Doomsday Heists,
+  The Diamond Casino Heist, and The Cayo Perico Heist.
 
   Inflation is also a thing in GTA Online: prices of new vehicles and clothing
   items have skyrocketed update by update, and so are the properties' prices:

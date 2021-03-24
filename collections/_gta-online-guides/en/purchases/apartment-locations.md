@@ -142,6 +142,7 @@ Summary:
 
 - The cheapest high-end Apartment
 - Has many business properties nearby
+- The Apartment closest to a Kosatka spawn point
 - Not very friendly for Heists
 
 This is the most popular choice of Apartment location I have seen, probably
@@ -152,9 +153,15 @@ Insert Coin Arcade, and Morningwood Cocaine Lockup. If you buy an Apartment in
 Del Perro Heights, you can expand your GTA Online business empire from here and
 get quick access to them.
 
-One caveat for this building is that it is not a good location for Heists. When
-a Heist begins, the team will exit the Apartment where the host started it, and
-their vehicles are parked to the side of nearby roads, as shown
+For Cayo Perico Heist grinders, this is probably the most suitable high-end
+Apartment. Because it is the closest high-end Apartment to the ocean, it also
+has the shortest distance to a Kosatka spawn point, meaning that if you request
+your Kosatka outside your Apartment, Del Perro Heights allows you to reach your
+Kosatka in shortest time.
+
+One caveat for this building is that it is not a good location for the original
+Heists. When a Heist begins, the team will exit the Apartment where the host
+started it, and their vehicles are parked to the side of nearby roads, as shown
 [here](https://youtu.be/icSO9WL8h1A?t=13). In front of Del Perro Height's
 entrance is a small garden with stairs and barriers, so it will take time for
 your teammates to reach their cars. What makes things even worse is that
@@ -178,7 +185,8 @@ Heights.
 
 {: .img-caption}
 Del Perro Heights is just across the street from the cheapest Office, Maze Bank
-West. It is also close to Insert Coin Arcade and Del Perro Nightclub.
+West. It is also close to Insert Coin Arcade, Del Perro Nightclub, and a
+Kosatka spawn point.
 
 ![Starting a Heist from Del Perro
 Heights]({{ img_path }}/del-perro-heights-heist.png)

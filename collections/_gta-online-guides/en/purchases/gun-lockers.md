@@ -77,12 +77,14 @@ manually disable the custom weapon loadout. More specifically,
 
 Known flawless gun lockers include:
 
-- The Avenger's gun locker, as a part of the Avenger Weapon Workshop
+- The Avenger's gun locker, as a part of the Avenger Weapon Workshop upgrade
   ![Weapon Workshop upgrade for Avenger]({{ img_path_l10n }}/avenger.png)
 - The Arcade's gun locker in its personal quarters
   ![Personal Quarter upgrade for Arcade]({{ img_path_l10n }}/arcade.png)
 - The Penthouse's gun locker, bundled with its Office expansion
   ![Office expansion for Penthouse]({{ img_path_l10n }}/penthouse.png)
+- The Kosatka's gun locker, as a part of the Kosatka Weapon Workshop upgrade
+  ![Weapon Workshop upgrade for Kosatka]({{ img_path_l10n }}/kosatka.png)
 
 ## Interfering Gun Lockers
 
@@ -198,6 +200,8 @@ those weapons will be gone.
   - Personal Quarters in an Arcade
 
   - Office expansion in the Penthouse
+
+  - Weapon Workshop in Kosatka
 
 - The gun locker bundled with Mobile Operation Center's Weapon Workshop does
   not work alone, but it does not have any side effect either, so it is fine to

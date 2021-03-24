@@ -74,6 +74,7 @@ manageable with only one player, so if you are a lone wolf, make sure to
 exploit any events for the following:
 - [Bunker](null)
 - [Special Cargo](null)
+- [Cayo Perico Heist](null) (rare)
 - [Nightclub Warehouse](null) (rare)
 
 If you have buddies, then you can also participate in events for the following

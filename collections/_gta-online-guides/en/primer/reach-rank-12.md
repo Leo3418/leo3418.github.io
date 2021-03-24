@@ -27,13 +27,55 @@ At lower Ranks, because you haven't unlocked many rewarding Missions that give
 lots of RP, you can only use some primitive ways to get more RP. Fortunately,
 you only need 33,400 RP to get to Rank 12.
 
+### Collectibles
+
+![All collectibles in GTA Online]({{ img_path_l10n }}/collectibles.png)
+
+In GTA Online, there are lots of collectible items on the map, and each item
+successfully collected gives you 1000-2000 RP. This means to reach Rank 12, you
+just need to obtain at most 34 collectible items, which is not hard as long as
+you have a vehicle.
+
+There are multiple types of collectibles as shown in the screenshot above, but
+**Action Figures** and **Playing Cards** are the easiest to collect. The number
+of items to collect might look overwhelming, but you do not have to collect all
+of them at once. As presented in the table below, only 17 Playing Cards are
+required to reach Rank 12.
+
+Although a doubled amount of Action Figures is needed for Rank 12, each Action
+Figure collected gives you $1000 additionally, so you can earn 34,000 RP plus
+$34,000 by collecting 34 Action Figures. For Playing Cards, however, the reward
+besides RP is only some Chips with lower monetary value that can only be used
+in The Diamond Casino and Resort. In other words, you may choose to either rank
+up more quickly by collecting less Playing Cards, or earn some money in
+addition to the same amount of RP by collecting more Action Figures. This is
+completely up to you.
+
+| Collectible Type | RP Per Item | Number of Items to Collect for Rank 12 |  Extra Earnings   |            Guides            |
+| :--------------- | :---------: | :------------------------------------: | :---------------: | :--------------------------: |
+| Action Figures   |    1000     |                   34                   |      $34,000      | [Video][afv], [Webpage][afw] |
+| Playing Cards    |    2000     |                   17                   | $5,600 (as Chips) | [Video][pcv], [Webpage][pcw] |
+
+No matter which type of collectibles you choose, it is wise to collect them
+systematically. Follow a guide for the chosen collectible type, like one of the
+guides linked in the table, and get the items in strictly the same order as the
+guide, so when you want to complete the collection in the future, you know the
+place where the work should resume, as long as you still use the same guide.
+
+[afv]: https://www.youtube.com/watch?v=K19ap2onKa8
+[pcv]: https://www.youtube.com/watch?v=Ea844GlzcUs
+[afw]: https://gta.fandom.com/wiki/Action_Figures#Locations
+[pcw]: https://gta.fandom.com/wiki/Playing_Cards#Locations
+
 ### Double Rewards Events on Races or Special Game Modes
+
+![A Job with active Double Rewards]({{ img_path_l10n }}/double-rewards.png)
 
 Every week, Rockstar will offer double (or sometimes, even triple) RP and cash
 rewards for a specific game mode, such as Stunt Race, Transform Race, Bunker
 Series, etc. These are just some entertaining Jobs in which you don't need to
 worry about harsh and tough NPC enemies and can also earn reasonable amount of
-RP during Double Rewards.
+RP during Double Rewards, although some of them involve PvP activities.
 
 When you need some RP to rank up, you can find out which game modes have active
 Double Rewards on [Social Club](https://socialclub.rockstargames.com/events),
@@ -41,143 +83,5 @@ and participate. Usually it would be a kind of Race, so you may try some Race
 Jobs, find the ones that are quick or fun to do, and keep playing them until
 you have got enough RP you need.
 
-### Contact Missions
-
-Before Rank 12, you can access some Contact Missions offered by Simeon
-Yetarian, Gerald, and Martin Madrazo. On average, each Mission can give you
-1000-3000 RP.
-
-I deliberately ignored Lamar Missions because I believe [they are not suitable
-for beginners](general-tips-for-beginners#ignore-lamar-missions-for-now).
-First, none of them can be played solo, and they require players to collaborate
-well. If you are unfamiliar with those Missions, and you can't communicate with
-your teammates using voice, then you might need to spend a lot of time passing
-them. Second, many of them requires four players, whereas other Contact
-Missions can all be done by one or two players. The more teammates who are
-strangers, the greater the chance to fail the Mission. Larger number of players
-might also mean longer waiting time to gather enough teammates before starting
-the Mission.
-
-#### List of Missions
-
-| Mission | Unlocked at Rank |
-| :------ | :--------------: |
-| **Classic Contact Missions**<br />Added in 2013-2014 |   |
-| Ballas to the Wall | 5 |
-| Chasers | 5 |
-| It Takes a Thief | 5 |
-| Rich Men in Richman | 5 |
-| Rockford Roll | 5 |
-| Where Credit's Due | 5 |
-| Pier Pressure | 6 |
-| Death Metal | 6 |
-| Deal Breaker | 6 |
-| Flood in the LS River | 6 |
-| Meth'd Up | 7 |
-| No Hay Bronca | 8 |
-| All in the Game | 10 |
-| El Burro Heists | 10 |
-| Gentry Does It | 10 |
-| **Dispatch Missions**<br />Added in 2018 |   |
-| Dispatch I | 1 |
-| Dispatch II | 1 |
-| Dispatch III | 1 |
-| Dispatch IV | 1 |
-| Dispatch V | 1 |
-| Dispatch VI | 1 |
-| **Premium Deluxe Repo Work**<br />Added in 2019 |   |
-| Repo - Blow Up IV | 1 |
-| Repo - Burn Rate | 1 |
-| Repo - Do You Even Lift? | 1 |
-| Repo - GTA Today II | 1 |
-| Repo - RV Nearly There? | 1 |
-| Repo - Sasquashed | 1 |
-| Repo - Simeonomics | 1 |
-| Repo - Under the Hammer | 1 |
-| **Gerald's Last Play**<br />Added in 2020 |   |
-| Last Play - Bad Companies | 1 |
-| Last Play - Deal With It | 1 |
-| Last Play - End Product | 1 |
-| Last Play - Fast Peddling | 1 |
-| Last Play - Go Figure | 1 |
-| Last Play - Make Ends Meat | 1 |
-
-#### Comparison Between Mission Categories
-
-| Category | Typical RP Reward (for Hard Difficulty Setting) | Required Players | Mission Difficulty for Beginners |
-| :----------------------- | :-------: | :-: | :------------: |
-| Classic Contact Missions | 1000-2000 |  1  | Easy to medium |
-| Dispatch Missions        | 2000-3000 |  2  | Medium         |
-| Premium Deluxe Repo Work | 3000-4000 |  1  | Medium to hard |
-| Gerald's Last Play       | 2500-3500 |  1  | Hard           |
-
-The earliest Contact Missions do not give a lot of RP rewards, but they are
-very easy to complete. You may choose to repeat doing some of those missions
-for many times if you just want something simple.
-
-Martin Madrazo's Dispatch Missions offer more RP, but they are harder than
-those classic Contact Missions, especially if you don't own any of armored
-Kuruma, Buzzard, Deluxo, or Oppressor Mk II. They also require at least two
-players, so you can't do them solo and must either join a Job another player
-hosts or start the Mission by yourself and wait until someone joins. However,
-if you happen to get a teammate who uses any of the vehicles mentioned above,
-then these Missions become much more easier, so this could be a plus.
-
-The Repo Missions given by Simeon Yetarian have varying difficulties, but some
-of them should still be manageable by new players. They can be completed solo
-and offer more RP than Dispatch Missions. You can choose to do some easy Jobs
-among them, such as **Simeonomics**, and grind more RP than what a classic
-Contact Mission has to offer.
-
-The Gerald's Last Play Missions are easy if you have an armored Kuruma and hard
-if you don't. Since you can purchase armored Kuruma at a lower price after Rank
-12 and there are many other Contact Missions you can do, I won't suggest buying
-that car just for these Missions. So, perhaps consider ignoring them
-temporarily until you get an armored Kuruma.
-
-#### Equipment
-
-The recommended equipment for these Missions is Special Carbine with
-Suppressor. They are unlocked at Rank 1, meaning that you can buy them
-directly. Special Carbine is an assault rifle with good performance; the
-suppressor is useful in Missions that require stealth kills, like some Dispatch
-Missions. They cost $27,250 in total.
-
-![Special Carbine in Ammu-Nation]({{ img_path_l10n }}/special-carbine.png)
-
-![Special Carbine with
-Suppressor]({{ img_path_l10n }}/special-carbine-suppressor.png)
-
-![Special Carbine in the Weapon
-Wheel]({{ img_path_l10n }}/special-carbine-in-weapon-wheel.png)
-
-#### Tips
-
-- When you are starting a Mission, make sure you choose Hard Difficulty. This
-  gives you more RP and cash rewards and is not significantly harder than
-  Normal Difficulty.
-
-  ![Selecting Hard Difficulty]({{ img_path_l10n }}/hard-difficulty.png)
-
-- If you are hosting a Dispatch Mission, you need another player to start the
-  Job. To find a player more quickly, you can do the following in the "Invite"
-  screen:
-  - Change "Matchmaking" to "Open"
-  - Choose "Auto-Invite"
-  - If you are in a highly populated session, you can choose "All From Current
-    Session"
-  - Choose "Skill Matched Players > All Skill Matched Players"
-
-  ![The "Invite" screen]({{ img_path_l10n }}/invite-players.png)
-
-#### Guides
-
-GTA Series Videos has a lot of video guides covering those Contact Missions:
-
-- [Playlist for classic Contact
-  Missions](https://www.youtube.com/playlist?list=PLQ3KzJPBsAHlIT-8YtVjN-5aJGd3fvJ3o)
-- [Dispatch Missions](https://www.youtube.com/watch?v=A8b6P4K3k1s)
-- Repo Missions: [Part 1](https://www.youtube.com/watch?v=mqtYbGUrNRA),
-  [Part 2](https://www.youtube.com/watch?v=4EoxQFDHXMY),
-  [Part 3](https://www.youtube.com/watch?v=SB1IgG_NkcE)
-- [Gerald's Last Play](https://www.youtube.com/watch?v=NbVEoPzXe38)
+If you are in game, look for the `2 x RP` and `2 x $` icons shown in the Job
+details page, as shown in the screenshot above.

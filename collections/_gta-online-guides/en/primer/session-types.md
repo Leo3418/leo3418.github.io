@@ -64,9 +64,9 @@ might not be available to you.
   people can't join, and you don't plan to do any activities that would require
   a Public Session.
 
-- You are planning to do Casino Heist Prep Missions, which do not require a
-  Public Session but still needs you to register as a VIP, CEO, or MC
-  President.
+- You are planning to do Cayo Perico Heist Prep Missions or Casino Heist Prep
+  Missions, which do not require a Public Session but still needs you to
+  register as a VIP, CEO, or MC President.
 
 ## Method
 
