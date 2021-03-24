@@ -72,16 +72,17 @@ Los Santos, it has road connections to different parts of the city. It is also
 the required location for Elite Challenge of The Fleeca Job.
 
 ![3 Alta St and the tunnel entrance]({{ img_path }}/3-alta-st.png)
-![3 Alta St on the map]({{ img_path }}/3-alta-st-map.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/3-alta-st-map.png{% endcapture %}
+{% capture fig_caption %}
 1. 3 Alta St
 2. The LST Metro tunnel entrance
 
-{: .img-caption}
 If you are being pursued by the Cops, you can easily find the tunnel entrance
 from your Apartment's icon on the map, hence get rid of your Wanted Level
 quickly and easily.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="3 Alta St on the map" %}
 
 ### 4 Integrity Way
 
@@ -108,9 +109,8 @@ Because of easy access to freeways and highways to Blaine County, Apartments at
 this location are also optimal for Heists that require you to go to rural
 areas, including The Prison Break and Series A Funding.
 
-![4 Integrity Way and vicinity]({{ img_path }}/4-integrity-way.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/4-integrity-way.png{% endcapture %}
+{% capture fig_caption %}
 1. 4 Integrity Way
 2. Arcadius Business Center
 3. Route to Rockford Hills
@@ -120,7 +120,6 @@ areas, including The Prison Break and Series A Funding.
 5. Route to Grand Senora Desert, Sandy Shores and Grapeseed via Los Santos
    Freeway
 
-{: .img-caption}
 - Arcadius Business Center is just across the street.
 - An entrance to the Los Santos Freeway is only one tunnel away.
 - Although there are not many roads connected to the building, you can drive
@@ -128,8 +127,12 @@ areas, including The Prison Break and Series A Funding.
 - Del Perro Freeway does not have an entrance that serves any nearby road, but
   you can access the freeway thanks to the broken barrier near the Apartment
   building, as shown below.
+
   ![Entering Del Perro Freeway from 4 Integrity
   Way]({{ img_path }}/4-integrity-way-fwy-entrance.png)
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="4 Integrity Way and vicinity" %}
 
 ### Del Perro Heights
 
@@ -181,17 +184,17 @@ Santos, which takes significant extra time. In terms of distances, other
 Apartments near the center of the map are better for Heists than Del Perro
 Heights.
 
-![Del Perro Heights vicinity]({{ img_path }}/del-perro-heights.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/del-perro-heights.png{% endcapture %}
+{% capture fig_caption %}
 Del Perro Heights is just across the street from the cheapest Office, Maze Bank
 West. It is also close to Insert Coin Arcade, Del Perro Nightclub, and a
 Kosatka spawn point.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Del Perro Heights vicinity" %}
 
-![Starting a Heist from Del Perro
-Heights]({{ img_path }}/del-perro-heights-heist.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/del-perro-heights-heist.png{% endcapture %}
+{% capture fig_caption %}
 A Heist has just been started from Del Perro Heights. Two team members'
 vehicles are shown under the arrows. Vehicles of the other two team members are
 around the corner, to the left of field of view in the screenshot. To get to
@@ -201,6 +204,9 @@ happen to have vehicles that look very alike and they spawned at different
 sides of the corner, they have to guess which one is theirs and take a bet. If
 it is wrong, they must walk around to get to the other car, and this is
 probably not enjoyable at all.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Starting a Heist from Del Perro Heights" %}
 
 ### Eclipse Towers
 
@@ -235,14 +241,15 @@ of The Pacific Standard Job. It was the Apartment location for Elite Challenge
 of the Finale as well, until Rockstar added a few Stilt Apartments that is
 better for the task later.
 
-![Eclipse Towers and Eight-Bit Arcade]({{ img_path }}/eclipse-towers.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/eclipse-towers.png{% endcapture %}
+{% capture fig_caption %}
 1. Eclipse Towers
 2. Eight-Bit Arcade
 
-{: .img-caption}
 Eclipse Towers is only one block away from Eight-Bit Arcade.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Eclipse Towers and Eight-Bit Arcade" %}
 
 ### Richards Majestic
 
@@ -281,18 +288,18 @@ Beach than Del Perro Heights, they do offer their owners awesome sea view.
 Ironically, you cannot see the beach from Del Perro Heights at all because the
 building is not higher than the one on its west, so the sea view is blocked.
 
-![Richards Majestic and Weazel Plaza on the
-map]({{ img_path }}/rm-and-wp-map.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/rm-and-wp-map.png{% endcapture %}
+{% capture fig_caption %}
 1. Richards Majestic
 2. Weazel Plaza
 3. Del Perro Freeway and Western Highway
 4. Los Santos Freeway
 
-{: .img-caption}
 There is no short and direct route to get onto Del Perro Freeway or Los Santos
 Freeway, two important freeways on the map.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Richards Majestic and Weazel Plaza on the map" %}
 
 ### Tinsel Towers
 
@@ -313,9 +320,8 @@ passing it connects to both Western Highway and Los Santos Freeway. This makes
 Tinsel Towers the optimal Apartment location for not only The Pacific Standard
 Job but also many other Heist Missions as well.
 
-![Tinsel Towers on the map]({{ img_path }}/tinsel-towers-map.png)
-
-{: .img-caption}
+{% capture fig_path %}{{ img_path }}/tinsel-towers-map.png{% endcapture %}
+{% capture fig_caption %}
 1. Tinsel Towers
 2. Eclipse Towers
 3. Eight-Bit Arcade
@@ -324,7 +330,6 @@ Job but also many other Heist Missions as well.
 6. Route to Grand Senora Desert, Sandy Shroes and Grapeseed via Los Santos
    Freeway
 
-{: .img-caption}
 - Tinsel Towers is only two blocks down from Eclipse Towers.
 - It is still close to Eight-Bit Arcade, although you need to drive uphill for
   the distance of two blocks.
@@ -333,6 +338,10 @@ Job but also many other Heist Missions as well.
 - Although it requires driving across half of the city, you can get onto
   highways and freeways to Blaine County using simple routes which do not have
   lots of turns.
+Freeway, two important freeways on the map.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Tinsel Towers on the map" %}
 
 ## Stilt Apartments
 
