@@ -182,6 +182,11 @@ p, a, li, figcaption, td {
     }
 }
 
+figcaption {
+    font-family: unset;
+    font-size: 0.875em;
+}
+
 // Masthead
 
 .masthead, .greedy-nav {
