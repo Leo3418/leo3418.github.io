@@ -59,7 +59,7 @@ following things:
 
 - Only purchase the upgrades that are fundamentally useful, so the utility
   charges will not increase. We will get to this with more details later.
-  
+
 - Leave the current session when you think you have spent about 48 minutes in
   it. Because one in-game day takes 48 minutes, if you are about to see the
   same time of day in the lobby, it is the time to leave and avoid the property
@@ -97,7 +97,27 @@ without its icon being shown. Here is the method:
    you for idling too long, nor will it make you pay for the property utility
    charges.
 
+   Note that the TV is not required to be turned on. As long as the TV controls
+   are shown at the screen's corner, you will not be kicked.
+
    ![Idling by watching TV]({{ img_path_l10n }}/watching-tv.png)
 
 3. When you don't need to stay AFK anymore, you can either quit the Mission
    directly or complete it.
+
+### Special Note for PC
+
+On PC, there is an additional requirement for not being kicked: the game window
+must be active. If the game window is minimized or not focused, you can still
+be kicked for idling.
+
+If you use Windows 10 and wish to switch to another window, you can use the
+[virtual
+desktop](https://community.windows.com/en-us/stories/virtual-desktop-windows-10)
+feature, put the game window in one virtual desktop, and open other
+applications in another virtual desktop. By using multiple desktops, it is
+possible to have more than one active window, so you can stay AFK without being
+kicked in GTA Online while using other windows.
+
+![Using virtual desktops in Windows
+10]({{ img_path_l10n }}/virtual-desktops.png)

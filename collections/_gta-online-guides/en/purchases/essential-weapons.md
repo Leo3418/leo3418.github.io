@@ -76,10 +76,10 @@ homing accuracy on aircraft is really low: enemy pilots can dodge the missiles
 easily. Therefore, don't depend on the lock-on too much when you are targeting
 aircraft.
 
-This weapon is also favored by players who focus on on-foot PvP. By using
-first-person camera and some quick weapon switching tricks that I don't master,
-those players are able to burst out multiple missiles rapidly with the Homing
-Launcher and cause massive damages on adversary players.
+The Homing Launcher has another advantage over the RPG: Homing Launcher's
+rockets travel faster. This makes the Homing Launcher still a little bit useful
+even after RPG is unlocked. Some players favor this weapon in on-foot PvP
+activities for this reason.
 
 ## Tear Gas
 

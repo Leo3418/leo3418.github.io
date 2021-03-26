@@ -9,8 +9,8 @@ This has been mentioned more or less in the previous parts of this collection,
 but it is worth emphasizing it again since it is a mistake that so many players
 will make:
 
-Do not buy a property located near Paleto Bay only because it is cheap, when
-such location has a very significant disadvantage.
+*Do not buy a property located near Paleto Bay only because it is cheap, when
+such location has a very significant disadvantage.*
 
 More specifically, you should never consider Paleto Forest Bunker if you want
 to make money with it, no matter what kind of offer on it is available to you.

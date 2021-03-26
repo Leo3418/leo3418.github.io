@@ -5,7 +5,7 @@ level: 3
 lang: en
 ---
 {% include img-path.liquid %}
-When you join GTA Online from GTA V, you will enter a Public Session by
+When you join GTA Online from GTA V, you will enter a **Public Session** by
 default. A Public Session might already have other players in it, and new
 players can join it as well.
 
@@ -16,8 +16,8 @@ can join:
   invitation sent from you or anyone already in the session.
 
 - **Closed Crew Session**: Only players in your Crew on Social Club can join
-  the session. They can join without an invitation. You cannot invite anyone
-  not in your Crew to the session.
+  the session. They can join without an invitation. Anyone who is not in your
+  Crew cannot join the session.
 
 - **Crew Session** (with customizable number of Crews): Should work like a
   Closed Crew Session but is able to contain players from more than one Crew.
@@ -64,9 +64,9 @@ might not be available to you.
   people can't join, and you don't plan to do any activities that would require
   a Public Session.
 
-- You are planning to do Casino Heist Prep Missions, which do not require a
-  Public Session but still needs you to register as a VIP, CEO, or MC
-  President.
+- You are planning to do Cayo Perico Heist Prep Missions or Casino Heist Prep
+  Missions, which do not require a Public Session but still needs you to
+  register as a VIP, CEO, or MC President.
 
 ## Method
 

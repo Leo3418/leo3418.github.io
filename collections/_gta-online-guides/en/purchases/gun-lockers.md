@@ -42,7 +42,7 @@ I could use it to toggle the loadout I defined from the gun locker.
 ![The custom weapon loadout option in the Interaction
 Menu]({{ img_path_l10n }}/toggle-loadout.png)
 
-This is not going to happen in all situations. For some gun lockers, **the
+This is not going to happen in all situations. **For some gun lockers, the
 custom weapon loadout needs to be manually enabled every time when you join a
 session**. If you forgot to enable it before starting a Freemode activity or
 joining a Heist, you will have to deal with your entire arsenal. **The option
@@ -56,7 +56,7 @@ The above screenshot was taken when I was in the Sightseer VIP Work, which is a
 Freemode activity. The custom weapon loadout option in the Interaction Menu was
 grayed out, preventing me from hiding unwanted weapon from the Weapon Wheel.
 
-For a few gun lockers, **even if you remember to enable the custom loadout, the
+**For a few gun lockers, even if you remember to enable the custom loadout, the
 weapons you have hidden will still strangely come back to the Weapon Wheel in
 Heists**. Ironically, harder Heist Missions have no tolerance for time wasted
 on weapon switching and are thus the situations where you would seriously
@@ -75,16 +75,16 @@ manually disable the custom weapon loadout. More specifically,
 - The custom weapon loadout must work everywhere, from Freemode sessions to
   Freemode activities and Heists.
 
-Flawless gun lockers that are verified by me are the **Avenger's gun locker**, a part of the Avenger Weapon Workshop, and the **Arcade's gun locker** in its personal quarters.
+Known flawless gun lockers include:
 
-![Weapon Workshop upgrade for Avenger]({{ img_path_l10n }}/avenger.png)
-![Personal Quarter upgrade for Arcade]({{ img_path_l10n }}/arcade.png)
-
-I have also seen players reporting that the **Penthouse's gun locker** bundled
-with its Office expansion is also working flawlessly, but I cannot test it by
-myself yet.
-
-![Office expansion for Penthouse]({{ img_path_l10n }}/penthouse.png)
+- The Avenger's gun locker, as a part of the Avenger Weapon Workshop upgrade
+  ![Weapon Workshop upgrade for Avenger]({{ img_path_l10n }}/avenger.png)
+- The Arcade's gun locker in its personal quarters
+  ![Personal Quarter upgrade for Arcade]({{ img_path_l10n }}/arcade.png)
+- The Penthouse's gun locker, bundled with its Office expansion
+  ![Office expansion for Penthouse]({{ img_path_l10n }}/penthouse.png)
+- The Kosatka's gun locker, as a part of the Kosatka Weapon Workshop upgrade
+  ![Weapon Workshop upgrade for Kosatka]({{ img_path_l10n }}/kosatka.png)
 
 ## Interfering Gun Lockers
 
@@ -179,8 +179,8 @@ following weapons will not even show up in the Gun Locker menu:
   challenge](your-first-1-25m#navy-revolver-challenge-250000)
 
 The Firework Launcher is temporary available during events for Christmas, New
-Year, Independence Day of the US, etc. If you can use up all fireworks before
-the event ends, then the Firework Launcher will be gone after the event.
+Year, Independence Day of the US, etc. Once you use up all the fireworks, the
+Firework Launcher will be removed when the event has ended.
 
 For the other weapons, they require an alternative way to be removed. In the
 Pause Menu, choose Online > Jobs > Play Job > Rockstar Created > Arena War,
@@ -200,6 +200,8 @@ those weapons will be gone.
   - Personal Quarters in an Arcade
 
   - Office expansion in the Penthouse
+
+  - Weapon Workshop in Kosatka
 
 - The gun locker bundled with Mobile Operation Center's Weapon Workshop does
   not work alone, but it does not have any side effect either, so it is fine to

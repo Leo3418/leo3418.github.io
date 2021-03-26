@@ -35,7 +35,8 @@ $17,420.
 3. When you turn onto the north side of the block and drive towards west, you
    might see a Sentinel XS in either yellow or purple coming to you in the
    opposite direction. It usually appears in front of the Eight-Bit Arcade. If
-   you don't see it, keep circling until you do.
+   you don't see it, circle one more time. If it still does not spawn, leave
+   the area and come back, then try again.
 
    ![The yellow variant has spawned]({{ img_path }}/yellow-spawned.png)
 
@@ -56,6 +57,8 @@ $17,420.
   to farm with your friends together, you may carpool when you circle the
   block.
 
+  ![Carpooling to farm Sentinel XS]({{ img_path }}/carpool.png)
+
 ## Vehicle Selling Limits
 
 You can only sell one car to Los Santos Customs per 48 real-life minutes. So,
@@ -67,6 +70,8 @@ Associates, and let them sell vehicles for you. You can get 90% of the revenue,
 whereas the rest 10% goes to SecuroServ (deducted by Rockstar, actually).
 However, this would still activate the 48-minute timer for your Bodyguards or
 Associates.
+
+![Getting cut from car sale as a VIP or CEO]({{ img_path }}/securoserv-cut.png)
 
 Also, your Bodyguards or Associates cannot sell cars that have been stored in
 your Personal Garage. If you still have some Sentinel XS's left in your Garage,

@@ -16,8 +16,10 @@ many new players are not aware of them.
 
 I had been thinking that if I would make a GTA Online guide someday, I should
 cover the ways to protect oneself from other players' attacks in the first
-lesson. So here it goes: there are three different mechanisms to keep attacks
-from other players away, applicable to different situations:
+lesson. There is nothing we can do to completely stop griefing, but at least we
+can change ourselves and learn how to avoid impacts of griefers. So here it
+goes: there are three different mechanisms to keep attacks from other players
+away, applicable to different situations:
 
 1. [Passive Mode](passive-mode)
 

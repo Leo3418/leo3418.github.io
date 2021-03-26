@@ -22,10 +22,9 @@ Workshop. You can get a Weapon Workshop through any of the following means:
 
 - By purchasing the Weapon Workshop for your Terrorbyte.
 
-- By setting up The Diamond Casino Heist and completing the Unmarked Weapons
-  Prep Mission. A Weapon Workshop will be available in your Arcade's basement,
-  across the Heist planning boards. It will be there until you complete or
-  cancel the Heist.
+- By setting up The Diamond Casino Heist and selecting the crew members. A
+  Weapon Workshop will be available in your Arcade's basement, across the Heist
+  planning boards. It will be there until you complete or cancel the Heist.
 
 Note that once you own a Weapon Workshop, you can also purchase certain weapons
 before reaching the Ranks required to unlock them. In other words, as long as

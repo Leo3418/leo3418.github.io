@@ -71,16 +71,18 @@ In addition, 3 Alta St is also a fine location for Heists. Located in Downtown
 Los Santos, it has road connections to different parts of the city. It is also
 the required location for Elite Challenge of The Fleeca Job.
 
----
-
 ![3 Alta St and the tunnel entrance]({{ img_path }}/3-alta-st.png)
-![3 Alta St on the map]({{ img_path }}/3-alta-st-map.png)
-1. 3 Alta St  
-2. The LST Metro tunnel entrance  
+{% capture fig_path %}{{ img_path }}/3-alta-st-map.png{% endcapture %}
+{% capture fig_caption %}
+1. 3 Alta St
+2. The LST Metro tunnel entrance
 
 If you are being pursued by the Cops, you can easily find the tunnel entrance
 from your Apartment's icon on the map, hence get rid of your Wanted Level
 quickly and easily.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="3 Alta St on the map" %}
 
 ### 4 Integrity Way
 
@@ -107,9 +109,8 @@ Because of easy access to freeways and highways to Blaine County, Apartments at
 this location are also optimal for Heists that require you to go to rural
 areas, including The Prison Break and Series A Funding.
 
----
-
-![4 Integrity Way and vicinity]({{ img_path }}/4-integrity-way.png)
+{% capture fig_path %}{{ img_path }}/4-integrity-way.png{% endcapture %}
+{% capture fig_caption %}
 1. 4 Integrity Way
 2. Arcadius Business Center
 3. Route to Rockford Hills
@@ -126,8 +127,12 @@ areas, including The Prison Break and Series A Funding.
 - Del Perro Freeway does not have an entrance that serves any nearby road, but
   you can access the freeway thanks to the broken barrier near the Apartment
   building, as shown below.
-![Entering Del Perro Freeway from 4 Integrity
-Way]({{ img_path }}/4-integrity-way-fwy-entrance.png)
+
+  ![Entering Del Perro Freeway from 4 Integrity
+  Way]({{ img_path }}/4-integrity-way-fwy-entrance.png)
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="4 Integrity Way and vicinity" %}
 
 ### Del Perro Heights
 
@@ -140,6 +145,7 @@ Summary:
 
 - The cheapest high-end Apartment
 - Has many business properties nearby
+- The Apartment closest to a Kosatka spawn point
 - Not very friendly for Heists
 
 This is the most popular choice of Apartment location I have seen, probably
@@ -150,9 +156,15 @@ Insert Coin Arcade, and Morningwood Cocaine Lockup. If you buy an Apartment in
 Del Perro Heights, you can expand your GTA Online business empire from here and
 get quick access to them.
 
-One caveat for this building is that it is not a good location for Heists. When
-a Heist begins, the team will exit the Apartment where the host started it, and
-their vehicles are parked to the side of nearby roads, as shown
+For Cayo Perico Heist grinders, this is probably the most suitable high-end
+Apartment. Because it is the closest high-end Apartment to the ocean, it also
+has the shortest distance to a Kosatka spawn point, meaning that if you request
+your Kosatka outside your Apartment, Del Perro Heights allows you to reach your
+Kosatka in shortest time.
+
+One caveat for this building is that it is not a good location for the original
+Heists. When a Heist begins, the team will exit the Apartment where the host
+started it, and their vehicles are parked to the side of nearby roads, as shown
 [here](https://youtu.be/icSO9WL8h1A?t=13). In front of Del Perro Height's
 entrance is a small garden with stairs and barriers, so it will take time for
 your teammates to reach their cars. What makes things even worse is that
@@ -172,16 +184,17 @@ Santos, which takes significant extra time. In terms of distances, other
 Apartments near the center of the map are better for Heists than Del Perro
 Heights.
 
----
-
-![Del Perro Heights vicinity]({{ img_path }}/del-perro-heights.png)
+{% capture fig_path %}{{ img_path }}/del-perro-heights.png{% endcapture %}
+{% capture fig_caption %}
 Del Perro Heights is just across the street from the cheapest Office, Maze Bank
-West. It is also close to Insert Coin Arcade and Del Perro Nightclub.
+West. It is also close to Insert Coin Arcade, Del Perro Nightclub, and a
+Kosatka spawn point.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Del Perro Heights vicinity" %}
 
----
-
-![Starting a Heist from Del Perro
-Heights]({{ img_path }}/del-perro-heights-heist.png)
+{% capture fig_path %}{{ img_path }}/del-perro-heights-heist.png{% endcapture %}
+{% capture fig_caption %}
 A Heist has just been started from Del Perro Heights. Two team members'
 vehicles are shown under the arrows. Vehicles of the other two team members are
 around the corner, to the left of field of view in the screenshot. To get to
@@ -191,6 +204,9 @@ happen to have vehicles that look very alike and they spawned at different
 sides of the corner, they have to guess which one is theirs and take a bet. If
 it is wrong, they must walk around to get to the other car, and this is
 probably not enjoyable at all.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Starting a Heist from Del Perro Heights" %}
 
 ### Eclipse Towers
 
@@ -225,13 +241,15 @@ of The Pacific Standard Job. It was the Apartment location for Elite Challenge
 of the Finale as well, until Rockstar added a few Stilt Apartments that is
 better for the task later.
 
----
-
-![Eclipse Towers and Eight-Bit Arcade]({{ img_path }}/eclipse-towers.png)
+{% capture fig_path %}{{ img_path }}/eclipse-towers.png{% endcapture %}
+{% capture fig_caption %}
 1. Eclipse Towers
 2. Eight-Bit Arcade
 
 Eclipse Towers is only one block away from Eight-Bit Arcade.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Eclipse Towers and Eight-Bit Arcade" %}
 
 ### Richards Majestic
 
@@ -270,10 +288,8 @@ Beach than Del Perro Heights, they do offer their owners awesome sea view.
 Ironically, you cannot see the beach from Del Perro Heights at all because the
 building is not higher than the one on its west, so the sea view is blocked.
 
----
-
-![Richards Majestic and Weazel Plaza on the
-map]({{ img_path }}/rm-and-wp-map.png)
+{% capture fig_path %}{{ img_path }}/rm-and-wp-map.png{% endcapture %}
+{% capture fig_caption %}
 1. Richards Majestic
 2. Weazel Plaza
 3. Del Perro Freeway and Western Highway
@@ -281,6 +297,9 @@ map]({{ img_path }}/rm-and-wp-map.png)
 
 There is no short and direct route to get onto Del Perro Freeway or Los Santos
 Freeway, two important freeways on the map.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Richards Majestic and Weazel Plaza on the map" %}
 
 ### Tinsel Towers
 
@@ -301,9 +320,8 @@ passing it connects to both Western Highway and Los Santos Freeway. This makes
 Tinsel Towers the optimal Apartment location for not only The Pacific Standard
 Job but also many other Heist Missions as well.
 
----
-
-![Tinsel Towers on the map]({{ img_path }}/tinsel-towers-map.png)
+{% capture fig_path %}{{ img_path }}/tinsel-towers-map.png{% endcapture %}
+{% capture fig_caption %}
 1. Tinsel Towers
 2. Eclipse Towers
 3. Eight-Bit Arcade
@@ -320,6 +338,10 @@ Job but also many other Heist Missions as well.
 - Although it requires driving across half of the city, you can get onto
   highways and freeways to Blaine County using simple routes which do not have
   lots of turns.
+Freeway, two important freeways on the map.
+{% endcapture %}
+{% include figure image_path=fig_path caption=fig_caption
+    alt="Tinsel Towers on the map" %}
 
 ## Stilt Apartments
 
