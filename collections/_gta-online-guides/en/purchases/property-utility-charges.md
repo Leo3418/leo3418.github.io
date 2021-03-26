@@ -104,3 +104,20 @@ without its icon being shown. Here is the method:
 
 3. When you don't need to stay AFK anymore, you can either quit the Mission
    directly or complete it.
+
+### Special Note for PC
+
+On PC, there is an additional requirement for not being kicked: the game window
+must be active. If the game window is minimized or not focused, you can still
+be kicked for idling.
+
+If you use Windows 10 and wish to switch to another window, you can use the
+[virtual
+desktop](https://community.windows.com/en-us/stories/virtual-desktop-windows-10)
+feature, put the game window in one virtual desktop, and open other
+applications in another virtual desktop. By using multiple desktops, it is
+possible to have more than one active window, so you can stay AFK without being
+kicked in GTA Online while using other windows.
+
+![Using virtual desktops in Windows
+10]({{ img_path_l10n }}/virtual-desktops.png)

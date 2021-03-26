@@ -179,8 +179,8 @@ following weapons will not even show up in the Gun Locker menu:
   challenge](your-first-1-25m#navy-revolver-challenge-250000)
 
 The Firework Launcher is temporary available during events for Christmas, New
-Year, Independence Day of the US, etc. If you can use up all fireworks before
-the event ends, then the Firework Launcher will be gone after the event.
+Year, Independence Day of the US, etc. Once you use up all the fireworks, the
+Firework Launcher will be removed when the event has ended.
 
 For the other weapons, they require an alternative way to be removed. In the
 Pause Menu, choose Online > Jobs > Play Job > Rockstar Created > Arena War,

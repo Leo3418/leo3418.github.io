@@ -13,7 +13,7 @@ farm them and get significant profit.
 
 In the method introduced by this article, two different variants of Sentinel XS
 can spawn: the yellow one is worth $14,970, and the purple one can be sold for
-$20,370.
+$17,420.
 
 ![Two variants of Sentinel XS]({{ img_path }}/sentinel-xs-variants.png)
 
@@ -57,6 +57,8 @@ $20,370.
   to farm with your friends together, you may carpool when you circle the
   block.
 
+  ![Carpooling to farm Sentinel XS]({{ img_path }}/carpool.png)
+
 ## Vehicle Selling Limits
 
 You can only sell one car to Los Santos Customs per 48 real-life minutes. So,
@@ -68,6 +70,8 @@ Associates, and let them sell vehicles for you. You can get 90% of the revenue,
 whereas the rest 10% goes to SecuroServ (deducted by Rockstar, actually).
 However, this would still activate the 48-minute timer for your Bodyguards or
 Associates.
+
+![Getting cut from car sale as a VIP or CEO]({{ img_path }}/securoserv-cut.png)
 
 Also, your Bodyguards or Associates cannot sell cars that have been stored in
 your Personal Garage. If you still have some Sentinel XS's left in your Garage,

@@ -11,6 +11,18 @@ players. Your model, and the model of any vehicle you drive when the Passive
 Mode is active, are transparent to other players, so they can't hit you
 directly with a vehicle or attack you with a gun.
 
+{% capture fig_path %}{{ img_path }}/effect-on-foot.png{% endcapture %}
+{% capture fig_desc %}
+How a player on foot with Passive Mode enabled looks to other players
+{% endcapture %}
+{% include figure image_path=fig_path alt=fig_desc caption=fig_desc %}
+
+{% capture fig_path %}{{ img_path }}/effect-in-vehicle.png{% endcapture %}
+{% capture fig_desc %}
+How a player in vehicle with Passive Mode enabled looks to other players
+{% endcapture %}
+{% include figure image_path=fig_path alt=fig_desc caption=fig_desc %}
+
 ## Effects
 
 - As described above, you cannot be hit or killed by other players directly.

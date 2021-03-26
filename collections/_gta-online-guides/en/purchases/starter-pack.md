@@ -134,6 +134,9 @@ This is the infamous Bunker I have [criticized in the article about Paleto Bay
 properties](paleto-bay-properties#paleto-forest-bunker). **Do not get it; the
 Gunrunning business run with this Bunker is very unlikely to be profitable**.
 
+![Avoid the free Bunker in the Starter Pack under all possible
+conditions]({{ img_path_l10n }}/free-bunker.png)
+
 ### Compact Grenade Launcher
 
 I have given reasons not to buy this weapon
