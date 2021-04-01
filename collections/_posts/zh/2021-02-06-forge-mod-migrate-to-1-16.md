@@ -7,7 +7,7 @@ tags:
 categories:
   - 博客
 toc: true
-last_modified_at: 2021-03-21
+last_modified_at: 2021-03-31
 ---
 
 Minecraft Forge 支持 Minecraft 1.16 已经有相当长一段时间了。1.16.x 系列的第一个稳定版本 34.1.0 早在 2020 年 9 月，也就是我[这个系列上一篇关于我的 mod 的更新的文章][config-screen]发布不久后，就已经出了。其实在我准备更新 mod 期间，Forge 的 1.16 支持就已经比较成熟了，所以我当时就在考虑要不要在更新时顺带把 mod 移植到 1.16 上。但是，经过艰苦的尝试，我发现当时 Forge 附带的 MCP 反编译出的 Minecraft 代码中依然有许多没完全*反混淆*的方法名称，遂感觉 Forge 对 1.16 的支持仍然不够完善，于是决定暂不把 mod 移植到 1.16。
@@ -66,12 +66,113 @@ public void render(int mouseX, int mouseY, float partialTicks) {
 @Override
 public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(matrixStack);
-    this.drawCenteredString(matrixStack, this.font, title, width, height, color);
+    drawCenteredString(matrixStack, this.font, title, width, height, color);
     super.render(matrixStack, mouseX, mouseY, partialTicks);
 }
 ```
 
+## 用于获取设置选项的名称的方法被删除
+
+如果您参考[本系列博客的上一篇文章][config-screen]中介绍的方法创建了一个配置界面的话，那么您需要对每个使用 `SliderPercentageOption` 和 `IteratableOption` 的地方进行修改。在该文章中，我使用了 `net.minecraft.client.settings.AbstractOption.getDisplayString()` 方法来获取设置选项的显示名称，但在 1.16 中，这个方法变成了另一个 `protected` 方法 `getBaseMessageTranslation()`，因此现在 `AbstractOption` 类中就没有公开的返回选项名称的方法了。如果您还想像在以前版本中那样显示选项名称的话，您需要自行生成名称字符串。具体的方法是将选项名称的翻译键传给 `I18n.format(String)` 以获得翻译后的选项名称，然后将其与一个冒号串接起来。
+
+```java
+import net.minecraft.client.settings.SliderPercentageOption;
+import net.minecraft.client.settings.IteratableOption;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.resources.I18n;
+
+// SliderPercentageOption
+this.optionsRowList.addOption(new SliderPercentageOption(
+        "hbwhelper.configGui.hudX.title",
+        min, max, step,
+        unused -> (double) ModSettings.getHudX(),
+        (unused, newValue) -> ModSettings.setHudX(newValue.intValue()),
+        // 返回 "<选项名>: <设定值>" 格式的字符串的 BiFunction
+        (gs, option) -> new StringTextComponent(
+                // 使用 I18n.format(String) 查询一个翻译键对应的译文
+                I18n.format("hbwhelper.configGui.hudX.title")
+                + ": "
+                + (int) option.get(gs)
+        )
+));
+
+// IteratableOption
+this.optionsRowList.addOption(new IteratableOption(
+        "hbwhelper.configGui.dreamMode.title",
+        (unused, newValue) ->
+                ModSettings.setDreamMode(DreamMode.values()[
+                        (ModSettings.getDreamMode().ordinal() + newValue)
+                                % DreamMode.values().length
+                ]),
+        (unused, option) -> new StringTextComponent(
+                I18n.format("hbwhelper.configGui.dreamMode.title")
+                + ": "
+                + I18n.format(ModSettings.getDreamMode().getTranslateKey())
+        )
+));
+```
+
+这样的改动不可避免地导致了源代码中翻译键的重复，但这是我能想到的最直接的解决方法。毕竟我们选择了使用 Minecraft 内部没有任何文档的 API，也得做好 API 出现各种不兼容的改动的心理准备。
+
+还有一种解决方法，就是继承 `SliderPercentageOption` 和 `IteratableOption` 这两个类，就可以使用 `getBaseMessageTranslation()` 这个 `protected` 方法了。但这也意味着需要为此在 mod 中创建两个新类。
+
+## 用于读取带格式代码的文本的方法被移除
+
+许多 Minecraft 玩家都应该熟悉[格式代码][formatting-codes]，就是以分节符号 `§` 开头的代码。格式代码可以用来给文字添加颜色，还可以用来控制粗体、斜体等文字样式。我暂且称这种带格式代码的文本为*格式化文本*。
+
+Minecraft 中有一个 `net.minecraft.util.text.ITextComponent` 接口，是文本要素（text component）对象的统一接口。您在 Minecraft 中看到的几乎所有文字的背后都有一个对应的文本要素对象。本来在 `ITextComponent` 接口中是有一个可用于获得一个文本要素所对应的格式化文本的 `getFormattedText()` 方法的，但是这个方法在 1.16 中被移除了，导致目前没有方式可以用来方便地从一个文本要素提取格式化文本了。
+
+如果不能提取带格式代码的文本，那我的 mod 的功能就废了一半。我的 mod 通过检查聊天信息里有没有收到 Hypixel 在一局起床战争游戏开始时发送的介绍性文字来[检测游戏是否开始][game-detector]，并且通过[持续检测聊天里的提示][team-upgrades]判断玩家的队伍有没有购买团队升级。当然了，在 1.16 中仍然可以直接获取不带颜色代码的聊天文本，但这会允许了解我的 mod 的工作原理的人对使用我的 mod 的用户进行干扰。比如说，他们在聊天里发一条像“Leo3418 购买了治愈池”这种和 Hypixel 系统提示一样的信息，就能让我的 mod 误以为有人买了治愈池，尽管实际根本没有人买。我的 mod 现在防范这种攻击的措施是检查收到的信息里的格式代码，因为玩家发不了带格式的聊天信息，所有有格式代码的信息都肯定是 Hypixel 的系统提示。
+
+为了解决这个问题，我专门写了一个[工具方法][text-components]，将 `ITextComponent` 转换为格式化文本，然后将 mod 代码中使用 `getFormattedText()` 的地方全部替换为使用我的工具方法即可。Minecraft 1.16 的 API 中仍然提供了足以允许我手动提取 `ITextComponent` 中的格式信息并自行生成格式化文本的方法，只不过步骤有些繁琐，所以我将相关的逻辑封装进了一个方法，以促进代码复用。
+
+```diff
+- String formattedMsg = event.getMessage().getFormattedText();
++ String formattedMsg = TextComponents.toFormattedText(event.getMessage());
+```
+
+如果您也与到了相同问题的话，您可以直接把我的 mod 中包含我那个工具方法的文件复制到您自己的 mod 中使用，毕竟我的 mod 是基于带附加权限的 GNU GPLv3+ 授权的自由软件，只要您遵守相关的[协议条款][mod-license]即可。
+
+[game-detector]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/GameDetector.java#L202
+[team-upgrades]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/game/GameManager.java#L323
+[text-components]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/TextComponents.java#L68
+[mod-license]: https://github.com/Leo3418/HBWHelper/tree/v1.2.1#license
+
+## 用于发送聊天信息的方法要求额外参数
+
+`net.minecraft.entity.Entity` 中的`sendMessage` 方法可以用来给玩家发送聊天信息：
+
+```java
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.text.StringTextComponent;
+
+// 1.16 以前给玩家发送聊天信息的方法
+Minecraft.getInstance().player.sendMessage(new StringTextComponent("hello, world"));
+```
+
+在 Minecraft 1.16 中，这个方法需要一个额外的 `java.util.UUID` 参数，代表的是发送聊天信息的玩家的 UUID。只有在多人联机时给其他玩家发送聊天信息时才会用到这个 UUID。如果您只是给当前客户端的玩家（也就是一个 `net.minecraft.client.entity.player.ClientPlayerEntity` 对象）发送提示信息的话，这个参数实际不会被用到，所以您可以随便指定它的值，连 `null` 都可以。但是如果您不喜欢在编程中大量使用 `null` 的话，您可以使用 Minecraft 提供的 `NIL_UUID`（这也是 Minecraft 自己调用这个方法时使用的参数）：
+
+```java
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.Util;
+import net.minecraft.util.text.StringTextComponent;
+
+Minecraft.getInstance().player.sendMessage(
+        new StringTextComponent("hello, world"),
+        Util.NIL_UUID
+);
+```
+
+## `mods.toml` 中需声明 Mod 协议
+
+从 Minecraft Forge 34.1 开始，您的 mod 的 `mods.toml` 中必须声明 `license` 字段，其对应的值就是您的 mod 的许可协议的名称。您可以参考[我自己的 mod 的 `mods.toml` 中的改动][mods-toml]。
+
+[mods-toml]: https://github.com/Leo3418/HBWHelper/commit/71cc524438ec25fbeba8310fe14064465aeabf28
+
 ## 用于关闭屏幕界面的方法有改动
+
+{: .notice--warning}
+**注意：**此部分内容仅适用于 Minecraft Forge 35.1.x 及以前版本（对应 Minecraft 1.16.4 及以前版本）。如果您是在 Minecraft Forge 36.1.x（对应 Minecraft 1.16.5）及更高版本上开发的话，请忽略此部分内容。
 
 在不是 Mojang 员工的情况下，我们能接触到的 Minecraft 的源代码就只有 MCP 反编译出的不带任何文档的源代码，所以我们要想了解 Minecraft API 的话，就只能通过直接阅读和研究源码、以及写一些调用 Minecraft API 的代码来实验和试错等方式了。根据我在开发 mod 的过程中与 Minecraft API 打交道的经验，在以前版本中关闭一个基于 `net.minecraft.client.gui.screen.Screen` 类的屏幕界面的原理是这样的：
 
@@ -179,105 +280,6 @@ public final class ConfigScreen extends Screen {
     }
 }
 ```
-
-## 用于获取设置选项的名称的方法被删除
-
-如果您参考[本系列博客的上一篇文章][config-screen]中介绍的方法创建了一个配置界面的话，那么您需要对每个使用 `SliderPercentageOption` 和 `IteratableOption` 的地方进行修改。在该文章中，我使用了 `net.minecraft.client.settings.AbstractOption.getDisplayString()` 方法来获取设置选项的显示名称，但在 1.16 中，这个方法变成了另一个 `protected` 方法 `getBaseMessageTranslation()`，因此现在 `AbstractOption` 类中就没有公开的返回选项名称的方法了。如果您还想像在以前版本中那样显示选项名称的话，您需要自行生成名称字符串。具体的方法是将选项名称的翻译键传给 `I18n.format(String)` 以获得翻译后的选项名称，然后将其与一个冒号串接起来。
-
-```java
-import net.minecraft.client.settings.SliderPercentageOption;
-import net.minecraft.client.settings.IteratableOption;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.client.resources.I18n;
-
-// SliderPercentageOption
-this.optionsRowList.addOption(new SliderPercentageOption(
-        "hbwhelper.configGui.hudX.title",
-        min, max, step,
-        unused -> (double) ModSettings.getHudX(),
-        (unused, newValue) -> ModSettings.setHudX(newValue.intValue()),
-        // 返回 "<选项名>: <设定值>" 格式的字符串的 BiFunction
-        (gs, option) -> new StringTextComponent(
-                // 使用 I18n.format(String) 查询一个翻译键对应的译文
-                I18n.format("hbwhelper.configGui.hudX.title")
-                + ": "
-                + (int) option.get(gs)
-        )
-));
-
-// IteratableOption
-this.optionsRowList.addOption(new IteratableOption(
-        "hbwhelper.configGui.dreamMode.title",
-        (unused, newValue) ->
-                ModSettings.setDreamMode(DreamMode.values()[
-                        (ModSettings.getDreamMode().ordinal() + newValue)
-                                % DreamMode.values().length
-                ]),
-        (unused, option) -> new StringTextComponent(
-                I18n.format("hbwhelper.configGui.dreamMode.title")
-                + ": "
-                + I18n.format(ModSettings.getDreamMode().getTranslateKey())
-        )
-));
-```
-
-这样的改动不可避免地导致了源代码中翻译键的重复，但这是我能想到的最直接的解决方法。毕竟我们选择了使用 Minecraft 内部没有任何文档的 API，也得做好 API 出现各种不兼容的改动的心理准备。
-
-还有一种解决方法，就是继承 `SliderPercentageOption` 和 `IteratableOption` 这两个类，就可以使用 `getBaseMessageTranslation()` 这个 `protected` 方法了。但这也意味着需要为此在 mod 中创建两个新类。
-
-## 用于读取带格式代码的文本的方法被移除
-
-许多 Minecraft 玩家都应该熟悉[格式代码][formatting-codes]，就是以分节符号 `§` 开头的代码。格式代码可以用来给文字添加颜色，还可以用来控制粗体、斜体等文字样式。我暂且称这种带格式代码的文本为*格式化文本*。
-
-Minecraft 中有一个 `net.minecraft.util.text.ITextComponent` 接口，是文本要素（text component）对象的统一接口。您在 Minecraft 中看到的几乎所有文字的背后都有一个对应的文本要素对象。本来在 `ITextComponent` 接口中是有一个可用于获得一个文本要素所对应的格式化文本的 `getFormattedText()` 方法的，但是这个方法在 1.16 中被移除了，导致目前没有方式可以用来方便地从一个文本要素提取格式化文本了。
-
-如果不能提取带格式代码的文本，那我的 mod 的功能就废了一半。我的 mod 通过检查聊天信息里有没有收到 Hypixel 在一局起床战争游戏开始时发送的介绍性文字来[检测游戏是否开始][game-detector]，并且通过[持续检测聊天里的提示][team-upgrades]判断玩家的队伍有没有购买团队升级。当然了，在 1.16 中仍然可以直接获取不带颜色代码的聊天文本，但这会允许了解我的 mod 的工作原理的人对使用我的 mod 的用户进行干扰。比如说，他们在聊天里发一条像“Leo3418 购买了治愈池”这种和 Hypixel 系统提示一样的信息，就能让我的 mod 误以为有人买了治愈池，尽管实际根本没有人买。我的 mod 现在防范这种攻击的措施是检查收到的信息里的格式代码，因为玩家发不了带格式的聊天信息，所有有格式代码的信息都肯定是 Hypixel 的系统提示。
-
-为了解决这个问题，我专门写了一个[工具方法][text-components]，将 `ITextComponent` 转换为格式化文本，然后将 mod 代码中使用 `getFormattedText()` 的地方全部替换为使用我的工具方法即可。Minecraft 1.16 的 API 中仍然提供了足以允许我手动提取 `ITextComponent` 中的格式信息并自行生成格式化文本的方法，只不过步骤有些繁琐，所以我将相关的逻辑封装进了一个方法，以促进代码复用。
-
-```diff
-- String formattedMsg = event.getMessage().getFormattedText();
-+ String formattedMsg = TextComponents.toFormattedText(event.getMessage());
-```
-
-如果您也与到了相同问题的话，您可以直接把我的 mod 中包含我那个工具方法的文件复制到您自己的 mod 中使用，毕竟我的 mod 是基于带附加权限的 GNU GPLv3+ 授权的自由软件，只要您遵守相关的[协议条款][mod-license]即可。
-
-[game-detector]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/GameDetector.java#L202
-[team-upgrades]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/game/GameManager.java#L323
-[text-components]: https://github.com/Leo3418/HBWHelper/blob/v1.2.1/src/main/java/io/github/leo3418/hbwhelper/util/TextComponents.java#L68
-[mod-license]: https://github.com/Leo3418/HBWHelper/tree/v1.2.1#license
-
-## 用于发送聊天信息的方法要求额外参数
-
-`net.minecraft.entity.Entity` 中的`sendMessage` 方法可以用来给玩家发送聊天信息：
-
-```java
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.StringTextComponent;
-
-// 1.16 以前给玩家发送聊天信息的方法
-Minecraft.getInstance().player.sendMessage(new StringTextComponent("hello, world"));
-```
-
-在 Minecraft 1.16 中，这个方法需要一个额外的 `java.util.UUID` 参数，代表的是发送聊天信息的玩家的 UUID。只有在多人联机时给其他玩家发送聊天信息时才会用到这个 UUID。如果您只是给当前客户端的玩家（也就是一个 `net.minecraft.client.entity.player.ClientPlayerEntity` 对象）发送提示信息的话，这个参数实际不会被用到，所以您可以随便指定它的值，连 `null` 都可以。但是如果您不喜欢在编程中大量使用 `null` 的话，您可以使用 Minecraft 提供的 `NIL_UUID`（这也是 Minecraft 自己调用这个方法时使用的参数）：
-
-```java
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.StringTextComponent;
-
-Minecraft.getInstance().player.sendMessage(
-        new StringTextComponent("hello, world"),
-        Util.NIL_UUID
-);
-```
-
-## `mods.toml` 中需声明 Mod 协议
-
-从 Minecraft Forge 34.1 开始，您的 mod 的 `mods.toml` 中必须声明 `license` 字段，其对应的值就是您的 mod 的许可协议的名称。您可以参考[我自己的 mod 的 `mods.toml` 中的改动][mods-toml]。
-
-[mods-toml]: https://github.com/Leo3418/HBWHelper/commit/71cc524438ec25fbeba8310fe14064465aeabf28
-
 
 ## 更多变动
 

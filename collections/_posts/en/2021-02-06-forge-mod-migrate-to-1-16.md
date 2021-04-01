@@ -7,7 +7,7 @@ tags:
 categories:
   - Blog
 toc: true
-last_modified_at: 2021-03-21
+last_modified_at: 2021-03-31
 ---
 
 It is no longer news that Minecraft Forge has stable Minecraft 1.16 support, as
@@ -152,137 +152,8 @@ inside it now have an extra `matrixStack` argument:
 @Override
 public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
     this.renderBackground(matrixStack);
-    this.drawCenteredString(matrixStack, this.font, title, width, height, color);
+    drawCenteredString(matrixStack, this.font, title, width, height, color);
     super.render(matrixStack, mouseX, mouseY, partialTicks);
-}
-```
-
-## New Method for Closing a Screen
-
-Unless we are Mojang employees, we have access to only the decompiled version
-of Minecraft source code, which is not expected to have any documentation, so
-any knowledge we can have about Minecraft's API can only come from interpreting
-and analyzing the decompiled source code, plus experience gained mainly in
-trial-and-errors.  And the empirical knowledge I have about closing a screen
-implemented based on Minecraft's `net.minecraft.client.gui.screen.Screen` class
-is:
-
-- The `onClose()` method in the `Screen` class should complete any teardown
-  tasks when the screen is being closed, and it must contain a call to
-  `net.minecraft.client.Minecraft.displayGuiScreen(Screen)` in order to switch
-  back to the parent screen.
-
-- By default, when the user presses the Esc key in a screen, its `onClose()`
-  method will be called.  Therefore, calling the `onClose()` method is *the*
-  way to let a screen close.
-
-In Minecraft 1.16, the intent of the `onClose()` method has been changed:
-
-- When the Esc key is pressed, the new `closeScreen()` method in the `Screen`
-  class is now called instead.  The default implementation of `closeScreen()`
-  only contains a call to `Minecraft.displayGuiScreen(Screen)`.
-
-- `onClose()` should only contain code that needs to be executed when the
-  screen is being closed.  It **must not** call
-  `Minecraft.displayGuiScreen(Screen)`; otherwise, an error would occur.
-
-- Hence, if you would like to close the current screen, you should no longer
-  call the `onClose()` method.  Instead, you can either directly call
-  `Minecraft.displayGuiScreen(Screen)` or, as a better way, use the
-  `closeScreen()` method.  Both methods would eventually cause the `onClose()`
-  method to be called.
-
-How does this actually look?  Consider a class like this:
-
-```java
-/*
- * OK for 1.14.4 and 1.15.x, but not 1.16.x
- */
-
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
-
-public final class ConfigScreen extends Screen {
-    /** The parent screen of this screen */
-    private final Screen parentScreen;
-
-    public ConfigScreen(Screen parentScreen) {
-        // Set screen title
-        super(new TranslationTextComponent("hbwhelper.configGui.title",
-                HbwHelper.NAME));
-        this.parentScreen = parentScreen;
-    }
-
-    @Override
-    protected void init() {
-        ...
-        // Add a "Done" button for leaving this screen
-        this.addButton(new Button(
-                horizontalPosition, verticalPosition, width, height,
-                I18n.format("gui.done"),
-                // Action performed when the button is pressed
-                button -> this.onClose()
-        ));
-    }
-
-    /** Executes tasks before this screen is closed, then closes this screen */
-    @Override
-    public void onClose() {
-        // Save mod configuration
-        ModSettings.save();
-        // Display the parent screen to close this screen
-        this.minecraft.displayGuiScreen(parentScreen);
-    }
-}
-```
-
-To port this class to Minecraft 1.16.x, it needs to be modified as this:
-
-```java
-/*
- * OK for 1.16.x, but not 1.14.4 or 1.15.x
- */
-
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
-
-public final class ConfigScreen extends Screen {
-    private final Screen parentScreen;
-
-    public ConfigScreen(Screen parentScreen) {
-        super(new TranslationTextComponent("hbwhelper.configGui.title",
-                HbwHelper.NAME));
-        this.parentScreen = parentScreen;
-    }
-
-    @Override
-    protected void init() {
-        ...
-        this.addButton(new Button(
-                horizontalPosition, verticalPosition, width, height,
-                // By the way, the type for button text is also changed
-                // from String to ITextComponent
-                new TranslationTextComponent("gui.done"),
-                // Note that another method is used to close the screen instead
-                button -> this.closeScreen()
-        ));
-    }
-
-    /** Only executes tasks before this screen is closed */
-    @Override
-    public void onClose() {
-        ModSettings.save();
-        // Must NOT call Minecraft.displayGuiScreen(Screen) here!
-    }
-
-    /** Closes this screen (New method added in 1.16) */
-    @Override
-    public void closeScreen() {
-        // The method call to display the parent screen is moved to here
-        this.minecraft.displayGuiScreen(parentScreen);
-    }
 }
 ```
 
@@ -444,6 +315,141 @@ mod's license.  You can look at [the change to my mod's `mods.toml`][mods-toml]
 for an example.
 
 [mods-toml]: https://github.com/Leo3418/HBWHelper/commit/71cc524438ec25fbeba8310fe14064465aeabf28
+
+## New Method for Closing a Screen
+
+{: .notice--warning}
+**Note:** This section is only applicable to Minecraft Forge 35.1.x and earlier
+(which corresponds to Minecraft 1.16.4 and earlier).  Please ignore the
+contents of this section if you are developing on Minecraft Forge 36.1.x (for
+Minecraft 1.16.5) or later versions.
+
+Unless we are Mojang employees, we have access to only the decompiled version
+of Minecraft source code, which is not expected to have any documentation, so
+any knowledge we can have about Minecraft's API can only come from interpreting
+and analyzing the decompiled source code, plus experience gained mainly in
+trial-and-errors.  And the empirical knowledge I have about closing a screen
+implemented based on Minecraft's `net.minecraft.client.gui.screen.Screen` class
+is:
+
+- The `onClose()` method in the `Screen` class should complete any teardown
+  tasks when the screen is being closed, and it must contain a call to
+  `net.minecraft.client.Minecraft.displayGuiScreen(Screen)` in order to switch
+  back to the parent screen.
+
+- By default, when the user presses the Esc key in a screen, its `onClose()`
+  method will be called.  Therefore, calling the `onClose()` method is *the*
+  way to let a screen close.
+
+In Minecraft 1.16, the intent of the `onClose()` method has been changed:
+
+- When the Esc key is pressed, the new `closeScreen()` method in the `Screen`
+  class is now called instead.  The default implementation of `closeScreen()`
+  only contains a call to `Minecraft.displayGuiScreen(Screen)`.
+
+- `onClose()` should only contain code that needs to be executed when the
+  screen is being closed.  It **must not** call
+  `Minecraft.displayGuiScreen(Screen)`; otherwise, an error would occur.
+
+- Hence, if you would like to close the current screen, you should no longer
+  call the `onClose()` method.  Instead, you can either directly call
+  `Minecraft.displayGuiScreen(Screen)` or, as a better way, use the
+  `closeScreen()` method.  Both methods would eventually cause the `onClose()`
+  method to be called.
+
+How does this actually look?  Consider a class like this:
+
+```java
+/*
+ * OK for 1.14.4 and 1.15.x, but not 1.16.x
+ */
+
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.resources.I18n;
+
+public final class ConfigScreen extends Screen {
+    /** The parent screen of this screen */
+    private final Screen parentScreen;
+
+    public ConfigScreen(Screen parentScreen) {
+        // Set screen title
+        super(new TranslationTextComponent("hbwhelper.configGui.title",
+                HbwHelper.NAME));
+        this.parentScreen = parentScreen;
+    }
+
+    @Override
+    protected void init() {
+        ...
+        // Add a "Done" button for leaving this screen
+        this.addButton(new Button(
+                horizontalPosition, verticalPosition, width, height,
+                I18n.format("gui.done"),
+                // Action performed when the button is pressed
+                button -> this.onClose()
+        ));
+    }
+
+    /** Executes tasks before this screen is closed, then closes this screen */
+    @Override
+    public void onClose() {
+        // Save mod configuration
+        ModSettings.save();
+        // Display the parent screen to close this screen
+        this.minecraft.displayGuiScreen(parentScreen);
+    }
+}
+```
+
+To port this class to Minecraft 1.16.x, it needs to be modified as this:
+
+```java
+/*
+ * OK for 1.16.x, but not 1.14.4 or 1.15.x
+ */
+
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.resources.I18n;
+
+public final class ConfigScreen extends Screen {
+    private final Screen parentScreen;
+
+    public ConfigScreen(Screen parentScreen) {
+        super(new TranslationTextComponent("hbwhelper.configGui.title",
+                HbwHelper.NAME));
+        this.parentScreen = parentScreen;
+    }
+
+    @Override
+    protected void init() {
+        ...
+        this.addButton(new Button(
+                horizontalPosition, verticalPosition, width, height,
+                // By the way, the type for button text is also changed
+                // from String to ITextComponent
+                new TranslationTextComponent("gui.done"),
+                // Note that another method is used to close the screen instead
+                button -> this.closeScreen()
+        ));
+    }
+
+    /** Only executes tasks before this screen is closed */
+    @Override
+    public void onClose() {
+        ModSettings.save();
+        // Must NOT call Minecraft.displayGuiScreen(Screen) here!
+    }
+
+    /** Closes this screen (New method added in 1.16) */
+    @Override
+    public void closeScreen() {
+        // The method call to display the parent screen is moved to here
+        this.minecraft.displayGuiScreen(parentScreen);
+    }
+}
+```
 
 ## More
 
