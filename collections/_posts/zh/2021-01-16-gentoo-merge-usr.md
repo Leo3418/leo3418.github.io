@@ -13,7 +13,7 @@ last_modified_at: 2021-03-05
 
 现在绝大多数主流 GNU/Linux 发行版中的 `/usr` 合并大趋势应该是由 Fedora 在 2012 年牵头开始的；之后，包括 Debian 和 Arch Linux 在内的许多常见的发行版也都相应地完成了 `/usr` 合并。说起来这和 systemd 在 GNU/Linux 社区中的侵蚀也有点类似，都是由 Red Hat 想按照自己的方式定型当代 GNU/Linux 发行版的野心和 [Lennart Poettering 大肆为其背书][0pointer-de]开始、在 Fedora 上首秀，然后逐渐被其它发行版采纳。
 
-而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接。虽说如此，Gentoo 应该还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE flag][split-usr]。现在这个 USE flag 是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天 Gentoo 官方可以完全支持 `/usr` 合并了，那届时就可以让 `split-usr` 变成一个可选的 USE flag。
+而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接。虽说如此，Gentoo 应该还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE 标志][split-usr]。现在这个 USE 标志是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天 Gentoo 官方可以完全支持 `/usr` 合并了，那届时就可以让 `split-usr` 变成一个可选的 USE 标志。
 
 这篇文章将向您展示的是，在目前 Gentoo 官方尚未支持的情况下，如何合并 `/usr`。我的旨意并不是说 `/usr` 合并有很多好处，`/usr` 合并的优点也不在本文的讨论范围之内。这篇文章唯一的目的是给那些知道自己想要合并 `/usr`、却不知道该怎么弄的用户提供一个教程。
 
@@ -45,7 +45,7 @@ last_modified_at: 2021-03-05
    drwxr-xr-x 1 root root 7006 Dec 26 09:50 /usr/sbin
    ```
 
-2. 在上述合并的基础上，再将 `/usr/sbin` 并入 `/usr/bin`。Arch Linux 目前采用这种方式；从已经支持 `split-usr` USE flag 的 Gentoo 软件包 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 来看，Gentoo 应该也是准备采取这种方案。
+2. 在上述合并的基础上，再将 `/usr/sbin` 并入 `/usr/bin`。Arch Linux 目前采用这种方式；从已经支持 `split-usr` USE 标志的 Gentoo 软件包 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 来看，Gentoo 应该也是准备采取这种方案。
    {: #usr-merge-variant-2}
 
    ```console
@@ -190,19 +190,19 @@ livecd /mnt/gentoo/usr # ln -s bin sbin
 ```" | markdownify }}
    </div>
 
-5. 屏蔽 `split-usr` USE flag，让支持区分 `/usr` 合并后的系统的软件包在构建时可以为合并后的文件系统进行构建。由于 `split-usr` 是强制启用的 USE flag，仅仅声明 `-split-usr` 是不够的；您需要在 `/etc/portage/profile/use.mask` 中屏蔽 `split-usr。
+5. 屏蔽 `split-usr` USE 标志，让支持区分 `/usr` 合并后的系统的软件包在构建时可以为合并后的文件系统进行构建。由于 `split-usr` 是强制启用的 USE 标志，仅仅声明 `-split-usr` 是不够的；您需要在 `/etc/portage/profile/use.mask` 中屏蔽 `split-usr。
    {: #sys-inst-5}
 
    ```
    # /etc/portage/profile/use.mask
 
-   # 屏蔽分离式 /usr 布局的 USE flag
+   # 屏蔽分离式 /usr 布局的 USE 标志
    split-usr
    ```
 
    如果想了解更多的话，请参阅[相关的 Gentoo Wiki 条目][use-mask]。
 
-6. 按照 Gentoo 手册中的步骤，完成剩余的安装步骤。请记得[更新 `@world` 集合][update-world]以应用 `split-usr` USE flag 的改动。
+6. 按照 Gentoo 手册中的步骤，完成剩余的安装步骤。请记得[更新 `@world` 集合][update-world]以应用 `split-usr` USE 标志的改动。
 
    当您运行安装在 `/sbin` 或 `/usr/sbin` 中的命令时，您可能会遇到“command not found”的错误提示。例如，如果您准备安装 GRUB，那么在运行 `/usr/sbin/grub-install` 的时候就会碰到该错误。您可以用 `whereis` 确认您要运行的命令确实在 `/usr/sbin` 下。
 
@@ -300,15 +300,15 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 
 5. 修复 `/usr` 下损坏的符号链接，具体的步骤和在安装时合并 `/usr` 步骤中的[第 4 步][sys-inst-4]相同。不过，有一些符号链接是可以不用手动修复的：
 
-   - 如果您同时使用 systemd 和 dracut，您可能会遇到一些名称类似 `dracut-*.service` 的链接。此种链接不需要手动修复，只需在屏蔽 `split-usr` USE flag 并重新编译 systemd **之后**重新安装 `sys-kernel/dracut` 即可。
+   - 如果您同时使用 systemd 和 dracut，您可能会遇到一些名称类似 `dracut-*.service` 的链接。此种链接不需要手动修复，只需在屏蔽 `split-usr` USE 标志并重新编译 systemd **之后**重新安装 `sys-kernel/dracut` 即可。
 
    - `/usr/lib/modules/*.*.*/build` 和 `/usr/lib/modules/*.*.*/source` 也可以不修复。
    
    而其余的符号链接，如 `/usr/bin/awk` 和 `/usr/sbin/resolvconf`，就需要手动干预修复了。
 
-6. 屏蔽 `split-usr` USE flag，具体的步骤和在安装时合并 `/usr` 步骤中的[第 5 步][sys-inst-5]相同。
+6. 屏蔽 `split-usr` USE 标志，具体的步骤和在安装时合并 `/usr` 步骤中的[第 5 步][sys-inst-5]相同。
 
-7. 更新 Portage 的 `@world` 集合，重新构建原本启用了 `split-usr` USE flag 的软件包，以应用新的 USE flag 变动。
+7. 更新 Portage 的 `@world` 集合，重新构建原本启用了 `split-usr` USE 标志的软件包，以应用新的 USE 标志变动。
 
    ```console
    # emerge --ask --update --deep --newuse @world
@@ -336,9 +336,9 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
 {: .notice--primary}
 如果您使用的是[第二种 `/usr` 合并方式][variant-2]的话，那么无需执行此步骤。
 
-之前推测 [Gentoo 会如何完成 `/usr` 合并][variant-2]的时候简单提及过，`/usr/sbin` 会被合并到 `/usr/bin` 中。如果仔细看 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 的话，您也许会发现，如果 `split-usr` USE flag 被禁用的话，`/usr/sbin` 会被从 `PATH` 环境变量中移除，毕竟所有本该在 `/usr/sbin` 里的命令都被挪到 `/usr/bin` 里了，而 `/usr/bin` 是在 `PATH` 里面的。
+之前推测 [Gentoo 会如何完成 `/usr` 合并][variant-2]的时候简单提及过，`/usr/sbin` 会被合并到 `/usr/bin` 中。如果仔细看 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 的话，您也许会发现，如果 `split-usr` USE 标志被禁用的话，`/usr/sbin` 会被从 `PATH` 环境变量中移除，毕竟所有本该在 `/usr/sbin` 里的命令都被挪到 `/usr/bin` 里了，而 `/usr/bin` 是在 `PATH` 里面的。
 
-但是，如果您使用的是[第一种 `/usr` 合并方式][variant-1]，那么这样就会出现问题了。这种方式中，`/usr/sbin` 里的命令仍在原处，但在禁用了 `split-usr` USE flag 后 `PATH` 里就没有了 `/usr/sbin`，导致任何 `/usr/sbin` 中的命令都无法被直接调用，除非您在命令前面加上 `/usr/sbin/`。
+但是，如果您使用的是[第一种 `/usr` 合并方式][variant-1]，那么这样就会出现问题了。这种方式中，`/usr/sbin` 里的命令仍在原处，但在禁用了 `split-usr` USE 标志后 `PATH` 里就没有了 `/usr/sbin`，导致任何 `/usr/sbin` 中的命令都无法被直接调用，除非您在命令前面加上 `/usr/sbin/`。
 
 我推荐的解决方式是在在 `/etc/env.d` 中创建一个文件，把 `/usr/sbin` 加回 `PATH`，就可以在系统全局层面解决这个问题。选择一个文件名（例如 `50baselayout-sbin`），然后在文件中写入如下的 `PATH` 和 `ROOTPATH` 定义：
 
@@ -349,7 +349,7 @@ PATH="/usr/local/sbin:/usr/sbin"
 ROOTPATH="/usr/local/sbin:/usr/sbin"
 ```
 
-这里我不仅把 `/usr/sbin` 加了回来，还添上了 `/usr/local/sbin`，因为这个路径在 `sys-apps/baselayout` 的 `split-usr` USE flag 被禁用时也会被从 `PATH` 中移除。
+这里我不仅把 `/usr/sbin` 加了回来，还添上了 `/usr/local/sbin`，因为这个路径在 `sys-apps/baselayout` 的 `split-usr` USE 标志被禁用时也会被从 `PATH` 中移除。
 
 随后，重新加载环境设置以应用更改：
 
