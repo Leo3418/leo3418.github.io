@@ -1,5 +1,5 @@
 ---
-title: "Gentoo Configuration Guide: GNOME with systemd"
+title: "Gentoo Configuration Guide: GNOME on systemd"
 lang: en
 tags:
   - Gentoo
