@@ -2,7 +2,8 @@ name: Jekyll Site CI
 
 on:
   push:
-    branches: [ jekyll ]
+    branches-ignore:
+      - gh-pages
   pull_request:
     branches: [ jekyll ]
 
