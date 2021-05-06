@@ -21,7 +21,7 @@ jobs:
         -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
         jekyll/builder:latest /bin/bash -c "chown jekyll:jekyll /srv/jekyll && JEKYLL_ENV=production jekyll build --future"
     - name: Push the site to the gh-pages branch
-      if: ${{ github.event_name == 'push' }}
+      if: ${{ github.ref == 'refs/heads/jekyll' }}
       run: |
         sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
