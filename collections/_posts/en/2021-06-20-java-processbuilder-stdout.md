@@ -213,7 +213,7 @@ it would redirect the Maven process's output to standard output, in the hope
 that Maven's output would give me a clue about why and how it would get stuck.
 I had not used `ProcessBuilder` before, so I searched for the way to print the
 output of a process started by `ProcessBuilder`to standard output, and the most
-elegant is to call its [`inheritIO` method][inherit-io].
+elegant way is to call its [`inheritIO` method][inherit-io].
 
 ```diff
          final ProcessBuilder processBuilder = new ProcessBuilder("mvn", "-f",
