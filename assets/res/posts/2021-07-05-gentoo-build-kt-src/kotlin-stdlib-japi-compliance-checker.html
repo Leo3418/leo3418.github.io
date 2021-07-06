@@ -1,0 +1,431 @@
+<!-- kind:binary;verdict:compatible;affected:0;added:18;removed:0;type_problems_high:0;type_problems_medium:0;type_problems_low:0;method_problems_high:0;method_problems_medium:0;method_problems_low:0;checked_methods:1493;checked_types:288;tool_version:2.4 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="keywords" content="kotlin-stdlib, binary, compatibility" />
+<meta name="description" content="Binary compatibility report for the kotlin-stdlib library between 1.5.10-bin and 1.5.10 versions" />
+<title>kotlin-stdlib: 1.5.10-bin to 1.5.10 binary compatibility report</title>
+<style type="text/css">
+body {
+    font-family:Arial, sans-serif;
+    background-color:White;
+    color:Black;
+}
+hr {
+    color:Black;
+    background-color:Black;
+    height:1px;
+    border:0;
+}
+h1 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.625em;
+}
+h2 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.25em;
+    white-space:nowrap;
+}
+div.symbols {
+    color:#003E69;
+}
+div.symbols i {
+    color:Brown;
+}
+span.section {
+    font-weight:bold;
+    cursor:pointer;
+    color:#003E69;
+    white-space:nowrap;
+    margin-left:0.3125em;
+}
+span:hover.section {
+    color:#336699;
+}
+span.sect_aff {
+    cursor:pointer;
+    padding-left:1.55em;
+    font-size:0.875em;
+    color:#cc3300;
+}
+span.ext {
+    font-weight:normal;
+}
+span.jar {
+    color:#cc3300;
+    font-size:0.875em;
+    font-weight:bold;
+}
+div.jar_list {
+    padding-left:0.4em;
+    font-size:0.94em;
+}
+span.pkg_t {
+    color:#408080;
+    font-size:0.875em;
+}
+span.pkg {
+    color:#408080;
+    font-size:0.875em;
+    font-weight:bold;
+}
+span.cname {
+    color:Green;
+    font-size:0.875em;
+    font-weight:bold;
+}
+span.iname_b {
+    font-weight:bold;
+}
+span.iname_a {
+    color:#333333;
+    font-weight:bold;
+    font-size:0.94em;
+}
+span.sym_p {
+    font-weight:normal;
+    white-space:normal;
+}
+span.sym_pd {
+    white-space:normal;
+}
+span.sym_p span, span.sym_pd span {
+    white-space:nowrap;
+}
+span.attr {
+    color:Black;
+    font-weight:normal;
+}
+span.deprecated {
+    color:Red;
+    font-weight:bold;
+    font-family:Monaco, monospace;
+}
+div.affect {
+    padding-left:1em;
+    padding-bottom:10px;
+    font-size:0.87em;
+    font-style:italic;
+    line-height:0.9em;
+}
+div.affected {
+    padding-left:2em;
+    padding-top:10px;
+}
+table.ptable {
+    border-collapse:collapse;
+    border:1px outset black;
+    margin-left:0.95em;
+    margin-top:3px;
+    margin-bottom:3px;
+    width:56.25em;
+}
+table.ptable td {
+    border:1px solid Gray;
+    padding:3px;
+    font-size:0.875em;
+    text-align:left;
+    vertical-align:top;
+    max-width:28em;
+    word-wrap:break-word;
+}
+table.ptable th {
+    background-color:#eeeeee;
+    font-weight:bold;
+    color:#333333;
+    font-family:Verdana, Arial;
+    font-size:0.875em;
+    border:1px solid Gray;
+    text-align:center;
+    vertical-align:top;
+    white-space:nowrap;
+    padding:3px;
+}
+table.summary {
+    border-collapse:collapse;
+    border:1px outset black;
+}
+table.summary th {
+    background-color:#eeeeee;
+    font-weight:normal;
+    text-align:left;
+    font-size:0.94em;
+    white-space:nowrap;
+    border:1px inset Gray;
+    padding:3px;
+}
+table.summary td {
+    text-align:right;
+    white-space:nowrap;
+    border:1px inset Gray;
+    padding:3px 5px 3px 10px;
+}
+span.mngl {
+    padding-left:1em;
+    font-size:0.875em;
+    cursor:text;
+    color:#444444;
+    font-weight:bold;
+}
+span.pleft {
+    padding-left:2.5em;
+}
+span.color_p {
+    font-style:italic;
+    color:Brown;
+}
+span.param {
+    font-style:italic;
+}
+span.focus_p {
+    font-style:italic;
+    background-color:#DCDCDC;
+}
+span.ttype {
+    font-weight:normal;
+}
+span.nowrap {
+    white-space:nowrap;
+}
+span.value {
+    white-space:nowrap;
+    font-weight:bold;
+}
+.passed {
+    background-color:#CCFFCC;
+    font-weight:normal;
+}
+.warning {
+    background-color:#F4F4AF;
+    font-weight:normal;
+}
+.failed {
+    background-color:#FFCCCC;
+    font-weight:normal;
+}
+.new {
+    background-color:#C6DEFF;
+    font-weight:normal;
+}
+
+.compatible {
+    background-color:#CCFFCC;
+    font-weight:normal;
+}
+.almost_compatible {
+    background-color:#FFDAA3;
+    font-weight:normal;
+}
+.incompatible {
+    background-color:#FFCCCC;
+    font-weight:normal;
+}
+.gray {
+    background-color:#DCDCDC;
+    font-weight:normal;
+}
+
+.top_ref {
+    font-size:0.69em;
+}
+.footer {
+    font-size:0.8125em;
+}
+
+</style>
+<script type="text/javascript" language="JavaScript">
+<!--
+function sC(header, id)
+{
+    e = document.getElementById(id);
+    if(e.style.display == 'none')
+    {
+        e.style.display = 'block';
+        e.style.visibility = 'visible';
+        header.innerHTML = header.innerHTML.replace(/\[[^0-9 ]\]/gi, "[&minus;]");
+    }
+    else
+    {
+        e.style.display = 'none';
+        e.style.visibility = 'hidden';
+        header.innerHTML = header.innerHTML.replace(/\[[^0-9 ]\]/gi, "[+]");
+    }
+}
+
+-->
+</script>
+</head>
+<body><a name='Top'></a><h1>Binary compatibility report for the <span style='color:Blue;'>kotlin-stdlib</span> library between <span style='color:Red;'>1.5.10-bin</span> and <span style='color:Red;'>1.5.10</span> versions</h1>
+
+<h2>Test Info</h2><hr/>
+<table class='summary'>
+<tr><th>Library Name</th><td>kotlin-stdlib</td></tr>
+<tr><th>Version #1</th><td>1.5.10-bin</td></tr>
+<tr><th>Version #2</th><td>1.5.10</td></tr>
+</table>
+<h2>Test Results</h2><hr/>
+<table class='summary'>
+<tr><th>Total Java Modules</th><td><a href='#Checked_Archives' style='color:Blue;'>1</a></td></tr>
+<tr><th>Total Methods / Classes</th><td>1493 / 288</td></tr>
+<tr><th>Compatibility</th>
+<td class='compatible'>100%</td>
+</tr>
+</table>
+<h2>Problem Summary</h2><hr/>
+<table class='summary'>
+<tr><th></th><th style='text-align:center;'>Severity</th><th style='text-align:center;'>Count</th></tr>
+<tr><th>Added Methods</th><td>-</td><td class='new'><a href='#Added' style='color:Blue;'>18</a></td></tr>
+<tr><th>Removed Methods</th><td>High</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Data Types</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+<tr><th rowspan='3'>Problems with<br/>Methods</th><td>High</td><td>0</td></tr>
+<tr><td>Medium</td><td>0</td></tr>
+<tr><td>Low</td><td>0</td></tr>
+</table>
+
+<a name='Added'></a><h2>Added Methods <span class='new'>&nbsp;18&nbsp;</span></h2><hr/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>AbstractCollection.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin.collections</span><br/>
+<span class="section" onclick="sC(this, 'c_1')">
+AbstractCollection&lt;E&gt;.removeIf&#160;<span class='sym_p'><span>(&#160;Predicate&lt;? super E&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_1" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractCollection.removeIf:(Ljava/util/function/Predicate;)Z</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>AbstractList.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin.collections</span><br/>
+<span class="section" onclick="sC(this, 'c_2')">
+AbstractList&lt;E&gt;.replaceAll&#160;<span class='sym_p'><span>(&#160;UnaryOperator&lt;E&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;void</span></span>
+<br/>
+<div id="c_2" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractList.replaceAll:(Ljava/util/function/UnaryOperator;)V</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_3')">
+AbstractList&lt;E&gt;.sort&#160;<span class='sym_p'><span>(&#160;Comparator&lt;? super E&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;void</span></span>
+<br/>
+<div id="c_3" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractList.sort:(Ljava/util/Comparator;)V</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>AbstractMap.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin.collections</span><br/>
+<span class="section" onclick="sC(this, 'c_4')">
+AbstractMap&lt;K,V&gt;.compute&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>BiFunction&lt;? super K,? super V,?&gt; <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_4" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.compute:(Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_5')">
+AbstractMap&lt;K,V&gt;.computeIfAbsent&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>Function&lt;? super K,?&gt; <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_5" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.computeIfAbsent:(Ljava/lang/Object;Ljava/util/function/Function;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_6')">
+AbstractMap&lt;K,V&gt;.computeIfPresent&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>BiFunction&lt;? super K,? super V,?&gt; <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_6" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.computeIfPresent:(Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_7')">
+AbstractMap&lt;K,V&gt;.merge&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>V <span class='color_p'>p2</span></span>, <span>BiFunction&lt;? super V,? super V,?&gt; <span class='color_p'>p3</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_7" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.merge:(Ljava/lang/Object;Ljava/lang/Object;Ljava/util/function/BiFunction;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_8')">
+AbstractMap&lt;K,V&gt;.putIfAbsent&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>V <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_8" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_9')">
+AbstractMap&lt;K,V&gt;.remove&#160;<span class='sym_p'><span>(&#160;Object <span class='color_p'>p1</span></span>, <span>Object <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_9" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.remove:(Ljava/lang/Object;Ljava/lang/Object;)Z</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_10')">
+AbstractMap&lt;K,V&gt;.replace&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>V <span class='color_p'>p2</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;V</span></span>
+<br/>
+<div id="c_10" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.replace:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_11')">
+AbstractMap&lt;K,V&gt;.replace&#160;<span class='sym_p'><span>(&#160;K <span class='color_p'>p1</span></span>, <span>V <span class='color_p'>p2</span></span>, <span>V <span class='color_p'>p3</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_11" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.replace:(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)Z</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_12')">
+AbstractMap&lt;K,V&gt;.replaceAll&#160;<span class='sym_p'><span>(&#160;BiFunction&lt;? super K,? super V,?&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;void</span></span>
+<br/>
+<div id="c_12" style="display:none;">
+<span class='mngl'>kotlin/collections/AbstractMap.replaceAll:(Ljava/util/function/BiFunction;)V</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>EmptyList.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin.collections</span><br/>
+<span class="section" onclick="sC(this, 'c_13')">
+EmptyList.replaceAll&#160;<span class='sym_p'><span>(&#160;UnaryOperator <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;void</span></span>
+<br/>
+<div id="c_13" style="display:none;">
+<span class='mngl'>kotlin/collections/EmptyList.replaceAll:(Ljava/util/function/UnaryOperator;)V</span><br/><br/></div>
+
+<span class="section" onclick="sC(this, 'c_14')">
+EmptyList.sort&#160;<span class='sym_p'><span>(&#160;Comparator <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;void</span></span>
+<br/>
+<div id="c_14" style="display:none;">
+<span class='mngl'>kotlin/collections/EmptyList.sort:(Ljava/util/Comparator;)V</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>UByteArray.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin</span><br/>
+<span class="section" onclick="sC(this, 'c_15')">
+UByteArray.removeIf&#160;<span class='sym_p'><span>(&#160;Predicate&lt;? super UByte&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_15" style="display:none;">
+<span class='mngl'>kotlin/UByteArray.removeIf:(Ljava/util/function/Predicate;)Z</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>UIntArray.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin</span><br/>
+<span class="section" onclick="sC(this, 'c_16')">
+UIntArray.removeIf&#160;<span class='sym_p'><span>(&#160;Predicate&lt;? super UInt&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_16" style="display:none;">
+<span class='mngl'>kotlin/UIntArray.removeIf:(Ljava/util/function/Predicate;)Z</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>ULongArray.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin</span><br/>
+<span class="section" onclick="sC(this, 'c_17')">
+ULongArray.removeIf&#160;<span class='sym_p'><span>(&#160;Predicate&lt;? super ULong&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_17" style="display:none;">
+<span class='mngl'>kotlin/ULongArray.removeIf:(Ljava/util/function/Predicate;)Z</span><br/><br/></div>
+
+<br/>
+<span class='jar'>kotlin-stdlib.jar</span>, <span class='cname'>UShortArray.class</span><br/>
+<span class='pkg_t'>package</span> <span class='pkg'>kotlin</span><br/>
+<span class="section" onclick="sC(this, 'c_18')">
+UShortArray.removeIf&#160;<span class='sym_p'><span>(&#160;Predicate&lt;? super UShort&gt; <span class='color_p'>p1</span></span>&#160;)</span><span class='sym_p nowrap'> &#160;<b>:</b>&#160;&#160;boolean</span></span>
+<br/>
+<div id="c_18" style="display:none;">
+<span class='mngl'>kotlin/UShortArray.removeIf:(Ljava/util/function/Predicate;)Z</span><br/><br/></div>
+
+<br/>
+<a class='top_ref' href='#Top'>to the top</a><br/>
+<a name='Checked_Archives'></a><h2>Java Archives <span class='gray'>&nbsp;1&nbsp;</span></h2>
+<hr/><div class='jar_list'>
+kotlin-stdlib-1.5.10.jar<br/>
+</div><br/><a class='top_ref' href='#Top'>to the top</a><br/>
+<br/><br/><br/>
+<hr/><div class='footer' align='right'><i>Generated by <a href='https://github.com/lvc/japi-compliance-checker'>Java API Compliance Checker</a> 2.4 &#160;</i></div><br/>
+</body></html>

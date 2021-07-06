@@ -1,0 +1,518 @@
+<!-- changed:0.3;added:1;removed:0;moved:0;renamed:0;changed:0;tool_version:1.7.2 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="kotlin-reflect, changes, report" />
+    <meta name="description" content="Changes report for the kotlin-reflect package between 1.5.20-bin and 1.5.20 versions" />
+    <title>
+        kotlin-reflect: 1.5.20-bin to 1.5.20 changes report
+    </title>
+    <style type="text/css">
+    body {
+    font-family:Arial, sans-serif;
+    background-color:White;
+    color:Black;
+}
+hr {
+    color:Black;
+    background-color:Black;
+    height:1px;
+    border:0;
+}
+h1 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.625em;
+}
+h2 {
+    margin-bottom:0px;
+    padding-bottom:0px;
+    font-size:1.25em;
+    white-space:nowrap;
+}
+table.summary {
+    border-collapse:collapse;
+    border:1px outset black;
+}
+table.summary th {
+    background-color:#eeeeee;
+    font-weight:bold;
+    text-align:left;
+    font-size:0.94em;
+    white-space:nowrap;
+    border:1px inset gray;
+    padding: 3px;
+}
+table.summary td {
+    text-align:right;
+    white-space:nowrap;
+    border:1px inset gray;
+    padding: 3px 5px 3px 5px;
+}
+table.summary td.left {
+    text-align:left;
+}
+table.summary th.left {
+    text-align:left;
+    font-weight:100;
+}
+table.summary td.f_path {
+    font-size:0.875em;
+    font-family:Consolas, 'DejaVu Sans Mono', 'Droid Sans Mono', Monaco, Monospace;
+    white-space:normal;
+    word-wrap:break-word;
+    max-width:57em;
+}
+table.summary td.value {
+    padding-left:10px;
+}
+td.passed, tr.passed {
+    background-color:#CCFFCC;
+}
+td.warning, tr.warning {
+    background-color:#F4F4AF;
+}
+td.renamed, tr.renamed {
+    background-color:#FFDAA3;
+}
+td.moved, tr.moved {
+    background-color:#FFDAA3;
+}
+td.failed, tr.failed {
+    background-color:#FFC3CE;
+}
+td.new, tr.new {
+    background-color:#C6DEFF;
+}
+a.default {
+    color:#336699;
+}
+div.p_list {
+    padding-left:10px;
+    color:#333333;
+    font-size:0.94em;
+}
+.top_ref {
+    font-size:0.69em;
+}
+.footer {
+    font-size:0.75em;
+}
+
+    </style>
+    <script type="text/javascript" language="JavaScript">
+    <!--
+    function sort(el, status)
+{ 
+    var col_sort = el.innerHTML;
+    var tr = el.parentNode;
+    var table = tr.parentNode;
+    var td, col_sort_num;
+    for (var i=0; (td = tr.getElementsByTagName('th').item(i)); i++)
+    {
+        if(td.innerHTML == col_sort)
+        {
+            col_sort_num = i;
+            if(td.prevsort == 'y') {
+                el.up = Number(!el.up);
+            }
+            else if(td.prevsort == 'n') {
+                td.prevsort = 'y';
+                el.up = 0;
+            }
+            else
+            {
+                if(col_sort_num==0)
+                { // already sorted
+                    td.prevsort = 'n';
+                    el.up = 1;
+                }
+                else if(col_sort_num==2)
+                { // delta
+                    td.prevsort = 'n';
+                    el.up = 1;
+                }
+                else
+                {
+                    td.prevsort = 'y';
+                    el.up = 0;
+                }
+            }
+        }
+        else
+        {
+            if(td.prevsort == 'y') {
+                td.prevsort = 'n';
+            }
+        }
+    }
+    
+    var a = new Array();
+    for(var i=1; i < table.rows.length; i++)
+    {
+        var cols = table.rows[i].getElementsByTagName('td');
+        if(cols.item(status)==null)
+        { // double status
+            a[i-2][2] = table.rows[i];
+        }
+        else
+        {
+            a[i-1] = new Array();
+            var indent = cols.item(col_sort_num).innerHTML;
+            if(indent=='') indent='0';
+            if(indent.substr(indent.length-1, 1)=="%")
+            { // delta
+                indent = indent.substr(0, indent.length-1)*100;
+            }
+            a[i-1][0] = indent;
+            a[i-1][1] = table.rows[i];
+            a[i-1][2] = null;
+        }
+    }
+    
+    // sort table
+    a.sort(sort_array);
+    if(el.up) a.reverse();
+    
+    // draw table
+    for(var i in a)
+    {
+        table.appendChild(a[i][1]);
+        if(a[i][2]!=null) {
+            table.appendChild(a[i][2]);
+        }
+    }
+}
+
+function sort_array(a,b)
+{
+    if(a[0] == b[0]) return 0;
+    if(a[0] > b[0]) return 1;
+    return -1;
+}
+    -->
+    </script>
+    </head>
+<body>
+<div><a name='Top'></a>
+<h1>Changes report for the <span style='color:Blue;'>kotlin-reflect</span> package between <span style='color:Red;'>1.5.20-bin</span> and <span style='color:Red;'>1.5.20</span> versions</h1>
+<br/><table class='summary'>
+    <tr><td class='new' width='80px'>added</td><td class='passed' width='80px'>unchanged</td></tr>
+    <tr><td class='warning'>changed</td><td class='failed'>removed</td></tr></table>
+<h2>Test Info</h2><hr/>
+<table class='summary'>
+<tr><th class='left'>Package Name</th><td>kotlin-reflect</td></tr>
+<tr><th class='left'>Package Format</th><td>JAR</td></tr>
+<tr><th class='left'>Version #1</th><td>1.5.20-bin</td></tr>
+<tr><th class='left'>Version #2</th><td>1.5.20</td></tr>
+</table>
+<h2>Test Results</h2><hr/>
+<table class='summary'>
+<tr><th class='left'>Total Packages</th><td><a href='#Packages' style='color:Blue;'>2</a></td></tr>
+<tr><th class='left'>Total Files</th><td><a href='#Files' style='color:Blue;'>68</a></td></tr>
+<tr><th class='left'>Verdict</th><td><span style='color:Red;'><b>Changed<br/>(0.3%)</b></span></td></tr>
+</table>
+<a name='Deps'></a>
+<a name='Files'></a><h2>Changes In Files</h2><hr/>
+<table class='summary'>
+<tr><th>File Type</th><th>Total</th><th>Added</th><th>Removed</th><th>Changed</th></tr>
+<tr>
+<td class='left'>Directory</td>
+<td><a href='#Directories' style='color:Blue;'>68</a></td>
+<td class='new'><a href='#Directories' style='color:Blue;'>1</a></td>
+<td>0</td>
+<td>0</td>
+</tr>
+</table>
+<a name='Directories'></a>
+<h2>Directories (68)</h2><hr/>
+<table class='summary'>
+<tr>
+<th title='sort' onclick='javascript:sort(this, 1)' style='cursor:pointer'>Name</th>
+<th title='sort' onclick='javascript:sort(this, 1)' style='cursor:pointer'>Status</th>
+</tr>
+<tr>
+<td class='left f_path'>kotlin</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/full</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/calls</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/builtins</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/builtins/functions</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/builtins/jvm</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path new'>kotlin/reflect/jvm/internal/impl/container</td>
+<td class='new'>added</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/annotations</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/deserialization</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/impl</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/java</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/runtime</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/runtime/components</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/descriptors/runtime/structure</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/incremental</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/incremental/components</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/components</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/descriptors</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/lazy</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/lazy/descriptors</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/lazy/types</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/sources</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/structure</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/java/typeEnhancement</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/kotlin</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/load/kotlin/header</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/metadata</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/metadata/builtins</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/metadata/deserialization</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/metadata/jvm</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/metadata/jvm/deserialization</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/name</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/platform</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/protobuf</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/renderer</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/calls</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/calls/inference</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/constants</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/deprecation</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/descriptorUtil</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/jvm</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/sam</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/scopes</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/resolve/scopes/receivers</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/serialization</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/serialization/deserialization</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/serialization/deserialization/builtins</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/serialization/deserialization/descriptors</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/storage</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types/checker</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types/error</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types/model</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types/typesApproximation</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/types/typeUtil</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/util</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/util/capitalizeDecapitalize</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/util/collectionUtils</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/impl/utils</td>
+<td class='passed'>unchanged</td>
+</tr>
+<tr>
+<td class='left f_path'>kotlin/reflect/jvm/internal/pcollections</td>
+<td class='passed'>unchanged</td>
+</tr>
+</table>
+<a name='Packages'></a>
+<h2>Packages (2)</h2><hr/>
+<div class='p_list'>
+kotlin-reflect-1.5.20.jar<br/>
+kotlin-reflect.jar<br/>
+</div>
+<br/><a class='top_ref' href='#Top'>to the top</a><br/>
+</div>
+<br/><br/><br/><hr/>
+<div class='footer' style='width:100%;' align='right'><i>Generated by <a href='http://lvc.github.com/pkgdiff/'>PkgDiff</a> 1.7.2 &#160;</i></div><br/>
+</body></html>
