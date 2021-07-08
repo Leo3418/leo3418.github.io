@@ -16,6 +16,10 @@ header:
   overlay_image: /assets/img/posts/2021-07-05-gentoo-build-kt-src/kotlin-emerge.png
   overlay_filter: 0.375
   image_description: "Installing ebuilds to build Kotlin libraries from source"
+  actions:
+    - label: "Learn More"
+      url: "https://wiki.gentoo.org/wiki/User:Leo3418/Kotlin"
+last_modified_at: 2021-07-08
 ---
 {% include img-path.liquid %}
 {% include res-path.liquid %}
@@ -512,57 +516,3 @@ that provides Kotlin in its official software repository.
 
 [java-pkg-simple-pkgdiff]: https://gitweb.gentoo.org/repo/gentoo.git/tree/eclass/java-pkg-simple.eclass#n260
 [kotlin-stdlib-failing-test-cases]: https://github.com/Leo3418/spark-overlay/blob/master/dev-java/kotlin-stdlib/kotlin-stdlib-1.5.20.ebuild#L98
-
-## Installing the ebuilds
-
-The ebuilds are currently in [my fork of the Spark
-overlay][spark-overlay-fork].  To install them, please first add the Git-based
-ebuild repository at `https://github.com/Leo3418/spark-overlay.git` to Portage
-and synchronize its contents to the system.  This can be done conveniently with
-[`eselect-repository`][eselect-repository]:
-
-```console
-# emerge --ask --noreplace app-eselect/eselect-repository dev-vcs/git
-# eselect repository add spark-overlay git https://github.com/Leo3418/spark-overlay.git
-# emerge --sync spark-overlay
-```
-
-Like installation process of many other self-hosted programming languages like
-Java and Go on Gentoo, pre-built binaries for the Kotlin libraries must be
-installed for bootstrapping before the libraries can be built from source.  To
-bootstrap, only `kotlin-stdlib` and `kotlin-reflect` need to be installed
-because they are the only two Kotlin core library modules required by the
-compiler, as mentioned before.  Then, the Kotlin compiler package
-`dev-lang/kotlin-bin` can be installed, completing a binary installation of
-Kotlin.  At this point, the Kotlin libraries bootstrapping process has
-effectively reached [stage 1][wikipedia-bootstrapping].
-
-```console
-# env USE="binary" emerge --ask --oneshot dev-java/kotlin-stdlib dev-java/kotlin-reflect
-# emerge --ask dev-lang/kotlin-bin
-```
-
-Users who are happy to use a pre-built version of Kotlin can simply stop here.
-For those who want to use a version of Kotlin libraries that are built from
-source, reinstall `kotlin-stdlib` and `kotlin-reflect` but do not use the
-pre-built binaries this time to get to stage 2 of the bootstrapping process.
-
-```console
-# emerge --ask --oneshot dev-java/kotlin-stdlib dev-java/kotlin-reflect
-```
-
-If other Kotlin library modules like `kotlin-stdlib-jdk8` and
-`kotlin-test-junit` are needed, they can also be emerged as long as
-`dev-lang/kotlin-bin` has been installed.
-
-```console
-# emerge --ask dev-java/kotlin-stdlib-jdk8
-```
-
-```console
-# emerge --ask dev-java/kotlin-test-junit
-```
-
-[spark-overlay-fork]: https://github.com/Leo3418/spark-overlay
-[eselect-repository]: https://wiki.gentoo.org/wiki/Eselect/Repository
-[wikipedia-bootstrapping]: https://en.wikipedia.org/wiki/Bootstrapping_(compilers)#Process
