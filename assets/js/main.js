@@ -1,13 +1,20 @@
 $(document).ready(function () {
-    // Language switcher toggle
-    $(".lang-switcher-toggle").on("click", function () {
-        $(".lang-switcher").toggleClass("hidden");
-        // Hide navigation menu when language switcher is open
-        $(".hidden-links").addClass("hidden");
+    $(".lang-switcher-toggle").click(function () {
+        $(this).toggleClass("close");
     });
 
-    // Hide language switcher when navigation menu is open
-    $(".greedy-nav__toggle").on("click", function () {
-        $(".lang-switcher").addClass("hidden");
+    $("nav > button").click(function () {
+        var shouldOpenMenu = $(this).hasClass("close");
+        if (shouldOpenMenu) {
+            // Ensure all other menus are closed
+            $("nav > button").removeClass("close");
+            $("nav > button + ul").addClass("hidden");
+            // Open the menu toggled by this button
+            $(this).addClass("close");
+            $(this).next().removeClass("hidden");
+        } else {
+            $(this).removeClass("close");
+            $(this).next().addClass("hidden");
+        }
     });
 });
