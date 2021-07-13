@@ -23,7 +23,7 @@ jobs:
     - name: Push the site to the gh-pages branch
       if: ${{ github.ref == 'refs/heads/jekyll' }}
       run: |
-        sudo chown $( whoami ):$( whoami ) ${{ github.workspace }}/_site
+        sudo chown ${USER}:${USER} ${{ github.workspace }}/_site
         cd ${{ github.workspace }}/_site
         git init -b gh-pages
         git config user.name ${{ github.actor }}
