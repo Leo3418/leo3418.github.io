@@ -85,7 +85,7 @@ find -- "${temp_dir}" -type f -print0 | xargs -0 sed -i \
 find -- "${temp_dir}" -type f -print0 | xargs -0 sed -i \
     's/site\.locale/site\.active_lang/g' --
 find -- "${temp_dir}" -type f -print0 | xargs -0 sed -i \
-    's/"%B %-d, %Y"/site\.data\.l10n\.date_format/g' --
+    's/site.date_format/site\.data\.l10n\.date_format/g' --
 # Label the patched files
 find -- "${temp_dir}" -type f -name '*.js' -print0 | xargs -0 sed -i \
     "\$a\\\n/* ${THEME_FILE_LABEL} */" --

@@ -5,7 +5,8 @@
       {% assign date = document.date %}
       <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        <time datetime="{{ date | date_to_xmlschema }}">{{ date | date: site.data.l10n.date_format }}</time>
+        {% assign date_format = site.data.l10n.date_format | default: "%B %-d, %Y" %}
+        <time datetime="{{ date | date_to_xmlschema }}">{{ date | date: date_format }}</time>
       </span>
     {% endif %}
 
