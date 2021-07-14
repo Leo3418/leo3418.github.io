@@ -3,12 +3,12 @@ $(document).ready(function () {
         $(this).toggleClass("close");
     });
 
-    $("nav > button").click(function () {
+    $("#site-nav > button").click(function () {
         var shouldOpenMenu = $(this).hasClass("close");
         if (shouldOpenMenu) {
             // Ensure all other menus are closed
-            $("nav > button").removeClass("close");
-            $("nav > button + ul").addClass("hidden");
+            $("#site-nav > button").removeClass("close");
+            $("#site-nav > button + ul").addClass("hidden");
             // Open the menu toggled by this button
             $(this).addClass("close");
             $(this).next().removeClass("hidden");
