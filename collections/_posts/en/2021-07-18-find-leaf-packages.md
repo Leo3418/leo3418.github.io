@@ -92,7 +92,7 @@ set is that the number of packages that depend on it equals zero.
 But some details are yet to be fleshed out.  A directed graph is only an
 [*abstract data type*][wikipedia-adt] (ADT), which defines the data structure
 only at a high and abstract level.  It does not necessarily specify how a
-concrete implementation of the data type's should look like.  For instance, a
+concrete implementation of the data type should look like.  For instance, a
 *list* is an abstract data type, and resizable array and linked list are both
 concrete implementations of it.  (In Java, these correspond to the `List`
 interface, the `ArrayList` class and the `LinkedList` class.)  The property of
@@ -255,7 +255,7 @@ introduced in the previous section.  The first algorithm has an outer `for`
 loop that iterates over every vertex and an inner loop which goes through every
 edge.  In the inner loop, it tests if the edge points to the vertex, and if the
 test result is positive, then we can conclude that the vertex's in-degree
-cannot be positive since there exists an edge that points to it.  Thus, the
+cannot be zero since there exists an edge that points to it.  Thus, the
 algorithm can break the inner loop immediately to move on to the next vertex
 earlier.
 
@@ -352,7 +352,7 @@ tools for doing these tasks.
 In Portage, there exists utilities like `portageq` that can print all ebuilds
 in a repository, and `equery` which can show all dependencies of an ebuild and
 list all ebuilds that match an atom.  We can first use `portageq --no-filters
---repo <repo>` to get all vertices, then for each vertex,
+--repo <repo>` to get all vertices, then, for each vertex,
 `equery depgraph -MUl <atom>` can be used to get a list of its outgoing edges.
 Iterating over all outgoing edges of every vertex is effectively iterating over
 all edges in the dependency graph.  `equery depgraph` gives the raw dependency
@@ -368,11 +368,11 @@ vertex.
 
 {% include asciinema-player.html name="match-atom.cast" poster="npt:7.4" %}
 
-Because both calling external programs and more sophisticated data structures
-such as associative arrays are required to implement the algorithms, I chose
-Python, a programming language I know that can be used to complete both tasks
-easily, to write the program.  The following code implements the second leaf
-package search algorithm.  There are a few things to note here:
+Because both calls to external programs and use of more sophisticated data
+structures such as associative arrays are required to implement the algorithms,
+I chose Python, a programming language I know that can be used to complete both
+tasks easily, to write the program.  The following code implements the second
+leaf package search algorithm.  There are a few things to note here:
 
 1. The dependency graph is never created or re-created in this Python program.
    As mentioned above, `portageq` and `equery` already provide functionalities
@@ -485,7 +485,7 @@ help of the [`pquery`][pkgcore-pquery] program from
 [pkgcore][gentoo-wiki-pkgcore], an alternative package manager for Gentoo.
 `pquery` has a `--restrict-revdep` option that can be used for getting an
 ebuild's reverse dependencies directly, so we would no longer need to write our
-own algorithm for finding any incoming edges of a vertex.  It also has
+own algorithm for finding any incoming edges of a vertex.  It also has a
 `--first` option that will make the `pquery` process exit immediately when a
 reverse dependency is found, just like what the optimized version of the first
 algorithm would do.
