@@ -9,7 +9,7 @@ categories:
 toc: true
 ---
 {% include img-path.liquid %}
-Common package managers implement the concept of software repositories that
+Common package managers implement the concept of software repositories to
 allow the set of packages installable from the package manager to be expanded.
 On Fedora, there is RPM Fusion and Copr repositories created and maintained by
 users.  Arch Linux users are fond of the AUR, the canonical repository for
@@ -21,7 +21,7 @@ and repositories for out-of-tree ebuilds, like `::gnome`, `::java`, and
 `::science`, let alone plenty of user personal overlays, like the [Spark
 overlay][spark-overlay] I have been working on for example.
 
-As covered in my [previous blog article][depgraph-algos], when there are
+As covered in [my previous blog article][depgraph-algos], when there are
 packages, there exist dependency relationships.  Out-of-tree packages in an
 external repository may depend on packages in not only the same repository but
 also the main repository for the GNU/Linux distribution too because there is no
@@ -58,13 +58,13 @@ latest copies of `::gentoo` and the Spark overlay to a Gentoo system, tests the
 Spark overlay ebuilds by installing them onto the system, and reports any
 installation issues to the maintainers automatically every day.  This led me
 into contemplating leveraging continuous integration (CI) for ebuild
-installation testing because a CI service is not only capable of but also
-designed for doing those types of tasks.  In this article, I will present the
-solution I have deployed to the Spark overlay and have been using during the
-past two weeks for automated ebuild testing: CI builds within GitHub Actions
-that conduct installation tests on Spark overlay ebuilds inside a Docker
-container based on the [Gentoo stage3 image][docker-gentoo-stage3], which acts
-like a minimal Gentoo system image.
+installation testing because a CI service is not only capable of doing those
+types of tasks but also designed for that purpose inherently.  In this article,
+I will present the solution I have deployed to the Spark overlay and have been
+using during the past two weeks for automated ebuild testing: CI builds within
+GitHub Actions that conduct installation tests on Spark overlay ebuilds inside
+a Docker container based on the [Gentoo stage3 image][docker-gentoo-stage3],
+which acts like a minimal Gentoo system image.
 
 [spark-overlay]: https://github.com/6-6-6/spark-overlay
 [depgraph-algos]: /2021/07/18/find-leaf-packages.html
@@ -166,13 +166,14 @@ way.
 For Portage configuration directory imports, I first trivially implemented the
 feature by binding the directory containing the configuration specified in the
 arguments to ebuild-commander to `/etc/portage` in the container.  But later
-on, when more test cases were being added, I found that the configuration
-directory was mostly the same for every test case and had exclusive settings in
-only a few files.  To encourage configuration file reuse, I [added *layered
-configuration support*][ebuild-cmder-multi-config] to ebuild-commander so it
-could take multiple configuration directories from the command-line arguments
-to it, use the first directory as the base configuration, and copy contents in
-subsequent directories into the base one in order.
+on, when more test cases using varied Portage configurations were being added,
+I found that the configuration directory was mostly the same for every test
+case and had exclusive settings in only a few files.  To encourage
+configuration file reuse, I [added *layered configuration
+support*][ebuild-cmder-multi-config] to ebuild-commander so it could take
+multiple configuration directories from the command-line arguments to it, use
+the first directory as the base configuration, and copy contents in subsequent
+directories into the base one in order.
 
 For example, if maintainers would like to run a 2-dimensional matrix of tests
 defined in the following table, they can create a base configuration `default`
@@ -229,8 +230,8 @@ functions declared in the Gentoo Package Manager Specification [in
 order][pms-phase-order].  When an ebuild `inherit`s an eclass, the eclass is
 `source`d in a similar way and can access any variables defined by the ebuild
 before the `inherit` statement.  `source`, a plain Bash shell built-in, has the
-potential to support complex and powerful functionalities of programs like
-Portage.
+potential to support a sophisticated and powerful system package manager for a
+GNU/Linux distribution.
 
 Based on the idea of leveraging `source`, I created a test entry point script
 that would `source` each test case given in the arguments to it, build
@@ -318,7 +319,7 @@ contents of the `run_test` function for reformatting, white space removal, etc.
 and to make sure they are ready to be piped into ebuild-commander.  This is a
 Bash trick for obtaining the body of a function.  Assuming `run_test` has been
 defined as a function, `type run_test` prints a description of it and its body
-with curly braces, and `sed '1,3d;$d` removes the first three lines plus the
+with curly braces, and `sed '1,3d;$d` strips the first three lines plus the
 last line from the input to it.
 
 ```
@@ -571,7 +572,7 @@ and uploading a tarball containing them as an [artifact][gh-actions-artifact]
 for maintainers to peruse in case the test fails (detected using
 {% raw %}`if: ${{ failure() }}`{% endraw %}).  Note that `/var/log/emerge` is
 not the default path for ebuild logs; it is set by adding
-`PORTAGE_LOGDIR="/var/log/emerge"` in `/etc/portage/make.conf`.
+`PORTAGE_LOGDIR="/var/log/emerge"` to `/etc/portage/make.conf`.
 
 Below is a screenshot of a workflow run based on the above configuration.  The
 jobs with `may-fail: true` failed, but the workflow run's overall status is
