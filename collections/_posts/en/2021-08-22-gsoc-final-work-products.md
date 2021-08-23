@@ -125,10 +125,11 @@ built with Gradle, including Android-related packages, to Gentoo users.
 
 - Status:
   - Initial release published
-  - ebuild added to the Spark overlay
+  - [ebuilds][ebuild-eselect-kotlin] added to the Spark overlay
   - Awaiting review for official Gentoo adoption
 - Location: [GitHub repository][github-eselect-kotlin]
 
+[ebuild-eselect-kotlin]: https://github.com/6-6-6/spark-overlay/tree/master/app-eselect/eselect-kotlin
 [github-eselect-kotlin]: https://github.com/Leo3418/eselect-kotlin
 
 This is an eselect module that allows users to choose a default Kotlin compiler
@@ -234,10 +235,11 @@ with basic functionalities.
 [project-idea]: https://wiki.gentoo.org/wiki/Google_Summer_of_Code/2021/Ideas/Big_Data_Infrastructure_by_Gentoo
 [weekly-report-9]: https://archives.gentoo.org/gentoo-soc/message/31a53bb42366474da4a460b0287a6455
 
-## Fixes for Existing ebuilds in the Spark overlay
+## Fixes for Existing ebuilds in the Spark Overlay
 
 - Status: Added to the Spark overlay
-- Location: [Multiple Git commits](https://github.com/6-6-6/spark-overlay/compare/be1c8c8...81a5987)
+- Location: [Multiple Git
+  commits](https://github.com/6-6-6/spark-overlay/compare/be1c8c8...81a5987)
 
 Due to updates and removals of packages in the Gentoo repository, dependencies
 of many ebuilds in the Spark overlay had been broken.  To bring the packages in
