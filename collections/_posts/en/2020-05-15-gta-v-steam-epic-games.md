@@ -22,7 +22,7 @@ the `MKLINK` command on Windows, which is not well-known, to create a link to
 the existing game files. The link works as if the linked files and folders are
 exactly there, but it occupies very little space.
 
-Because I believe almost all people who wants to let the apps of these two game
+Because I believe almost all people who want to let the apps of these two game
 platforms share the same game files have already downloaded GTA V from Steam
 rather than Epic Games, the following instructions will create a link to
 Steam's copy of GTA V files under Epic Games' installation path.
@@ -114,11 +114,11 @@ and Epic Games.
 ## Sign Out Your Old Social Club Account!
 
 I've heard from some people who have been already playing this game using the
-copy downloaded from Steam saying that, when they launch GTA V through Epic
-Games Launcher, the new copy of the game is activated for their original Social
-Club account, so they failed to make a brand new account for GTA Online. If you
-want to have a new Social Club account and activate the copy of GTA V you
-obtained on Epic Games for it, make sure you sign out your old Social Club
+copy downloaded from Steam saying that, when they launched GTA V through Epic
+Games Launcher, the new copy of the game was activated for their original
+Social Club account, so they failed to make a brand new account for GTA Online.
+If you want to have a new Social Club account and activate the copy of GTA V
+you obtained on Epic Games for it, make sure you sign out your old Social Club
 account from Rockstar Games Launcher.
 
 ## Steps to Do Upon Game Update
