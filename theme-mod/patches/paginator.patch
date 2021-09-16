@@ -1,0 +1,51 @@
+--- _includes/paginator.html
++++ _includes/paginator.html
+@@ -1,4 +1,13 @@
+-{% if paginator.total_pages > 1 %}
++<!-- Override total number of pages given by paginator
++    to exclude empty pages caused by filtering of posts not localized -->
++{% assign total_pages = site.posts
++    | where: "lang", site.active_lang
++    | size
++    | times: 1.0
++    | divided_by: paginator.per_page
++    | ceil %}
++
++{% if total_pages > 1 %}
+ <nav class="pagination">
+   {% assign first_page_path = paginator.first_page_path | default: site.paginate_path | replace: 'page:num', '' | replace: '//', '/' | relative_url %}
+   <ul>
+@@ -27,8 +36,8 @@
+       <li><a href="#" class="disabled">&hellip;</a></li>
+     {% endif %}
+ 
+-    {% assign page_end = paginator.total_pages | minus: 1 %}
+-    {% assign pages_to_end = paginator.total_pages | minus: paginator.page %}
++    {% assign page_end = total_pages | minus: 1 %}
++    {% assign pages_to_end = total_pages | minus: paginator.page %}
+     {% if pages_to_end > 4 %}
+       {% assign page_end = paginator.page | plus: 2 %}
+     {% endif %}
+@@ -52,11 +61,11 @@
+       <li><a href="#" class="disabled">&hellip;</a></li>
+     {% endif %}
+ 
+-    {% if paginator.page == paginator.total_pages %}
++    {% if paginator.page == total_pages %}
+       <li><a href="#" class="disabled current">{{ paginator.page }}</a></li>
+     {% else %}
+-      <li><a href="{{ site.paginate_path | replace: ':num', paginator.total_pages | replace: '//', '/' | relative_url }}">{{ paginator.total_pages }}</a></li>
++      <li><a href="{{ site.paginate_path | replace: ':num', total_pages | replace: '//', '/' | relative_url }}">{{ total_pages }}</a></li>
+     {% endif %}
+ 
+     {% comment %} Link next page {% endcomment %}
+     {% if paginator.next_page %}
+@@ -59,7 +68,7 @@
+     {% endif %}
+ 
+     {% comment %} Link next page {% endcomment %}
+-    {% if paginator.next_page %}
++    {% if paginator.page < total_pages %}
+       <li><a href="{{ site.paginate_path | replace: ':num', paginator.next_page | replace: '//', '/' | relative_url }}">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</a></li>
+     {% else %}
+       <li><a href="#" class="disabled"><span aria-hidden="true">{{ site.data.ui-text[site.active_lang].pagination_next | default: "Next" }}</span></a></li>

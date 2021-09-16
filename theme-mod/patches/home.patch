@@ -1,25 +1,27 @@
 --- _layouts/home.html
 +++ _layouts/home.html
-@@ -12,13 +12,21 @@
-   {% assign posts = site.posts %}
+@@ -4,12 +4,21 @@
+ 
+ {{ content }}
+ 
+-<h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
++<h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
++
++<!-- Array of localized posts -->
++{% assign l10n_posts = site.posts | where: "lang", site.active_lang %}
+ 
+ {% if paginator %}
+-  {% assign posts = paginator.posts %}
++  <!-- Pick posts from l10n_posts instead of paginator.posts, because
++      paginator.posts includes posts that are not localized -->
++  {% assign posts = '' | split: '' %} <!-- Create an empty array first -->
++  {% assign start = paginator.page | minus: 1 | times: paginator.per_page %}
++  {% for post in l10n_posts limit: paginator.per_page offset: start %}
++    {% assign posts = posts | push: post %}
++  {% endfor %}
+ {% else %}
+-  {% assign posts = site.posts %}
++  {% assign posts = l10n_posts %}
  {% endif %}
  
-+{% assign l10n_posts = posts | where: "lang", site.active_lang %}
-+
  {% assign entries_layout = page.entries_layout | default: 'list' %}
- <div class="entries-{{ entries_layout }}">
--  {% for post in posts %}
-+  {% for post in l10n_posts %}
-     {% include archive-single.html type=entries_layout %}
-   {% endfor %}
- </div>
- 
-+{% if paginator and l10n_posts != posts %}
-+<div class="untranslated-posts-hidden-msg">
-+  {{ site.data.strings.untranslated_posts_hidden | default: "Untranslated posts are hidden" }}
-+</div>
-+{% endif %}
-+
- {% include paginator.html %}
- 
- {%- comment -%} patched-theme-file {%- endcomment -%}
