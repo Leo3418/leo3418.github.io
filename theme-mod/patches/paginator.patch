@@ -26,7 +26,7 @@
      {% if pages_to_end > 4 %}
        {% assign page_end = paginator.page | plus: 2 %}
      {% endif %}
-@@ -52,11 +61,11 @@
+@@ -52,14 +61,14 @@
        <li><a href="#" class="disabled">&hellip;</a></li>
      {% endif %}
  
@@ -36,11 +36,6 @@
      {% else %}
 -      <li><a href="{{ site.paginate_path | replace: ':num', paginator.total_pages | replace: '//', '/' | relative_url }}">{{ paginator.total_pages }}</a></li>
 +      <li><a href="{{ site.paginate_path | replace: ':num', total_pages | replace: '//', '/' | relative_url }}">{{ total_pages }}</a></li>
-     {% endif %}
- 
-     {% comment %} Link next page {% endcomment %}
-     {% if paginator.next_page %}
-@@ -59,7 +68,7 @@
      {% endif %}
  
      {% comment %} Link next page {% endcomment %}
