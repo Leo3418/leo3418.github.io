@@ -1,14 +1,17 @@
 --- _layouts/home.html
 +++ _layouts/home.html
-@@ -4,12 +4,21 @@
+@@ -4,12 +4,24 @@
  
  {{ content }}
  
 -<h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
 +<h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
 +
-+<!-- Array of localized posts -->
-+{% assign l10n_posts = site.posts | where: "lang", site.active_lang %}
++<!-- Array of localized posts that are not hidden -->
++{% assign l10n_posts = site.posts
++  | where: "lang", site.active_lang
++  | where: "hidden", blank
++%}
  
  {% if paginator %}
 -  {% assign posts = paginator.posts %}

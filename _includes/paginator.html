@@ -2,10 +2,12 @@
     to exclude empty pages caused by filtering of posts not localized -->
 {% assign total_pages = site.posts
     | where: "lang", site.active_lang
+    | where: "hidden", blank
     | size
     | times: 1.0
     | divided_by: paginator.per_page
-    | ceil %}
+    | ceil
+%}
 
 {% if total_pages > 1 %}
 <nav class="pagination">

@@ -6,8 +6,11 @@ layout: archive
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.active_lang].recent_posts | default: "Recent Posts" }}</h3>
 
-<!-- Array of localized posts -->
-{% assign l10n_posts = site.posts | where: "lang", site.active_lang %}
+<!-- Array of localized posts that are not hidden -->
+{% assign l10n_posts = site.posts
+  | where: "lang", site.active_lang
+  | where: "hidden", blank
+%}
 
 {% if paginator %}
   <!-- Pick posts from l10n_posts instead of paginator.posts, because

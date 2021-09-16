@@ -1,21 +1,23 @@
 --- _includes/paginator.html
 +++ _includes/paginator.html
-@@ -1,4 +1,13 @@
+@@ -1,4 +1,15 @@
 -{% if paginator.total_pages > 1 %}
 +<!-- Override total number of pages given by paginator
 +    to exclude empty pages caused by filtering of posts not localized -->
 +{% assign total_pages = site.posts
 +    | where: "lang", site.active_lang
++    | where: "hidden", blank
 +    | size
 +    | times: 1.0
 +    | divided_by: paginator.per_page
-+    | ceil %}
++    | ceil
++%}
 +
 +{% if total_pages > 1 %}
  <nav class="pagination">
    {% assign first_page_path = paginator.first_page_path | default: site.paginate_path | replace: 'page:num', '' | replace: '//', '/' | relative_url %}
    <ul>
-@@ -27,8 +36,8 @@
+@@ -27,8 +38,8 @@
        <li><a href="#" class="disabled">&hellip;</a></li>
      {% endif %}
  
@@ -26,7 +28,7 @@
      {% if pages_to_end > 4 %}
        {% assign page_end = paginator.page | plus: 2 %}
      {% endif %}
-@@ -52,14 +61,14 @@
+@@ -52,14 +63,14 @@
        <li><a href="#" class="disabled">&hellip;</a></li>
      {% endif %}
  
