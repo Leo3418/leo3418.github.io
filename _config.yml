@@ -16,7 +16,7 @@ collections:
     output: true
     permalink: /collections/:collection/:name
 
-# Permalink for a post
+# Do not prepend categories to a post's permalink
 permalink: /:year/:month/:day/:title:output_ext
 
 defaults:
