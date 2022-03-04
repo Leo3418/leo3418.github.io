@@ -1,0 +1,35 @@
+From 3ef3b5bf3c4911502beb2a35121699e5f08ebfc8 Mon Sep 17 00:00:00 2001
+From: root <root@NVMe-Fussy.localdomain>
+Date: Mon, 23 Aug 2021 20:41:01 -0700
+Subject: [PATCH] Honor PATH elements set by WSL
+
+---
+ etc/profile | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/etc/profile b/etc/profile
+index 2afd51d..46026b4 100644
+--- a/etc/profile
++++ b/etc/profile
+@@ -4,12 +4,18 @@
+ # environment for login shells.
+ #
+ 
++# Back up PATH set by WSL because it might be overwritten by profile.env
++WSLPATH="${PATH}"
++
+ # Load environment settings from profile.env, which is created by
+ # env-update from the files in /etc/env.d
+ if [ -e /etc/profile.env ] ; then
+ 	. /etc/profile.env
+ fi
+ 
++export PATH="${PATH}:${WSLPATH}"
++unset WSLPATH
++
+ # You should override these in your ~/.bashrc (or equivalent) for per-user
+ # settings.  For system defaults, you can add a new file in /etc/profile.d/.
+ export EDITOR=${EDITOR:-/bin/nano}
+-- 
+2.31.1
+
