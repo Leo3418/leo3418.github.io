@@ -87,8 +87,7 @@ they require more expert knowledge to use.
 - [*linux-next* kernel][kernel-git-next] (corresponds to
   `sys-kernel/linux-next`)
 
-Some kernel repositories (including the repository for stable and longterm
-kernels on kernel.org) have multiple branches for different kernel versions.
+Some kernel repositories have multiple branches for different kernel versions.
 For instance, the repository for the stable and longterm kernels have
 [branches][kernel-git-stable-refs] like `linux-5.16.y`, `linux-5.15.y`,
 `linux-5.10.y`, and so on.  In this case, a specific kernel version may be
