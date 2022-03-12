@@ -9,7 +9,7 @@ categories:
   - Tutorial
 asciinema-player: true
 toc: true
-last_modified_at: 2020-11-09
+last_modified_at: 2022-03-11
 ---
 
 This post is a continuation of my [previous
@@ -53,8 +53,9 @@ available, so we can compile it on our own.
 3.  Use `./buildme --aarch64` to compile the program for the `aarch64`
     architecture Fedora runs on and install it.
 
-    After the compilation completes and before the installation, you might see
-    a prompt from `sudo` that demands your password. Enter it to proceed.
+    After the compilation completes and before the installation, there might a
+    prompt from `sudo` asking for authentication. Enter the required
+    credentials to proceed.
 
     ```console
     $ ./buildme --aarch64
@@ -63,14 +64,15 @@ available, so we can compile it on our own.
     {% include asciinema-player.html name="build-and-install.cast"
     poster="npt:16.5" start_at="10" %}
 
-After this command completes, you will find the `vcgencmd` program under
+After this command completes, the `vcgencmd` program can be found under
 `/opt/vc/bin`.
 
 {% include asciinema-player.html name="after-install.cast" poster="npt:6" %}
 
 ## Tell the System About `/opt/vc`
 
-When you run `vcgencmd` now, you will see the following error message:
+If the `vcgencmd` program is invoked now, the following error message is
+expected to show up:
 
 ```console
 $ /opt/vc/bin/vcgencmd
@@ -93,13 +95,13 @@ Then, run the following command to apply the change:
 $ sudo ldconfig
 ```
 
-Running `/opt/vc/bin/vcgencmd` now should no longer get you the error message.
+Running `/opt/vc/bin/vcgencmd` now should no longer produce the error message.
 
 {% include asciinema-player.html name="ldconfig.cast" poster="npt:5" %}
 
-It can be tedious when you have to type in the full path to the `vcgencmd`
-program in order to run it. To save yourself from the torture, you can add
-`/opt/vc/bin` to the `PATH` environment variable by editing `~/.bashrc`:
+It can be tedious when the full path to the `vcgencmd` program must be entered
+to run it every time. To avoid this, add `/opt/vc/bin` to the `PATH`
+environment variable. One way of doing this is to edit `~/.bashrc`:
 
 ```diff
   # User specific environment
@@ -121,26 +123,37 @@ $ source ~/.bashrc
 
 ## Configure Device Permissions and User Group
 
-At this point, if you attempt to use `vcgencmd` to read hardware information as
-a normal user, you might get the `VCHI initialization failed` error.
+At this point, if `vcgencmd` is run using a normal user account to read
+hardware information, the `VCHI initialization failed` error might show up.
 
 {% include asciinema-player.html name="init-failed.cast" poster="npt:7" %}
 
-Most solutions to this issue you can find online would tell you to add the user
-to the `video` group. However, they typically assume you are running `vcgencmd`
-under Raspberry Pi OS. On Fedora, doing only this will not suffice. You need to
-configure the VCHI device so that `video` group users can access it. This is
-done by adding a new [udev
-rule](https://wiki.archlinux.org/index.php/udev#About_udev_rules) shown
-[here](https://github.com/sakaki-/genpi64-overlay/blob/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules),
-published by GitHub user [**@sakaki-**](https://github.com/sakaki-).
+Most solutions to this issue posted online would say that the user account used
+to run the program should be added to the `video` group. However, these
+solutions assume that `vcgencmd` is being run on Raspberry Pi OS. On Fedora,
+doing only this will not suffice. The VCHI device also needs to be configured
+so that `video` group users can access it. This is done by adding a new [udev
+rule](https://wiki.archlinux.org/index.php/udev#About_udev_rules):
 
-```console
-$ cd /usr/lib/udev/rules.d/
-$ sudo curl -O https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
+```
+KERNEL=="vchiq",GROUP="video",MODE="0660"
 ```
 
-Once the udev rule is copied to the correct location, you may apply it
+{: .notice--warning}
+This rule has only been tested on relatively-new Linux kernel versions (5.16
+and above); it might not work on older kernels. If the rule does not work
+because the kernel version is too old, please upgrade to the latest kernel.
+
+To add the udev rule, create a new file whose file extension is `.rules` under
+`/etc/udev/rules.d`, and add the rule as a line of text to the file. This can
+be achieved by running the following command, which will install the rule to a
+file called `92-local-vchiq-permissions.rules`:
+
+```console
+$ sudo tee /etc/udev/rules.d/92-local-vchiq-permissions.rules <<< 'KERNEL=="vchiq",GROUP="video",MODE="0660"'
+```
+
+Once the udev rule is copied to the correct location, it may be applied
 immediately without a reboot by using `udevadm`:
 
 ```console
@@ -156,12 +169,10 @@ $ ls -l /dev/vchiq
 crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
 ```
 
-{% include asciinema-player.html name="udev-rule.cast" poster="npt:11" %}
-
 Once this is done, any user in the `video` group can invoke `vcgencmd` without
-getting the same error. You can use the following command to add your own user
-account to the `video` group; however, **you must re-login to let the change
-take effect**.
+getting the same error. The following command can be used to add the current
+user account to the `video` group; however, **the change will not take effect
+until the account is logged out**.
 
 ```console
 $ sudo usermod -aG video $USER
@@ -174,23 +185,25 @@ $ sudo usermod -aG video $USER
 Don't want to build `vcgencmd` by yourself? I have made an RPM package for
 `userland` and uploaded it to a [Copr
 repository](https://copr.fedorainfracloud.org/coprs/leo3418/raspberrypi-userland/),
-so you can get `vcgencmd` working by simply running the following DNF commands:
+so anyone can get `vcgencmd` working by simply running the following DNF
+commands:
 
 ```console
 $ sudo dnf copr enable leo3418/raspberrypi-userland
 $ sudo dnf install raspberrypi-userland
 ```
 
-With this installation method, you can skip all the building and installation
-steps described above, including creating a `.conf` file under
+With this installation method, all the building and installation steps
+described above can be skipped, including creating a `.conf` file under
 `/etc/ld.so.conf.d`, modifying `~/.bashrc`, and installing the udev rule. The
-only thing you must do is to add your user account to the `video` group.
+only thing that must be done manually is to add the user account to the `video`
+group.
 
 {% include asciinema-player.html name="dnf.cast" poster="npt:3.8" %}
 
 You can also build the RPM packages for `userland` by yourself from the SPEC
-file I wrote for it. For this one, I will only give you a demo of how to build
-the RPM packages instead of detailed instructions.
+file I wrote for it. For this one, I will only give a demo of how to build the
+RPM packages instead of detailed instructions.
 
 {% include asciinema-player.html name="build-rpm.cast"
     poster="data:text/plain,RPM Build Demo" %}

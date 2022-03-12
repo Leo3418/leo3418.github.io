@@ -9,7 +9,7 @@ categories:
   - 教程
 asciinema-player: true
 toc: true
-last_modified_at: 2020-11-09
+last_modified_at: 2022-03-11
 ---
 
 这篇帖子算是对我之前关于[在树莓派集群上配置 Fedora](/2020/07/24/fedora-raspi-cluster.html) 的那篇的一个延续。集群配置好后，我告知机主 [**@ColsonXu**](https://github.com/ColsonXu) 他的集群已经正式投入运算，他就告诉我可以运行一个命令来查看树莓派的 CPU 温度，监视硬件状况：
@@ -77,7 +77,7 @@ $ sudo ldconfig
 
 {% include asciinema-player.html name="ldconfig.cast" poster="npt:5" %}
 
-目前还有一个小瑕疵，那就是每次运行 `vcgencmd` 的时候都需要输入它的完整的绝对路径。如果不想这么麻烦的话，可以把 `vcgencmd` 所在的 `/opt/vc/bin` 加到 `PATH` 环境变量中。编辑 `~/.bashrc` 并作出如下修改：
+目前还有一个小瑕疵，那就是每次运行 `vcgencmd` 的时候都需要输入它的完整的绝对路径。如果不想这么麻烦的话，可以把 `vcgencmd` 所在的 `/opt/vc/bin` 加到 `PATH` 环境变量中。变动 `PATH` 环境变量的一种方法是编辑 `~/.bashrc`，作出如下修改：
 
 ```diff
   # User specific environment
@@ -99,18 +99,26 @@ $ source ~/.bashrc
 
 ## 配置设备权限和用户组
 
-此时尝试在一个普通的用户下运行 `vcgencmd` 读取硬件信息的话，还是会遇到 `VCHI initialization failed` 的错误信息。
+此时，如果尝试在一个普通的用户下运行 `vcgencmd` 读取硬件信息的话，还是会遇到 `VCHI initialization failed` 的错误信息。
 
 {% include asciinema-player.html name="init-failed.cast" poster="npt:7" %}
 
-这个问题的解决方案在网上很多地方都能找到，那就是将该用户加入到 `video` 用户组中。不过这个办法都是只适用于树莓派 OS。在 Fedora 上的话，还需要一道额外步骤：允许 `video` 组中的的用户访问 VCHI 设备。具体的做法是添加一个新的 [udev 规则](https://wiki.archlinux.org/index.php/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#udev_%E8%A7%84%E5%88%99)，可以使用 GitHub 用户 [**@sakaki-**](https://github.com/sakaki-) 在[此处](https://github.com/sakaki-/genpi64-overlay/blob/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules)发布的规则文件。
+这个问题的解决方案在网上很多地方都能找到，那就是将该用户加入到 `video` 用户组中。不过，这个办法只适用于树莓派 OS；在 Fedora 上的话，还需要一道额外步骤：允许 `video` 组中的的用户访问 VCHI 设备。具体的做法是添加一个新的 [udev 规则](https://wiki.archlinux.org/index.php/Udev_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)#udev_%E8%A7%84%E5%88%99)：
 
-```console
-$ cd /usr/lib/udev/rules.d/
-$ sudo curl -O https://raw.githubusercontent.com/sakaki-/genpi64-overlay/master/media-libs/raspberrypi-userland/files/92-local-vchiq-permissions.rules
+```
+KERNEL=="vchiq",GROUP="video",MODE="0660"
 ```
 
-udev 规则下好后，无需重启，直接运行下列命令即可应用规则：
+{: .notice--warning}
+目前，该 udev 规则仅在相对比较新的内核（5.16 及以上）上测试过；在老版本内核上可能无法达到预期的效果。如果使用的内核版本比较老，并且该规则不管用的话，请升级到最新的内核。
+
+添加 udev 规则的方法是在 `/etc/udev/rules.d` 下创建一个文件扩展名是 `.rules` 的文件，然后将规则文本加到该文件中。可以使用下列命令来完成此操作，将规则添加至名为 `92-local-vchiq-permissions.rules` 的文件：
+
+```console
+$ sudo tee /etc/udev/rules.d/92-local-vchiq-permissions.rules <<< 'KERNEL=="vchiq",GROUP="video",MODE="0660"'
+```
+
+udev 规则加好后，无需重启，直接运行下列命令即可应用规则：
 
 ```console
 $ sudo udevadm trigger /dev/vchiq
@@ -123,9 +131,7 @@ $ ls -l /dev/vchiq
 crw-rw----. 1 root video 511, 0 Nov  9 23:17 /dev/vchiq
 ```
 
-{% include asciinema-player.html name="udev-rule.cast" poster="npt:11" %}
-
-之后，`video` 组中的用户就可以正常调用 `vcgencmd` 命令了。您可以用下面的命令将当前的用户添加到 `video` 组中，但是在运行完命令后**必须重新登录才能令更改生效**。
+之后，`video` 组中的用户就可以正常调用 `vcgencmd` 命令了。可以用下面的命令将当前的用户添加到 `video` 组中，但是在运行完命令后**必须重新登录才能令更改生效**。
 
 ```console
 $ sudo usermod -aG video $USER
@@ -142,11 +148,11 @@ $ sudo dnf copr enable leo3418/raspberrypi-userland
 $ sudo dnf install raspberrypi-userland
 ```
 
-如果用我的 RPM 软件包的话，就可以跳过上面的构建和安装步骤了，包括在 `/etc/ld.so.conf.d` 下创建 `.conf` 文件、修改 `~/.bashrc`、以及安装 udev 规则。您唯一需要额外进行的操作就是将您的用户帐户添加到 `video` 用户组中。
+如果用我的 RPM 软件包的话，就可以跳过上面的构建和安装步骤了，包括在 `/etc/ld.so.conf.d` 下创建 `.conf` 文件、修改 `~/.bashrc`、以及安装 udev 规则。唯一需要手动额外进行的操作就是将用户帐户添加到 `video` 用户组中。
 
 {% include asciinema-player.html name="dnf.cast" poster="npt:3.8" %}
 
-您还可以使用我写的 SPEC 文件自行创建 `userland` 的 RPM 软件包，这里我就只做一个演示，不给出详细步骤了。
+也可以使用我写的 SPEC 文件自行创建 `userland` 的 RPM 软件包，这里我就只做一个演示，不给出详细步骤了。
 
 {% include asciinema-player.html name="build-rpm.cast"
     poster="data:text/plain,RPM 构建演示" %}
