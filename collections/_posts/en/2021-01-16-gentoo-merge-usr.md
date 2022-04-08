@@ -6,7 +6,7 @@ tags:
 categories:
   - Tutorial
 toc: true
-last_modified_at: 2021-03-05
+last_modified_at: 2022-04-07
 ---
 
 The *`/usr` merge*, sometimes also known as *`/usr` move*, refers to a process
@@ -20,11 +20,20 @@ and [Fedora Wiki][fedora].
 
 The trend of `/usr` merge in GNU/Linux distributions seemed to be started by
 Fedora in 2012, and then, we can see that many well-known and popular
-distributions, including Debian and Arch Linux, have made the move.  It was
-similar to the wide adoption of systemd in GNU/Linux distributions, both of
-which were started by Red Hat's desire to shape all modern Linux-based systems
-at *their* discretion and [Lennart Poettering's support][0pointer-de], then
-made their debut in Fedora, and finally accepted by other distributions.
+distributions, including ~~Debian~~ Ubuntu and Arch Linux, have made the move.
+It was similar to the wide adoption of systemd in GNU/Linux distributions, both
+of which were started by Red Hat's desire to shape all modern Linux-based
+systems at *their* discretion and [Lennart Poettering's support][0pointer-de],
+then made their debut in Fedora, and finally accepted by other distributions.
+
+{: .notice}
+Update on {{ "2022-04-07" | date: site.data.l10n.date_format }}: After reading
+the new, hot [LWN.net report][lwn-debian] covering the `/usr` merge dilemma
+Debian is still facing, I am perplexed by how I got the impression that Debian
+had completed the `/usr` merge when I wrote the initial version of this
+article.  To show what a silly mistake I made, I am crossing out Debian and
+replacing it with Ubuntu instead.  Interestingly, Ubuntu, as a Debian
+derivative, has accomplished the `/usr` merge even earlier than Debian.
 
 Gentoo, being one of the few distributions that still do not use systemd as the
 default init system, is also absent from the group of distributions that have
@@ -60,6 +69,7 @@ idea.
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
 [fhs]: https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard
 [0pointer-de]: http://0pointer.de/blog/projects/the-usr-merge
+[lwn-debian]: https://lwn.net/SubscriberLink/890219/3ed11782cbc5bc24/
 [split-usr]: https://packages.gentoo.org/useflags/split-usr
 
 ## Variants of `/usr` Merge

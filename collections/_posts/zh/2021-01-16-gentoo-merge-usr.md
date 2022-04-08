@@ -6,12 +6,15 @@ tags:
 categories:
   - 教程
 toc: true
-last_modified_at: 2021-03-05
+last_modified_at: 2022-04-07
 ---
 
 *`/usr` 合并*是指在诸如 GNU/Linux 等的遵循[文件系统层次结构标准（FHS）][fhs]的系统上，将 `/bin`、`/lib`、`/lib64` 和 `/sbin` 中的内容分别迁移至 `/usr/bin`、`/usr/lib`、`/usr/lib64` 和 `/usr/sbin` 中，然后把 `/bin`、`/lib`、`/lib64` 和 `/sbin` 改成指向 `/usr` 中同名目录的符号链接（symbolic link）。如果想了解有关 `/usr` 合并的更多信息，可以参阅 [freedesktop.org][freedesktop] 和 [Fedora Wiki][fedora] 中的相关页面（皆为英文页面）。
 
-现在绝大多数主流 GNU/Linux 发行版中的 `/usr` 合并大趋势应该是由 Fedora 在 2012 年牵头开始的；之后，包括 Debian 和 Arch Linux 在内的许多常见的发行版也都相应地完成了 `/usr` 合并。说起来这和 systemd 在 GNU/Linux 社区中的侵蚀也有点类似，都是由 Red Hat 想按照自己的方式定型当代 GNU/Linux 发行版的野心和 [Lennart Poettering 大肆为其背书][0pointer-de]开始、在 Fedora 上首秀，然后逐渐被其它发行版采纳。
+现在绝大多数主流 GNU/Linux 发行版中的 `/usr` 合并大趋势应该是由 Fedora 在 2012 年牵头开始的；之后，包括 ~~Debian~~ Ubuntu 和 Arch Linux 在内的许多常见的发行版也都相应地完成了 `/usr` 合并。说起来这和 systemd 在 GNU/Linux 社区中的侵蚀也有点类似，都是由 Red Hat 想按照自己的方式定型当代 GNU/Linux 发行版的野心和 [Lennart Poettering 大肆为其背书][0pointer-de]开始、在 Fedora 上首秀，然后逐渐被其它发行版采纳。
+
+{: .notice}
+{{ "2022-04-07" | date: site.data.l10n.date_format }} 更新：读了前两天 [LWN.net][lwn-debian] 上的一篇文章，了解到关于 Debian 目前合并 `/usr` 时出现的进退两难的窘境后，我发现我直接被打脸，一开始写这篇文章的时候不知怎么，竟然以为 Debian 已经完成 `/usr` 合并了。为了不掩盖我当时憨憨了的事实，特划掉 Debian，改为 Ubuntu。Ubuntu 作为一个 Debian 衍生发行版，居然比 Debian 先完成了 `/usr` 合并，也是有点意思。
 
 而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接。虽说如此，Gentoo 应该还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE 标志][split-usr]。现在这个 USE 标志是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天 Gentoo 官方可以完全支持 `/usr` 合并了，那届时就可以让 `split-usr` 变成一个可选的 USE 标志。
 
@@ -27,6 +30,7 @@ last_modified_at: 2021-03-05
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
 [fhs]: https://zh.wikipedia.org/zh-cn/%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E6%A0%87%E5%87%86
 [0pointer-de]: http://0pointer.de/blog/projects/the-usr-merge
+[lwn-debian]: https://lwn.net/SubscriberLink/890219/3ed11782cbc5bc24/
 [split-usr]: https://packages.gentoo.org/useflags/split-usr
 
 ## 不同的 `/usr` 合并方法
