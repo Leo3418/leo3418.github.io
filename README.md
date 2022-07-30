@@ -9,16 +9,9 @@ This site is based on [Jekyll](https://jekyllrb.com/).
 Although GitHub Pages offers direct Jekyll support, it does not allow use of
 unsupported plugins. Because this site uses unsupported plugins, it cannot be
 built automatically by GitHub Pages. Instead, the site must be built somewhere
-else, then the generated static files of the site can be uploaded to this
-repository. The process of building and uploading the site is automated by a
-[GitHub Actions
-workflow](https://github.com/Leo3418/leo3418.github.io/actions).
-
-To separate the source files and generated static files for the site, these two
-sets of files are placed under different branches of this repository. The
-source files are stored in the `jekyll` branch. The workflow for automated
-builds and deployment will pull the source files from the `jekyll` branch and
-upload the static files to the `gh-pages` branch.
+else, then the generated static files of the site can be deployed to GitHub
+Pages. The process of building and deploying the site is automated by a [GitHub
+Actions workflow](https://github.com/Leo3418/leo3418.github.io/actions).
 
 ## Directory Structure of Source Files
 
