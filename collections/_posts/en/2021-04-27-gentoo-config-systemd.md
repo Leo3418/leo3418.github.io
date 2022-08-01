@@ -7,6 +7,7 @@ tags:
 categories:
   - Tutorial
 toc: true
+last_modified_at: 2022-07-31
 ---
 
 As of now, the Gentoo Handbook, which is the official Gentoo installation
@@ -14,13 +15,13 @@ guide, mainly focuses on steps to install a system based on OpenRC instead of
 systemd.  After all, as a project mainly maintained by Gentoo developers, it
 would be a surprise if Gentoo did not introduce OpenRC as the distribution's
 init system with primary support.  For people who want to use systemd on
-Gentoo, the Handbook does include a few instructions in itself, but it largely
+Gentoo, the Handbook does include some instructions in itself, but it sometimes
 asks the users to refer to the [standalone systemd
-article][gentoo-wiki-systemd].  In my opinion, that article is very
-comprehensive but is not well organized: commands that should be run during the
-installation process scatter around the entire article, making it easy to miss
-required steps.  Therefore, this article is created as my effort to come up
-with a clear and working procedure for getting systemd to work on Gentoo.
+article][gentoo-wiki-systemd] too.  In my opinion, that article is very
+comprehensive but is not well organized: steps that should be performed during
+the installation process scatter around the entire article, making it easy to
+miss required steps.  Therefore, this article is created as my effort to come
+up with a clear and working procedure for getting systemd to work on Gentoo.
 
 [gentoo-wiki-systemd]: https://wiki.gentoo.org/wiki/Systemd
 
@@ -30,8 +31,8 @@ The general installation steps of Gentoo are the same regardless of which init
 system is used, but there are some details that would change with the choice of
 init system.  Users who want to use systemd can follow all Handbook's
 instructions to install the operating system, but when it comes to a step in
-the Handbook that has extra comments, notes or remarks in this article, please
-pay attention to the relevalt information here.
+the Handbook for which this article has extra comments, notes or remarks,
+please pay attention to the relevant information here.
 
 ## Configuring the Kernel
 
@@ -53,36 +54,27 @@ and use an initramfs by default.
 
 ### Host and Domain Information
 
-For this part, the Handbook's instructions are all for OpenRC, so please ignore
-them.  For systemd, the way of editing the hostname when the system is not
-running is to edit the file `/etc/hostname` and put nothing but the desired
-hostname into the file.  Note that the `hostnamectl` command does not work in
-chroot environment.
+If the Handbook's instruction says that the `hostnamectl` command should be
+used, **do not follow it**.  Instead, set the hostname later when the
+`systemd-firstboot` command is being run (which is mentioned at the bottom of
+the *Configuring the system* chapter).
 
-### Configuring the Network
+This is because in the chroot environment, `hostnamectl` attempts to change the
+hostname for the *running host system* (e.g. the `livecd` system if the minimal
+installation CD or the LiveGUI image is used) rather than the new system that
+is chrooted into.  If the host system uses systemd, then its hostname will be
+subtlely altered in this way.  If it uses OpenRC (which is true for the minimal
+installation CD and the LiveGUI image), `hostnamectl` will exit with an error.
+
+### Network
 
 systemd has a component called `systemd-networkd` that already provides network
-interface management capabilities, so users can elect to use it directly
-without installing any other packages.  To use `systemd-networkd`, please
-ignore all Handbook instructions in this section and peruse the information
+interface management capabilities -- including DHCP, so users can elect to use
+it directly without installing any other packages.  To use `systemd-networkd`,
+please ignore all related Handbook instructions and peruse the information
 given [here][systemd-networkd].
 
 [systemd-networkd]: https://wiki.gentoo.org/wiki/Systemd#systemd-networkd
-
-### Automatically Start Networking at Boot
-
-If `systemd-networkd` is being used, please ignore this Handbook section too,
-and run the following command to start `systemd-networkd` and get network
-interfaces running at boot if it has not been executed before:
-
-```console
-# systemctl enable systemd-networkd.service
-```
-
-### Init and Boot Configuration
-
-As of now, the instructions in this section are all applicable to only OpenRC,
-so please ignore them for systemd.
 
 ## Installing Tools
 
@@ -129,34 +121,11 @@ Users who wish to install a cron daemon on systemd and use
 
 [systemd-cron]: https://wiki.gentoo.org/wiki/Systemd#Replacing_cron
 
-### Remote Access
-
-The Handbook only mentions the command to start `sshd` automatically upon
-system boot on OpenRC.  On systemd, the equivalent command is:
-
-```console
-# systemctl enable sshd.service
-```
-
 ### Installing a DHCP Client
 
-`systemd-networkd` has a built-in DHCP client, so there is no need to install a
+If `systemd-networkd` has been chosen for network interface management, then
+because it already has a built-in DHCP client, it is not necessary to install a
 standalone one.
-
-## Before Rebooting Into the Installed System
-
-At the end of system installation, please make sure to run the following
-commands before leaving the chroot environment:
-
-```console
-# systemd-machine-id-setup
-# systemctl preset-all --preset-mode=enable-only
-```
-
-The first command creates a machine ID that systemd journaling and
-`systemd-networkd` depend on.  The second command enables systemd units that
-should be enabled by default, some of which are vital to basic system
-functionality.
 
 ## Remarks to the systemd Article on Gentoo Wiki
 
@@ -180,5 +149,5 @@ If something like the following is shown, then the link has been established
 correctly, and there is no need to create it again:
 
 ```
-lrwxrwxrwx 1 root root 19 Nov 18 23:41 /etc/mtab -> ../proc/self/mounts
+lrwxrwxrwx 1 root root 17 Nov 18 23:41 /etc/mtab -> /proc/self/mounts
 ```
