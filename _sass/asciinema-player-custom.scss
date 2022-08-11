@@ -1,5 +1,11 @@
 $terminal-background-color: #121314;
 
+// Limit maximum width of players
+.asciinema-player-container {
+    margin: auto;
+    max-width: 596px;
+}
+
 // Adjust the style of selected text
 .asciinema-player *::selection {
     background-color: #ffffff;

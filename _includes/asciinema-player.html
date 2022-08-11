@@ -1,8 +1,8 @@
 {%- comment -%}
 
 This file inserts an asciinema player
-(https://github.com/asciinema/asciinema-player/blob/master/README.md) that
-plays the specified asciinema recording file.
+(https://github.com/asciinema/asciinema-player) that plays the specified
+asciinema recording file.
 
 It takes a 'name' argument for the relative path of the recording file to the
 resource path for the current page.
@@ -15,7 +15,7 @@ In addition to the 'name' parameter, the following 'include' parameters are
 honored by this file:
 - poster: the preview of the recording shown in the player. For more
   information about ways to specify the poster, see
-  (https://github.com/asciinema/asciinema-player/blob/master/README.md#poster).
+  (https://github.com/asciinema/asciinema-player/tree/v3.0.1#poster).
   Defaults to 'npt:0'.
 - theme: the color theme applied to the recording, defaults to 'tango'
 - font_size: the size of font shown in the player, defaults to 'small'
@@ -23,7 +23,7 @@ honored by this file:
 - start_at: the starting point of the playback in the player, defaults to 0
 
 More information about the values accepted by each parameter can be found in
-(https://github.com/asciinema/asciinema-player/blob/master/README.md#asciinema-player-element-attributes).
+(https://github.com/asciinema/asciinema-player/tree/v3.0.1#options).
 
 {%- endcomment -%}
 
@@ -31,11 +31,27 @@ More information about the values accepted by each parameter can be found in
 {%- include res-path.liquid -%}
 {%- endunless -%}
 
-<p><asciinema-player
-    src="{{ res_path }}/{{ include.name }}"
-    poster="{{ include.poster | default: 'npt:0' }}"
-    theme="{{ include.theme | default: 'tango' }}"
-    font-size="{{ include.font_size | default: 'small' }}"
-    speed="{{ include.speed | default: 1 }}"
-    start-at="{{ include.start_at | default: 0 }}"
-></asciinema-player></p>
+{%- unless asciinema_player_id -%}
+{%- assign asciinema_player_id = 0 -%}
+{%- endunless -%}
+
+<div
+    class="asciinema-player-container"
+    id="asciinema-player-{{ asciinema_player_id }}"
+></div>
+<script>
+    AsciinemaPlayer.create(
+        "{{ res_path }}/{{ include.name }}",
+        document.getElementById("asciinema-player-{{ asciinema_player_id }}"),
+        {
+            poster: "{{ include.poster | default: 'npt:0' }}",
+            theme: "{{ include.theme | default: 'tango' }}",
+            terminalFontSize: "{{ include.font_size | default: 'small' }}",
+            speed: "{{ include.speed | default: 1 }}",
+            startAt: "{{ include.start_at | default: 0 }}",
+        }
+    );
+</script>
+<p></p>
+
+{%- assign asciinema_player_id = asciinema_player_id | plus: 1 -%}
