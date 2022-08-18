@@ -155,12 +155,13 @@ html {
 
 .list__item {
     .page__meta, .comment__date {
-        font-size: 0.75em;
+        font-size: $type-size-6;
     }
 }
 
 div.highlighter-rouge, figure.highlight {
     line-height: unset;
+    margin-bottom: calc(4em / 3);
 
     // Increase contrast of selected text against unselected in code snippets
     *::selection {
@@ -172,7 +173,7 @@ div.highlighter-rouge, figure.highlight {
 h1, h2, h3, h4, h5, h6, strong, em, del {
     & > code {
         background: $code-background-color;
-        border-radius: 4px;
+        border-radius: $border-radius;
         font-size: $code-font-size;
         padding: 0.1em $code-padding-horizontal;
     }
@@ -271,7 +272,7 @@ figcaption {
 // Footer
 
 .page__footer {
-    font-size: 0.75em;
+    font-size: $type-size-6;
 
     footer {
         padding-left: 1rem;
@@ -309,7 +310,7 @@ figcaption {
     }
 
     ul {
-        padding-left: 12px;
+        padding-left: 0.75rem;
         margin-bottom: 0;
     }
 }
@@ -328,6 +329,7 @@ figure img {
 
 // Tables
 
+// Center tables
 table {
     display: revert;
     width: unset;
