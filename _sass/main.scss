@@ -67,12 +67,8 @@ $code-padding-horizontal: 0.375em !default;
         }
     }
 
-    li {
+    li:not(:last-child) {
         border-bottom: 1px solid $masthead-menu-border-color;
-
-        &:last-child {
-            border-bottom: none;
-        }
     }
 }
 
@@ -104,11 +100,10 @@ $code-padding-horizontal: 0.375em !default;
 .footer-block {
     flex: 1;
     margin-bottom: 16px;
-    margin-right: 16px;
     min-width: 240px;
 
-    &:last-of-type {
-        margin-right: revert;
+    &:not(:last-of-type) {
+        margin-right: 16px;
     }
 }
 
@@ -222,7 +217,10 @@ figcaption {
 
     button {
         padding: 0;
-        margin-left: 1rem;
+
+        &:not(:first-child) {
+            margin-left: 1rem;
+        }
     }
 
     .hidden-links {
