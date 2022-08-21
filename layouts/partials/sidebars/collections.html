@@ -1,0 +1,24 @@
+{{- $collection := partial "GetCollection.html" . }}
+{{- if $collection }}
+{{- $currentPage := . }}
+<div class="sidebar sticky">
+    <nav class="nav__list">
+        <div class="nav__title" style="padding-left: 0;">
+            <a href="{{ $collection.RelPermalink }}"
+               style="color: inherit;">
+            {{- $collection.Title -}}
+            </a>
+        </div>
+        <input id="ac-toc" name="accordion-toc" type="checkbox" />
+        <label for="ac-toc">{{ i18n "menuLabel" }}</label>
+        <ul class="nav__items">
+            {{- range $collection.Pages }}
+            {{- partial "sidebars/collections-pages.html" (dict
+                "currentPage" $currentPage
+                "this" .
+            )}}
+            {{- end }}
+        </ul>
+    </nav>
+</div>
+{{- end }}

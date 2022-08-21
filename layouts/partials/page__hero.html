@@ -1,0 +1,73 @@
+{{- $header := .Params.header }}
+{{- if $header }}
+{{- $overlayColor := $header.overlay_color }}
+{{- $overlayImage := $header.overlay_image }}
+
+{{- $overlayFilter := $header.overlay_filter }}
+{{- if $overlayFilter }}
+{{- if in $overlayFilter "gradient" }}
+{{- /* Use the value as-is */}}
+{{- else if in $overlayFilter "rgba" }}
+{{- $overlayFilter = printf "linear-gradient(%s, %s)"
+    $overlayFilter $overlayFilter }}
+{{- else }}
+{{- $overlayFilter = printf "rgba(0, 0, 0, %f)" $overlayFilter }}
+{{- $overlayFilter = printf "linear-gradient(%s, %s)"
+    $overlayFilter $overlayFilter }}
+{{- end }}
+{{- end }}
+
+{{- $imageDescription := $header.image_description | default .Title
+    | markdownify | plainify | htmlUnescape }}
+
+<div class="page__hero
+     {{- if or $overlayColor $overlayImage -}}
+     --overlay
+     {{- end -}}"
+     style="background-color: {{ $overlayColor | default "transparent" }};
+        {{- if $overlayImage }} background-image: {{ if $overlayFilter }}{{ safeCSS $overlayFilter }}, {{ end -}}
+        url('{{ relURL $overlayImage }}');
+        {{- end -}}">
+    {{- if or $overlayColor $overlayImage }}
+    <div class="wrapper">
+        <h1 id="page-title" class="page__title" itemprop="headline">
+            {{- markdownify .Title -}}
+        </h1>
+        {{- with .Params.tagline }}
+        <p class="page__lead">{{ markdownify . }}</p>
+        {{- else }}
+        {{- if $header.show_overlay_excerpt | default true }}
+        {{- with (.Description | default .Summary) }}
+        <p class="page__lead">{{ markdownify . }}</p>
+        {{- end }}
+        {{- end }}
+        {{- end }}
+
+        {{- partial "page__meta.html" . }}
+
+        {{- $ctaURL := $header.ctaURL }}
+        {{- if $ctaURL }}
+        <p><a href="{{ relURL $ctaURL }}"
+              class="btn btn--light-outline btn--large">
+            {{- $header.ctaLabel | default (i18n "moreLabel") }}
+        </a></p>
+        {{- end }}
+
+        {{- range $header.actions }}
+        <p><a href="{{ relURL .url }}"
+           class="btn btn--light-outline btn--large">
+            {{- .label | default (i18n "moreLabel") -}}
+        </a></p>
+        {{- end }}
+    </div>
+    {{- else }}
+    <img src="{{ $header.image }}" alt="{{ $imageDescription }}"
+         class="page__hero-image">
+    {{- end }}
+
+    {{- $caption := $header.caption | default false }}
+    {{- if $caption }}
+    <span class="page__hero-caption">{{ markdownify $caption }}</span>
+    {{- end }}
+</div>
+{{- end }}

@@ -1,0 +1,37 @@
+{{/*
+Provides an element that shows all terms in a taxonomy assigned to the current
+page in the context.
+
+Recognized parameters in .Scratch:
+- taxonomy: The name of the taxonomy to show in the element
+- iconClass: The class for the icon shown for the taxonomy
+*/}}
+
+{{- $taxonomy := .Scratch.Get "taxonomy" }}
+{{- $iconClass := .Scratch.Get "iconClass" }}
+
+{{- if index .Params $taxonomy }}
+{{- $taxonomyPage := urlize $taxonomy | printf "/%s" | .GetPage }}
+{{- $scratch := newScratch }}
+{{- range $taxonomyPage.Data.Terms }}
+{{- $scratch.SetInMap "taxonomyHomes" .Page.Title .Page.RelPermalink }}
+{{- end }}
+
+<p class="page__taxonomy">
+    <strong>
+        <i class="{{ $iconClass }}" aria-hidden="true"></i>
+        {{ $taxonomyPage.Title }}{{ i18n "punctuationColon" | htmlUnescape }}
+    </strong>
+    <span itemprop="keywords">
+        {{- range $i, $term := index .Params $taxonomy }}
+        {{- if gt $i 0 -}}
+            <span class="sep">
+                {{- i18n "punctuationCommaInList" | htmlUnescape -}}
+            </span>
+        {{- end }}
+        <a href="{{ index ($scratch.Get "taxonomyHomes") $term }}"
+           class="page__taxonomy-item p-category" rel="tag">{{ $term }}</a>
+        {{- end }}
+    </span>
+</p>
+{{- end }}

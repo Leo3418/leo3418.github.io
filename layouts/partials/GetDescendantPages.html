@@ -1,0 +1,14 @@
+{{/*
+For the page in the context, returns an array containing itself (if it is not
+a headless section's landing page) plus all its recursive descendant pages.
+*/}}
+
+{{- $pages := slice }}
+{{- if eq (.Params._build.list | default "always") "always" }}
+{{- $pages = $pages | append . }}
+{{- end }}
+
+{{- range .Pages }}
+{{- $pages = $pages | append (partialCached "GetDescendantPages.html" . .) }}
+{{- end }}
+{{- return $pages }}

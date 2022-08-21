@@ -1,0 +1,11 @@
+{{/*
+Reports an error pertaining to a missing argument.  Accepts a dictionary with
+at least the following keys:
+- sc: The shortcode object (referenced by '.' in a shortcode)
+- arg: A description of the missing argument
+*/}}
+
+{{- errorf (i18n "scErrNoArg" (dict
+    "sc" .sc
+    "arg" .arg
+)) .sc.Position }}

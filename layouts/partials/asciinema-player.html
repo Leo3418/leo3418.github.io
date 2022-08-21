@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="{{ relURL "css/asciinema-player.css" }}">
+{{- $style := resources.Get "sass/asciinema-player-custom.scss"
+    | resources.ToCSS | resources.Minify | resources.Fingerprint
+}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
+<script type="text/javascript" src="{{ relURL "js/asciinema-player.js" }}"></script>

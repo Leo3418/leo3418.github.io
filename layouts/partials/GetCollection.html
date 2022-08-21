@@ -1,0 +1,11 @@
+{{/*
+For the page in the context, returns its collection's home page if it is in a
+collection; otherwise, returns a false value.
+*/}}
+
+{{- $collection := false }}
+{{- with .CurrentSection.File }}
+{{- $collection = split .Dir "/" | first 2 | path.Join | printf "/%s"
+    | $.GetPage }}
+{{- end }}
+{{- return $collection }}

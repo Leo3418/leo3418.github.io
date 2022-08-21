@@ -1,0 +1,24 @@
+{{- $rssEnabled := .Site.Home.AlternativeOutputFormats.Get "RSS" }}
+
+{{- if or .Site.Menus.follow $rssEnabled }}
+<div class="page__footer-follow">
+    <ul class="social-icons">
+        <li><strong>{{ i18n "followLabel" }}</strong></li>
+
+    {{- range .Site.Menus.follow }}
+        <li><a href="{{ .URL }}" rel="nofollow noopener noreferrer">
+            <i class="{{ .Params.icon | default "fas fa-link" }}"
+               aria-hidden="true"></i>
+            {{ .Name }}
+        </a></li>
+    {{- end }}
+
+    {{- if $rssEnabled }}
+        <li><a href="{{ relref .  (dict "path" "/" "outputFormat" "rss") }}">
+            <i class="fas fa-fw fa-rss-square" aria-hidden="true"></i>
+            {{ i18n "feedLabel" }}
+        </a></li>
+    {{- end }}
+    </ul>
+</div>
+{{- end }}

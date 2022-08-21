@@ -1,104 +1,119 @@
 # `leo3418.github.io`
 
-This is the repository for [my personal site](https://leo3418.github.io/).
+This is the repository for [my personal site][site].
+
+[site]: https://leo3418.github.io/
 
 ## Technical Overview
 
-This site is based on [Jekyll](https://jekyllrb.com/).
+This site is based on [Hugo][hugo].  The theme it uses is a custom port of the
+[Minimal Mistakes][minimal-mistakes] Jekyll theme to Hugo.  Changes to the site
+are deployed to GitHub Pages automatically by a [GitHub Actions
+workflow][gh-actions].
 
-Although GitHub Pages offers direct Jekyll support, it does not allow use of
-unsupported plugins. Because this site uses unsupported plugins, it cannot be
-built automatically by GitHub Pages. Instead, the site must be built somewhere
-else, then the generated static files of the site can be deployed to GitHub
-Pages. The process of building and deploying the site is automated by a [GitHub
-Actions workflow](https://github.com/Leo3418/leo3418.github.io/actions).
+[hugo]: https://gohugo.io/
+[minimal-mistakes]: https://mmistakes.github.io/minimal-mistakes/
+[gh-actions]: https://github.com/Leo3418/leo3418.github.io/actions
 
 ## Directory Structure of Source Files
 
-The source files for this site are generally structured like a [basic Jekyll
-site](https://jekyllrb.com/docs/structure/) with a few variations.
+The source files for this site are organized in compliance with [Hugo's default
+directory structure for sites][dir-struct].  The custom Hugo templates this
+site uses (all of which are under the `layouts/` directory) also respect some
+special paths:
 
-- `assets/`: Assets
-  - `css/`: SCSS files used to generate this site's stylesheets
-  - `img/`: Images
-    - `collections/<collection-name>/<doc-name>/`: Images for a document in a
-      collection
-      - `<lang>/`: Localized images for the document
-    - `drafts/<post-name>/`: Images for a draft
-      - `<lang>/`: Localized images for the draft
-    - `posts/<year>-<month>-<day>-<post-name>/`: Images for a post
-      - `<lang>/`: Localized images for the post
-  - `js/`: Scripts for this site
-  - `res/`: Other types of resources
-    - `collections/<collection-name>/<doc-name>/`: Resources for a document in
-      a collection
-    - `drafts/<post-name>/`: Resources for a draft
-    - `posts/<year>-<month>-<day>-<post-name>/`: Resources for a post
-- `collections/`: Pages for collections, posts, and drafts
-  - `_drafts/<lang>/`: Drafts written in a language
-  - `_posts/<lang>/`: Posts written in a language
-  - `_<collection-name>/<lang>/`: Documents in a collection, in the specified
-    language
-- `_data/`: Data files
-  - `<lang>/`: Localized data files for a language
-    - `l10n.yml`: Properties for the language and localized site variables
-    - `strings.yml`: Translated strings
-- `_includes/`: Partials that can be included in other files, usually layouts
-- `_layouts/`: Templates that wrap posts
-- `pages/<lang>/`: Top-level pages for the specified language
-- `_sass/`: Sass partials to be included by the SCSS files
-- `theme-mod/`: Scripts and patches for modifying the theme this site uses
-- `_config.yml`: Jekyll configuration file
+- `assets/js/plugins/`: JavaScript plugins and libraries used by this site's
+  scripts
+- `static/css/syntax.css`: The [syntax highlighter stylesheet][syntax-hl-css]
+- `static/img/`, `static/res/`: Images and miscellaneous resource files for
+  this site
+  - For details about how these directories' contents are organized, please
+    read the comment at the top of file `layouts/shortcodes/static-path.html`
+    in this repository.
 
-## Generating Static Files
+[dir-struct]: https://gohugo.io/getting-started/directory-structure/#directory-structure-explained
+[syntax-hl-css]: https://gohugo.io/content-management/syntax-highlighting/#generate-syntax-highlighter-css
 
-Before building the site, make sure you have [installed Jekyll and
-Bundler](https://jekyllrb.com/docs/installation/) in your environment.
+## Generating the Site
 
-If this is the first time you build this site in your environment, then you
-should run `bundle` under the this repository's root directory to install this
-site's dependency gems. Also, you'd better run `bundle` again to update those
-dependencies if the `Gemfile.lock` file has been changed since your last run of
-the command.
+First, ensure the **extended version** of Hugo is installed.  The extended
+version is required because this site has SCSS files, which only the extended
+version can handle.  The installation instructions are available
+[here][hugo-install].
 
-To generate the static files, run `bundle exec jekyll build`. By default, the
-static files are in the `_site/` directory under this repository's root.
+To start a local development server for previewing, change the working
+directory to this repository's root, and run command `hugo server`.  By
+default, the site is accessible via `http://localhost:1313/`.
 
-To generate the files and view the site in a web browser, run `bundle exec
-jekyll serve`. By default, the site is accessible from
-`http://localhost:4000/`.
+To write the site's files to disk, run command `hugo`.  By default, the files
+are written to the `public/` directory under this repository's root.
 
-If the default Jekyll version in your environment matches the version used for
-this site specified in `Gemfile.lock`, then you can build and serve with
-`jekyll build` and `jekyll serve` respectively for shorter commands. You can
-compare those versions with the following commands:
-
-1. In a directory that is **not** the root of any Jekyll site, run this command
-   to retrieve the default Jekyll version:
-
-   ```console
-   $ jekyll -v
-   jekyll x.y.z
-   ```
-
-2. In the root of this repository, run this command to get the Jekyll version
-   used for this site:
-
-   ```console
-   $ grep -o "\sjekyll ([0-9]\+.[0-9]\+.[0-9])" Gemfile.lock
-    jekyll (x.y.z)
-   ```
-
-If the version numbers in the output of those commands are identical, then you
-can omit `bundle exec` in all `jekyll` commands you run for this site.
+[hugo-install]: https://gohugo.io/getting-started/installing/
 
 ## Reusing Contents in This Repository
 
-Feel free to reuse any files in this repository to build your own Jekyll site.
+Feel free to reuse any files under the these directories in this repository to
+build your own Hugo site:
+- `archetypes/`
+- `assets/`
+- `config/`
+- `i18n/`
+- `layouts/`
+- `static/css/`
+- `static/js/`
 
-Please also keep in mind that some contents used in the pages of this site,
-such as text and images, are provided under a certain license. Those contents
-are usually placed under the `assets/img/` and `collections/` directories. The
-licensing information for a content is indicated on the generated webpage. If
-you want to reuse any of those contents, please comply with the terms of the
-license.
+Note that some of these files come from other projects and are covered by
+certain license terms.  More details are given in the *License Information*
+section below.
+
+The majority of the content on this site's pages, such as text and images, are
+provided under a certain license. The content is usually placed under the
+`static/img/` and `content/` directories. The licensing information for a piece
+of content is indicated on the generated webpage.  If you want to reuse any
+content of such kind, please comply with the terms of the license.
+
+## Licensing Information
+
+This site uses SCSS files, JavaScript snippets, Hugo templates translated from
+Liquid snippets, HTML DOM definitions, and UI strings from Minimal Mistakes,
+which is copyright (C) 2013-2020 Michael Rose and contributors.  Its license
+can be found [here][mmistakes-license].
+
+This site uses templates derived from Hugo's built-in shortcodes.  Hugo is
+copyright (C) 2021 The Hugo Authors, and its license can be found
+[here][hugo-license].
+
+This site uses [asciinema player][asciinema-player], which is copyright (C)
+2011-2022 Marcin Kulik and stored at `static/css/asciinema-player.css` and is
+stored at `static/js/asciinema-player.js` in this repository.  Its license can
+be found [here][asciinema-player-license].
+
+This site uses [Breakpoint][breakpoint], which is copyright (C) 2012-2022 Sam
+Richard and others and is stored at
+`assets/sass/minimal-mistakes/vendor/breakpoint/` in this repository.  Its
+license can be found [here][breakpoint-license].
+
+This site uses [Gumshoe][gumshoe], which is copyright (C) Go Make Things, LLC
+and is stored at `assets/js/plugins/gumshoe.js` in this repository.  Its
+license can be found [here][gumshoe-license].
+
+This site uses [jQuery][jquery], which is copyright (C) OpenJS Foundation and
+other contributors and is stored at `static/js/jquery.slim.min.js` in this
+repository.  Its license can be found [here][jquery-license].
+
+This site uses [Susy][susy], which is copyright (C) 2017, Miriam Eric Suzanne
+and is stored at `assets/sass/minimal-mistakes/vendor/susy/` in this
+repository.  Its license can be found [here][susy-license].
+
+[asciinema-player]: https://github.com/asciinema/asciinema-player
+[asciinema-player-license]: https://github.com/asciinema/asciinema-player/blob/v3.0.1/LICENSE
+[breakpoint]: https://github.com/at-import/breakpoint
+[breakpoint-license]: https://github.com/at-import/breakpoint/blob/main/LICENSE
+[hugo-license]: https://github.com/gohugoio/hugo/blob/v0.101.0/LICENSE
+[gumshoe]: https://github.com/cferdinandi/gumshoe
+[gumshoe-license]: https://github.com/cferdinandi/gumshoe/blob/v5.1.1/LICENSE.md
+[jquery]: https://jquery.com/
+[jquery-license]: https://github.com/jquery/jquery/blob/3.6.0/LICENSE.txt
+[mmistakes-license]: https://github.com/mmistakes/minimal-mistakes/blob/4.24.0/LICENSE
+[susy]: https://www.oddbird.net/susy/
+[susy-license]: https://github.com/oddbird/susy/blob/master/LICENSE.txt

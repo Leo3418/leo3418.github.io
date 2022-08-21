@@ -1,0 +1,108 @@
+collections:
+  other: "系列文章"
+
+feedLabel:
+  other: "RSS 源"
+
+followLabel:
+  other: "关注："
+
+licenseCC:
+  other: "知识共享许可协议"
+
+licenseCC-BY-SA-4.0:
+  other: '此页面中的文本在<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.zh">知识共享 署名-相同方式共享 4.0 国际 协议</a>条款下提供。'
+
+menuLabel:
+  other: "系列目录"
+
+moreLabel:
+  other: "了解更多"
+
+noMoreArticles:
+  other: "已无更多文章"
+
+paginationAriaFirst:
+  other: "首页"
+
+paginationAriaLast:
+  other: "尾页"
+
+paginationAriaNext:
+  other: "下一页"
+
+paginationAriaPageNumber:
+  other: "第 {{ . }} 页"
+
+paginationAriaPrevious:
+  other: "上一页"
+
+paginationNext:
+  other: "下一页"
+
+paginationPrevious:
+  other: "上一页"
+
+permalink:
+  other: "永久链接"
+
+punctuationColon:
+  other: "："
+
+punctuationCommaInList:
+  other: "、"
+
+punctuationDash:
+  other: "&ndash;"
+
+punctuationEllipsis:
+  other: "……"
+
+readingTime:
+  one: "阅读时长：1 分钟"
+  other: "阅读时长：{{ .Count }} 分钟"
+
+recentPosts:
+  other: "最新文章"
+
+relatedLabel:
+  other: "您可能还想看"
+
+scErrNoArg:
+  other: "Shortcode 错误：{{ .sc.Name }}：缺失必需参数 {{ .arg }}，位于 %s"
+
+siteBuildStatus:
+  other: "构建状态"
+
+siteBuildTime:
+  other: '网站构建于 {{ .Format "2006-01-02 15:04:05 -07:00" }}'
+
+siteContentUpdateTime:
+  other: '内容更新于 {{ .Format "2006-01-02 15:04:05 -07:00" }}'
+
+sitePoweredBy:
+  other: "此网站由以下技术驱动："
+
+siteThemeDescription:
+  other: "基于 {{ . }} 魔改的自定义主题"
+
+skipContent:
+  other: "转到内容"
+
+skipFooter:
+  other: "转到底部"
+
+skipPrimaryNav:
+  other: "转到主导航栏"
+
+switchLanguage:
+  other: "切换语言"
+
+tocLabel:
+  other: "目录"
+
+toggleMenu:
+  other: "打开/关闭菜单"
+
+updated:
+  other: "更新时间："

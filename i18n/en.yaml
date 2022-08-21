@@ -1,0 +1,108 @@
+collections:
+  other: "Collections"
+
+feedLabel:
+  other: "Feed"
+
+followLabel:
+  other: "Follow:"
+
+licenseCC:
+  other: "Creative Commons License"
+
+licenseCC-BY-SA-4.0:
+  other: 'Text is available under the <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.'
+
+menuLabel:
+  other: "Toggle Menu"
+
+moreLabel:
+  other: "Learn More"
+
+noMoreArticles:
+  other: "No more articles"
+
+paginationAriaFirst:
+  other: "First Page"
+
+paginationAriaLast:
+  other: "Last Page"
+
+paginationAriaNext:
+  other: "Next Page"
+
+paginationAriaPageNumber:
+  other: "Page {{ . }}"
+
+paginationAriaPrevious:
+  other: "Previous Page"
+
+paginationNext:
+  other: "Next"
+
+paginationPrevious:
+  other: "Previous"
+
+permalink:
+  other: "Permalink"
+
+punctuationColon:
+  other: ":"
+
+punctuationCommaInList:
+  other: ","
+
+punctuationDash:
+  other: "&ndash;"
+
+punctuationEllipsis:
+  other: "&hellip;"
+
+readingTime:
+  one: "1 minute to read"
+  other: "{{ .Count }} minutes to read"
+
+recentPosts:
+  other: "Recent Posts"
+
+relatedLabel:
+  other: "You May Also Enjoy"
+
+scErrNoArg:
+  other: "Shortcode error: {{ .sc.Name }}: Missing value for required argument {{ .arg }} at %s"
+
+siteBuildStatus:
+  other: "Build status"
+
+siteBuildTime:
+  other: 'Site built on {{ .Format "2006-01-02 15:04:05 -07:00" }}'
+
+siteContentUpdateTime:
+  other: 'Content updated on {{ .Format "2006-01-02 15:04:05 -07:00" }}'
+
+sitePoweredBy:
+  other: "Powered by:"
+
+siteThemeDescription:
+  other: "Custom theme derived from {{ . }}"
+
+skipContent:
+  other: "Skip to content"
+
+skipFooter:
+  other: "Skip to footer"
+
+skipPrimaryNav:
+  other: "Skip to primary navigation"
+
+switchLanguage:
+  other: "Switch language"
+
+tocLabel:
+  other: "On This Page"
+
+toggleMenu:
+  other: "Toggle menu"
+
+updated:
+  other: "Updated:"

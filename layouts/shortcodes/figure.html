@@ -1,0 +1,62 @@
+{{/*
+A custom override of the built-in 'figure' shortcode which supports reading the
+image's URL from its inner content and specifying the <figure> element's
+'style' attribute's value.  As a result, the image's URL to be obtained from
+another shortcode.  With the built-in shortcode, which only accepts the image's
+URL via the 'src' parameter, this cannot be done because Hugo does not support
+supplying a shortcode parameter's value from another shortcode, hence this
+override is created.
+
+This shortcode is fully compatible with the built-in one and versatile.  When
+the inner content is present, it will always be used as the image URL,
+regardless of whether the 'src' parameter is specified; otherwise, the 'src'
+parameter's value is used, just like the built-in one.  It supports all the
+following styles of calls:
+- {{< figure >}} hugo.png {{< /figure >}}
+- {{< figure >}} {{< shortcode-returning-image-URL >}} {{< /figure >}}
+- {{< figure style="width: 75%;" >}} hugo.png {{< /figure >}}
+- {{< figure title="Hugo" >}} hugo.png {{< /figure >}}
+- {{< figure src="hugo.png" >}}
+- {{< figure src="hugo.png" style="width: 75%;" >}}
+- {{< figure src="this-is-ignored.png" >}} this-is-shown.png {{< /figure >}}
+
+For all other supported parameters, please read Hugo's documentation:
+https://gohugo.io/content-management/shortcodes/#figure
+
+This shortcode is modified from <https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/figure.html>.
+*/}}
+
+{{- $src := .Get "src" }}
+{{- with trim .Inner " \t\r\n" }}
+{{- if gt (len .) 0 }}{{ $src = . }}{{ end }}
+{{- end }}
+
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}
+    {{- with .Get "style" }} style="{{ safeCSS . }}"{{ end }}>
+    {{- if .Get "link" -}}
+        <a href="{{ .Get "link" }}"{{ with .Get "target" }} target="{{ . }}"{{ end }}{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+    {{- end -}}
+    <img src="{{ $src }}"
+         {{- if or (.Get "alt") (.Get "caption") }}
+         alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
+         {{- end -}}
+         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
+         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
+    /><!-- Closing img tag -->
+    {{- if .Get "link" }}</a>{{ end -}}
+    {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
+        <figcaption>
+            {{ with (.Get "title") -}}
+                <h4>{{ . }}</h4>
+            {{- end -}}
+            {{- if or (.Get "caption") (.Get "attr") -}}<p>
+                {{- .Get "caption" | markdownify -}}
+                {{- with .Get "attrlink" }}
+                    <a href="{{ . }}">
+                {{- end -}}
+                {{- .Get "attr" | markdownify -}}
+                {{- if .Get "attrlink" }}</a>{{ end }}</p>
+            {{- end }}
+        </figcaption>
+    {{- end }}
+</figure>

@@ -1,0 +1,416 @@
+/* Values */
+
+$code-font-size: 0.875em !default;
+$code-padding-horizontal: 0.375em !default;
+
+// The screen width threshold for mobile/desktop masthead layout divide
+$masthead-mobile: $small;
+
+/* Custom classes */
+
+// Masthead
+
+.nav-widgets {
+    display: flex;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-flex: 1;
+    flex: 1;
+
+    label {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+.nav-widget {
+    // Let children's 'position: absolute;' style be respected
+    position: relative;
+
+    &:not(:first-child) {
+        margin-left: 1rem;
+    }
+
+    // Let the <input> element fill the widget element
+    & .nav-toggle {
+        display: block;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        opacity: 0;
+
+        // Define an outline around each toggle for keyboard navigation
+        // since 'opacity: 0;' hides the browser's outline
+        &:focus-visible + label {
+            outline: 1px solid $masthead-link-color;
+            border-radius: $border-radius;
+        }
+
+        &:checked ~ .floating-menu {
+            visibility: visible;
+        }
+
+        // Add animations to icons in the masthead
+        & + label, &:hover + label {
+            .icon {
+                -webkit-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+
+        &:hover + label .icon {
+            color: $masthead-link-color-hover;
+        }
+    }
+}
+
+.greedy-nav .floating-menu {
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    top: 1.75em;
+    right: 0;
+    margin-top: 16px;
+    padding: 5px;
+    border: 1px solid $masthead-menu-border-color;
+    border-radius: $border-radius;
+    background: $masthead-background-color;
+    -webkit-box-shadow: 0 2px 4px 0 rgba(#000, 0.16),
+    0 2px 10px 0 rgba(#000, 0.12);
+    box-shadow: 0 2px 4px 0 rgba(#000, 0.16), 0 2px 10px 0 rgba(#000, 0.12);
+
+    a {
+        margin: 0;
+        padding: 10px 20px;
+        font-size: $type-size-5;
+
+        &:hover {
+            background: $navicon-link-color-hover;
+            color: $masthead-link-color-hover;
+        }
+    }
+
+    li:not(:last-child) {
+        border-bottom: 1px solid $masthead-menu-border-color;
+    }
+}
+
+// Intentionally increase specificity to override inherited styles
+nav.greedy-nav .navigation-links {
+    @include breakpoint($masthead-mobile) {
+        visibility: visible;
+        display: flex;
+        -webkit-box-pack: end;
+        justify-content: flex-end;
+        -webkit-box-flex: 1;
+        flex: 1;
+        overflow: hidden;
+
+        position: unset;
+        top: unset;
+        right: unset;
+        margin-top: unset;
+        padding: unset;
+        border: none;
+        background: none;
+        -webkit-box-shadow: unset;
+        box-shadow: unset;
+
+        a {
+            padding: unset;
+            margin: 0 1rem;
+
+            &:hover {
+                background: unset;
+            }
+        }
+
+        li:not(:last-child) {
+            border-bottom: revert;
+        }
+    }
+
+    @include breakpoint(max-width $masthead-mobile - 1px) {
+        a:before {
+            background: unset;
+        }
+    }
+}
+
+#greedy-nav__toggle, #greedy-nav__toggle-label {
+    @include breakpoint($masthead-mobile) {
+        display: none;
+    }
+}
+
+.lang-switcher {
+    li {
+        text-align: right;
+    }
+
+    .lang-option-active {
+        color: $masthead-link-color;
+        font-weight: bold;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+}
+
+// Footer
+
+.custom-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.footer-block {
+    flex: 1;
+    margin-bottom: 16px;
+    min-width: 240px;
+
+    &:not(:last-of-type) {
+        margin-right: 16px;
+    }
+}
+
+.footer-site-info .powered-by {
+    ul {
+        margin-top: 0;
+    }
+
+    ul, li {
+        margin-bottom: 0;
+    }
+}
+
+// Pagination
+
+.pagination {
+    .pagination-title, .pagination-no-title {
+        font-size: 0.75em;
+        font-weight: normal;
+    }
+
+    .pagination-no-title {
+        font-style: italic;
+    }
+}
+
+// Images
+
+p.half > img {
+    width: calc(50% - 0.5em);
+}
+
+p.third > img {
+    width: calc(33.3333% - 0.5em);
+}
+
+/* Custom styles */
+
+// Fonts
+
+html {
+    font-size: unset;
+}
+
+.list__item {
+    .page__meta, .comment__date {
+        font-size: $type-size-6;
+    }
+}
+
+.toc h2.nav__title {
+    border-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+
+div.highlighter-rouge, figure.highlight {
+    line-height: unset;
+    margin-bottom: calc(4em / 3);
+
+    // Increase contrast of selected text against unselected in code snippets
+    *::selection {
+        color: $base00;
+        background: $base05;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, strong, em, del {
+    & > code {
+        background: $code-background-color;
+        border-radius: $border-radius;
+        font-size: $code-font-size;
+        padding: 0.1em $code-padding-horizontal;
+    }
+}
+
+p, a, li, figcaption, td {
+    & > code {
+        font-size: $code-font-size;
+        padding-left: $code-padding-horizontal;
+        padding-right: $code-padding-horizontal;
+
+        &:before, &:after {
+            content: unset;
+        }
+    }
+}
+
+.notice, .notice--primary, .notice--info,
+.notice--warning, .notice--success, .notice--danger {
+    font-size: 0.875em !important;
+
+    div.highlighter-rouge, figure.highlight {
+        font-size: $code-font-size;
+    }
+}
+
+figcaption {
+    font-family: unset;
+    font-size: 0.875em;
+}
+
+// Masthead
+
+.masthead, .greedy-nav {
+    background: $masthead-background-color;
+}
+
+.masthead {
+    border-bottom: 1px solid $masthead-border-color;
+}
+
+.greedy-nav {
+    a, svg.icon {
+        color: $masthead-link-color;
+    }
+
+    button {
+        padding: 0;
+        margin-left: 1rem;
+    }
+
+    .hidden-links {
+        &:before, &:after {
+            display: none;
+        }
+    }
+
+    .icon {
+        width: 1.5em;
+        height: 1.5em;
+        top: 0;
+    }
+
+    .search__toggle {
+        color: revert;
+        height: unset;
+        margin-right: unset;
+    }
+
+    .visible-links a:before {
+        background: $masthead-link-color-hover;
+    }
+}
+
+// Header Links
+
+// Improve accessibility for users navigating with a keyboard
+.page__content {
+    h1, h2, h3, h4, h5, h6 {
+        .header-link:focus {
+            opacity: 1;
+        }
+    }
+}
+
+// Pagination
+
+.pagination {
+    display: flex;
+
+    .pagination--pager {
+        padding: 0.5em 0.5em;
+    }
+}
+
+// Footer
+
+.page__footer {
+    font-size: $type-size-6;
+
+    footer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+
+        @include breakpoint($large) {
+            padding-left: calc(#{$right-sidebar-width-narrow} + 1rem);
+            padding-right: calc(#{$right-sidebar-width-narrow} + 1rem);
+        }
+
+        @include breakpoint($x-large) {
+            max-width: $max-width;
+            padding-left: calc(#{$right-sidebar-width} + 1rem);
+            padding-right: calc(#{$right-sidebar-width} + 1rem);
+        }
+    }
+
+    .page__footer-follow li {
+        font-size: unset;
+    }
+}
+
+// Sidebar Navigation Menu
+
+.nav__list .nav__items {
+    font-size: unset;
+}
+
+.nav__list ul {
+    li {
+        font-size: 0.75rem;
+        line-height: normal;
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
+
+    ul {
+        padding-left: 0.75rem;
+        margin-bottom: 0;
+    }
+}
+
+// Images
+
+.page__content img:not(.align-left):not(.align-right) {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure img {
+    border-radius: unset;
+}
+
+// Tables
+
+// Center tables
+table {
+    display: revert;
+    width: unset;
+    margin-left: auto;
+    margin-right: auto;
+}

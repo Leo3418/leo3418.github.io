@@ -1,0 +1,12 @@
+{{/*
+Adds an anchor link next to each header in an article to enable convenient
+copying of a section's URL.
+*/}}
+
+{{- $anchor := safeURL .Anchor }}
+<h{{ .Level }} id="{{ $anchor }}">
+    {{ .Text | safeHTML }}
+    <a class="header-link" href="#{{ $anchor }}" title="{{ i18n "permalink" }}">
+        <i class="fas fa-link"></i>
+    </a>
+</h{{ .Level }}>

@@ -1,0 +1,41 @@
+{{/*
+Inserts an asciinema player <https://github.com/asciinema/asciinema-player>
+that plays the specified asciinema recording file.
+
+This is a closing shortcode; the content between the opening and closing
+shortcode tags are taken as the recording file's path.
+
+Named Parameters:
+- poster: The preview of the recording shown in the player; defaults to
+  'npt:0'.  For more information about ways to specify the poster, please
+  consult <https://github.com/asciinema/asciinema-player/tree/v3.0.1#poster>.
+- theme: The color theme applied to the recording; defaults to 'tango'
+- fontSize: The size of font shown in the player; defaults to 'small'
+- speed: The playback speed of the recording; defaults to 1
+- startAt: The starting point of the playback in the player; defaults to 0
+
+More information about the values accepted by each parameter can be found in
+<https://github.com/asciinema/asciinema-player/tree/v3.0.1#options>.
+*/}}
+
+{{- $asciinemaPlayerId := printf "asciicast-%d" .Ordinal }}
+<div class="asciinema-player-container" id="{{ $asciinemaPlayerId }}"></div>
+<script>
+    AsciinemaPlayer.create(
+        {{/* Hyphens <https://gohugo.io/templates/introduction/#whitespace>
+             are unfortunately not sufficient to trim whitespace here */ -}}
+        "{{ trim .Inner " \t\r\n" }}",
+        document.getElementById("{{ $asciinemaPlayerId }}"),
+        {
+            {{/* Avoid replacing '\r\n' with '\r\r\n' */ -}}
+            poster: "{{ .Get "poster"
+                | replaceRE "\r\n" "\n" | replaceRE "\n" "\r\n"
+                | default "npt:0" }}",
+            theme: "{{ .Get "theme" | default "tango" }}",
+            terminalFontSize: "{{ .Get "fontSize" | default "small" }}",
+            speed: "{{ .Get "speed" | default 1 }}",
+            startAt: "{{ .Get "startAt" | default 0 }}",
+        },
+    );
+</script>
+<p></p>

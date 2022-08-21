@@ -1,0 +1,19 @@
+<script src="{{ relURL "js/jquery.slim.min.js" }}"></script>
+<script src="{{ relURL "js/minimal-mistakes.js" }}"></script>
+{{- partial "load-js-plugins.html" }}
+<script src="{{ relURL "js/custom.js" }}"></script>
+
+{{- define "partials/load-js-plugins.html" }}
+{{- $pluginsPath := "assets/js/plugins" }}
+{{- $pluginsResPath := split $pluginsPath "/" | after 1 | path.Join }}
+{{- if and (fileExists $pluginsPath) (os.Stat $pluginsPath).IsDir }}
+    {{- range os.ReadDir $pluginsPath }}
+    {{- if not .IsDir }}
+    {{- $plugin := printf "%s/%s" $pluginsResPath .Name |
+        resources.Get | resources.Minify | resources.Fingerprint }}
+    <script src="{{ $plugin.RelPermalink }}"
+            integrity="{{ $plugin.Data.Integrity }}"></script>
+    {{- end }}
+    {{- end }}
+{{- end }}
+{{- end }}

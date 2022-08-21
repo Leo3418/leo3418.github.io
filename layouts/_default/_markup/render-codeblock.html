@@ -1,0 +1,23 @@
+{{- if transform.CanHighlight .Type }}
+    {{- $options := slice }}
+
+    {{- range $k, $v := .Options }}
+        {{- if eq (printf "%T" $v) "[][2]int" }}
+            {{/* 'hl_lines' option specified as an array */}}
+            {{- $hlLines := slice }}
+            {{- range $v }}
+                {{- $hlLines = $hlLines | append (seq
+                    (index . 0 | add 1) (index . 1 | add 1)) }}
+            {{- end }}
+            {{ $v = delimit $hlLines " " }}
+        {{- end }}
+
+        {{- $options = $options | append (print $k "=" $v) }}
+    {{- end }}
+
+    {{- highlight .Inner .Type (delimit $options ", ") }}
+{{- else }}
+    <div class="highlight"><pre class="chroma"><code>
+        {{- .Inner -}}
+    </code></pre></div>
+{{- end }}

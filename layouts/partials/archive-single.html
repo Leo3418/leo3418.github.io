@@ -1,0 +1,47 @@
+{{/*
+Provides an element that can be used in an archive for the current page in the
+context.
+
+Recognized parameters in .Scratch:
+- type: The type of the archive's layout ("grid", "list", etc.); defaults to
+  "list"
+*/}}
+
+{{- $type := .Scratch.Get "type" | default "list" }}
+
+{{- $teaser := .Params.header.teaser | default .Site.Params.teaser }}
+
+<div class="{{ $type }}__item">
+    <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+        {{- if and (eq $type "grid") (ne $teaser nil) }}
+        <div class="archive__item-teaser">
+            <img src="{{ relURL $teaser }}" alt="">
+        </div>
+        {{- end }}
+
+        <h3 class="archive__item-title no_toc" itemprop="headline">
+            <a href="{{ .RelPermalink }}" rel="permalink">
+                {{- markdownify .Title -}}
+            </a>
+        </h3>
+
+        {{- .Scratch.Set "type" $type }}
+        {{- partial "page__meta.html" . }}
+        {{- .Scratch.Delete "type" }}
+
+        {{- with .Description }}
+        <p class="archive__item-excerpt" itemprop="description">
+            {{ . }}
+        </p>
+        {{- end }}
+        {{- with .Summary }}
+        <p class="archive__item-excerpt"
+           {{- if not $.Description }} itemprop="description"{{ end }}>
+            {{ . }}
+            {{- if $.Truncated }}
+            {{ i18n "punctuationEllipsis" | htmlUnescape}}
+            {{- end }}
+        </p>
+        {{- end }}
+    </article>
+</div>

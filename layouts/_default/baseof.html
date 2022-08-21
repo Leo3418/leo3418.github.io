@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{{ printf `<!--
+    Customized theme based on Minimal Mistakes Jekyll Theme,
+    which is copyright (C) 2013-2020 Michael Rose and contributors
+    <https://github.com/mmistakes/minimal-mistakes>
+-->` | safeHTML }}
+
+<html lang="{{ .Language.Lang }}">
+    <head>
+        {{- /* Call the SEO partial here instead of in head.html, so head.html
+             adds no article-specific metadata and can thus be cached */}}
+        {{- partial "seo.html" . }}
+        {{- partialCached "head.html" . }}
+
+        {{- if .HasShortcode "asciicast" }}
+        {{- partialCached "asciinema-player.html" . }}
+        {{- end }}
+    </head>
+
+    <body class="layout--{{ block "layout" . }}{{ end }}">
+        {{- partialCached "skip-links.html" . }}
+        {{- partial "masthead.html" . }}
+
+        <div class="initial-content">
+            {{- block "main" . }}
+            {{- end }}
+        </div>
+
+        <div id="footer" class="page__footer"><footer>
+            <div class="custom-footer">
+                {{- partialCached "footer-site-info.html" . }}
+                {{- block "license" . }}
+                {{- end }}
+            </div>
+            {{- partialCached "footer-follow.html" . }}
+        </footer></div>
+
+        {{- partialCached "scripts.html" . }}
+    </body>
+</html>

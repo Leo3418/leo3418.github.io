@@ -1,0 +1,10 @@
+goldmark:
+  parser:
+    attribute:
+      block: true
+
+highlight:
+  noClasses: false
+
+tableOfContents:
+  endLevel: 6

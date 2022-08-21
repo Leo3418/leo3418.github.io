@@ -1,0 +1,2 @@
+collections: '/:sections[:2]/:slugorfilename'
+posts: '/:year/:month/:day/:slugorfilename'

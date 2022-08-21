@@ -1,0 +1,93 @@
+{{/*
+Generates a widget for navigating pages from a paginator.
+
+Recognized parameters in .Scratch:
+- paginator: The paginator object
+*/}}
+
+{{- $paginator := .Scratch.Get "paginator" }}
+
+{{- if gt $paginator.TotalPages 1 }}
+{{- $i18nAriaPrev := i18n "paginationAriaPrevious" }}
+{{- $i18nPrev := i18n "paginationPrevious" }}
+{{- $i18nAriaFirst := i18n "paginationAriaFirst" }}
+{{- $i18nAriaLast := i18n "paginationAriaLast" }}
+{{- $i18nAriaNext := i18n "paginationAriaNext" }}
+{{- $i18nNext := i18n "paginationNext" }}
+<nav class="pagination"><ul>
+    {{- if $paginator.HasPrev }}
+    <li><a href="{{ $paginator.Prev.URL }}" aria-label="{{ $i18nAriaPrev }}">
+        {{- $i18nPrev -}}
+    </a></li>
+    {{- else }}
+    <li><a href="#" aria-label="{{ $i18nAriaPrev }}"
+           class="disabled" aria-disabled="true">
+        <span aria-hidden="true">{{ $i18nPrev }}</span>
+    </a></li>
+    {{- end }}
+
+    {{- if eq $paginator.PageNumber 1 }}
+    <li><a href="#" aria-label="{{ $i18nAriaFirst }}"
+           class="disabled current" aria-disabled="true" aria-current="page">
+        1
+    </a></li>
+    {{- else }}
+    <li><a href="{{ $paginator.First.URL }}" aria-label="{{ $i18nAriaFirst }}">
+        1
+    </a></li>
+    {{- end }}
+
+    {{- $pageStart := 2 }}
+    {{- if gt $paginator.PageNumber 5 }}
+    {{- $pageStart = sub $paginator.PageNumber 2 }}
+    <li><a href="#" class="disabled" aria-disabled="true">
+        <span aria-hidden="true">&hellip;</span>
+    </a></li>
+    {{- end }}
+
+    {{- $pageEnd := sub $paginator.TotalPages 1 }}
+    {{- $pagesToEnd := sub $paginator.TotalPages $paginator.PageNumber }}
+    {{- if gt $pagesToEnd 4 }}
+    {{- $pageEnd = add $paginator.PageNumber 2 }}
+    {{- end }}
+
+    {{- if le $pageStart $pageEnd }}
+    {{- range $i := seq $pageStart $pageEnd }}
+    <li><a href="{{ (index $paginator.Pagers (sub $i 1)).URL }}"
+           aria-label="{{ i18n "paginationAriaPageNumber" $i }}"
+           {{- if eq $paginator.PageNumber $i }}
+           class="disabled current" aria-disabled="true" aria-current="page"
+           {{- end -}}
+    >{{- $i -}}</a></li>
+    {{- end }}
+    {{- end }}
+
+    {{- if and (gt $pagesToEnd 3) (lt (add $pageEnd 1) $paginator.TotalPages) }}
+    <li><a href="#" class="disabled" aria-disabled="true">
+        <span aria-hidden="true">&hellip;</span>
+    </a></li>
+    {{- end }}
+
+    {{- if eq $paginator.PageNumber $paginator.TotalPages }}
+    <li><a href="#" aria-label="{{ $i18nAriaLast }}"
+           class="disabled current" aria-disabled="true" aria-current="page">
+        {{- $paginator.PageNumber -}}
+    </a></li>
+    {{- else }}
+    <li><a href="{{ $paginator.Last.URL }}" aria-label="{{ $i18nAriaLast }}">
+        {{- $paginator.TotalPages -}}
+    </a></li>
+    {{- end }}
+
+    {{- if $paginator.HasNext }}
+    <li><a href="{{ $paginator.Next.URL }}" aria-label="{{ $i18nAriaNext }}">
+        {{- $i18nNext -}}
+    </a></li>
+    {{- else }}
+    <li><a href="#" aria-label="{{ $i18nAriaNext }}"
+           class="disabled" aria-disabled="true">
+        <span aria-hidden="true">{{ $i18nNext }}</span>
+    </a></li>
+    {{- end }}
+</ul></nav>
+{{- end }}

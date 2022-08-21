@@ -1,0 +1,10 @@
+includeNewer: true
+indices:
+  - name: 'keywords'
+    weight: 100
+  - name: 'tags'
+    weight: 80
+  - name: 'date'
+    weight: 10
+threshold: 80
+toLower: true

@@ -1,0 +1,26 @@
+<div class="footer-site-info footer-block">
+    <div class="build-info">
+        <p class="build-badge">
+            <a href="https://github.com/Leo3418/leo3418.github.io">
+                <img alt="{{ i18n "siteBuildStatus" }}"
+                     src="https://github.com/Leo3418/leo3418.github.io/workflows/Jekyll%20Site%20CI/badge.svg?branch=jekyll&event=push">
+            </a>
+        </p>
+        <p class="build-time">
+            {{ i18n "siteBuildTime" now }}
+        </p>
+        <p class="build-time">
+            {{ i18n "siteContentUpdateTime" .Site.LastChange }}
+        </p>
+    </div>
+    <div class="powered-by">
+        {{ i18n "sitePoweredBy" }}
+        <ul>
+            <li><a href="https://gohugo.io/">Hugo</a></li>
+            <li>
+                {{ i18n "siteThemeDescription" "<a href=\"https://mmistakes.github.io/minimal-mistakes/\">Minimal Mistakes</a>" | safeHTML }}
+            </li>
+            <li><a href="https://pages.github.com/">GitHub Pages</a></li>
+        </ul>
+    </div>
+</div>

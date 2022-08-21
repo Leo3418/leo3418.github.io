@@ -1,0 +1,37 @@
+// Footnote
+
+.footnote-ref {
+    @extend .footnote;
+}
+
+a.footnote-backref {
+    @extend a, .reversefootnote;
+}
+
+// Syntax highlighting
+
+div.highlight {
+    font-size: 0.75rem;
+    margin-bottom: calc(4em / 3);
+
+    & > pre.chroma, & > .chroma .lntable {
+        margin: 0;
+        padding: 1em;
+    }
+
+    & > .chroma {
+        border-radius: $border-radius;
+
+        & .lntable {
+            // Undo the style applied to <table> elements for centering them in
+            // minimal-mistakes-custom.scss, so code blocks do not overflow
+            display: block;
+        }
+    }
+
+    // Increase contrast of selected text against unselected
+    *::selection {
+        color: $base00;
+        background: $base05;
+    }
+}

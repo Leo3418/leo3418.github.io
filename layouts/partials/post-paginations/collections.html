@@ -1,0 +1,46 @@
+{{- $collection := partial "GetCollection.html" . }}
+
+{{- if $collection }}
+{{- $pages := partialCached "GetDescendantPages.html" $collection $collection }}
+
+{{- $numPages := len $pages }}
+{{- $prev := false }}
+{{- $next := false }}
+
+{{- range $i, $page := $pages }}
+{{- if eq $page $.Page }}
+{{- $prev = index $pages (sub $i 1) }}
+{{- $next = index $pages (add $i 1) }}
+{{- end }}
+{{- end }}
+
+<nav class="pagination">
+    {{- if $prev }}
+    {{- $prevTitle := markdownify $prev.Title }}
+    <a href="{{ $prev.RelPermalink }}" class="pagination--pager"
+       title="{{ $prevTitle }}">
+        <div class="pagination-guide-text">{{ i18n "paginationPrevious" }}</div>
+        <div class="pagination-title">{{ $prevTitle }}</div>
+    </a>
+    {{- else }}
+    <a href="#" class="pagination--pager disabled">
+        <div class="pagination-guide-text">{{ i18n "paginationPrevious" }}</div>
+        <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
+    </a>
+    {{- end }}
+
+    {{- if $next }}
+    {{- $nextTitle := markdownify $next.Title }}
+    <a href="{{ $next.RelPermalink }}" class="pagination--pager"
+       title="{{ $nextTitle }}">
+        <div class="pagination-guide-text">{{ i18n "paginationNext" }}</div>
+        <div class="pagination-title">{{ $nextTitle }}</div>
+    </a>
+    {{- else }}
+    <a href="#" class="pagination--pager disabled">
+        <div class="pagination-guide-text">{{ i18n "paginationNext" }}</div>
+        <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
+    </a>
+    {{- end }}
+</nav>
+{{- end }}

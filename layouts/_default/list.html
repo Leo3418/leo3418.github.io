@@ -1,0 +1,23 @@
+{{- define "layout" -}}
+archive
+{{- end -}}
+
+{{- define "main" }}
+<div id="main" role="main">
+    <div class="archive">
+        <h1 id="page-title" class="page__title">{{ .Title }}</h1>
+        <section class="page__content e-content" itemprop="text">
+            {{ .Content }}
+        </section>
+
+        {{- $entriesLayout := .Param "entries_layout" | default "list" }}
+        <div class="entries-{{ $entriesLayout }}">
+            {{- range .Pages }}
+            {{- .Scratch.Set "type" $entriesLayout }}
+            {{- partial "archive-single.html" . }}
+            {{- .Scratch.Delete "type" }}
+            {{- end }}
+        </div>
+    </div>
+</div>
+{{- end }}

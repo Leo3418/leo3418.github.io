@@ -1,0 +1,22 @@
+{{- define "layout" -}}
+archive
+{{- end -}}
+
+{{- define "main" }}
+<div id="main" role="main">
+    <div class="archive">
+        <h1 id="page-title" class="page__title">{{ .Title }}</h1>
+        {{ .Content }}
+
+        <ul class="taxonomy__index">
+            {{- range $i, $taxonomy := .Data.Terms.ByCount }}
+            {{- $termPage := $.GetPage $taxonomy.Term }}
+            <li><a href="{{ $termPage.RelPermalink }}">
+                <strong>{{ $termPage.Title }}</strong>
+                <span class="taxonomy__count">{{ $taxonomy.Count }}</span>
+            </a></li>
+            {{- end }}
+        </ul>
+    </div>
+</div>
+{{- end }}

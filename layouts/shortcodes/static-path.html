@@ -1,0 +1,110 @@
+{{/*
+Based on this site's convention for organizing static files, returns the full
+relative path of a static file to the site base URL.  The returned path's value
+depends on the current page's permalink, section, kind, and draft status.
+
+This site's static files are organized in the following convention:
+- The files are organized by their types under different directories in the
+  union of all static directories, like 'static/img/' for images, and
+  'static/res/' for miscellaneous resources.
+- Under each type's directory are static files of that type for the section of
+  this site whose name is the same as the directory, such as
+  'static/img/collections/' for all images used in the 'collections' section,
+  and 'static/res/posts/' for all resources used in the 'posts' section.
+
+With respect to the basic conventions above, the exact path relative to a
+section's directory is determined as follows:
+- For each post that is not a draft: The post's date in 'YYYY-MM-DD' format,
+  followed by a hyphen, and the last element of the post's permalink with any
+  extension stripped.  e.g. '2006/01/02/lorem-ipsum.html' ->
+  'static/img/posts/2006-01-02-lorem-ipsum/'
+- For each draft post: The string 'drafts/', followed by the last element of
+  the post's permalink with any extension stripped.  e.g.
+  '2006/01/02/lorem-ipsum.html' -> 'static/img/posts/drafts/lorem-ipsum/'
+- For each page in other sections: The page's permalink relative to the root of
+  the section it is in, with any extension stripped; for section landing pages
+  (whose '.Kind' is 'section'), '/index' will be appended to the path. e.g.
+  - 'collections/hugo/shortcode.html' ->
+    'static/img/collections/hugo/shortcode/'
+  - 'collections/hugo.html' -> 'static/img/collections/hugo/index/'
+
+Finally, under every path derived from the above rules, a directory whose name
+is the same as a locale's language code (i.e. what '.Language.Lang' returns)
+can be optionally created to store localized static files for the locale.  Any
+static files not in such a directory are unlocalized files that may be shared
+across all multilingual variants of the site.  For example:
+- 'static/img/posts/2006-01-02-lorem-ipsum/en/' contains the post's images
+  that are localized for English
+- 'static/img/posts/2006-01-02-lorem-ipsum/' is for images that can be shared
+  among all locales
+
+Named Parameters:
+- type: The static file's type, such as 'img' and 'res'
+- file: The static file's base name, like 'hugo.png'; optional -- if not
+  specified, the root path to all static files of the specified type (without
+  trailing slash) is returned instead
+- l10n: Optional -- if specified and not empty, causes a path to the file's
+  localized version for the current locale to be returned
+
+Positional Parameters:
+- 0: Equivalent to the 'type' named parameter
+- 1: Equivalent to the 'file' named parameter
+*/}}
+
+{{- $type := false }}
+{{- $file := "" }}
+{{- $l10nDir := false }}
+
+{{- if .IsNamedParams }}
+    {{- with .Get "type" }}
+        {{- $type = . }}
+    {{- else }}
+        {{- partial "sc-err/no-arg.html" (dict "sc" . "arg" "'type'") }}
+    {{- end }}
+
+    {{- with .Get "file" }}
+        {{- $file = printf "/%s" . }}
+    {{- end }}
+
+    {{- $l10nDir = (cond (gt (len (.Get "l10n")) 0)
+        (.Page.Language.Lang | printf "/%s") "") }}
+{{- else }}
+    {{- with .Get 0 }}
+        {{- $type = . }}
+    {{- else }}
+        {{- partial "sc-err/no-arg.html" (dict "sc" . "arg" "0 ('type')") }}
+    {{- end }}
+
+    {{- with .Get 1 }}
+        {{- $file = printf "/%s" . }}
+    {{- end }}
+
+    {{- $l10nDir = "" }}
+{{- end }}
+
+{{- with .Page }}
+    {{- if eq .Section "posts" }}
+        {{- relURL (printf "%s/posts/%s%s%s%s"
+            $type
+            (cond .Draft "drafts/" (.Date.Format "2006-01-02-"))
+            (path.BaseName .RelPermalink)
+            $l10nDir
+            $file
+        )}}
+    {{- else }}
+        {{- relURL (printf "%s%s/%s%s%s%s"
+            $type
+            (replace
+                (path.Dir .RelPermalink | absURL)
+                (printf "%s%s"
+                    (strings.TrimRight "/" .Site.BaseURL) .Site.LanguagePrefix)
+                ""
+                1
+            )
+            (path.BaseName .RelPermalink)
+            (cond .IsSection "/index" "")
+            $l10nDir
+            $file
+        )}}
+    {{- end }}
+{{- end }}

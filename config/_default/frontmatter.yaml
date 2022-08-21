@@ -1,0 +1,10 @@
+date: 
+  - ':filename' # Use Jekyll-style behavior for posts
+  - ':default'
+  - ':fileModTime'
+
+lastMod:
+  - 'lastmod'
+  - ':git'
+  - ':default'
+  - ':fileModTime'

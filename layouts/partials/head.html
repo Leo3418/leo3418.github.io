@@ -1,0 +1,26 @@
+<meta charset="utf-8">
+
+{{- with .Site.Home.AlternativeOutputFormats.Get "RSS" }}
+<link href="{{ .RelPermalink }}" type="application/atom+xml" rel="alternate"
+      title="{{ $.Site.Title }} {{ i18n "feedLabel" }}">
+{{- end }}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{{- $style := resources.Get "sass/main.scss"
+    | resources.ToCSS | resources.Minify | resources.Fingerprint
+}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
+{{- partial "load-css-if-present.html" "static/css/syntax.css" }}
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+{{- define "partials/load-css-if-present.html" }}
+{{- $pathInProject := . }}
+{{- if and
+    (fileExists $pathInProject) (os.Stat $pathInProject).Mode.IsRegular }}
+    {{- $href := split $pathInProject "/" | after 1 | path.Join | relURL }}
+    <link rel="stylesheet" href="{{ $href }}">
+{{- end }}
+{{- end }}
