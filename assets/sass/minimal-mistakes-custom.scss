@@ -168,6 +168,7 @@ nav.greedy-nav .navigation-links {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    column-gap: 16px;
 
     p {
         margin-top: 0;
@@ -179,10 +180,6 @@ nav.greedy-nav .navigation-links {
     flex: 1;
     margin-bottom: 16px;
     min-width: 240px;
-
-    &:not(:last-of-type) {
-        margin-right: 16px;
-    }
 }
 
 .footer-site-info .powered-by {
