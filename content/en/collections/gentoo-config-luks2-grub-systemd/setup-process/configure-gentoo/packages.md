@@ -40,7 +40,7 @@ dracut, or else the LUKS partition could not be unlocked during boot.
 GRUB 2.06 has [limited support for LUKS2][arch-wiki-grub-luks2].  Although code
 implementing partial LUKS2 support exists in this version, the bootloader files
 installed using the default procedure do not support LUKS2.  Argon2id is not
-support at all in this version either.
+supported at all in this version either.
 
 Luckily, after applying the following patches to GRUB 2.06, LUKS2 support can
 be added to the installed bootloader files automatically, and Argon2id is
