@@ -411,3 +411,24 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+
+// Breadcrumbs
+
+.breadcrumbs {
+    @include breakpoint($x-large) {
+        max-width: $max-width;
+    }
+
+    ol {
+        @include breakpoint($large) {
+            width: calc(100% - 2 * #{$right-sidebar-width-narrow});
+            float: unset;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @include breakpoint($x-large) {
+            width: calc(100% - 2 * #{$right-sidebar-width});
+        }
+    }
+}

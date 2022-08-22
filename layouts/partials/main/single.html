@@ -5,6 +5,10 @@
 {{- partial "page__hero.html" . }}
 {{- end }}
 
+{{- if .Param "breadcrumbs" }}
+{{- partial "breadcrumbs.html" . }}
+{{- end }}
+
 <div id="main" role="main">
     {{- $partialPath := printf "sidebars/%s.html" .Section }}
     {{- if templates.Exists (printf "partials/%s" $partialPath) }}

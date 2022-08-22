@@ -1,0 +1,53 @@
+<nav class="breadcrumbs">
+    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
+        {{- partial "breadcrumbs-items.html" (dict "p1" . "p2" .) }}
+    </ol>
+</nav>
+
+{{- define "partials/breadcrumbs-items.html" }}
+{{- /*
+Recursively generates breadcrumb items.  This template is taken from
+<https://gohugo.io/content-management/sections/#example-breadcrumb-navigation>.
+*/}}
+
+{{- if .p1.Parent }}
+{{- partial "breadcrumbs-items.html" (dict "p1" .p1.Parent "p2" .p2) }}
+{{- else if not .p1.IsHome }}
+{{- partial "breadcrumbs-items.html" (dict "p1" .p1.Site.Home "p2" .p2) }}
+{{- end }}
+
+{{- /*
+The landing page of a headless section does not necessarily have a title, and
+in this case, the headless section's parent page defines the section's title.
+To use the '.GetPage' function to get the parent page instead of the headless
+section's landing page, just append a dot to the argument, which works for any
+file extension.
+*/}}
+{{- $p1Displayed := .p1 }}
+{{- if eq (len .p1.Title) 0 }}
+{{- with .p1.File }}
+{{- $p1Displayed = ((path.Split .Path).Dir | strings.TrimSuffix "/"
+    | printf "%s." | $.p1.Site.GetPage) }}
+{{- end }}
+{{- end }}
+
+{{- if .p1.IsHome }}
+    {{- partial "breadcrumbs-item.html" $p1Displayed }}
+{{- else if not (and .p1.Parent.IsHome
+    (.p1.Section | in (slice "collections" "posts"))) }}
+    <span class="sep" aria-hidden="true">/</span>
+    {{- if eq .p1 .p2 }}
+    <li class="current">{{ $p1Displayed.Title }}</li>
+    {{- else }}
+    {{- partial "breadcrumbs-item.html" $p1Displayed }}
+    {{- end }}
+{{- end }}
+{{- end }}
+
+{{- define "partials/breadcrumbs-item.html" }}
+<li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+    <a href="{{ .RelPermalink }}" itemprop="item">
+        <span itemprop="name">{{ .Title }}</span>
+    </a>
+</li>
+{{- end }}
