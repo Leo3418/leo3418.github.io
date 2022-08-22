@@ -11,7 +11,7 @@ Recognized parameters in .Scratch:
 {{- $iconClass := .Scratch.Get "iconClass" }}
 
 {{- if index .Params $taxonomy }}
-{{- $taxonomyPage := urlize $taxonomy | printf "/%s" | .GetPage }}
+{{- $taxonomyPage := urlize $taxonomy | .Site.GetPage }}
 {{- $scratch := newScratch }}
 {{- range $taxonomyPage.Data.Terms }}
 {{- $scratch.SetInMap "taxonomyHomes" .Page.Title .Page.RelPermalink }}

@@ -28,7 +28,7 @@
                         </label>
                         <ul class="floating-menu navigation-links visible-links">
                             {{- range .Site.Menus.navigation }}
-                            {{- with .URL | printf "/%s" | $.GetPage }}
+                            {{- with ($.Site.GetPage .URL) }}
                             <li class="masthead__menu-item">
                                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
                             </li>

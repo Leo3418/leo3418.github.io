@@ -5,7 +5,6 @@ collection; otherwise, returns a false value.
 
 {{- $collection := false }}
 {{- with .CurrentSection.File }}
-{{- $collection = split .Dir "/" | first 2 | path.Join | printf "/%s"
-    | $.GetPage }}
+{{- $collection = split .Dir "/" | first 2 | path.Join | $.Site.GetPage }}
 {{- end }}
 {{- return $collection }}
