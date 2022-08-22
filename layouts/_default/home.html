@@ -10,10 +10,8 @@ home
 
         <h2 class="archive__subtitle">{{ i18n "collections" }}</h2>
         <ul>
-            {{- range where .Site.Pages "IsSection" true }}
-            {{- if eq .Parent (.GetPage "/collections") }}
+            {{- range (.GetPage "/collections").Pages }}
             <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-            {{- end }}
             {{- end }}
         </ul>
 
