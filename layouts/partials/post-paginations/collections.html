@@ -23,7 +23,8 @@
         <div class="pagination-title">{{ $prevTitle }}</div>
     </a>
     {{- else }}
-    <a href="#" class="pagination--pager disabled">
+    <a href="#" class="pagination--pager disabled" aria-disabled="true"
+       aria-label="{{ i18n "paginationAriaPrevious" }}">
         <div class="pagination-guide-text">{{ i18n "paginationPrevious" }}</div>
         <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
     </a>
@@ -37,7 +38,8 @@
         <div class="pagination-title">{{ $nextTitle }}</div>
     </a>
     {{- else }}
-    <a href="#" class="pagination--pager disabled">
+    <a href="#" class="pagination--pager disabled" aria-disabled="true"
+       aria-label="{{ i18n "paginationAriaNext" }}">
         <div class="pagination-guide-text">{{ i18n "paginationNext" }}</div>
         <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
     </a>
