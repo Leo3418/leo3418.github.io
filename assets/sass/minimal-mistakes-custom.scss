@@ -101,8 +101,7 @@ $masthead-mobile: $small;
     }
 }
 
-// Intentionally increase specificity to override inherited styles
-nav.greedy-nav .navigation-links {
+.greedy-nav .navigation-links {
     @include breakpoint($masthead-mobile) {
         visibility: visible;
         display: flex;
@@ -136,8 +135,10 @@ nav.greedy-nav .navigation-links {
         }
     }
 
+    // When navigation links are collapsed into the menu,
+    // do not show the underscore when they are hovered over
     @include breakpoint(max-width $masthead-mobile - 1px) {
-        a:before {
+        .masthead__menu-item a:before {
             background: unset;
         }
     }
