@@ -80,7 +80,7 @@ which is copyright (C) 2013-2020 Michael Rose and contributors.  Its license
 can be found [here][mmistakes-license].
 
 This site uses templates derived from Hugo's built-in shortcodes.  Hugo is
-copyright (C) 2021 The Hugo Authors, and its license can be found
+copyright (C) 2021 The Hugo Authors.  Its license can be found
 [here][hugo-license].
 
 This site uses [asciinema player][asciinema-player], which is copyright (C)
