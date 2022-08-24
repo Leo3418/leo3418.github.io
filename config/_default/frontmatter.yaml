@@ -6,3 +6,7 @@ date:
 lastmod:
   - 'lastmod'
   - ':default'
+
+publishDate:
+  - ':default'
+  - ':filename' # Use Jekyll-style behavior for posts
