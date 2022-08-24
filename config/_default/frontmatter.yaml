@@ -6,6 +6,7 @@ date:
 lastmod:
   - 'lastmod'
   - ':default'
+  - ':fileModTime'
 
 publishDate:
   - ':default'
