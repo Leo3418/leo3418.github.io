@@ -3,8 +3,6 @@ date:
   - ':default'
   - ':fileModTime'
 
-lastMod:
+lastmod:
   - 'lastmod'
-  - ':git'
   - ':default'
-  - ':fileModTime'
