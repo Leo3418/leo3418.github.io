@@ -60,8 +60,7 @@
                         </label>
                         <ul class="floating-menu lang-switcher">
                             {{- range .Page.AllTranslations }}
-                            {{- $langName := .Language.LanguageName }}
-                            {{- if eq .Lang $.Site.Language.Lang }}
+                            {{- if eq .Language $.Site.Language }}
                             <li class="lang-option-active masthead__menu-item">
                                 <a aria-current="page" aria-disabled="true"
                                    href="#">
@@ -69,7 +68,7 @@
                             <li class="lang-option-inactive masthead__menu-item">
                                 <a href="{{ .RelPermalink }}">
                             {{- end }}
-                                    {{- $langName -}}
+                                    {{- .Language.LanguageName -}}
                                 </a>
                             </li>
                             {{- end }}
