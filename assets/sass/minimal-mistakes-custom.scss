@@ -391,6 +391,10 @@ figcaption {
     }
 }
 
+.nav__title a {
+    color: inherit;
+}
+
 // Images
 
 .page__content img:not(.align-left):not(.align-right) {
