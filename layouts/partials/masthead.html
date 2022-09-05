@@ -1,4 +1,6 @@
 {{- $mastheadTitle := .Site.Params.masthead_title | default .Site.Title }}
+{{- $i18nToggleMenu := i18n "toggleMenu" }}
+{{- $i18nSwitchLanguage := i18n "switchLanguage" }}
 
 <div class="masthead">
     <div class="masthead__inner-wrap">
@@ -23,8 +25,13 @@
                                id="greedy-nav__toggle"
                                aria-labelledby="greedy-nav__toggle-label">
                         <label id="greedy-nav__toggle-label"
-                               title="{{ i18n "toggleMenu" }}">
+                               title="{{ $i18nToggleMenu }}">
                             {{- partial "icons/greedy-nav-toggle.html" }}
+
+                            {{- /* For text-based web browsers */}}
+                            <span class="hidden">
+                                {{- $i18nToggleMenu -}}
+                            </span>
                         </label>
                         <ul class="floating-menu navigation-links visible-links">
                             {{- range .Site.Menus.navigation }}
@@ -43,8 +50,13 @@
                                id="lang-switcher-toggle"
                                aria-labelledby="lang-switcher-label">
                         <label id="lang-switcher-label"
-                               title="{{ i18n "switchLanguage" }}">
+                               title="{{ $i18nSwitchLanguage }}">
                             {{- partial "icons/lang-switcher-toggle.html" }}
+
+                            {{- /* For text-based web browsers */}}
+                            <span class="hidden">
+                                {{- $i18nSwitchLanguage -}}
+                            </span>
                         </label>
                         <ul class="floating-menu lang-switcher">
                             {{- range .Page.AllTranslations }}
