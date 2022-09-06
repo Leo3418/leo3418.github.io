@@ -8,7 +8,7 @@
 <html lang="{{ .Language.Lang }}">
     <head>
         {{- /* Call the SEO partial here instead of in head.html, so head.html
-             adds no article-specific metadata and can thus be cached */}}
+               adds no article-specific metadata and can thus be cached */}}
         {{- partial "seo.html" . }}
         {{- partialCached "head.html" . }}
 
