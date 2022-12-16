@@ -5,8 +5,72 @@ tags:
 categories:
   - 教程
 toc: true
-lastmod: 2022-04-07
+_build:
+  list: false
 ---
+
+{{< deprecated.inline >}}
+<div class="notice--warning">
+{{ print
+(printf "%s更新：\n" ("2022-12-15" | time.Format ":date_long"))
+`
+**本教程已过时。** 为响应 systemd 在 2023 年停止支持` " `/usr` " `未合并的系统的计划，Gentoo 已开始官方支持` " `/usr` " `合并。
+
+**因此，现在在 Gentoo 上合并` " `/usr` " `的话就无需再参考此教程了。** 根据情形的不同，目前推荐的合并` " `/usr` " `的操作也不同：
+
+- 如果要安装一个新的 Gentoo 系统，那么在选择 stage 压缩包时，选一个文件名中包含` " `mergedusr` " `字样的压缩包，然后按正常步骤安装系统即可。
+
+- 如果已经有了一个` " `/usr` " `分区尚未合并的 Gentoo 系统，那么可以直接使用 Gentoo 官方提供的` " `sys-apps/merge-usr` " `工具来完成合并。欲了解具体步骤，请参考相应的[新闻条目][news-usrmerge]和 [Gentoo Wiki 页面][wiki-merge-usr]（均为英文页面）。
+
+- 如果之前已经根据此教程完成了` " `/usr` " `合并，那么尽管理论上无须任何额外操作即可保持系统正常运行，但还是*推荐*执行下列操作：
+
+  1. 将系统配置文件（profile）切换至一个` " `merged-usr` " `配置文件。首先，可以用下列命令找出可供选择的配置文件：
+`
+"     ```console" `
+     $ eselect profile list | grep merged-usr
+`
+"     ```"
+`
+     然后，使用` " `eselect profile set` " `选择合适的配置文件。
+
+  2. 删除` " `/etc/portage/profile/use.mask` " `文件中的` " `split-usr` " `USE 标志。只要已经切换到了任意一个` " `merged-usr` " `配置文件，就可以从该文件中删除该 USE 标志了。
+
+  3. 如果之前执行过任何[*附加步骤*][additional-tasks]小节中列出的步骤，那么将相应的步骤复原（删除当时创建的新文件、撤销当时作出的配置改动）。
+
+  4. 如果当时合并` " `/usr` " `时采用的是[第一种方式][usr-merge-variant-1]，那么仍然*推荐*运行一下 ` " `sys-apps/merge-usr` " `。Gentoo 官方选用的是第二种方式，故如果在使用第一种方式合并后遇到任何问题，可能会不受官方支持。` "`merge-usr` " `可以将已通过第一种方式被合并的系统转为第二种方式：
+`
+"     ```console" `
+     $ ls -dl /sbin /usr/sbin
+     lrwxrwxrwx 1 root root    8 Dec 13  2020 /sbin -> usr/sbin
+     drwxr-xr-x 1 root root 6680 Nov 29 09:03 /usr/sbin
+     $ merge-usr --dryrun
+     WARNING: Already a symlink: '/bin'
+     WARNING: Already a symlink: '/sbin'
+     INFO: Migrating files from '/usr/sbin' to '/usr/bin'
+     INFO: No problems found for '/usr/sbin'
+     WARNING: Already a symlink: '/lib'
+     WARNING: Already a symlink: '/lib64'
+`
+"     ```"
+`
+     相比于在` " `/usr` " `尚未合并的系统上运行` " `merge-usr` " `，这种情况会导致一处不同：` " `/sbin` " `不会被改为指向` " `usr/bin` " `。不过这对系统正常运行应该没有任何影响，毕竟链接串起来后就成了` " `/sbin -> /usr/sbin -> /usr/bin`" `。如果介意的话，可以手动将` " `/sbin` " `改为指向` " `usr/bin`" `：
+`
+"     ```console" `
+     # rm /sbin && ln -s usr/bin /sbin
+`
+"     ```"
+`
+
+此教程会被保留，以作历史纪录。
+
+[news-usrmerge]: https://www.gentoo.org/support/news-items/2022-12-01-systemd-usrmerge.html
+[wiki-merge-usr]: https://wiki.gentoo.org/wiki/Merge-usr
+`
+(printf "[additional-tasks]: %s\n" (relref . "#附加步骤"))
+(printf "[usr-merge-variant-1]: %s\n" (relref . "#usr-merge-variant-1"))
+| markdownify }}
+</div>
+{{</ deprecated.inline >}}
 
 *`/usr` 合并*是指在诸如 GNU/Linux 等的遵循[文件系统层次结构标准（FHS）][fhs]的系统上，将 `/bin`、`/lib`、`/lib64` 和 `/sbin` 中的内容分别迁移至 `/usr/bin`、`/usr/lib`、`/usr/lib64` 和 `/usr/sbin` 中，然后把 `/bin`、`/lib`、`/lib64` 和 `/sbin` 改成指向 `/usr` 中同名目录的符号链接（symbolic link）。如果想了解有关 `/usr` 合并的更多信息，可以参阅 [freedesktop.org][freedesktop] 和 [Fedora Wiki][fedora] 中的相关页面（皆为英文页面）。
 
@@ -15,15 +79,9 @@ lastmod: 2022-04-07
 {{< date.inline >}}{{ "2022-04-07" | time.Format ":date_long" }}{{< /date.inline >}}更新：读了前两天 [LWN.net][lwn-debian] 上的一篇文章，了解到关于 Debian 目前合并 `/usr` 时出现的进退两难的窘境后，我发现我直接被打脸，一开始写这篇文章的时候不知怎么，竟然以为 Debian 已经完成 `/usr` 合并了。为了不掩盖我当时憨憨了的事实，特划掉 Debian，改为 Ubuntu。Ubuntu 作为一个 Debian 衍生发行版，居然比 Debian 先完成了 `/usr` 合并，也是有点意思。
 {.notice}
 
-而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接。虽说如此，Gentoo 应该还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE 标志][split-usr]。现在这个 USE 标志是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天 Gentoo 官方可以完全支持 `/usr` 合并了，那届时就可以让 `split-usr` 变成一个可选的 USE 标志。
+而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，~~更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接~~。虽说如此，Gentoo ~~应该~~还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE 标志][split-usr]。~~现在这个 USE 标志是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天~~ Gentoo 官方可以完全支持 `/usr` 合并了，那~~届时~~就可以让 `split-usr` 变成一个可选的 USE 标志。
 
-这篇文章将向您展示的是，在目前 Gentoo 官方尚未支持的情况下，如何合并 `/usr`。我的旨意并不是说 `/usr` 合并有很多好处，`/usr` 合并的优点也不在本文的讨论范围之内。这篇文章唯一的目的是给那些知道自己想要合并 `/usr`、却不知道该怎么弄的用户提供一个教程。
-
-虽然目前可以在 Gentoo 上合并 `/usr`，但请铭记，**目前 Gentoo 官方尚未支持 `/usr` 合并！** 如果您不擅长处理系统问题，尤其是和符号链接相关的问题的话，那么不推荐合并 `/usr`。
-{.notice--danger}
-
-目前已知有些软件包在 `/usr` 合并后的 Gentoo 系统上无法正常安装，例如 `dev-ml/dune`。此类安装问题通常需要修改软件包的 `ebuild` 来解决，因此除非您了解相关的流程，否则不建议合并 `/usr`。
-{.notice--danger}
+~~这篇文章将向您展示的是，在目前 Gentoo 官方尚未支持的情况下，如何合并 `/usr`。~~ 我的旨意并不是说 `/usr` 合并有很多好处，`/usr` 合并的优点也不在本文的讨论范围之内。这篇文章唯一的目的是给那些知道自己想要合并 `/usr`、却不知道该怎么弄的用户提供一个教程。
 
 [freedesktop]: https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
@@ -32,11 +90,11 @@ lastmod: 2022-04-07
 [lwn-debian]: https://lwn.net/SubscriberLink/890219/3ed11782cbc5bc24/
 [split-usr]: https://packages.gentoo.org/useflags/split-usr
 
-## 不同的 `/usr` 合并方法
+## 不同的 `/usr` 合并方式
 
 在开始前，有必要介绍一下目前 GNU/Linux 发行版中常见的两种不同的合并 `/usr` 的方式：
 
-1. 将 `/bin` 并入 `/usr/bin`、`/lib` 并入 `/usr/lib`、`/lib64` 并入 `/usr/lib64`、`/sbin` 并入 `/usr/sbin`。这是 Fedora 和 Debian 采用的方式。
+1. 将 `/bin` 并入 `/usr/bin`、`/lib` 并入 `/usr/lib`、`/lib64` 并入 `/usr/lib64`、`/sbin` 并入 `/usr/sbin`。这是 Fedora 和 ~~Debian~~ Ubuntu 采用的方式。
    {#usr-merge-variant-1}
 
    ```console
@@ -48,7 +106,7 @@ lastmod: 2022-04-07
    drwxr-xr-x 1 root root 7006 Dec 26 09:50 /usr/sbin
    ```
 
-2. 在上述合并的基础上，再将 `/usr/sbin` 并入 `/usr/bin`。Arch Linux 目前采用这种方式；从已经支持 `split-usr` USE 标志的 Gentoo 软件包 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 来看，Gentoo 应该也是准备采取这种方案。
+2. 在上述合并的基础上，再将 `/usr/sbin` 并入 `/usr/bin`。Arch Linux 目前采用这种方式；从已经支持 `split-usr` USE 标志的 Gentoo 软件包 [`sys-apps/baselayout` 的 `ebuild`][baselayout] 来看，Gentoo ~~应该~~也是~~准备~~采取这种方式。
    {#usr-merge-variant-2}
 
    ```console
@@ -60,10 +118,10 @@ lastmod: 2022-04-07
    lrwxrwxrwx 1 root root 3 Dec 13 14:11 /usr/sbin -> bin
    ```
 
-上面的命令输出只是用于演示两种不同的合并 `/usr` 方法下的 `/usr/sbin` 的区别，可能会与您实际遇到的目录布局有所偏差。
+上面的命令输出只是用于演示两种不同的合并 `/usr` 方式下的 `/usr/sbin` 的区别，可能会与您实际遇到的目录布局有所偏差。
 {.notice--info}
 
-本文将主要使用第一种方法，因为我用过 Fedora 和 Debian，对这种方法产生的文件系统布局更熟悉，而 Arch Linux 我还没用过。不过，即使您准备采取第二种方法，也可以参阅本教程。第二种是 Gentoo 合并 `/usr` 所计划采用的方式，因此使用该方法会稍微简单些，反倒是第一种方法略微复杂。如果这篇教程介绍的是完成一种更复杂的方案的步骤，那借助它来做一件更简单的事应该不在话下。虽说如此，您仍然需要能触类旁通，适当修改此教程中提到的命令，以满足您自己的情况和需求。
+本文将主要使用第一种方式，因为我用过 Fedora 和 ~~Debian~~ Ubuntu，对这种方式产生的文件系统布局更熟悉，而 Arch Linux 我还没用过。不过，即使您准备采取第二种方式，也可以参阅本教程。第二种是 Gentoo 合并 `/usr` 所~~计划~~采用的方式，因此使用该方式会稍微简单些，反倒是第一种方式略微复杂。如果这篇教程介绍的是完成一种更复杂的方式的步骤，那借助它来做一件更简单的事应该不在话下。虽说如此，您仍然需要能触类旁通，适当修改此教程中提到的命令，以满足您自己的情况和需求。
 
 [baselayout]: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192
 
@@ -98,7 +156,7 @@ lastmod: 2022-04-07
 
    {{< notice.inline >}}
    <div class="notice--primary" id="variant-2-usr-sbin">
-   <p>{{ "如果您准备采用[第二种 `/usr` 合并方案](#usr-merge-variant-2)，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接：" | markdownify }}</p>
+   <p>{{ "如果您准备采用[第二种 `/usr` 合并方式](#usr-merge-variant-2)，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接：" | markdownify }}</p>
 
    {{ highlight `livecd /mnt/gentoo # cd usr
 livecd /mnt/gentoo/usr # mv sbin/* bin
@@ -298,7 +356,7 @@ livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr
    livecd /mnt/gentoo # ln -s usr/sbin sbin
    ```
 
-   如果您准备采用[第二种 `/usr` 合并方案][variant-2]，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接。点击[此处][variant-2-usr-sbin]查看相关的命令。
+   如果您准备采用[第二种 `/usr` 合并方式][variant-2]，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接。点击[此处][variant-2-usr-sbin]查看相关的命令。
    {.notice--primary}
 
 4. 重启电脑，进入到您的系统中（不是启动盘）。只要您把 `/bin`、`/lib`、`/lib64` 和 `/sbin` 中的文件正确地复制到了 `/usr` 中、并正确地建立了符号链接，您的系统就应该能正常启动。

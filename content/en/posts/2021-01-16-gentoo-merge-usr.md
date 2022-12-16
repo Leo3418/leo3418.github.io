@@ -5,8 +5,97 @@ tags:
 categories:
   - Tutorial
 toc: true
-lastmod: 2022-04-07
+_build:
+  list: false
 ---
+
+{{< deprecated.inline >}}
+<div class="notice--warning">
+{{ print
+(printf "Update on %s:\n" ("2022-12-15" | time.Format ":date_long"))
+`
+**This tutorial is deprecated.**  Gentoo has started to officially support`
+" `/usr`-merged file system layout in response to systemd's plan to drop "
+`support for unmerged` " `/usr` " `in 2023.
+
+**There is no need to follow this tutorial to merge` " `/usr` " `anymore.**
+One of the following actions is recommended instead, depending on the
+situation:
+
+- Users performing a new Gentoo installation may choose a stage tarball whose
+  file name contains` " `mergedusr` to install a `/usr`-merged system."
+`
+- Users of an existing system with unmerged ` " `/usr` " `can use the new,
+  official` " `sys-apps/merge-usr` " `utility to carry out the merge.  More
+  instructions are available in [this news item][news-usrmerge] and [on Gentoo
+  Wiki][wiki-merge-usr].
+
+- Users who have followed this tutorial before to merge` " `/usr` " `are
+  *recommended*, but not necessarily required, to go through these steps:
+
+  1. Switch to a` " `merged-usr` " `profile.  Candidate profiles can be found
+     by running:
+`
+"     ```console" `
+     $ eselect profile list | grep merged-usr
+`
+"     ```"
+`
+     Then, use` " `eselect profile set` " `to select a proper profile.
+
+  2. Delete the` " `split-usr` " `USE flag from file`
+     " `/etc/portage/profile/use.mask`. " `It is no longer needed when a`
+     " `merge-usr` " `profile is selected.
+
+  3. If any tasks in the [*Additional Tasks*][additional-tasks] section below
+     were done, undo the changes by removing the relevant file and
+     configuration.
+
+  4. If the [first variant of` " `/usr` " `merge][usr-merge-variant-1] was
+     used, then running ` " `sys-apps/merge-usr` " `is still *recommended*.
+     Gentoo has officially adopted the second variant, so the first variant
+     might not receive official support when an issue occurs later.`
+     " `merge-usr` " `is able to convert the first variant to the second
+     variant:
+`
+"     ```console" `
+     $ ls -dl /sbin /usr/sbin
+     lrwxrwxrwx 1 root root    8 Dec 13  2020 /sbin -> usr/sbin
+     drwxr-xr-x 1 root root 6680 Nov 29 09:03 /usr/sbin
+     $ merge-usr --dryrun
+     WARNING: Already a symlink: '/bin'
+     WARNING: Already a symlink: '/sbin'
+     INFO: Migrating files from '/usr/sbin' to '/usr/bin'
+     INFO: No problems found for '/usr/sbin'
+     WARNING: Already a symlink: '/lib'
+     WARNING: Already a symlink: '/lib64'
+`
+"     ```"
+`
+     In this case, ` " `merge-usr` " `will not replace` " `/sbin` " `with a
+     symbolic link to` " `usr/bin` " `(it would if the system's` " `/usr` " `
+     was not merged), but this should not negatively affect system
+     functionality because the links are eventually chained together as`
+     " `/sbin -> /usr/sbin -> /usr/bin`." `  For those who want a direct link
+     instead, the target of` " `/sbin` " `can be manually changed to`
+     " `usr/bin`:" `
+`
+"     ```console" `
+     # rm /sbin && ln -s usr/bin /sbin
+`
+"     ```"
+`
+
+This tutorial is preserved for historical purposes.
+
+[news-usrmerge]: https://www.gentoo.org/support/news-items/2022-12-01-systemd-usrmerge.html
+[wiki-merge-usr]: https://wiki.gentoo.org/wiki/Merge-usr
+`
+(printf "[additional-tasks]: %s\n" (relref . "#additional-tasks"))
+(printf "[usr-merge-variant-1]: %s\n" (relref . "#usr-merge-variant-1"))
+| markdownify }}
+</div>
+{{</ deprecated.inline >}}
 
 The *`/usr` merge*, sometimes also known as *`/usr` move*, refers to a process
 on a [Filesystem Hierarchy Standard (FHS)][fhs] compliant system, which most
@@ -35,35 +124,22 @@ Ubuntu, as a Debian derivative, has accomplished the `/usr` merge even earlier
 than Debian.
 {.notice}
 
-Gentoo, being one of the few distributions that still do not use systemd as the
-default init system, is also absent from the group of distributions that have
-completed the `/usr` merge.  By default, in the root file system of a Gentoo
-installation, `/bin`, `/lib`, `/lib64` and `/sbin` are still standalone
-directories instead of symbolic links.  But judging from a [`split-usr` global
-Portage USE flag][split-usr], there might have already been plans to merge
-`/usr` in Gentoo.  As of the current revision of this post was published, the
-USE flag was forcibly declared, to indicate that `/bin`, `/lib`, `/lib64` and
-`/sbin` were still split from `/usr`; in the future, the USE flag might become
-optional when Gentoo is fully ready for the `/usr` merge.
+~~Gentoo, being one of the few distributions that still do not use systemd as
+the default init system, is also absent from the group of distributions that
+have completed the `/usr` merge.  By default, in the root file system of a
+Gentoo installation, `/bin`, `/lib`, `/lib64` and `/sbin` are still standalone
+directories instead of symbolic links.  But~~ judging from a [`split-usr`
+global Portage USE flag][split-usr], there might have already been plans to
+merge `/usr` in Gentoo.  At the time when the first revision of this post was
+published, the USE flag was forcibly declared, to indicate that `/bin`, `/lib`,
+`/lib64` and `/sbin` were still split from `/usr`; ~~in the future,~~ the USE
+flag might become optional when Gentoo is fully ready for the `/usr` merge.
 
-This article will show you how to merge `/usr` on a Gentoo installation now,
-when it is yet to be officially supported.  It is by no means suggesting that
+This article ~~will show you how to merge `/usr` on a Gentoo installation now,
+when it is yet to be officially supported.  It~~ is by no means suggesting that
 `/usr` split is a definitely beneficial decision, and the advantages of `/usr`
 merge are not the subject of discussion here.  The sole purpose of this post is
 to help people who are interested in making the merge to do it.
-
-Though it is possible, **merging `/usr` is not officially supported by Gentoo
-yet!** Unless you are somewhat confident in resolving arbitrary issues on your
-system, particularly those pertinent to system file paths and symbolic links,
-it is not advisable to merge `/usr` on Gentoo.
-{.notice--danger}
-
-It is already known that a few packages cannot be installed correctly on a
-Gentoo system with `/usr` merged, like `dev-ml/dune`.  Fixing those package
-installation issues will typically require you to modify the package's
-`ebuild`, so unless you know how to do this right, merging `/usr` is not a good
-idea.
-{.notice--danger}
 
 [freedesktop]: https://www.freedesktop.org/wiki/Software/systemd/TheCaseForTheUsrMerge/
 [fedora]: https://fedoraproject.org/wiki/Features/UsrMove#Detailed_Description
@@ -79,7 +155,7 @@ can be found in various GNU/Linux distributions:
 
 1. Merge `/bin` into `/usr/bin`, `/lib` into `/usr/lib`, `/lib64` into
    `/usr/lib64`, and `/sbin` into `/usr/sbin`.  This kind of merge is what
-   Fedora and Debian do.
+   Fedora and ~~Debian~~ Ubuntu do.
    {#usr-merge-variant-1}
 
    ```console
@@ -95,7 +171,10 @@ can be found in various GNU/Linux distributions:
    contents of `/usr/sbin` into `/usr/bin`.  Arch Linux merges `/usr` in this
    way, and from the [`ebuild` for Gentoo package
    `sys-apps/baselayout`][baselayout], which already supports the `split-usr`
-   USE flag, this is likely to be how Gentoo merges `/usr` too.
+   USE flag, this is ~~likely to be~~ how Gentoo merges `/usr` too.
+   (Update on {{< date.inline >}}{{ "2022-12-15" | time.Format ":date_long"
+   }}{{< /date.inline >}}: this is exactly how Gentoo merges `/usr` now that
+   the distribution officially supports it.)
    {#usr-merge-variant-2}
 
    ```console
@@ -114,13 +193,13 @@ the actual file system layout you might encounter.
 
 This article will mainly focus on the first way because the resulting merged
 file system layout is what I am personally more familiar with, and I prefer
-that layout because I have used Fedora and Debian, but not Arch Linux.  Even if
-you would like to perform the second type of merge, this should not matter too
-much because it is the way Gentoo devises. Doing the first type of merge, on
-the other hand, is actually a little more complicated because of this.  If I
-provide you a guide for a more difficult goal, then you should be able to use
-it to achieve an easier goal, though you might need to slightly change some
-commands for your special situation.
+that layout because I have used Fedora and ~~Debian~~ Ubuntu, but not Arch
+Linux.  Even if you would like to perform the second type of merge, this should
+not matter too much because it is the way Gentoo devises. Doing the first type
+of merge, on the other hand, is actually a little more complicated because of
+this.  If I provide you a guide for a more difficult goal, then you should be
+able to use it to achieve an easier goal, though you might need to slightly
+change some commands for your special situation.
 
 [baselayout]: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-apps/baselayout/baselayout-2.7.ebuild#n192
 
