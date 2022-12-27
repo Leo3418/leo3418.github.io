@@ -4,3 +4,8 @@ uglyurls: true # Use Jekyll-style URLs
 
 enableGitInfo: true
 enableInlineShortcodes: true
+
+cascade:
+  - _target:
+      path: '/posts/drafts/**'
+    draft: true
