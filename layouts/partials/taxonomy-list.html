@@ -20,13 +20,13 @@ Recognized parameters in .Scratch:
 <p class="page__taxonomy">
     <strong>
         <i class="{{ $iconClass }}" aria-hidden="true"></i>
-        {{ $taxonomyPage.Title }}{{ i18n "punctuationColon" | htmlUnescape }}
+        {{ $taxonomyPage.Title }}{{ i18n "punctuationColon" | safeHTML }}
     </strong>
     <span itemprop="keywords">
         {{- range $i, $term := index .Params $taxonomy }}
         {{- if gt $i 0 -}}
             <span class="sep">
-                {{- i18n "punctuationCommaInList" | htmlUnescape -}}
+                {{- i18n "punctuationCommaInList" | safeHTML -}}
             </span>
         {{- end }}
         <a href="{{ index ($scratch.Get "taxonomyHomes") $term }}"

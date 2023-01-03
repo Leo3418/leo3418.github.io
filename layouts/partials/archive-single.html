@@ -39,7 +39,7 @@ Recognized parameters in .Scratch:
            {{- if not $.Description }} itemprop="description"{{ end }}>
             {{ . }}
             {{- if $.Truncated }}
-            {{ i18n "punctuationEllipsis" | htmlUnescape }}
+            {{ i18n "punctuationEllipsis" | safeHTML }}
             {{- end }}
         </p>
         {{- end }}
