@@ -17,9 +17,8 @@ page, then include the collection's title in the page title
     | append ($collection.Title | markdownify | plainify | htmlUnescape) }}
 {{- end }}
 
-{{- $ogTitle := delimit $titleParts $titleDelimit $titleDelimit }}
-{{- $seoTitle := delimit
-    ($titleParts | append .Site.Title) $titleDelimit $titleDelimit }}
+{{- $ogTitle := delimit $titleParts $titleDelimit }}
+{{- $seoTitle := delimit ($titleParts | append .Site.Title) $titleDelimit }}
 
 {{- $canonicalURL := .Permalink }}
 
