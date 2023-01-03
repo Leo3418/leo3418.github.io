@@ -1,8 +1,7 @@
 {{- $titleParts := slice }}
 
 {{- with .Title }}
-{{- $titleParts = $titleParts
-    | append (. | markdownify | plainify | htmlUnescape) }}
+{{- $titleParts = $titleParts | append (. | markdownify | plainify) }}
 {{- end }}
 
 {{- /*
@@ -12,7 +11,7 @@ page, then include the collection's title in the page title
 {{- $collection := partial "GetCollection.html" . }}
 {{- if (and $collection (eq .Kind "page")) }}
 {{- $titleParts = $titleParts
-    | append ($collection.Title | markdownify | plainify | htmlUnescape) }}
+    | append ($collection.Title | markdownify | plainify) }}
 {{- end }}
 
 {{- $titleDelimiter := " - " }}
@@ -26,10 +25,10 @@ page, then include the collection's title in the page title
 
 {{- $seoDescription := .Description
     | default (printf "%s%s" .Summary (cond .Truncated
-        (printf " %s" (i18n "punctuationEllipsis" | htmlUnescape))
+        (printf " %s" (i18n "punctuationEllipsis"))
         ""
     ))
-    | markdownify | plainify | htmlUnescape }}
+    | markdownify | plainify }}
 
 {{- $header := .Params.header }}
 {{- $pageLargeImage := $header.og_image
@@ -48,7 +47,7 @@ page, then include the collection's title in the page title
 <meta property="og:locale" content="{{ replace .Language.Lang "-" "_" }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:title" content="{{ $ogTitle
-    | default (.Site.Title | markdownify | plainify | htmlUnescape) }}">
+    | default (.Site.Title | markdownify | plainify) }}">
 <meta property="og:url" content="{{ $canonicalURL }}">
 {{- if $pageLargeImage }}
 <meta property="og:image" content="{{ absURL $pageLargeImage }}">

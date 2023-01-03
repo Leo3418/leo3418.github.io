@@ -18,7 +18,7 @@
 {{- end }}
 
 {{- $imageDescription := $header.image_description | default .Title
-    | markdownify | plainify | htmlUnescape }}
+    | markdownify | plainify }}
 
 <div class="page__hero
      {{- if or $overlayColor $overlayImage -}}
