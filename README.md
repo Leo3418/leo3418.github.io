@@ -66,9 +66,9 @@ Note that some of these files come from other projects and are covered by
 certain license terms.  More details are given in the *License Information*
 section below.
 
-The majority of the content on this site's pages, such as text and images, are
+The majority of the content on this site's pages, such as text and images, is
 provided under a certain license. The content is usually placed under the
-`static/img/` and `content/` directories. The licensing information for a piece
+`content/` and `static/img/` directories. The licensing information for a piece
 of content is indicated on the generated webpage.  If you want to reuse any
 content of such kind, please comply with the terms of the license.
 
@@ -84,9 +84,9 @@ copyright (C) 2022 The Hugo Authors.  Its license can be found
 [here][hugo-license].
 
 This site uses [asciinema player][asciinema-player], which is copyright (C)
-2011-2022 Marcin Kulik and stored at `static/css/asciinema-player.css` and is
-stored at `static/js/asciinema-player.js` in this repository.  Its license can
-be found [here][asciinema-player-license].
+2011-2022 Marcin Kulik and is stored at `static/css/asciinema-player.css` and
+`static/js/asciinema-player.js` in this repository.  Its license can be found
+[here][asciinema-player-license].
 
 This site uses [Breakpoint][breakpoint], which is copyright (C) 2012-2022 Sam
 Richard and others and is stored at
