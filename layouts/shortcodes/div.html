@@ -1,0 +1,48 @@
+{{/*
+Renders Markdown content in a <div> element with customizable classes and
+ID.  This shortcode is useful for wrapping multiple paragraphs in a single
+element to apply style to them collectively based on the classes.
+
+This is a closing shortcode; the content between the opening and closing
+shortcode tags are taken as the Markdown content to render.
+
+Named Parameters:
+- class: Optional -- the classes for the <div> element, separated by space
+- id: Optional -- the ID for the <div> element
+
+Positional Parameters:
+- For each argument that starts with '.', the substring after the '.' will be
+  added to the list of classes for the <div> element
+- If any arguments start with '#', then the last of such arguments will be
+  selected, have the '#' prefix removed, and be used as the <div> element's ID
+- Arguments that start with any other character will be ignored
+*/}}
+
+{{- $class := false }}
+{{- $id := false }}
+
+{{- if .IsNamedParams }}
+    {{- with .Get "class" }}
+        {{- $class = . }}
+    {{- end }}
+    {{- with .Get "id" }}
+        {{- $id = . }}
+    {{- end }}
+{{- else }}
+    {{- $classList := slice }}
+
+    {{- range .Params }}
+        {{- if hasPrefix . "." }}
+            {{- $classList = $classList | append (strings.TrimPrefix "." .) }}
+        {{- else if hasPrefix . "#" }}
+            {{- $id = strings.TrimPrefix "#" . }}
+        {{- end }}
+    {{- end }}
+
+    {{- $class = delimit $classList " " }}
+{{- end }}
+
+<div{{ with $class }} class="{{ . }}"{{ end }}
+    {{- with $id }} id="{{ . }}"{{ end }}>
+    {{ markdownify .Inner -}}
+</div>
