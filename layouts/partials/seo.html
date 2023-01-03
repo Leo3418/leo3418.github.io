@@ -1,11 +1,25 @@
-{{- $seoTitle := false }}
+{{- $titleDelimit := printf " %s " (i18n "punctuationDash" | htmlUnescape) }}
+
+{{- $titleParts := slice }}
+
 {{- with .Title }}
-{{- $seoTitle = printf "%s %s %s"
-    (. | markdownify | plainify | htmlUnescape)
-    (i18n "punctuationDash" | htmlUnescape)
-    $.Site.Title
-}}
+{{- $titleParts = $titleParts
+    | append (. | markdownify | plainify | htmlUnescape) }}
 {{- end }}
+
+{{- /*
+If the current page is in a collection and is not the collection's landing
+page, then include the collection's title in the page title
+*/}}
+{{- $collection := partial "GetCollection.html" . }}
+{{- if (and $collection (eq .Kind "page")) }}
+{{- $titleParts = $titleParts
+    | append ($collection.Title | markdownify | plainify | htmlUnescape) }}
+{{- end }}
+
+{{- $ogTitle := delimit $titleParts $titleDelimit $titleDelimit }}
+{{- $seoTitle := delimit
+    ($titleParts | append .Site.Title) $titleDelimit $titleDelimit }}
 
 {{- $canonicalURL := .Permalink }}
 
@@ -27,7 +41,7 @@
     | default .Site.Params.og_image
     | default .Site.Params.teaser }}
 
-<title>{{ $seoTitle | default .Site.Title }}</title>
+<title>{{ $seoTitle }}</title>
 {{- if $seoDescription }}
 <meta name="description" content="{{- $seoDescription -}}">
 {{- end }}
@@ -35,8 +49,8 @@
 <meta property="og:type" content="{{ $ogType }}">
 <meta property="og:locale" content="{{ replace .Language.Lang "-" "_" }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
-<meta property="og:title" content="{{ .Title | default .Site.Title
-    | markdownify | plainify | htmlUnescape }}">
+<meta property="og:title" content="{{ $ogTitle
+    | default (.Site.Title | markdownify | plainify | htmlUnescape) }}">
 <meta property="og:url" content="{{ $canonicalURL }}">
 {{- if $pageLargeImage }}
 <meta property="og:image" content="{{ absURL $pageLargeImage }}">
