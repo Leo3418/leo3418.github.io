@@ -140,7 +140,7 @@ be unlocked using the passphrase; otherwise, the new settings are applied to
 any key slot that can be unlocked using the specified key file.
 
 The following commands set the number of iterations (i.e. time cost) to 4 and
-memory requirement to 128 MiB, which, at least on a dual core Intel Core
+memory requirement to 128 MiB, which, at least on a dual-core Intel Core
 i5-7200U dated from 2017, allow the LUKS partition to be unlocked in about 2
 seconds from GRUB and should still grant reasonable security:
 

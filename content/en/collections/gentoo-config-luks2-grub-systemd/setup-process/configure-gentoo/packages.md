@@ -77,23 +77,24 @@ arbitrary.
 
 To apply these patches to Gentoo's GRUB package -- `sys-boot/grub`, add them as
 [Portage user patches][gentoo-wiki-etc-portage-patches] to
-`/etc/portage/patches/sys-boot/grub-2.06`.  The following commands may be used
-to do this:
+`/etc/portage/patches/sys-boot/grub-2.06`.  Patches at this location are
+applied to all Gentoo revisions of GRUB 2.06 (`-r3`, `-r4`, etc.).  The
+following commands may be used to do this:
 
 {{< commands.inline >}}
 {{ $content := `# mkdir -p /etc/portage/patches/sys-boot/grub-2.06
 # cd /etc/portage/patches/sys-boot/grub-2.06
 ` }}
-{{ $patches := slice
+{{- $patches := slice
     .Page.Params.vars.memregion_patch
     .Page.Params.vars.argon2_patch
     .Page.Params.vars.aur_patch
 }}
-{{ range $patches }}
-{{ $url := printf "%s/%s" $.Page.Params.vars.patches_base_url . | absURL }}
-{{ $content = print $content "# curl -O " $url | println }}
-{{ end }}
-{{ highlight $content "console" }}
+{{- range $patches }}
+{{- $url := printf "%s/%s" $.Page.Params.vars.patches_base_url . | absURL }}
+{{- $content = print $content "# curl -O " $url | println }}
+{{- end }}
+{{- highlight $content "console" }}
 {{< /commands.inline >}}
 
 Readers who are interested in learning more about Portage's user patch feature
@@ -105,12 +106,13 @@ Because the patch set for Argon2 support modifies the file
 `grub-core/Makefile.core.def`, according to the [`sys-boot/grub`
 ebuild][ebuild-sys-boot:grub], the `GRUB_AUTOGEN` environment variable must be
 set.  **Otherwise, any builds of the package with the patch set applied would
-fail.**  The environment variable can be set exclusively for `sys-boot/grub` in
-file `/etc/portage/env/sys-boot/grub`:
+fail.**  The environment variable can be set exclusively for all Gentoo
+revisions of `sys-boot/grub-2.06` in file
+`/etc/portage/env/sys-boot/grub-2.06`:
 
 ```console
 # mkdir -p /etc/portage/env/sys-boot
-# echo 'GRUB_AUTOGEN=1' >> /etc/portage/env/sys-boot/grub
+# echo 'GRUB_AUTOGEN=1' >> /etc/portage/env/sys-boot/grub-2.06
 ```
 
 [arch-wiki-grub-luks2]: https://wiki.archlinux.org/title/GRUB#LUKS2
@@ -120,7 +122,7 @@ file `/etc/portage/env/sys-boot/grub`:
 [aur-git-grub-install-luks2-patch]: https://aur.archlinux.org/cgit/aur.git/tree/grub-install_luks2.patch?h=grub-improved-luks2-git&id=27612416769e544d2c08d29932fff69129cb143a
 [gentoo-wiki-etc-portage-patches]: https://wiki.gentoo.org/wiki//etc/portage/patches
 [portage-user-patches]: {{< relref "2021-03-01-portage-user-patches" >}}
-[ebuild-sys-boot:grub]: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.06-r2.ebuild?id=7bbb9e2ce52ffd701c05daa3752f1fe11ec72f27#n13
+[ebuild-sys-boot:grub]: https://gitweb.gentoo.org/repo/gentoo.git/tree/sys-boot/grub/grub-2.06-r4.ebuild?id=56e6e30263e56771de876c0e053561a54fd19ed1#n13
 
 ## New Installation Only: Initialize Portage
 

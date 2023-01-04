@@ -12,8 +12,8 @@ The goal assumed by this tutorial is to set up a Gentoo system with the
 following configuration:
 
 - A UEFI-based system with an **EFI system partition**.  Throughout this
-  tutorial, `/dev/sda1` will be used to identify this partition.  The actual
-  block device for the EFI system partition may be different, e.g. `/dev/sdb1`,
+  tutorial, this partition will be identified as `/dev/sda1`.  The actual block
+  device for the EFI system partition may be different, e.g. `/dev/sdb1`,
   `/dev/nvme0n1p1`; this is normal and expected.  In this case, please replace
   `/dev/sda1` in the instructions with the actual device for the EFI system
   partition.
@@ -24,10 +24,10 @@ following configuration:
     This allows the kernel image and initramfs to be encrypted and full disk
     encryption to be implemented to the maximum possible extent.
 
-- A single partition to be used as the **LUKS partition**.  `/dev/sda2` will be
-  used to identify this partition.  The LUKS partition can be seen and
-  identified as a LUKS partition by some partition manager programs even when
-  it is locked.
+- A single partition to be used as the **LUKS partition**.  Throughout this
+  tutorial, it will be identified as `/dev/sda2`.  The LUKS partition can be
+  seen and identified as a LUKS partition by some partition manager programs
+  even when it is locked.
   - The LUKS version to be used will obviously be **LUKS2**.
   - The PBKDF (Password-Based Key Derivation Function) of *all* unlock keys
     will be [**Argon2id**][wikipedia-argon2].
@@ -56,13 +56,33 @@ following configuration:
 
 [wikipedia-argon2]: https://en.wikipedia.org/wiki/Argon2
 
+{{<div class="notice--info">}}
+It should be possible to use OpenRC and/or genkernel instead of systemd and/or
+dracut and achieve an equivalent configuration, but use of these packages is
+out of this tutorial's scope.  Readers who want to use these packages should
+merely use this tutorial as a reference rather than follow it to the full
+extent, and they are recommended to consult these additional resources:
+
+- For OpenRC:
+  - [Instructions to automatically unlock a LUKS partition on boot on Gentoo
+    Wiki][gentoo-wiki-dm-crypt]
+- For genkernel:
+  - [Instructions to enable LUKS support for initramfs on Gentoo
+    Wiki][gentoo-wiki-fde-genkernel]
+  - [The main *genkernel* article on Gentoo Wiki][gentoo-wiki-genkernel]
+
+[gentoo-wiki-dm-crypt]: https://wiki.gentoo.org/wiki/Dm-crypt#Automate_mounting_encrypted_file_systems
+[gentoo-wiki-fde-genkernel]: https://wiki.gentoo.org/wiki/Dm-crypt_full_disk_encryption#Genkernel
+[gentoo-wiki-genkernel]: https://wiki.gentoo.org/wiki/Genkernel
+{{</div>}}
+
 ## Resulting Boot Process
 
 The boot process that the instructions in this tutorial are intended to achieve
 is described as follows:
 
 1. When GRUB starts, it shows the menu without asking for the passphrase.  This
-   will allow the user to enter the passphrase only when it is really needed.
+   will allow the user to not enter the passphrase until it is really needed.
    For example, booting an alternative operating system that is not on the LUKS
    partition (e.g. Microsoft Windows) does not require the passphrase for the
    LUKS partition; neither does using the "UEFI Firmware Settings" option to
