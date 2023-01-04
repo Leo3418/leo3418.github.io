@@ -7,58 +7,54 @@ categories:
 toc: true
 _build:
   list: false
+lastmod: 2022-12-15
 ---
 
-{{< deprecated.inline >}}
-<div class="notice--warning">
-{{ print
-(printf "Update on %s:\n" ("2022-12-15" | time.Format ":date_long"))
-`
-**This tutorial is deprecated.**  Gentoo has started to officially support`
-" `/usr`-merged file system layout in response to systemd's plan to drop "
-`support for unmerged` " `/usr` " `in 2023.
+{{<div class="notice--warning">}}
+Update on {{< date.inline "2022-12-15" >}}{{ .Get 0 | time.Format ":date_long"
+}}{{< /date.inline >}}:
 
-**There is no need to follow this tutorial to merge` " `/usr` " `anymore.**
-One of the following actions is recommended instead, depending on the
-situation:
+**This tutorial is deprecated.**  Gentoo has started to officially support
+`/usr`-merged file system layout in response to systemd's plan to drop support
+for unmerged `/usr` in 2023.
+
+**There is no need to follow this tutorial to merge `/usr` anymore.** One of
+the following actions is recommended instead, depending on the situation:
 
 - Users performing a new Gentoo installation may choose a stage tarball whose
-  file name contains` " `mergedusr` to install a `/usr`-merged system."
-`
-- Users of an existing system with unmerged ` " `/usr` " `can use the new,
-  official` " `sys-apps/merge-usr` " `utility to carry out the merge.  More
-  instructions are available in [this news item][news-usrmerge] and [on Gentoo
+  file name contains `mergedusr` to install a `/usr`-merged system.
+
+- Users of an existing system with unmerged `/usr` can use the new, official
+  `sys-apps/merge-usr` utility to carry out the merge.  More instructions are
+  available in [this news item][news-usrmerge] and [on Gentoo
   Wiki][wiki-merge-usr].
 
-- Users who have followed this tutorial before to merge` " `/usr` " `are
+- Users who have followed this tutorial before to merge `/usr` are
   *recommended*, but not necessarily required, to go through these steps:
 
-  1. Switch to a` " `merged-usr` " `profile.  Candidate profiles can be found
-     by running:
-`
-"     ```console" `
-     $ eselect profile list | grep merged-usr
-`
-"     ```"
-`
-     Then, use` " `eselect profile set` " `to select a proper profile.
+  1. Switch to a `merged-usr` profile.  Candidate profiles can be found by
+     running:
 
-  2. Delete the` " `split-usr` " `USE flag from file`
-     " `/etc/portage/profile/use.mask`. " `It is no longer needed when a`
-     " `merge-usr` " `profile is selected.
+     ```console
+     $ eselect profile list | grep merged-usr
+     ```
+
+     Then, use `eselect profile set` to select a proper profile.
+
+  2. Delete the `split-usr` USE flag from file `/etc/portage/profile/use.mask`.
+     It is no longer needed when a `merge-usr` profile is selected.
 
   3. If any tasks in the [*Additional Tasks*][additional-tasks] section below
      were done, undo the changes by removing the relevant file and
      configuration.
 
-  4. If the [first variant of` " `/usr` " `merge][usr-merge-variant-1] was
-     used, then running ` " `sys-apps/merge-usr` " `is still *recommended*.
-     Gentoo has officially adopted the second variant, so the first variant
-     might not receive official support when an issue occurs later.`
-     " `merge-usr` " `is able to convert the first variant to the second
-     variant:
-`
-"     ```console" `
+  4. If the [first variant of `/usr` merge][usr-merge-variant-1] was used, then
+     running `sys-apps/merge-usr` is still *recommended*.  Gentoo has
+     officially adopted the second variant, so the first variant might not
+     receive official support when an issue occurs later.  `merge-usr` is able
+     to convert the first variant to the second variant:
+
+     ```console
      $ ls -dl /sbin /usr/sbin
      lrwxrwxrwx 1 root root    8 Dec 13  2020 /sbin -> usr/sbin
      drwxr-xr-x 1 root root 6680 Nov 29 09:03 /usr/sbin
@@ -69,33 +65,26 @@ situation:
      INFO: No problems found for '/usr/sbin'
      WARNING: Already a symlink: '/lib'
      WARNING: Already a symlink: '/lib64'
-`
-"     ```"
-`
-     In this case, ` " `merge-usr` " `will not replace` " `/sbin` " `with a
-     symbolic link to` " `usr/bin` " `(it would if the system's` " `/usr` " `
-     was not merged), but this should not negatively affect system
-     functionality because the links are eventually chained together as`
-     " `/sbin -> /usr/sbin -> /usr/bin`." `  For those who want a direct link
-     instead, the target of` " `/sbin` " `can be manually changed to`
-     " `usr/bin`:" `
-`
-"     ```console" `
+     ```
+
+     In this case, `merge-usr` will not replace `/sbin` with a symbolic link to
+     `usr/bin` (it would if the system's `/usr` was not merged), but this
+     should not negatively affect system functionality because the links are
+     eventually chained together as `/sbin -> /usr/sbin -> /usr/bin`.  For
+     those who want a direct link instead, the target of `/sbin` can be
+     manually changed to `usr/bin`:
+
+     ```console
      # rm /sbin && ln -s usr/bin /sbin
-`
-"     ```"
-`
+     ```
 
 This tutorial is preserved for historical purposes.
 
 [news-usrmerge]: https://www.gentoo.org/support/news-items/2022-12-01-systemd-usrmerge.html
 [wiki-merge-usr]: https://wiki.gentoo.org/wiki/Merge-usr
-`
-(printf "[additional-tasks]: %s\n" (relref . "#additional-tasks"))
-(printf "[usr-merge-variant-1]: %s\n" (relref . "#usr-merge-variant-1"))
-| markdownify }}
-</div>
-{{</ deprecated.inline >}}
+[additional-tasks]: {{< relref "#additional-tasks" >}}
+[usr-merge-variant-1]: {{< relref "#usr-merge-variant-1" >}}
+{{</div>}}
 
 The *`/usr` merge*, sometimes also known as *`/usr` move*, refers to a process
 on a [Filesystem Hierarchy Standard (FHS)][fhs] compliant system, which most
@@ -114,14 +103,13 @@ of which were started by Red Hat's desire to shape all modern Linux-based
 systems at *their* discretion and [Lennart Poettering's support][0pointer-de],
 then made their debut in Fedora, and finally accepted by other distributions.
 
-Update on {{< date.inline >}}{{ "2022-04-07" | time.Format ":date_long" }}{{<
-/date.inline >}}: After reading the new, hot [LWN.net report][lwn-debian]
-covering the `/usr` merge dilemma Debian is still facing, I am perplexed by how
-I got the impression that Debian had completed the `/usr` merge when I wrote
-the initial version of this article.  To show what a silly mistake I made, I am
-crossing out Debian and replacing it with Ubuntu instead.  Interestingly,
-Ubuntu, as a Debian derivative, has accomplished the `/usr` merge even earlier
-than Debian.
+Update on {{< date.inline "2022-04-07" />}}: After reading the new, hot
+[LWN.net report][lwn-debian] covering the `/usr` merge dilemma Debian is still
+facing, I am perplexed by how I got the impression that Debian had completed
+the `/usr` merge when I wrote the initial version of this article.  To show
+what a silly mistake I made, I am crossing out Debian and replacing it with
+Ubuntu instead.  Interestingly, Ubuntu, as a Debian derivative, has
+accomplished the `/usr` merge even earlier than Debian.
 {.notice}
 
 ~~Gentoo, being one of the few distributions that still do not use systemd as
@@ -245,21 +233,18 @@ in the [Gentoo Handbook][handbook].
    livecd /mnt/gentoo # ln -s usr/sbin sbin
    ```
 
-   {{< notice.inline >}}
-   <div class="notice--primary" id="variant-2-usr-sbin">
-   <p>{{ print
-"If you wish to have the [second type of `/usr` merge](#usr-merge-variant-2), "
-"you should additionally move everything in `usr/sbin` into `usr/bin` and "
-"replace `usr/sbin` with a symbolic link to the `usr/bin` directory:"
-| markdownify }}</p>
+   {{<div class="notice--primary" id="variant-2-usr-sbin">}}
+   If you wish to have the [second type of `/usr` merge](#usr-merge-variant-2),
+   you should additionally move everything in `usr/sbin` into `usr/bin` and
+   replace `usr/sbin` with a symbolic link to the `usr/bin` directory:
 
-   {{ highlight `livecd /mnt/gentoo # cd usr
-livecd /mnt/gentoo/usr # mv sbin/* bin
-livecd /mnt/gentoo/usr # rmdir sbin
-livecd /mnt/gentoo/usr # ln -s bin sbin
-` "console" }}
-   </div>
-   {{< /notice.inline >}}
+   ```console
+   livecd /mnt/gentoo # cd usr
+   livecd /mnt/gentoo/usr # mv sbin/* bin
+   livecd /mnt/gentoo/usr # rmdir sbin
+   livecd /mnt/gentoo/usr # ln -s bin sbin
+   ```
+   {{</div>}}
 
    The result of this operation is something like the following.  Note that
    `bin`, `lib`, `lib64` and `sbin` are now symbolic links:
@@ -346,27 +331,24 @@ livecd /mnt/gentoo/usr # ln -s bin sbin
    If you run `find -L /usr -type l` again now, nothing should be printed,
    which indicates that all broken symbolic links have been fixed.
 
-   {{< notice.inline >}}
-   <div class="notice--success">
-   <p>{{ print
-"`find -L -type l` is the panacea for finding broken symbolic links. "
-"`find` is a basic but powerful command that is usually preinstalled on most "
-"GNU/Linux distributions.  There is no need to install other packages like "
-"`symlinks` for this purpose!"
-| markdownify }}</p>
+   {{<div class="notice--success">}}
+   `find -L -type l` is the panacea for finding broken symbolic links.
+   `find` is a basic but powerful command that is usually preinstalled on most
+   GNU/Linux distributions.  There is no need to install other packages like
+   `symlinks` for this purpose!
 
-   <p>{{ "The `find(1)` manual page says:" | markdownify }}</p>
+   The `find(1)` manual page says:
         
-   {{ highlight `        -type c
-               File is of type c:
+   ```
+           -type c
+                  File is of type c:
 
-               l      symbolic link; this is never true if the -L option or the
-                      -follow  option is in effect, unless the symbolic link is
-                      broken.  If you want to search for symbolic links when -L
-                      is in effect, use -xtype.
-` "plain" }}
-   </div>
-   {{< /notice.inline >}}
+                  l      symbolic link; this is never true if the -L option or the
+                         -follow  option is in effect, unless the symbolic link is
+                         broken.  If you want to search for symbolic links when -L
+                         is in effect, use -xtype.
+   ```
+   {{</div>}}
 
 5. Mask the `split-usr` USE flag, so packages can know the current system has
    its `/usr` merged if they support it.  Declaring `-split-usr` is not
@@ -457,38 +439,36 @@ livecd /mnt/gentoo/usr # ln -s bin sbin
    to omit it if you do not need it.
    {.notice--info}
 
-   {{< notice.inline >}}
-   <div class="notice--info">
-   <p>{{ print
-"Adding a backslash `\\` in front of `cp` ignores any alias set for `cp`. "
-"If you are using the Gentoo minimal installation CD image, the default alias "
-"for `cp` is `cp -i`, which lets `cp` ask for your confirmation on every file "
-"being overwritten." | markdownify }}</p>
+   {{<div class="notice--info">}}
+   Adding a backslash `\` in front of `cp` ignores any alias set for `cp`.
+   If you are using the Gentoo minimal installation CD image, the default alias
+   for `cp` is `cp -i`, which lets `cp` ask for your confirmation on every file
+   being overwritten.
 
-   {{ highlight `livecd ~ # alias cp
-alias cp='cp -i'
-` "console" }}
+   ```console
+   livecd ~ # alias cp
+   alias cp='cp -i'
+   ```
 
-   <p>{{ print
-"Using `\\cp` instead of `cp` ignores the alias.  Alternatively, you may "
-"also use `unalias cp` to remove that alias and continue to invoke `cp` "
-"without `\\` in front, or pipe in a lot of `y`'s with `yes | cp ...`."
-| markdownify }}</p>
+   Using `\cp` instead of `cp` ignores the alias.  Alternatively, you may
+   also use `unalias cp` to remove that alias and continue to invoke `cp`
+   without `\` in front, or pipe in a lot of `y`'s with `yes | cp ...`.
 
-   {{ highlight `livecd /mnt/gentoo # unalias cp
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination bin/* usr/bin
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib/* usr/lib
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib64/* usr/lib64
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination sbin/* usr/sbin
-` "console" }}
+   ```console
+   livecd /mnt/gentoo # unalias cp
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination bin/* usr/bin
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib/* usr/lib
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib64/* usr/lib64
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination sbin/* usr/sbin
+   ```
 
-   {{ highlight `livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination bin/* usr/bin
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib/* usr/lib
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib64/* usr/lib64
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr/sbin
-` "console" }}
-   </div>
-   {{< /notice.inline >}}
+   ```console
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination bin/* usr/bin
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib/* usr/lib
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib64/* usr/lib64
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr/sbin
+   ```
+   {{</div>}}
 
 3. Replace each of `bin`, `lib`, `lib64` and `sbin` with symbolic link to the
    directory under `usr` with the same name.

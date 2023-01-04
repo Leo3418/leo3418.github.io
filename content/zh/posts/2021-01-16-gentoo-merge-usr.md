@@ -7,39 +7,37 @@ categories:
 toc: true
 _build:
   list: false
+lastmod: 2022-12-15
 ---
 
-{{< deprecated.inline >}}
-<div class="notice--warning">
-{{ print
-(printf "%s更新：\n" ("2022-12-15" | time.Format ":date_long"))
-`
-**本教程已过时。** 为响应 systemd 在 2023 年停止支持` " `/usr` " `未合并的系统的计划，Gentoo 已开始官方支持` " `/usr` " `合并。
+{{<div class="notice--warning">}}
+{{< date.inline "2022-12-15" >}}{{ .Get 0 | time.Format ":date_long" }}{{< /date.inline >}}更新：
 
-**因此，现在在 Gentoo 上合并` " `/usr` " `的话就无需再参考此教程了。** 根据情形的不同，目前推荐的合并` " `/usr` " `的操作也不同：
+**本教程已过时。** 为响应 systemd 在 2023 年停止支持 `/usr` 未合并的系统的计划，Gentoo 已开始官方支持 `/usr` 合并。
 
-- 如果要安装一个新的 Gentoo 系统，那么在选择 stage 压缩包时，选一个文件名中包含` " `mergedusr` " `字样的压缩包，然后按正常步骤安装系统即可。
+**因此，现在在 Gentoo 上合并 `/usr` 的话就无需再参考此教程了。** 根据情形的不同，目前推荐的合并 `/usr` 的操作也不同：
 
-- 如果已经有了一个` " `/usr` " `分区尚未合并的 Gentoo 系统，那么可以直接使用 Gentoo 官方提供的` " `sys-apps/merge-usr` " `工具来完成合并。欲了解具体步骤，请参考相应的[新闻条目][news-usrmerge]和 [Gentoo Wiki 页面][wiki-merge-usr]（均为英文页面）。
+- 如果要安装一个新的 Gentoo 系统，那么在选择 stage 压缩包时，选一个文件名中包含 `mergedusr` 字样的压缩包，然后按正常步骤安装系统即可。
 
-- 如果之前已经根据此教程完成了` " `/usr` " `合并，那么尽管理论上无须任何额外操作即可保持系统正常运行，但还是*推荐*执行下列操作：
+- 如果已经有了一个 `/usr` 分区尚未合并的 Gentoo 系统，那么可以直接使用 Gentoo 官方提供的 `sys-apps/merge-usr` 工具来完成合并。欲了解具体步骤，请参考相应的[新闻条目][news-usrmerge]和 [Gentoo Wiki 页面][wiki-merge-usr]（均为英文页面）。
 
-  1. 将系统配置文件（profile）切换至一个` " `merged-usr` " `配置文件。首先，可以用下列命令找出可供选择的配置文件：
-`
-"     ```console" `
+- 如果之前已经根据此教程完成了 `/usr` 合并，那么尽管理论上无须任何额外操作即可保持系统正常运行，但还是*推荐*执行下列操作：
+
+  1. 将系统配置文件（profile）切换至一个 `merged-usr` 配置文件。首先，可以用下列命令找出可供选择的配置文件：
+
+     ```console
      $ eselect profile list | grep merged-usr
-`
-"     ```"
-`
-     然后，使用` " `eselect profile set` " `选择合适的配置文件。
+     ```
 
-  2. 删除` " `/etc/portage/profile/use.mask` " `文件中的` " `split-usr` " `USE 标志。只要已经切换到了任意一个` " `merged-usr` " `配置文件，就可以从该文件中删除该 USE 标志了。
+     然后，使用 `eselect profile set` 选择合适的配置文件。
+
+  2. 删除 `/etc/portage/profile/use.mask` 文件中的 `split-usr` USE 标志。只要已经切换到了任意一个 `merged-usr` 配置文件，就可以从该文件中删除该 USE 标志了。
 
   3. 如果之前执行过任何[*附加步骤*][additional-tasks]小节中列出的步骤，那么将相应的步骤复原（删除当时创建的新文件、撤销当时作出的配置改动）。
 
-  4. 如果当时合并` " `/usr` " `时采用的是[第一种方式][usr-merge-variant-1]，那么仍然*推荐*运行一下 ` " `sys-apps/merge-usr` " `。Gentoo 官方选用的是第二种方式，故如果在使用第一种方式合并后遇到任何问题，可能会不受官方支持。` "`merge-usr` " `可以将已通过第一种方式被合并的系统转为第二种方式：
-`
-"     ```console" `
+  4. 如果当时合并 `/usr` 时采用的是[第一种方式][usr-merge-variant-1]，那么仍然*推荐*运行一下 `sys-apps/merge-usr` 。Gentoo 官方选用的是第二种方式，故如果在使用第一种方式合并后遇到任何问题，可能会不受官方支持。`merge-usr` 可以将已通过第一种方式被合并的系统转为第二种方式：
+
+     ```console
      $ ls -dl /sbin /usr/sbin
      lrwxrwxrwx 1 root root    8 Dec 13  2020 /sbin -> usr/sbin
      drwxr-xr-x 1 root root 6680 Nov 29 09:03 /usr/sbin
@@ -50,27 +48,21 @@ _build:
      INFO: No problems found for '/usr/sbin'
      WARNING: Already a symlink: '/lib'
      WARNING: Already a symlink: '/lib64'
-`
-"     ```"
-`
-     相比于在` " `/usr` " `尚未合并的系统上运行` " `merge-usr` " `，这种情况会导致一处不同：` " `/sbin` " `不会被改为指向` " `usr/bin` " `。不过这对系统正常运行应该没有任何影响，毕竟链接串起来后就成了` " `/sbin -> /usr/sbin -> /usr/bin`" `。如果介意的话，可以手动将` " `/sbin` " `改为指向` " `usr/bin`" `：
-`
-"     ```console" `
+     ```
+
+     相比于在 `/usr` 尚未合并的系统上运行 `merge-usr` ，这种情况会导致一处不同： `/sbin` 不会被改为指向 `usr/bin` 。不过这对系统正常运行应该没有任何影响，毕竟链接串起来后就成了 `/sbin -> /usr/sbin -> /usr/bin`。如果介意的话，可以手动将 `/sbin` 改为指向 `usr/bin`：
+
+     ```console
      # rm /sbin && ln -s usr/bin /sbin
-`
-"     ```"
-`
+     ```
 
 此教程会被保留，以作历史纪录。
 
 [news-usrmerge]: https://www.gentoo.org/support/news-items/2022-12-01-systemd-usrmerge.html
 [wiki-merge-usr]: https://wiki.gentoo.org/wiki/Merge-usr
-`
-(printf "[additional-tasks]: %s\n" (relref . "#附加步骤"))
-(printf "[usr-merge-variant-1]: %s\n" (relref . "#usr-merge-variant-1"))
-| markdownify }}
-</div>
-{{</ deprecated.inline >}}
+[additional-tasks]: {{< relref "#附加步骤" >}}
+[usr-merge-variant-1]: {{< relref "#usr-merge-variant-1" >}}
+{{</div>}}
 
 *`/usr` 合并*是指在诸如 GNU/Linux 等的遵循[文件系统层次结构标准（FHS）][fhs]的系统上，将 `/bin`、`/lib`、`/lib64` 和 `/sbin` 中的内容分别迁移至 `/usr/bin`、`/usr/lib`、`/usr/lib64` 和 `/usr/sbin` 中，然后把 `/bin`、`/lib`、`/lib64` 和 `/sbin` 改成指向 `/usr` 中同名目录的符号链接（symbolic link）。如果想了解有关 `/usr` 合并的更多信息，可以参阅 [freedesktop.org][freedesktop] 和 [Fedora Wiki][fedora] 中的相关页面（皆为英文页面）。
 
@@ -154,17 +146,16 @@ _build:
    livecd /mnt/gentoo # ln -s usr/sbin sbin
    ```
 
-   {{< notice.inline >}}
-   <div class="notice--primary" id="variant-2-usr-sbin">
-   <p>{{ "如果您准备采用[第二种 `/usr` 合并方式](#usr-merge-variant-2)，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接：" | markdownify }}</p>
+   {{<div class="notice--primary" id="variant-2-usr-sbin">}}
+   如果您准备采用[第二种 `/usr` 合并方式](#usr-merge-variant-2)，您应该在此基础上，将 `usr/sbin` 中的所有内容移到 `usr/bin` 中，然后把 `usr/sbin` 替换成指向 `usr/bin` 的符号链接：
 
-   {{ highlight `livecd /mnt/gentoo # cd usr
-livecd /mnt/gentoo/usr # mv sbin/* bin
-livecd /mnt/gentoo/usr # rmdir sbin
-livecd /mnt/gentoo/usr # ln -s bin sbin
-` "console" }}
-   </div>
-   {{< /notice.inline >}}
+   ```console
+   livecd /mnt/gentoo # cd usr
+   livecd /mnt/gentoo/usr # mv sbin/* bin
+   livecd /mnt/gentoo/usr # rmdir sbin
+   livecd /mnt/gentoo/usr # ln -s bin sbin
+   ```
+   {{</div>}}
 
    如下所示，这样操作的结果是 `bin`、`lib`、`lib64` 和 `sbin` 变为符号链接：
 
@@ -236,22 +227,21 @@ livecd /mnt/gentoo/usr # ln -s bin sbin
 
    如果您现在再运行 `find -L /usr -type l` 的话，该命令应该不再输出任何内容，意味着所有损坏的符号链接都已被成功修复。
 
-   {{< notice.inline >}}
-   <div class="notice--success">
-   <p>{{ "实际上，`find -L -type l` 可以用来在各种情景下搜索损坏的符号链接。`find` 虽说是个很基础的命令，但是非常强大，在各路 GNU/Linux 发行版上基本也都是预装。因此，完全没有必要安装任何诸如 `symlinks` 的其它软件包来寻找损坏的符号链接。" | markdownify }}</p>
+   {{<div class="notice--success">}}
+   实际上，`find -L -type l` 可以用来在各种情景下搜索损坏的符号链接。`find` 虽说是个很基础的命令，但是非常强大，在各路 GNU/Linux 发行版上基本也都是预装。因此，完全没有必要安装任何诸如 `symlinks` 的其它软件包来寻找损坏的符号链接。
 
-   <p>{{ "`find(1)` 手册页面对此的描述如下：" | markdownify }}</p>
+   `find(1)` 手册页面对此的描述如下：
 
-   {{ highlight `        -type c
-               File is of type c:
+   ```
+           -type c
+                  File is of type c:
 
-               l      symbolic link; this is never true if the -L option or the
-                      -follow  option is in effect, unless the symbolic link is
-                      broken.  If you want to search for symbolic links when -L
-                      is in effect, use -xtype.
-` "plain" }}
-   </div>
-   {{< /notice.inline >}}
+                  l      symbolic link; this is never true if the -L option or the
+                         -follow  option is in effect, unless the symbolic link is
+                         broken.  If you want to search for symbolic links when -L
+                         is in effect, use -xtype.
+   ```
+   {{</div>}}
 
 5. 屏蔽 `split-usr` USE 标志，让支持区分 `/usr` 合并后的系统的软件包在构建时可以为合并后的文件系统进行构建。由于 `split-usr` 是强制启用的 USE 标志，仅仅声明 `-split-usr` 是不够的；您需要在 `/etc/portage/profile/use.mask` 中屏蔽 `split-usr。
    {#sys-inst-5}
@@ -321,30 +311,31 @@ livecd /mnt/gentoo/usr # ln -s bin sbin
    `cp` 的 `-v` 选项允许您查看复制进度。如果不需要，可以省略该选项。
    {.notice--info}
 
-   {{< notice.inline >}}
-   <div class="notice--info">
-   <p>{{ "在 `cp` 前面加一个反斜杠 `\\` 可以忽略为 `cp` 设置的别名。如果您使用的是 Gentoo 安装光盘映像，那么 `cp` 默认的别称是 `cp -i`；这个 `-i` 选项会导致 `cp` 在每次覆写文件前都要求您手动确认。" | markdownify }}</p>
+   {{<div class="notice--info">}}
+   在 `cp` 前面加一个反斜杠 `\` 可以忽略为 `cp` 设置的别名。如果您使用的是 Gentoo 安装光盘映像，那么 `cp` 默认的别称是 `cp -i`；这个 `-i` 选项会导致 `cp` 在每次覆写文件前都要求您手动确认。
 
-   {{ highlight `livecd ~ # alias cp
-alias cp='cp -i'
-` "console" }}
+   ```console
+   livecd ~ # alias cp
+   alias cp='cp -i'
+   ```
 
-   <p>{{ "如果使用 `\\cp` 而非 `cp`，就可以忽略该别名。您也可以用 `unalias cp` 移除该别名，然后不加 `\\`、正常调用 `cp`；也可以利用 `yes` 程序，使用 `yes | cp ... ` 向 `cp` 的标准输入传递一大堆 `y`，自动确认每个要覆写的文件。" | markdownify }}</p>
+   如果使用 `\cp` 而非 `cp`，就可以忽略该别名。您也可以用 `unalias cp` 移除该别名，然后不加 `\`、正常调用 `cp`；也可以利用 `yes` 程序，使用 `yes | cp ... ` 向 `cp` 的标准输入传递一大堆 `y`，自动确认每个要覆写的文件。
 
-   {{ highlight `livecd /mnt/gentoo # unalias cp
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination bin/* usr/bin
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib/* usr/lib
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib64/* usr/lib64
-livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination sbin/* usr/sbin
-` "console" }}
+   ```console
+   livecd /mnt/gentoo # unalias cp
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination bin/* usr/bin
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib/* usr/lib
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination lib64/* usr/lib64
+   livecd /mnt/gentoo # cp -rv --preserve=all --remove-destination sbin/* usr/sbin
+   ```
 
-   {{ highlight `livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination bin/* usr/bin
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib/* usr/lib
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib64/* usr/lib64
-livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr/sbin
-` "console" }}
-   </div>
-   {{< /notice.inline >}}
+   ```console
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination bin/* usr/bin
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib/* usr/lib
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination lib64/* usr/lib64
+   livecd /mnt/gentoo # yes | cp -rv --preserve=all --remove-destination sbin/* usr/sbin
+   ```
+   {{</div>}}
 
 3. 将 `bin`、`lib`、`lib64` 和 `sbin` 替换为指向 `usr` 下同名目录的符号链接。
 
