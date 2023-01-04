@@ -37,7 +37,7 @@
         <p class="page__lead">{{ markdownify . }}</p>
         {{- else }}
         {{- if $header.show_overlay_excerpt | default true }}
-        {{- with (.Description | default .Summary) }}
+        {{- with .Description | default .Summary }}
         <p class="page__lead">{{ markdownify . }}</p>
         {{- end }}
         {{- end }}

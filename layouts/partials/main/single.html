@@ -1,7 +1,7 @@
 {{- $header := .Params.header }}
 {{- $overlayColor := $header.overlay_color }}
 {{- $overlayImage := $header.overlay_image }}
-{{- if (or (or $overlayColor $overlayImage) $header.image)}}
+{{- if or (or $overlayColor $overlayImage) $header.image}}
 {{- partial "page__hero.html" . }}
 {{- end }}
 
@@ -73,7 +73,7 @@
     </article>
 
     {{- if .Param "related" }}
-    {{- with (.Site.RegularPages.Related . | first 4) }}
+    {{- with .Site.RegularPages.Related . | first 4 }}
     <div class="page__related">
         <h2 class="page__related-title">{{ i18n "relatedLabel" }}</h2>
         <div class="grid__wrapper">
