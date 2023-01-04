@@ -23,19 +23,19 @@ noMoreArticles:
   other: "No more articles"
 
 paginationAriaFirst:
-  other: "First Page"
+  other: "First page"
 
 paginationAriaLast:
-  other: "Last Page"
+  other: "Last page"
 
 paginationAriaNext:
-  other: "Next Page"
+  other: "Next page"
 
 paginationAriaPageNumber:
   other: "Page {{ . }}"
 
 paginationAriaPrevious:
-  other: "Previous Page"
+  other: "Previous page"
 
 paginationNext:
   other: "Next"
