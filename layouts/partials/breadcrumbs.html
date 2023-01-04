@@ -31,7 +31,7 @@
 
             {{- end }}
         {{- end }}
-        <li class="current" aria-current="page">{{ .Title }}</li>
+        <li class="current" aria-current="page">{{ markdownify .Title }}</li>
     </ol>
 </nav>
 {{- else }}
@@ -46,7 +46,7 @@
 {{- define "partials/breadcrumbs-item.html" }}
 <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
     <a href="{{ .RelPermalink }}" itemprop="item">
-        <span itemprop="name">{{ .Title }}</span>
+        <span itemprop="name">{{ markdownify .Title }}</span>
     </a>
 </li>
 {{- end }}
@@ -78,7 +78,9 @@ Recursively generates breadcrumb items.  This template is taken from
     (.p1.Section | in (slice "collections" "posts"))) }}
     <span class="sep" aria-hidden="true">/</span>
     {{- if eq .p1 .p2 }}
-    <li class="current" aria-current="page">{{ $p1Displayed.Title }}</li>
+    <li class="current" aria-current="page">
+        {{- markdownify $p1Displayed.Title -}}
+    </li>
     {{- else }}
     {{- partial "breadcrumbs-item.html" $p1Displayed }}
     {{- end }}

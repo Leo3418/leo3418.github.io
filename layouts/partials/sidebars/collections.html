@@ -5,7 +5,7 @@
     <nav class="nav__list">
         <div class="nav__title" style="padding-left: 0;">
             <a href="{{ $collection.RelPermalink }}">
-                {{- $collection.Title -}}
+                {{- markdownify $collection.Title -}}
             </a>
         </div>
         <input id="ac-toc" name="accordion-toc" type="checkbox" />
@@ -40,7 +40,7 @@ generated list is glitchy as a result.
        {{- if eq .this .currentPage -}}
        class="active"
        {{- end -}}>
-    {{- .this.Title -}}
+    {{- markdownify .this.Title -}}
 </a></li>
 {{- end }}
 
