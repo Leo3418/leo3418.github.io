@@ -49,11 +49,12 @@ Named Parameters:
 Positional Parameters:
 - 0: Equivalent to the 'type' named parameter
 - 1: Equivalent to the 'file' named parameter
+- 2: Optional -- equivalent to the 'l10n' named parameter
 */}}
 
 {{- $type := false }}
 {{- $file := "" }}
-{{- $l10nDir := false }}
+{{- $l10n := false }}
 
 {{- if .IsNamedParams }}
     {{- with .Get "type" }}
@@ -66,8 +67,7 @@ Positional Parameters:
         {{- $file = printf "/%s" . }}
     {{- end }}
 
-    {{- $l10nDir = (cond (gt (len (.Get "l10n")) 0)
-        (.Page.Language.Lang | printf "/%s") "") }}
+    {{- $l10n = gt (.Get "l10n" | len) 0 }}
 {{- else }}
     {{- with .Get 0 }}
         {{- $type = . }}
@@ -79,8 +79,10 @@ Positional Parameters:
         {{- $file = printf "/%s" . }}
     {{- end }}
 
-    {{- $l10nDir = "" }}
+    {{- $l10n = gt (.Get 2 | len) 0 }}
 {{- end }}
+
+{{- $l10nDir := cond $l10n (printf "/%s" .Page.Language.Lang) "" }}
 
 {{- with .Page }}
     {{- if eq .Section "posts" }}
