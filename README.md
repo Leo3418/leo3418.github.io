@@ -93,6 +93,9 @@ Richard and others and is stored at
 `assets/sass/minimal-mistakes/vendor/breakpoint/` in this repository.  Its
 license can be found [here][breakpoint-license].
 
+This site uses [Font Awesome Free][font-awesome], which is copyright (C) 2022
+Fonticons, Inc.  Its license can be found [here][font-awesome-license].
+
 This site uses [Gumshoe][gumshoe], which is copyright (C) Go Make Things, LLC
 and is stored at `assets/js/plugins/gumshoe.js` in this repository.  Its
 license can be found [here][gumshoe-license].
@@ -108,11 +111,13 @@ repository.  Its license can be found [here][susy-license].
 [asciinema-player-license]: https://github.com/asciinema/asciinema-player/blob/v3.0.1/LICENSE
 [breakpoint]: https://github.com/at-import/breakpoint
 [breakpoint-license]: https://github.com/at-import/breakpoint/blob/main/LICENSE
-[hugo-license]: https://github.com/gohugoio/hugo/blob/v0.101.0/LICENSE
+[font-awesome]: https://fontawesome.com/
+[font-awesome-license]: https://github.com/FortAwesome/Font-Awesome/blob/5.x/LICENSE.txt
 [gumshoe]: https://github.com/cferdinandi/gumshoe
 [gumshoe-license]: https://github.com/cferdinandi/gumshoe/blob/v5.1.1/LICENSE.md
+[hugo-license]: https://github.com/gohugoio/hugo/blob/v0.101.0/LICENSE
 [jquery]: https://jquery.com/
 [jquery-license]: https://github.com/jquery/jquery/blob/3.6.0/LICENSE.txt
 [mmistakes-license]: https://github.com/mmistakes/minimal-mistakes/blob/4.24.0/LICENSE
 [susy]: https://www.oddbird.net/susy/
-[susy-license]: https://github.com/oddbird/susy/blob/master/LICENSE.txt
+[susy-license]: https://github.com/oddbird/susy/blob/main/LICENSE.txt
