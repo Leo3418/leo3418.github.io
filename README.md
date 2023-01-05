@@ -98,8 +98,7 @@ and is stored at `assets/js/plugins/gumshoe.js` in this repository.  Its
 license can be found [here][gumshoe-license].
 
 This site uses [jQuery][jquery], which is copyright (C) OpenJS Foundation and
-other contributors and is stored at `static/js/jquery.slim.min.js` in this
-repository.  Its license can be found [here][jquery-license].
+other contributors.  Its license can be found [here][jquery-license].
 
 This site uses [Susy][susy], which is copyright (C) 2017, Miriam Eric Suzanne
 and is stored at `assets/sass/minimal-mistakes/vendor/susy/` in this
