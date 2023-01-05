@@ -84,8 +84,7 @@ copyright (C) 2022 The Hugo Authors.  Its license can be found
 [here][hugo-license].
 
 This site uses [asciinema player][asciinema-player], which is copyright (C)
-2011-2022 Marcin Kulik and is stored at `static/css/asciinema-player.css` and
-`static/js/asciinema-player.js` in this repository.  Its license can be found
+2011-2022 Marcin Kulik.  Its license can be found
 [here][asciinema-player-license].
 
 This site uses [Breakpoint][breakpoint], which is copyright (C) 2012-2022 Sam

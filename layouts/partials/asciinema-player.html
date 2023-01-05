@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="{{ relURL "css/asciinema-player.css" }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.0.1/dist/bundle/asciinema-player.css">
 {{- $style := resources.Get "sass/asciinema-player-custom.scss"
     | resources.ToCSS | resources.Minify | resources.Fingerprint
 }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}">
-<script type="text/javascript" src="{{ relURL "js/asciinema-player.js" }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/asciinema-player@3.0.1/dist/bundle/asciinema-player.min.js"></script>
