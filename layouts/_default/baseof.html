@@ -19,7 +19,7 @@
 
     <body class="layout--{{ block "layout" . }}{{ end }}">
         {{- partialCached "skip-links.html" . }}
-        {{- partial "masthead.html" . }}
+        {{- partialCached "masthead.html" . .Page.AllTranslations }}
 
         <div class="initial-content">
             {{- block "main" . }}
