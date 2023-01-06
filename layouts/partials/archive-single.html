@@ -37,7 +37,7 @@ Recognized parameters in .Scratch:
         {{- with .Summary }}
         <p class="archive__item-excerpt"
            {{- if not $.Description }} itemprop="description"{{ end }}>
-            {{ . }}
+            {{ . | plainify | htmlUnescape }}
             {{- if $.Truncated }}
             {{ i18n "punctuationEllipsis" | safeHTML }}
             {{- end }}
