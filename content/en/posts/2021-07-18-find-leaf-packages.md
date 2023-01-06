@@ -37,15 +37,20 @@ on package *A*" is generally false.  Thus, an arrow starting from the vertex
 for package *A* and pointing to the vertex for package *B* is drawn on the
 graph to show this relationship.
 
-{{< figure style="width: 75%; margin: auto;" alt="An example dependency graph"
-caption=`An example of a dependency graph showing how some of the Kotlin
-    packages I have created depend on other packages and dependencies of
-    dev-java/openjdk-bin:8.  This graph is only intended for demonstrating
-    how a dependency graph is visualized; it is not a precise representation of
-    the actual dependency relationships of the packages included in this
-    diagram and thus should not be used for informational purposes.` >}}
-{{< static-path img dep-graph-example.svg >}}
-{{< /figure >}}
+{{<fig class="half">}}
+
+![An example dependency graph]({{< static-path img dep-graph-example.svg >}})
+
+{{<figcaption>}}
+An example of a dependency graph showing how some of the Kotlin packages I have
+created depend on other packages and dependencies of `dev-java/openjdk-bin:8`.
+This graph is only intended for demonstrating how a dependency graph is
+visualized; it is not a precise representation of the actual dependency
+relationships of the packages included in this diagram and thus should not be
+used for informational purposes.
+{{</figcaption>}}
+
+{{</fig>}}
 
 A lot of valuable information can be extracted from a dependency graph.  For
 example, one can compute from a dependency graph a list of **leaf packages** in
