@@ -1,0 +1,41 @@
+{{/*
+Renders Markdown content and wraps the resulting HTML structure in a <figure>
+element.  Compared to Hugo's built-in 'figure' shortcode, this one allows the
+figure's image and <figcaption> to be defined in its inner content instead of
+parameters, so the definitions can be written in Markdown, which is easy and
+straightforward.
+
+It is recommended that this shortcode is used together with the 'figcaption'
+shortcode in the same directory.  For example:
+
+{{< fig >}}
+![Alternate text for the image](image-url)
+{{< figcaption >}}
+Image caption.  Backticks are permitted, even if the caption is separated into
+multiple lines.  This is not possible with Hugo's built-in `figure` shortcode.
+{{< /figcaption >}}
+{{< /fig >}}
+
+The following example demonstrates the problem this shortcode solves:
+
+{{< figure src="image-url" caption=`
+Raw string literal captions like this one do not work with the built-in
+`figure` shortcode because it contains backticks, which cannot be escaped.
+` >}}
+
+This is a closing shortcode; the content between the opening and closing
+shortcode tags are taken as the Markdown content to render.
+
+Named Parameters:
+- class: Optional -- the classes for the <figure> element, separated by space
+- id: Optional -- the ID for the <figure> element
+*/}}
+
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}
+    {{- with .Get "id" }} id="{{ . }}"{{ end }}>
+    {{- /* Remove redundant newline characters to prevent <figcaption>
+           from being wrapped in <p>, which is invalid HTML because
+           <figcaption> must be a direct child of <figure> */}}
+    {{ .Inner | replaceRE "\r{2,}|\n{2,}|(\r\n){2,}" ""
+        | htmlEscape | markdownify | htmlUnescape | safeHTML }}
+</figure>
