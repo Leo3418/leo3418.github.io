@@ -79,10 +79,6 @@ Liquid snippets, HTML DOM definitions, and UI strings from Minimal Mistakes,
 which is copyright (C) 2013-2020 Michael Rose and contributors.  Its license
 can be found [here][mmistakes-license].
 
-This site uses templates derived from Hugo's built-in shortcodes.  Hugo is
-copyright (C) 2022 The Hugo Authors.  Its license can be found
-[here][hugo-license].
-
 This site uses [asciinema player][asciinema-player], which is copyright (C)
 2011-2022 Marcin Kulik.  Its license can be found
 [here][asciinema-player-license].
@@ -114,7 +110,6 @@ repository.  Its license can be found [here][susy-license].
 [font-awesome-license]: https://github.com/FortAwesome/Font-Awesome/blob/5.x/LICENSE.txt
 [gumshoe]: https://github.com/cferdinandi/gumshoe
 [gumshoe-license]: https://github.com/cferdinandi/gumshoe/blob/v5.1.1/LICENSE.md
-[hugo-license]: https://github.com/gohugoio/hugo/blob/v0.101.0/LICENSE
 [jquery]: https://jquery.com/
 [jquery-license]: https://github.com/jquery/jquery/blob/3.6.0/LICENSE.txt
 [mmistakes-license]: https://github.com/mmistakes/minimal-mistakes/blob/4.24.0/LICENSE
