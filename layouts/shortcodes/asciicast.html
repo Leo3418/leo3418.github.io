@@ -3,38 +3,88 @@ Inserts an asciinema player <https://github.com/asciinema/asciinema-player>
 that plays the specified asciinema recording file.
 
 This is a closing shortcode; the content between the opening and closing
-shortcode tags are taken as the recording file's path.
+shortcode tags is taken as the recording file's path.
 
-Named Parameters:
-- poster: The preview of the recording shown in the player; defaults to
-  'npt:0'.  For more information about ways to specify the poster, please
-  consult <https://github.com/asciinema/asciinema-player/tree/v3.0.1#poster>.
-- theme: The color theme applied to the recording; defaults to 'tango'
-- fontSize: The size of font shown in the player; defaults to 'small'
-- speed: The playback speed of the recording; defaults to 1
-- startAt: The starting point of the playback in the player; defaults to 0
-
-More information about the values accepted by each parameter can be found in
-<https://github.com/asciinema/asciinema-player/tree/v3.0.1#options>.
+The named parameters recognized by this shortcode are exactly the options
+listed at <https://github.com/asciinema/asciinema-player/tree/v3.0.1#options>;
+the parameters' names and supported values are the same as those options'.  For
+each unspecified named parameter, its corresponding option will not be set for
+the player either.  The only exception is the 'theme' option, whose value will
+be set to "tango" if the named parameter is not specified.
 */}}
 
 {{- $asciinemaPlayerId := printf "asciicast-%d" .Ordinal }}
 <div class="asciinema-player-container" id="{{ $asciinemaPlayerId }}"></div>
 <script>
     AsciinemaPlayer.create(
-        {{/* Hyphens <https://gohugo.io/templates/introduction/#whitespace>
-             are unfortunately not sufficient to trim whitespace here */ -}}
+        {{- /* Hyphens <https://gohugo.io/templates/introduction/#whitespace>
+               are unfortunately not sufficient to trim whitespace here */}}
         "{{ trim .Inner " \t\r\n" }}",
         document.getElementById("{{ $asciinemaPlayerId }}"),
         {
-            {{/* Avoid replacing '\r\n' with '\r\r\n' */ -}}
-            poster: "{{ .Get "poster"
-                | replaceRE "\r\n" "\n" | replaceRE "\n" "\r\n"
-                | default "npt:0" }}",
-            theme: "{{ .Get "theme" | default "tango" }}",
-            terminalFontSize: "{{ .Get "fontSize" | default "small" }}",
-            speed: "{{ .Get "speed" | default 1 }}",
-            startAt: "{{ .Get "startAt" | default 0 }}",
+            {{- /* Break lines in 'with' blocks for prettier JS in output */}}
+
+            {{- with .Get "cols" }}
+            cols: {{ int . | safeJS }},
+            {{- end }}
+
+            {{- with .Get "rows" }}
+            rows: {{ int . | safeJS }},
+            {{- end }}
+
+            {{- with .Get "autoPlay" }}
+            autoPlay: {{ cond (. | in (slice "true" "false")) (safeJS .) . }},
+            {{- end }}
+
+            {{- with .Get "preload" }}
+            preload: {{ cond (. | in (slice "true" "false")) (safeJS .) . }},
+            {{- end }}
+
+            {{- with .Get "loop" }}
+            {{- $loop := . }}
+            {{- if and (eq (printf "%T" .) "string")
+                (not (. | in (slice "true" "false"))) }}
+                {{- $loop = int . }}
+            {{- end }}
+            loop: {{ safeJS $loop }},
+            {{- end }}
+
+            {{- with .Get "startAt" }}
+            startAt: {{ . }},
+            {{- end }}
+
+            {{- with .Get "speed" }}
+            speed: {{ . }},
+            {{- end }}
+
+            {{- with .Get "idleTimeLimit" }}
+            idleTimeLimit: {{ . }},
+            {{- end }}
+
+            {{- with .Get "theme" | default "tango" }}
+            theme: {{ . }},
+            {{- end }}
+
+            {{- with .Get "poster" }}
+            {{- /* Avoid replacing '\r\n' with '\r\r\n' */}}
+            poster: {{ . | replaceRE "\r\n" "\n" | replaceRE "\n" "\r\n" }},
+            {{- end }}
+
+            {{- with .Get "fit" }}
+            fit: {{ . }},
+            {{- end }}
+
+            {{- with .Get "terminalFontSize" }}
+            terminalFontSize: {{ . }},
+            {{- end }}
+
+            {{- with .Get "terminalFontFamily" -}}
+            terminalFontFamily: {{ . }},
+            {{- end }}
+
+            {{- with .Get "terminalLineHeight" -}}
+            terminalLineHeight: {{ . }},
+            {{- end }}
         },
     );
 </script>
