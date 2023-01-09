@@ -45,6 +45,8 @@ Named Parameters:
   trailing slash) is returned instead
 - l10n: Optional -- if specified and not empty, then a path to the file's
   localized version for the current locale will be returned
+- abs: Optional -- if specified and not empty, then the absolute path to the
+  file will be returned instead of the relative path
 
 Positional Parameters:
 - 0: Equivalent to the 'type' named parameter
@@ -52,11 +54,14 @@ Positional Parameters:
 - Remaining positional parameters:
   - If they contain "l10n", then a path to the file's localized version for the
     current locale will be returned
+  - If they contain "abs", then the absolute path to the file will be returned
+    instead of the relative path
 */}}
 
 {{- $type := false }}
 {{- $file := "" }}
 {{- $l10n := false }}
+{{- $abs := false }}
 
 {{- if .IsNamedParams }}
     {{- with .Get "type" }}
@@ -70,6 +75,7 @@ Positional Parameters:
     {{- end }}
 
     {{- $l10n = gt (.Get "l10n" | len) 0 }}
+    {{- $abs = gt (.Get "abs" | len) 0 }}
 {{- else }}
     {{- with .Get 0 }}
         {{- $type = . }}
@@ -84,6 +90,8 @@ Positional Parameters:
     {{- range after 2 .Params }}
         {{- if eq . "l10n" }}
             {{- $l10n = true }}
+        {{- else if eq . "abs" }}
+            {{- $abs = true }}
         {{- end }}
     {{- end }}
 {{- end }}
@@ -91,16 +99,17 @@ Positional Parameters:
 {{- $l10nDir := cond $l10n (printf "/%s" .Page.Language.Lang) "" }}
 
 {{- with .Page }}
+    {{- $path := "" }}
     {{- if eq .Section "posts" }}
-        {{- relURL (printf "%s/posts/%s%s%s%s"
+        {{- $path = printf "%s/posts/%s%s%s%s"
             $type
             (cond .Draft "drafts/" (.Date.Format "2006-01-02-"))
             (path.BaseName .RelPermalink)
             $l10nDir
             $file
-        )}}
+        }}
     {{- else }}
-        {{- relURL (printf "%s%s/%s%s%s%s"
+        {{- $path = printf "%s%s/%s%s%s%s"
             $type
             (replace
                 (path.Dir .RelPermalink | absURL)
@@ -113,6 +122,7 @@ Positional Parameters:
             (cond .IsSection "/index" "")
             $l10nDir
             $file
-        )}}
+        }}
     {{- end }}
+    {{- cond $abs (absURL $path) (relURL $path) }}
 {{- end -}}
