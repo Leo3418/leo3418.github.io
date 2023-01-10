@@ -61,7 +61,7 @@
         {{- end }}
     </div>
     {{- else }}
-    <img src="{{ $header.image }}" alt="{{ $imageDescription }}"
+    <img src="{{ relURL $header.image }}" alt="{{ $imageDescription }}"
          class="page__hero-image">
     {{- end }}
 
