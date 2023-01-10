@@ -1,0 +1,40 @@
+{{/*
+Converts a timestamp to a localized, formatted string.
+
+Named Parameters:
+- time: The timestamp to convert
+- layout: The formatting layout, equivalent to the 'LAYOUT' parameter in
+  <https://gohugo.io/functions/dateformat/>; optional -- defaults to
+  ":date_long"
+
+Positional Parameters:
+- 0: Equivalent to the 'time' named parameter
+- 1: Equivalent to the 'layout' named parameter
+*/}}
+
+{{- $time := false }}
+{{- $layout := ":date_long" }}
+
+{{- if .IsNamedParams }}
+    {{- with .Get "time" }}
+        {{- $time = . }}
+    {{- else }}
+        {{- partial "sc-err/no-arg.html" (dict "sc" . "arg" "'time'") }}
+    {{- end }}
+
+    {{- with .Get "layout" }}
+        {{- $layout = . }}
+    {{- end }}
+{{- else }}
+    {{- with .Get 0 }}
+        {{- $time = . }}
+    {{- else }}
+        {{- partial "sc-err/no-arg.html" (dict "sc" . "arg" "0 ('time')") }}
+    {{- end }}
+
+    {{- with .Get 1 }}
+        {{- $layout = . }}
+    {{- end }}
+{{- end }}
+
+{{- time.Format $layout $time -}}
