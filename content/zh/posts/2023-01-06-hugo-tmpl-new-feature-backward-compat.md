@@ -42,10 +42,13 @@ categories:
 
 使用 `.Ancestors` 除了能让面包屑模板更简洁，还能让模板的速度更快。我对这两个版本的样例模板进行了性能测试，分别使用它们为本网站上的全部 174 个页面（统计于本文被编写时）生成面包屑，结果是使用 `.Ancestors` 的模板的速度是不使用它的模板的大约两倍。（关于性能测试的更多详情，请参见[附录][appendix-benchmark]。）
 
+{{< date.inline >}}{{ "2023-01-10" | time.Format ":date_long" }}{{< /date.inline >}}更新：我使用 Hugo 的 `--ignoreCache` 和 `--renderToMemory` 选项重新运行了一遍性能测试，并相应地更新了测试结果。这两个选项分别会让 Hugo 不使用缓存以及将网站渲染到内存；和我在第一次测试时将生成的文件写到 tmpfs 相比，这两个选项理论上能更好地避免文件系统读写造成的性能波动。
+{.notice}
+
 | 面包屑模板           |  平均总运行耗时 |
 | :----------------- | ------------: |
-| 不使用 `.Ancestors` | 21.8588862 ms |
-| 使用 `.Ancestors`   |  11.252103 ms |
+| 不使用 `.Ancestors` | 22.4727531 ms |
+| 使用 `.Ancestors`   | 10.9241115 ms |
 
 因为我一直以来都在自行编写和维护本网站使用的 Hugo 模板，所以一看到使用 `.Ancestors` 的样例模板，就开始想着把[我自己的面包屑模板][my-tmpl-breadcrumb-old]也改成差不多的。以前的模板在以后的 Hugo 版本中肯定是还能继续用的，所以我也不是说*必须*改模板；甚至，根据“代码能跑就不要再乱动”的原则，我是*不应该*改它的。但是一想到用了 `.Ancestors` 的让代码既能更美观、也能更快的好处，我直接大手一挥，管它有什么原则，干就完了。
 
@@ -162,31 +165,31 @@ $ for i in {1..10}; do
 > rm -r /tmp/hugo_cache
 > /tmp/hugo --destination /tmp/public --templateMetrics | grep -F 'partials/breadcrumbs.html'
 > done
-    23.360982ms     134.258µs    3.187397ms    174  partials/breadcrumbs.html
-    25.673855ms      147.55µs    2.658119ms    174  partials/breadcrumbs.html
-    16.676426ms      95.841µs     589.762µs    174  partials/breadcrumbs.html
-    21.724248ms     124.852µs    2.150144ms    174  partials/breadcrumbs.html
-    21.823904ms     125.424µs    2.396832ms    174  partials/breadcrumbs.html
-    23.215258ms     133.421µs    4.748894ms    174  partials/breadcrumbs.html
-    20.530041ms     117.988µs    1.457153ms    174  partials/breadcrumbs.html
-    19.765254ms     113.593µs    1.685052ms    174  partials/breadcrumbs.html
-    19.293112ms     110.879µs     960.213µs    174  partials/breadcrumbs.html
-    26.525782ms     152.447µs    5.964104ms    174  partials/breadcrumbs.html
+    20.843343ms     119.789µs    2.037636ms    174  partials/breadcrumbs.html
+     17.97466ms     103.302µs     731.496µs    174  partials/breadcrumbs.html
+    20.916035ms     120.207µs    1.324354ms    174  partials/breadcrumbs.html
+    21.813846ms     125.366µs    2.276513ms    174  partials/breadcrumbs.html
+    28.113151ms     161.569µs    4.627905ms    174  partials/breadcrumbs.html
+    17.310946ms      99.488µs    1.667575ms    174  partials/breadcrumbs.html
+     23.29696ms      133.89µs    3.878245ms    174  partials/breadcrumbs.html
+    20.942715ms      120.36µs    1.319785ms    174  partials/breadcrumbs.html
+    27.327393ms     157.053µs    5.052419ms    174  partials/breadcrumbs.html
+    26.188482ms     150.508µs     8.38873ms    174  partials/breadcrumbs.html
 $ # 测试使用 '.Ancestors' 的面包屑模板
 $ for i in {1..10}; do
 > rm -r /tmp/hugo_cache
 > /tmp/hugo --destination /tmp/public --templateMetrics | grep -F 'partials/breadcrumbs.html'
 > done
-    11.581039ms      66.557µs     932.621µs    174  partials/breadcrumbs.html
-     9.629813ms      55.343µs     281.399µs    174  partials/breadcrumbs.html
-    14.392727ms      82.716µs    3.841255ms    174  partials/breadcrumbs.html
-     9.619406ms      55.283µs     628.243µs    174  partials/breadcrumbs.html
-    10.613697ms      60.998µs     987.308µs    174  partials/breadcrumbs.html
-    11.262963ms      64.729µs    1.069025ms    174  partials/breadcrumbs.html
-    10.649529ms      61.204µs     485.482µs    174  partials/breadcrumbs.html
-    13.811549ms      79.376µs    3.165308ms    174  partials/breadcrumbs.html
-     9.685682ms      55.664µs    1.046395ms    174  partials/breadcrumbs.html
-    11.274625ms      64.796µs     592.692µs    174  partials/breadcrumbs.html
+    13.876398ms      79.749µs    3.214174ms    174  partials/breadcrumbs.html
+     9.453452ms       54.33µs     625.308µs    174  partials/breadcrumbs.html
+    10.339717ms      59.423µs    1.403833ms    174  partials/breadcrumbs.html
+    10.727788ms      61.653µs     796.077µs    174  partials/breadcrumbs.html
+     9.777874ms      56.194µs    1.072293ms    174  partials/breadcrumbs.html
+     9.753709ms      56.055µs      771.05µs    174  partials/breadcrumbs.html
+    10.858828ms      62.407µs    1.250856ms    174  partials/breadcrumbs.html
+    12.769683ms      73.388µs    1.658969ms    174  partials/breadcrumbs.html
+    10.897951ms      62.631µs     805.244µs    174  partials/breadcrumbs.html
+    10.785715ms      61.986µs     772.212µs    174  partials/breadcrumbs.html
 ```
 
 {{<asciicast
