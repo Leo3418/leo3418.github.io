@@ -11,8 +11,7 @@ lastmod: 2022-12-15
 ---
 
 {{<div class="notice--warning">}}
-Update on {{< date.inline "2022-12-15" >}}{{ .Get 0 | time.Format ":date_long"
-}}{{< /date.inline >}}:
+Update on {{< format-time "2022-12-15" >}}:
 
 **This tutorial is deprecated.**  Gentoo has started to officially support
 `/usr`-merged file system layout in response to systemd's plan to drop support
@@ -103,7 +102,7 @@ of which were started by Red Hat's desire to shape all modern Linux-based
 systems at *their* discretion and [Lennart Poettering's support][0pointer-de],
 then made their debut in Fedora, and finally accepted by other distributions.
 
-Update on {{< date.inline "2022-04-07" />}}: After reading the new, hot
+Update on {{< format-time "2022-04-07" >}}: After reading the new, hot
 [LWN.net report][lwn-debian] covering the `/usr` merge dilemma Debian is still
 facing, I am perplexed by how I got the impression that Debian had completed
 the `/usr` merge when I wrote the initial version of this article.  To show
@@ -160,9 +159,8 @@ can be found in various GNU/Linux distributions:
    way, and from the [`ebuild` for Gentoo package
    `sys-apps/baselayout`][baselayout], which already supports the `split-usr`
    USE flag, this is ~~likely to be~~ how Gentoo merges `/usr` too.
-   (Update on {{< date.inline >}}{{ "2022-12-15" | time.Format ":date_long"
-   }}{{< /date.inline >}}: this is exactly how Gentoo merges `/usr` now that
-   the distribution officially supports it.)
+   (Update on {{< format-time "2022-12-15" >}}: this is exactly how Gentoo
+   merges `/usr` now that the distribution officially supports it.)
    {#usr-merge-variant-2}
 
    ```console

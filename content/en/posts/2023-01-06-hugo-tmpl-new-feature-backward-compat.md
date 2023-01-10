@@ -55,12 +55,11 @@ on this website as of writing, and the template which uses `.Ancestors` was
 about two times faster than the one which does not.  (More details about the
 benchmark are available in the [appendix][appendix-benchmark].)
 
-Update on {{< date.inline >}}{{ "2023-01-10" | time.Format ":date_long" }}{{<
-/date.inline >}}: I reran the benchmark by invoking Hugo with `--ignoreCache`
-and `--renderToMemory` options; theoretically, this should help avoid
-performance deviations caused by file system I/O better than using a directory
-on a tmpfs as the output destination, which was what I did in the first
-benchmark run.  The benchmark results were updated accordingly.
+Update on {{< format-time 2023-01-10 >}}: I reran the benchmark by invoking
+Hugo with `--ignoreCache` and `--renderToMemory` options; theoretically, this
+should help avoid performance deviations caused by file system I/O better than
+using a directory on a tmpfs as the output destination, which was what I did in
+the first benchmark run.  The benchmark results were updated accordingly.
 {.notice}
 
 | Breadcrumb Template       | Mean Total Execution Time |

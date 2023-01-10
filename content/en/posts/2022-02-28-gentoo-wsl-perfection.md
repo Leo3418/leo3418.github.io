@@ -27,11 +27,11 @@ looked at my profile).  Now that I can enjoy a short break with some peace of
 mind, I have decided to at least complete that tutorial.  But before I started,
 I happened to search for "Gentoo WSL" on Google out of curiosity.  While I had
 been away, there was a new [*Gentoo in WSL* article on Gentoo
-Wiki][gentoo-wiki-wsl] originally created on November 24, 2021.  That article
-already covers the bulk of what I wanted to mention in my tutorial in a very
-concise way, and it is easy to find thanks to the fact that it is on Gentoo
-Wiki, thus I could no longer see the value of repeating the identical things in
-lengthy and verbose paragraphs on my personal site.
+Wiki][gentoo-wiki-wsl] originally created on {{< format-time 2021-11-24 >}}.
+That article already covers the bulk of what I wanted to mention in my tutorial
+in a very concise way, and it is easy to find thanks to the fact that it is on
+Gentoo Wiki, thus I could no longer see the value of repeating the identical
+things in lengthy and verbose paragraphs on my personal site.
 
 Despite this, the Gentoo Wiki article does not contain some arcane things with
 regards to setting up Gentoo on WSL that I would like to share with people.

@@ -38,9 +38,10 @@ It is important to know what the easiest and fastest ways to earn GTA$ are and
 what purchases give you the most utility with the least cost, so you can
 efficiently build a successful GTA Online career. As an experienced player who
 has played GTA Online for 1980 hours, reached Rank 285 with one character and
-190 with another, and earned GTA$285M as of March 25, 2021, my job is to give
-you my suggestions in this collection on what to do, in what steps should you
-do them, and what not to do in order to get better progress in less time.
+190 with another, and earned GTA$285M as of {{< format-time 2021-03-25 >}}, my
+job is to give you my suggestions in this collection on what to do, in what
+steps should you do them, and what not to do in order to get better progress in
+less time.
 
 ## Work in Progress
 

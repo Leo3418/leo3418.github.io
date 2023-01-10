@@ -11,7 +11,7 @@ lastmod: 2022-12-15
 ---
 
 {{<div class="notice--warning">}}
-{{< date.inline "2022-12-15" >}}{{ .Get 0 | time.Format ":date_long" }}{{< /date.inline >}}更新：
+{{< format-time "2022-12-15" >}}更新：
 
 **本教程已过时。** 为响应 systemd 在 2023 年停止支持 `/usr` 未合并的系统的计划，Gentoo 已开始官方支持 `/usr` 合并。
 
@@ -68,7 +68,7 @@ lastmod: 2022-12-15
 
 现在绝大多数主流 GNU/Linux 发行版中的 `/usr` 合并大趋势应该是由 Fedora 在 2012 年牵头开始的；之后，包括 ~~Debian~~ Ubuntu 和 Arch Linux 在内的许多常见的发行版也都相应地完成了 `/usr` 合并。说起来这和 systemd 在 GNU/Linux 社区中的侵蚀也有点类似，都是由 Red Hat 想按照自己的方式定型当代 GNU/Linux 发行版的野心和 [Lennart Poettering 大肆为其背书][0pointer-de]开始、在 Fedora 上首秀，然后逐渐被其它发行版采纳。
 
-{{< date.inline >}}{{ "2022-04-07" | time.Format ":date_long" }}{{< /date.inline >}}更新：读了前两天 [LWN.net][lwn-debian] 上的一篇文章，了解到关于 Debian 目前合并 `/usr` 时出现的进退两难的窘境后，我发现我直接被打脸，一开始写这篇文章的时候不知怎么，竟然以为 Debian 已经完成 `/usr` 合并了。为了不掩盖我当时憨憨了的事实，特划掉 Debian，改为 Ubuntu。Ubuntu 作为一个 Debian 衍生发行版，居然比 Debian 先完成了 `/usr` 合并，也是有点意思。
+{{< format-time "2022-04-07" >}}更新：读了前两天 [LWN.net][lwn-debian] 上的一篇文章，了解到关于 Debian 目前合并 `/usr` 时出现的进退两难的窘境后，我发现我直接被打脸，一开始写这篇文章的时候不知怎么，竟然以为 Debian 已经完成 `/usr` 合并了。为了不掩盖我当时憨憨了的事实，特划掉 Debian，改为 Ubuntu。Ubuntu 作为一个 Debian 衍生发行版，居然比 Debian 先完成了 `/usr` 合并，也是有点意思。
 {.notice}
 
 而 Gentoo 却不是潮流的追随者，不仅是为数不多的默认不使用 systemd 的发行版，~~更没有跟随合并 `/usr` 的大势。目前，按照默认方式安装 Gentoo 后，`/bin`、`/lib`、`/lib64` 和 `/sbin` 仍然是独立的目录，而不是像其它发行版改成了符号链接~~。虽说如此，Gentoo ~~应该~~还是有实现 `/usr` 合并的计划的，因为他们在 Portage 中定义了一个 [`split-usr` USE 标志][split-usr]。~~现在这个 USE 标志是强制启用的，因为目前 `/bin`、`/lib`、`/lib64` 和 `/sbin` 这些目录还未合并，也就是分离（split）的状态；如果日后有一天~~ Gentoo 官方可以完全支持 `/usr` 合并了，那~~届时~~就可以让 `split-usr` 变成一个可选的 USE 标志。
