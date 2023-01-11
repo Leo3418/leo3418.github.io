@@ -16,8 +16,8 @@
     {{- end }}
 
     <article class="page h-entry"
-        itemscope itemtype="https://schema.org/CreativeWork">
-        {{- partial "article-meta.html" . }}
+             itemscope itemtype="https://schema.org/CreativeWork">
+        {{ partial "article-meta.html" . }}
 
         <div class="page__inner-wrap">
             {{- if not (or $overlayColor $overlayImage) }}
