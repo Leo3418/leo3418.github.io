@@ -12,7 +12,8 @@ Recognized parameters in .Scratch:
 {{- $teaser := .Params.header.teaser | default .Site.Params.teaser }}
 
 <div class="{{ $type }}__item">
-    <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    <article class="archive__item"
+             itemscope itemtype="https://schema.org/CreativeWork">
         {{- if and (eq $type "grid") (ne $teaser nil) }}
         <div class="archive__item-teaser">
             <img src="{{ relURL $teaser }}" alt="">
