@@ -5,8 +5,7 @@ copying of a section's URL.
 
 {{- $anchor := safeURL .Anchor }}
 <h{{ .Level }} id="{{ $anchor }}">
-    {{ safeHTML .Text }}
-    <a class="header-link" href="#{{ $anchor }}" title="{{ i18n "permalink" }}">
-        <i class="fas fa-link"></i>
-    </a>
+    {{ safeHTML .Text -}}
+    <a class="header-link" title="{{ i18n "permalink" }}"
+       href="#{{ $anchor }}"><i class="fas fa-link"></i></a>
 </h{{ .Level }}>
