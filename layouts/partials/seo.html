@@ -40,7 +40,7 @@ page, then include the collection's title in the page title
 
 <title>{{ $seoTitle }}</title>
 {{- if $seoDescription }}
-<meta name="description" content="{{- $seoDescription -}}">
+<meta name="description" content="{{ $seoDescription }}">
 {{- end }}
 
 <meta property="og:type" content="{{ $ogType }}">
@@ -49,6 +49,11 @@ page, then include the collection's title in the page title
 <meta property="og:title" content="{{ $ogTitle
     | default (.Site.Title | markdownify | plainify) }}">
 <meta property="og:url" content="{{ $canonicalURL }}">
+
+{{- if $seoDescription }}
+<meta property="og:description" content="{{ $seoDescription }}">
+{{- end }}
+
 {{- if $pageLargeImage }}
 <meta property="og:image" content="{{ absURL $pageLargeImage }}">
 {{- else if $pageTeaserImage }}
