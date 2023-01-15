@@ -7,5 +7,10 @@ enableInlineShortcodes: true
 
 cascade:
   - _target:
+      path: '/{collections,posts}'
+    outputs:
+      # Drop 'HTML' from output formats
+      - 'RSS'
+  - _target:
       path: '/posts/drafts/**'
     draft: true
