@@ -6,10 +6,13 @@ tags:
 categories:
   - Tutorial
 show_reading_time: false
+aliases:
+  - "/2022/08/21/gentoo-config-luks2-grub-systemd"
 cascade:
 - date: 2022-08-21
 - show_date: true
 - toc: true
+lastmod: 2022-08-21
 ---
 
 This collection is a tutorial which provides instructions to set up LUKS2-based
