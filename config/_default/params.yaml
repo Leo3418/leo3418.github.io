@@ -1,2 +1,5 @@
+atom_feed:
+  path: '/posts'
+
 license: 'cc-by-sa-4_0'
 toc_sticky: true
