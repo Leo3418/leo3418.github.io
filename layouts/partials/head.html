@@ -21,7 +21,7 @@
 {{- $pathInProject := . }}
 {{- if and
     (fileExists $pathInProject) (os.Stat $pathInProject).Mode.IsRegular }}
-    {{- $href := split $pathInProject "/" | after 1 | path.Join | relURL }}
-    <link rel="stylesheet" href="{{ $href }}">
+{{- $href := split $pathInProject "/" | after 1 | path.Join | relURL }}
+<link rel="stylesheet" href="{{ $href }}">
 {{- end }}
 {{- end }}
