@@ -95,9 +95,6 @@ This site uses [Gumshoe][gumshoe], which is copyright (C) Go Make Things, LLC
 and is stored at `assets/js/plugins/gumshoe.js` in this repository.  Its
 license can be found [here][gumshoe-license].
 
-This site uses [jQuery][jquery], which is copyright (C) OpenJS Foundation and
-other contributors.  Its license can be found [here][jquery-license].
-
 This site uses [Susy][susy], which is copyright (C) 2017, Miriam Eric Suzanne
 and is stored at `assets/sass/minimal-mistakes/vendor/susy/` in this
 repository.  Its license can be found [here][susy-license].
@@ -110,8 +107,6 @@ repository.  Its license can be found [here][susy-license].
 [font-awesome-license]: https://github.com/FortAwesome/Font-Awesome/blob/5.x/LICENSE.txt
 [gumshoe]: https://github.com/cferdinandi/gumshoe
 [gumshoe-license]: https://github.com/cferdinandi/gumshoe/blob/v5.1.1/LICENSE.md
-[jquery]: https://jquery.com/
-[jquery-license]: https://github.com/jquery/jquery/blob/3.6.0/LICENSE.txt
 [mmistakes-license]: https://github.com/mmistakes/minimal-mistakes/blob/4.24.0/LICENSE
 [susy]: https://www.oddbird.net/susy/
 [susy-license]: https://github.com/oddbird/susy/blob/main/LICENSE.txt
