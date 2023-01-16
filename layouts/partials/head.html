@@ -10,7 +10,8 @@
 {{- $style := resources.Get "sass/main.scss"
     | resources.ToCSS | resources.Minify | resources.Fingerprint
 }}
-<link rel="stylesheet" href="{{ $style.RelPermalink }}">
+<link rel="stylesheet" href="{{ $style.RelPermalink }}"
+      integrity="{{ $style.Data.Integrity }}">
 {{- partial "load-css-if-present.html" "static/css/syntax.css" }}
 
 <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
