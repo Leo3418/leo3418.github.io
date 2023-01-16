@@ -1,7 +1,13 @@
 <meta charset="utf-8">
 
-{{- with .Site.Home.AlternativeOutputFormats.Get "RSS" }}
-<link href="{{ .RelPermalink }}" type="application/atom+xml" rel="alternate"
+{{- $rssEnabled := and
+    (not .Site.Params.atom_feed.hide)
+    (.Site.Home.AlternativeOutputFormats.Get "RSS")
+}}
+{{- if $rssEnabled }}
+{{- $path := .Site.Params.atom_feed.path | default "/" }}
+<link href="{{ relref . (dict "path" $path "outputFormat" "rss") }}"
+      type="application/atom+xml" rel="alternate"
       title="{{ $.Site.Title }} {{ i18n "feedLabel" }}">
 {{- end }}
 
