@@ -1,6 +1,6 @@
-$(function() {
+(function () {
     // Gumshoe scroll spy init
-    if($("nav.toc").length > 0) {
+    if (document.querySelectorAll("nav.toc").length > 0) {
         var spy = new Gumshoe("nav.toc a", {
             // Active classes
             navClass: "active", // applied to the nav list item
@@ -18,4 +18,4 @@ $(function() {
             events: true // if true, emit custom events
         });
     }
-})
+})();

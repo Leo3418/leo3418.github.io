@@ -1,6 +1,13 @@
 // Make navigation menus mutually exclusive
-$(".nav-toggle").click(function () {
-    var tmp = $(this).prop("checked");
-    $(".nav-toggle").prop("checked", false);
-    $(this).prop("checked", tmp);
-});
+(function () {
+    const toggles = document.getElementsByClassName("nav-toggle");
+    for (const toggle of toggles) {
+        toggle.addEventListener("click", function () {
+            const tmp = toggle.checked;
+            for (const t of toggles) {
+                t.checked = false;
+            }
+            toggle.checked = tmp;
+        });
+    }
+})();
