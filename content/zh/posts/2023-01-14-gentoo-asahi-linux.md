@@ -15,6 +15,7 @@ header:
   caption: "Gentoo 在 Mac mini 2020 上运行 MATE 桌面环境"
   overlay_filter: 0.5
   show_overlay_excerpt: false
+lastmod: 2023-01-14
 ---
 
 我还记得在苹果刚发布基于自家 ARM 芯片的 Mac 的时候，有人猜测一场变革将就此在桌面计算领域展开。当时在 Reddit 上就有一名 GNU/Linux 用户声称，各大 GNU/Linux 发行版应重视起潜在的 x86-64 转到 ARM64 的趋势、未雨绸缪、采取行动，以免跟不上时代的潮流。但持此类观点的用户可能不知道的是，得益于高级语言的可移植性，构成 GNU/Linux 的常见软件包其实已经兼容 ARM64 很长时间了。而苹果发布的这些基于自家的高性能 ARM 芯片的 Mac，不但不一定会对 GNU/Linux 造成威胁，反而可能给后者提供了一个更宽阔的舞台供其发挥。在 [Asahi Linux][asahi-linux] 项目开发者的努力下，我们可以在搭载苹果芯片的 Mac 上运行 GNU/Linux，充分压榨苹果芯片的性能。
@@ -286,7 +287,7 @@ src_prepare() {
 - [`sys-kernel/asahi-edge-kernel`][sys-kernel/asahi-edge-kernel]，对应 `linux-asahi-edge` 软件包。`linux-asahi-edge` 和 `linux-asahi` 相比，都是使用相同的源码构建的，但是前者的内核配置启用了额外的[实验性选项][linux-asahi-edge-config]。
 
 [gentoo-wiki-dist-kernel]: https://wiki.gentoo.org/wiki/Project:Distribution_Kernel
-[gentoo-kernel-git]: {{<relref path="2022-03-04-gentoo-kernel-git" lang="en">}}
+[gentoo-kernel-git]: {{<relref 2022-03-04-gentoo-kernel-git>}}
 [linux-asahi-config]: https://github.com/AsahiLinux/PKGBUILDs/blob/main/linux-asahi/config
 [sys-kernel/asahi-kernel]: https://github.com/Leo3418/leo3418-ebuild-repo/blob/2e063a35efb385b3f2831db875d4ee959615554a/sys-kernel/asahi-kernel/asahi-kernel-6.1_p3-r1.ebuild
 [sys-kernel/asahi-edge-kernel]: https://github.com/Leo3418/leo3418-ebuild-repo/blob/2e063a35efb385b3f2831db875d4ee959615554a/sys-kernel/asahi-edge-kernel/asahi-edge-kernel-6.1_p3-r1.ebuild
