@@ -6,7 +6,6 @@ tags:
 categories:
   - Tutorial
 toc: true
-lastmod: 2021-04-24
 ---
 
 Getting a perfect GNOME configuration on Gentoo is not hard but is tricky.  In
@@ -152,17 +151,15 @@ credentials]({{< static-path img polkit-wheel.png >}})
 
 ## Enable WebRTC Screen Sharing Based on PipeWire in Web Browsers
 
-On Wayland, which is the default display server protocol used by GNOME,
-enabling screen sharing in web browsers is a tricky thing many users have asked
-about.  The solution to this problem is fairly simple, which is to install
-`xdg-desktop-portal-gtk`.  On Gentoo, however, this can be even trickier,
-because Gentoo packages have the notion of USE flags that allows fine-grained
-control over the set of components to be installed for each package.  If
-critical USE flags for screen sharing functionality are not enabled, then even
-if the `xdg-desktop-portal-gtk` package is installed, it will not work as
-intended.
+Enabling WebRTC-based screen sharing from web browsers on Wayland -- which is
+the default display server protocol used by GNOME -- is a tricky thing many
+users have asked about.  The solution to this problem is fairly simple, which
+is to ensure `xdg-desktop-portal-gtk` is installed.
 
-These are the things that require extra care on Gentoo:
+On Gentoo, `sys-apps/xdg-desktop-portal-gtk` is guaranteed to be installed with
+`gnome-base/gnome-shell` because the latter package indirectly depends on the
+former package.  However, WebRTC screen sharing requires additional
+configurations to be functional:
 
 - The `screencast` USE flag needs to be enabled at the global level, so
   packages can be compiled with PipeWire's screencast portal support.
@@ -170,7 +167,7 @@ These are the things that require extra care on Gentoo:
 - The systemd socket for PipeWire -- `pipewire.socket` -- needs to be manually
   enabled because it is disabled by default.
 
-Here are the detailed steps:
+The detailed steps are:
 
 1. Enable the `screencast` USE flag at the global level.  The Gentoo Handbook
    covers [one way of doing this][handbook-use] via modifying
@@ -190,19 +187,13 @@ Here are the detailed steps:
    # emerge --ask --newuse --deep @world
    ```
 
-3. Install `sys-apps/xdg-desktop-portal-gtk`:
-
-   ```console
-   # emerge --ask sys-apps/xdg-desktop-portal-gtk
-   ```
-
-4. Enable PipeWire's systemd socket:
+3. Enable PipeWire's systemd socket:
 
    ```console
    # systemctl --global enable pipewire.socket
    ```
 
-5. Reboot the system.
+4. Reboot the system.
 
 According to [ArchWiki][archwiki-webrtc], FireFox has WebRTC PipeWire support
 enabled by default, whereas on Chromium/Google Chrome, the following
@@ -214,20 +205,14 @@ chrome://flags/#enable-webrtc-pipewire-capturer
 
 To test whether screen sharing has been correctly configured, the *screen
 capture* test in [this test page][screen-capture-test] can be used.  After
-selecting what to share from the system dialog, the screen sharing content
-should be visible on the page, and an orange screen share icon should be in the
-top bar.
+selecting what to share from the dialog, the screen sharing content should be
+visible on the page, and an orange screen share icon should be in the top bar.
 
 ![Screen is being shared from Google Chrome]({{< static-path img screen-share.png >}})
 
 ### Limitations
 
-- Screen shares from Google Chrome do not have sound.  Interestingly, on
-  Windows, screen shares do not have sound either, so this is probably a Chrome
-  issue.
-
-- On Google Chrome, the system dialog asking for the screen sharing source will
-  be shown twice.
+- Screen shares from Google Chrome do not have sound.
 
 [handbook-use]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/USE#Declare_permanent_USE_flags
 [archwiki-webrtc]: https://wiki.archlinux.org/index.php/PipeWire#WebRTC_screen_sharing

@@ -6,7 +6,6 @@ tags:
 categories:
   - 教程
 toc: true
-lastmod: 2021-04-24
 ---
 
 想在 Gentoo 上完美配置 GNOME 虽然不难，但需要经验。只要成功配置过一遍后就可能会觉得是小菜一碟，但是第一次操作的时候很容易遇到重重坎坷。虽然根据 [Gentoo Wiki 上的 GNOME 指南][gentoo-gnome-guide]可以配置一个最基础且能用的 GNOME 环境，但是想要完善 GNOME 配置的话，就还需要执行许多指南中没提到的额外步骤。比如，如果不进行额外配置的话，修改网络连接选项时就需要输入用户密码以验证权限，在 Wayland 会话中也无法从包括 Chrome 在内的浏览器共享屏幕内容。而且，该指南的中文翻译质量也有些堪忧。
@@ -109,9 +108,9 @@ polkit.addAdminRule(function (action, subject) {
 
 ## 启用浏览器中基于 PipeWire 的 WebRTC 屏幕共享
 
-Wayland 是 GNOME 默认使用的显示服务器协议，而如何在 Wayland 上启用浏览器中的屏幕共享功能也是许多用户都会问的问题。这个问题的解决方法倒是不难，那就是安装 `xdg-desktop-portal-gtk`。但是在 Gentoo 上，这个问题的解决方案更为复杂，因为 Gentoo 的软件包有着 USE 标志的概念，允许对各个软件包中被安装的功能进行精细的调整。如果一些屏幕共享功能必需的 USE 标志没有被启用，那么 `xdg-desktop-portal-gtk` 即使安装了也无法正常工作。
+不少用户都遇到过在使用 GNOME 默认的 Wayland 显示服务器协议时，如何在浏览器中启用基于 WebRTC 的屏幕共享功能的问题。这个问题的解决方法倒是不难，那就是确保系统上安装了 `xdg-desktop-portal-gtk`。
 
-在 Gentoo 上启用屏幕共享的额外注意事项包括：
+在 Gentoo 上，只要安装了 `gnome-base/gnome-shell`（即 GNOME 壳层），那么 `sys-apps/xdg-desktop-portal-gtk` 也会被作为间接依赖一同安装。但在此基础上，还需要一些额外的配置才能完全启用 WebRTC 屏幕共享：
 
 - 需要在全局范围内启用 `screencast` USE 标志，以启用软件包对 PipeWire 屏幕捕获功能的支持。
 
@@ -133,37 +132,28 @@ Wayland 是 GNOME 默认使用的显示服务器协议，而如何在 Wayland �
    ```console
    # emerge --ask --newuse --deep @world
    ```
-
-3. 安装 `sys-apps/xdg-desktop-portal-gtk`：
-
-   ```console
-   # emerge --ask sys-apps/xdg-desktop-portal-gtk
-   ```
-
-4. 启用 PipeWire 的 systemd 套接字：
+3. 启用 PipeWire 的 systemd 套接字：
 
    ```console
    # systemctl --global enable pipewire.socket
    ```
 
-5. 重启系统。
+4. 重启系统。
 
-[ArchWiki][archwiki-webrtc] 称，FireFox 默认已经启用了 WebRTC PipeWire 支持，而在 Chromium/Chrome 上则需要启用一个实验性功能：
+[ArchWiki][archwiki-webrtc] 称，FireFox 默认已经启用了 WebRTC PipeWire 支持，而在 Chromium/Chrome 上则还需要启用以下实验性功能：
 
 ```
 chrome://flags/#enable-webrtc-pipewire-capturer
 ```
 
-如果想测试配置是否成功，可以在[这个测试页面][screen-capture-test]中点击“Screen capture”按钮。在弹出的系统对话框中，选择共享源，然后就应该能在网页上看到屏幕共享的内容了，并且顶栏中还会显示一个橙色的屏幕共享图标。
+如果想测试配置是否成功，可以在[这个测试页面][screen-capture-test]中点击“Screen capture”按钮。在弹出的对话框中选择共享源，然后就应该能在网页上看到屏幕共享的内容了，并且顶栏中还会显示一个橙色的屏幕共享图标。
 
 ![在 Chrome 中共享屏幕]({{< static-path img screen-share.png >}})
 
 ### 限制
 
-- Chrome 的屏幕共享没有声音。不过即使是在 Windows 上，从 Chrome 共享屏幕也是没有声音的，所以这应该是 Chrome 的问题。
-
-- 从 Chrome 分享屏幕时，询问分享源的系统对话框会出现两次。
+- Chrome 中的屏幕共享没有声音。
 
 [handbook-use]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/USE/zh-cn#.E5.A3.B0.E6.98.8E.E6.B0.B8.E4.B9.85USE.E6.A0.87.E5.BF.97
-[archwiki-webrtc]: https://wiki.archlinux.org/index.php/PipeWire#WebRTC_screen_sharing
+[archwiki-webrtc]: https://wiki.archlinuxcn.org/wiki/PipeWire#WebRTC_%E5%B1%8F%E5%B9%95%E5%85%B1%E4%BA%AB
 [screen-capture-test]: https://mozilla.github.io/webrtc-landing/gum_test.html
