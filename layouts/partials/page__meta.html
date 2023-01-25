@@ -43,7 +43,7 @@ Recognized parameters in .Scratch:
 
     {{- if $showLastmod }}
     {{- if $showDate }}
-    <span class="page__meta-sep"></span>
+    <span class="page__meta-sep" aria-hidden="true"></span>
     {{- end }}
     <span class="page__meta-date">
         <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i>
@@ -56,7 +56,7 @@ Recognized parameters in .Scratch:
 
     {{- if $showReadingTime }}
     {{- if or $showDate $showLastmod }}
-    <span class="page__meta-sep"></span>
+    <span class="page__meta-sep" aria-hidden="true"></span>
     {{- end }}
     <span class="page__meta-readtime">
         <i class="{{ cond
