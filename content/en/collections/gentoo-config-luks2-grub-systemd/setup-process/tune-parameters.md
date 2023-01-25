@@ -8,11 +8,11 @@ operation takes about half a minute to complete; whereas on a normal running
 operating system, the same partition may just take a few seconds to unlock.
 This is because the cryptographic libraries GRUB uses for unlocking are less
 efficient than `cryptsetup`.  In particular, hardware accelerations for
-unlocking are generally unavailable in GRUB since it runs at a still quite
+unlocking are generally unavailable in GRUB since GRUB runs at a still quite
 early stage of the boot process.
 
 If such an unlock speed is unbearable, the LUKS partition's parameters can be
-tuned for faster unlocks with less performance requirements and also **less
+tuned for faster unlocks with less performance requirements but also **less
 security**.
 
 ## LUKS and Argon2id Parameters' Impact on Unlock Speed
@@ -102,6 +102,8 @@ Digests:
 	            a4 96 bf e5 61 3d 2e 4d 50 2a c5 61 67 f9 a8 f0
 ```
 
+### Default Parameters Selected by `cryptsetup`
+
 If a parameter's value was not specified when the LUKS partition was
 initialized or a key file was added, then it would be determined by the
 `cryptsetup` program either from the compiled-in defaults or based on ad-hoc
@@ -131,61 +133,79 @@ including concurrency and hardware acceleration, were present.  Therefore, the
 set of parameters that would yield a 2-second unlock time in this situation
 could cost GRUB half a minute due to those factors' absence.
 
-## Change the Parameters
+## Change the Parameters for GRUB
 
-`cryptsetup luksConvertKey` can be used to update a key slot's parameters.  If
-the `--key-file` option is not included in its invocation, then `cryptsetup`
-asks for the passphrase and applies the new settings to any key slot that can
-be unlocked using the passphrase; otherwise, the new settings are applied to
-any key slot that can be unlocked using the specified key file.
+The parameters that affect the unlock speed the most are applied on a per-key
+slot basis rather than on the entire LUKS partition, so they need to be changed
+individually for each key slot.
 
-The following commands set the number of iterations (i.e. time cost) to 4 and
-memory requirement to 128 MiB, which, at least on a dual-core Intel Core
-i5-7200U dated from 2017, allow the LUKS partition to be unlocked in about 2
-seconds from GRUB and should still grant reasonable security:
+`cryptsetup luksConvertKey` can be used to update a key slot's parameters.  It
+recognizes options including but not limited to these ones:
+
+- `--key-slot`: The ID of the key slot to be updated
+- `--pbkdf-force-iterations`: The new time cost for the key slot
+- `--pbkdf-memory`: The new memory requirement for the key slot
+
+The parameters of the key slot associated with the passphrase will be tuned
+first because this is the key slot that GRUB unlocks.  This key slot's ID is 0
+if this tutorial's instructions were followed properly.
+
+The command below sets the key slot's time cost to 4 and memory requirement to
+128 MiB, which, at least on a dual-core Intel Core i5-7200U dated from 2017,
+allow the LUKS partition to be unlocked in about 2 seconds from GRUB and should
+still grant reasonable security:
 
 ```console
-# cryptsetup luksConvertKey /dev/sda2 --pbkdf-force-iterations 4 --pbkdf-memory 131072
-# cryptsetup luksConvertKey /dev/sda2 --pbkdf-force-iterations 4 --pbkdf-memory 131072 --key-file /etc/cryptsetup-keys.d/gentoo.key
+# cryptsetup luksConvertKey /dev/sda2 --key-slot 0 --pbkdf-force-iterations 4 --pbkdf-memory 131072
 ```
 
-These commands update the parameters for both key slots together.  Although
-only the key slot associated with the passphrase is used by GRUB, for the sake
-of ensuring the fastest unlock speed, the passphrase key slot's last
-modification time **must be earlier than** that of the key slot associated with
-the key file.  Based on my testing, GRUB seems to try out the key slots in the
-order of their modification times, from oldest to newest.  So, if the
-passphrase key slot's modification time is the earliest, GRUB will be able to
-attempt it first; otherwise, GRUB would waste time trying the incorrect key
-slot.
-
-Even though achieving a faster unlock speed in GRUB does not require tuning
-down the parameters of the key slot for the key file since this key slot is not
-intended for GRUB at all, keeping its parameters in sync with the passphrase
-key slot does not worsen the LUKS partition's security and may even expedite
-systemd's automatic unlock.  After all, as long as the key file has been
-properly created and secured, its corresponding key slot is more secure than
-the passphrase key slot when all parameters are identical since a key file
-cannot be guessed, brute-forced or phished as easily as a passphrase.
-
-To test the new unlock speed in GRUB, reboot the system and observe how long
-GRUB takes to unlock the LUKS partition after the passphrase is supplied.  If
-the new unlock speed is faster than desired, then these parameters can be tuned
-up to enhance security.  Remember, the unlock time is directly proportional to
-each parameter independently.
+To test the new parameters' unlock speed in GRUB, reboot the system and observe
+how long GRUB takes to unlock the LUKS partition after the passphrase is
+entered.  If the new unlock speed is faster than desired, then these parameters
+can be tuned up to enhance security.  Remember, the unlock time is directly
+proportional to each parameter independently.
 
 If the new unlock speed is still quite low, here are some suggestions:
 
 - It *might* be sensible to tune the memory size a little further down, and use
-  a passphrase with high [entropy][wikipedia-entropy-info-theory] to offset the
+  a passphrase with high [entropy][wikipedia-passwd-entropy] to offset the
   parameters' security impact.  Usually, the more randomized a passphrase is,
-  the higher entropy it has.  Randomization here means absence of dictionary
-  words, use of different characters, reasonable length, etc.  Avoid making the
-  memory size *too* low: the LUKS partition might become so insecure that even
-  a robust passphrase might not be able to compensate the weakened security.
+  the higher entropy it has.  Avoid making the memory size *too* low: the LUKS
+  partition might become so insecure that even a robust passphrase might not be
+  able to compensate the weakened security.
 
 - In workflows where security is pivotal, compromising security for speed is
   rarely wise or acceptable, so users would have to set the parameters to the
   minimal acceptable values to trade speed for security.
 
-[wikipedia-entropy-info-theory]: https://en.wikipedia.org/wiki/Entropy_(information_theory)
+[wikipedia-passwd-entropy]: https://en.wikipedia.org/wiki/Password_strength#Entropy_as_a_measure_of_password_strength
+
+## Optional: Synchronize the New Parameters to the Other Slot
+
+Once the most ideal parameters are determined, they can be optionally applied
+to the key slot associated with the key file as well.  Even though achieving a
+faster unlock speed in GRUB does not require tuning down the parameters of this
+key slot since this key slot is not intended for GRUB at all, keeping its
+parameters in sync with the passphrase key slot:
+
+- Does not worsen the LUKS partition's security.  After all, as long as the key
+  file has been properly created and secured, when all parameters are
+  identical, the key file's key slot is more secure than the passphrase key
+  slot since a key file cannot be guessed, brute-forced or phished as easily as
+  a passphrase.
+
+- May even expedite systemd's automatic unlock, as systemd unlocks the key
+  file's key slot.
+
+The ID of the key file's key slot is 1 if this tutorial's instructions were
+followed properly.  Note that when changing this key slot's parameters, the key
+file must be supplied to `cryptsetup` via the `--key-file` option.
+
+```console
+# cryptsetup luksConvertKey /dev/sda2 --key-slot 1 --pbkdf-force-iterations 4 --pbkdf-memory 131072 --key-file /etc/cryptsetup-keys.d/gentoo.key
+```
+
+Before {{< format-time 2023-01-25 >}}, this page suggested that the two key
+slots should be updated together to ensure that GRUB tries the passphrase key
+slot first.  This is no longer needed when the `--key-slot` option is used.
+{.notice--info}
