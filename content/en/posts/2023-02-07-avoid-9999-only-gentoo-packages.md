@@ -58,7 +58,7 @@ leading to a lose-lose situation.
     ebuild must be unkeyworded
     (<https://devmanual.gentoo.org/ebuild-writing/functions/src_unpack/vcs-sources/>).
 
-### Package is Prone to Changes in the VCS Repository
+### Package Is Prone to Changes in the VCS Repository
 
 The upstream may update the sources in the VCS repository at any time, and
 changes may break things: what worked yesterday may be broken today.
