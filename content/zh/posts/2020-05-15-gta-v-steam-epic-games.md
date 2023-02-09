@@ -5,7 +5,6 @@ tags:
 categories:
   - 教程
 toc: true
-lastmod: 2020-12-27
 ---
 
 继 Epic Games 宣布 GTA V 将在他们的平台上限免一周后，大量玩家蜂拥而至，其中甚至不乏一些已经在 Steam 上买了 GTA V，想再弄一个甚至好几个小号的人。
@@ -13,6 +12,9 @@ lastmod: 2020-12-27
 然而，很多人在 Steam 和 Epic Games 上同时拥有 GTA V 之后却发现即使已经从 Steam 上下过了游戏，也要从 Epic Games 上重新下载一遍。其实，只要利用一些小技巧，就可以让 Steam 和 Epic Games 共用同一份 GTA V 游戏文件，既省去了重新下载的麻烦，又能节省磁盘空间。我们可以利用 Windows 上一个不知名的 `MKLINK` 命令来建立一个链接：链接给人的感觉类似于快捷方式，能够让被连的文件看起来是放在了链接所在的位置，但其实是被存在了另一个位置。而链接本身占用的空间也是非常小的，所以可以节省大量的磁盘空间。
 
 我相信这次几乎所有玩家都是想把已经在 Steam 上下的文件给 Epic Games 用，而不是反过来，所以下面的步骤是在 Epic Games 游戏安装路径下创建一个连到 Steam 下载的游戏文件的链接的步骤。
+
+{{<format-time 2023-02-08>}}更新：根据在 GTA V 版本 1.66 更新下的测试，在游戏平台间切换时已经不需要再复制 `GTA5.exe` 文件了；现在从 Steam 和 Epic Games 下载的 `GTA5.exe` 文件是完全相同的了。
+{.notice--success}
 
 ## 步骤
 
@@ -46,7 +48,7 @@ lastmod: 2020-12-27
 
     ![]({{< static-path img 06-2-steam-gta-v-files.png >}})
 
-7.  把从 Steam 安装的 GTA V 中的 `GTA5.exe` 和 `PlayGTAV.exe` 复制到别处，并记下它们是从 Steam 的文件复制出来的，比如说把它们都复制到一个叫 `Steam` 的文件夹中。
+7.  把从 Steam 安装的 GTA V 中的 `PlayGTAV.exe` 复制到别处，并记下它是从 Steam 的文件复制出来的，比如说把它复制到一个叫 `Steam` 的文件夹中。
 
     ![]({{< static-path img 07-copy-executables.png >}})
 
@@ -70,11 +72,11 @@ lastmod: 2020-12-27
 
     ![]({{< static-path img 11-epic-games-verifies.png >}})
 
-12. 当 Epic Games 启动器显示可以启动 GTA V 时，前往 GTA V 游戏文件所在路径，再次将 `GTA5.exe` 和 `PlayGTAV.exe` 复制出来，并记下它们是来自于 Epic Games 下载的文件。
+12. 当 Epic Games 启动器显示可以启动 GTA V 时，前往 GTA V 游戏文件所在路径，再次将 `PlayGTAV.exe` 复制出来，并记下它是来自于 Epic Games 下载的文件。
 
     ![]({{< static-path img 12-two-copies-of-executables.png >}})
 
-以后，如果您想从 Steam 启动 GTA V，那么就将第 7 步中从 Steam 的文件复制出来的两个 EXE 文件复制回 GTA V 游戏文件所在路径当中；如果想从 Epic Games 启动，那就复制第 12 步得到的文件。在 GTA V 的关键游戏文件中，只有 `GTA5.exe` 和 `PlayGTAV.exe` 这两个文件从 Steam 下载和从 Epic Games 下载会出现不同，别的文件全部都是一样的。
+以后，如果您想从 Steam 启动 GTA V，那么就将第 7 步中从 Steam 的文件复制出来的两个 EXE 文件复制回 GTA V 游戏文件所在路径当中；如果想从 Epic Games 启动，那就复制第 12 步得到的文件。在 GTA V 的关键游戏文件中，只有 `PlayGTAV.exe` 这一个文件从 Steam 下载和从 Epic Games 下载会出现不同，别的文件全部都是一样的。
 
 ## 提前退出您原有的 Social Club 帐号！
 
@@ -86,10 +88,10 @@ lastmod: 2020-12-27
 
 1.	在游戏平台 A（可以是 Steam，也可以是 Epic Games）上更新 GTA V。
 
-2.	将 GTA V 安装路径中的 `GTA5.exe` 和 `PlayGTAV.exe` 复制到别处，并记下它们是游戏平台 A 下载的文件。
+2.	将 GTA V 安装路径中的 `PlayGTAV.exe` 复制到别处，并记下它是游戏平台 A 下载的文件。
 
 3.	在游戏平台 B（另一个游戏平台）上更新 GTA V。
 
-4.	再次将 GTA V 安装路径中的 `GTA5.exe` 和 `PlayGTAV.exe` 复制到别处，并记下它们是游戏平台 B 下载的文件。
+4.	再次将 GTA V 安装路径中的 `PlayGTAV.exe` 复制到别处，并记下它是游戏平台 B 下载的文件。
 
 之后，您就可以像以前一样正常启动游戏、以及在两个平台之间来回切换。

@@ -5,7 +5,6 @@ tags:
 categories:
   - Tutorial
 toc: true
-lastmod: 2020-12-27
 ---
 
 After Epic Games announced that it would give away free copies of GTA V for a
@@ -25,6 +24,12 @@ Because I believe almost all people who want to let the apps of these two game
 platforms share the same game files have already downloaded GTA V from Steam
 rather than Epic Games, the following instructions will create a link to
 Steam's copy of GTA V files under Epic Games' installation path.
+
+{{<format-time 2023-02-08>}} Update: As of GTA V Title Update 1.66, the
+`GTA5.exe` file no longer needs to be copied when switching between game
+platforms; the `GTA5.exe` files downloaded from Steam and Epic Games are now
+identical.
+{.notice--success}
 
 ## Steps
 
@@ -63,10 +68,9 @@ Steam's copy of GTA V files under Epic Games' installation path.
 
     ![]({{< static-path img 06-2-steam-gta-v-files.png >}})
 
-7.  Copy `GTA5.exe` and `PlayGTAV.exe` in Steam's GTA V installation to
-    somewhere else, and clearly label them as game files downloaded from
-    *Steam*.  For example, I would put those files in a folder with name
-    `Steam`.
+7.  Copy `PlayGTAV.exe` in Steam's GTA V installation to somewhere else, and
+    clearly label it as the game file downloaded from *Steam*.  For example, I
+    would put the file in a folder with name `Steam`.
 
     ![]({{< static-path img 07-copy-executables.png >}})
 
@@ -97,8 +101,8 @@ Steam's copy of GTA V files under Epic Games' installation path.
     ![]({{< static-path img 11-epic-games-verifies.png >}})
 
 12. Once GTA V is ready to play from Epic Games, visit the folder storing GTA V
-    game files again, copy `GTA5.exe` and `PlayGTAV.exe` similarly as in step
-    7, but label them as game files downloaded from *Epic Games* this time.
+    game files again, copy `PlayGTAV.exe` similarly as in step 7, but label
+    it as the game file downloaded from *Epic Games* this time.
 
     ![]({{< static-path img 12-two-copies-of-executables.png >}})
 
@@ -106,9 +110,8 @@ In the future, if you want to launch GTA V via Steam, make sure the executables
 you copied in step 7, which are the ones you labeled *Steam*, are in the GTA V
 game files folder. If you want to launch it via Epic Games, then you should put
 the files copied in step 12, labeled *Epic Games* by you, back to the game
-files folder. These two files, `GTA5.exe` and `PlayGTAV.exe`, are the only two
-critical files that differ between the copies of GTA V downloaded from Steam
-and Epic Games.
+files folder. The `PlayGTAV.exe` file is the only critical file that differs
+between the copies of GTA V downloaded from Steam and Epic Games respectively.
 
 ## Sign Out Your Old Social Club Account!
 
@@ -129,16 +132,14 @@ update:
 1.  Update GTA V from one game platform (either Steam or Epic Games). We will
     denote this platform as *Platform A*.
 
-2.  Copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation path to
-    somewhere else, and clearly label them as game files downloaded from
-    *Platform A*.
+2.  Copy `PlayGTAV.exe` under the game's installation path to somewhere else,
+    and clearly label it as the game file downloaded from *Platform A*.
 
 3.  Next, update GTA V from the other platform, which will be denoted as
     *Platform B*.
 
-4.  Again, copy `GTA5.exe` and `PlayGTAV.exe` under the game's installation
-    path to somewhere else, but label them as game files downloaded from
-    *Platform B* this time.
+4.  Again, copy `PlayGTAV.exe` under the game's installation path to somewhere
+    else, but label it as the game file downloaded from *Platform B* this time.
 
 Now, you should be able to launch GTA V and switch between Steam and Epic Games
 back and forth again as before.
