@@ -275,12 +275,19 @@ packages are tested automatically by the [tinderbox] system set up by Agostino,
 a Gentoo developer.  (The same tinderbox system also tests packages in the
 Gentoo repository.)  When tinderbox detects an issue in a package, like a build
 failure, a test failure, or a QA notice, it automatically reports the issue to
-the package's maintainers on Gentoo Bugzilla.  However, tinderbox cannot report
-issues for `-9999`-only packages.
+the package's maintainers on Gentoo Bugzilla.
 
-As the maintainer of some GURU packages, I have found tinderbox's issue reports
-very useful.  Without the reports, I would not have been aware of some issues
-of my packages that would not be triggered in my own test environments:
+However, tinderbox cannot report issues for `-9999`-only packages.  Tinderbox
+does not test live ebuilds, which is understandable: as already discussed, a
+live ebuild may become broken at any time -- even before tinderbox tests it.
+`-9999`-only packages do not have any non-live ebuilds for tinderbox to test,
+thus they are not covered by tinderbox at all.
+
+Tinderbox can help package maintainers discover package issues that would not
+exhibit in the maintainers' own test environments.  For instance, below are
+some issue reports I have received from tinderbox for GURU packages I have been
+maintaining.  Without these reports, I would not have been aware of those
+issues at all because my own test environments would not trigger them.
 
 - [Bug 833823][#833823]: Missing test dependency `gui-libs/gtk:4` in
   `DEPEND`.  I tested this ebuild in an environment where `gui-libs/gtk:4` was
@@ -294,17 +301,9 @@ of my packages that would not be triggered in my own test environments:
   build this package with LTO compiler flags, so I had been unaware of this
   issue until tinderbox reported it to me.
 
-Tinderbox generously tests packages under different configurations for package
-maintainers, and the only thing it asks in exchange is that the package has at
-least one non-live ebuild.  Tinderbox does not cover live ebuilds, which is
-understandable: as already discussed, a live ebuild may become broken at any
-time -- even before tinderbox tests it.  A corollary of this is, tinderbox
-cannot test `-9999`-only packages because these packages do not have any
-non-live ebuilds for tinderbox to test.
-
-GURU contributors are advised to consider adding at least one non-live ebuild
-to each of their `-9999`-only packages to gain the benefit of tinderbox's
-automated package tests.
+To gain the benefit of tinderbox's automated package tests, GURU contributors
+are advised to consider adding at least one non-live ebuild to each of their
+`-9999`-only packages.
 
 [GURU]: https://wiki.gentoo.org/wiki/Project:GURU
 [tinderbox]: https://blogs.gentoo.org/ago/2020/07/04/gentoo-tinderbox/

@@ -157,17 +157,17 @@ fatal: unable to access 'https://github.com/joncampbell123/dosbox-x.git/': Could
 
 ### GURU 中的软件包：无法受益于 Tinderbox 的自动测试
 
-[GURU] 是具 Gentoo 官方性质的由用户维护的 ebuild 仓库。GURU 中的软件包可被由 Gentoo 开发者 Agostino 配置的 [tinderbox] 系统自动测试。（该 tinderbox 系统同时也测试 Gentoo 仓库中的软件包。）如果 tinderbox 检测到某一软件包中存在诸如构建失败、测试失败、或 QA 警告等问题，它会自动在 Gentoo Bugzilla 上将该问题报告给该软件包的维护者。但是，tinderbox 并不能报告纯 `-9999` 软件包的问题。
+[GURU] 是具 Gentoo 官方性质、由用户维护的 ebuild 仓库。GURU 中的软件包可被由 Gentoo 开发者 Agostino 配置的 [tinderbox] 系统自动测试。（该 tinderbox 系统同时也测试 Gentoo 仓库中的软件包。）如果 tinderbox 检测到某一软件包中存在诸如构建失败、测试失败、或 QA 警告等问题，它会自动在 Gentoo Bugzilla 上将该问题报告给该软件包的维护者。
 
-身为 GURU 中若干个软件包的维护者，我觉得 tinderbox 的问题报告还是很有用的。如果没有 tinderbox 的报告，我就不会发现存在于我维护的软件包中、但在我自己的测试环境无法捕捉的一些问题：
+但是，tinderbox 并不能报告纯 `-9999` 软件包的问题。Tinderbox 的测试并不涵盖实时 ebuild——确实可以理解，毕竟正如上文中所讨论的，实时 ebuild 随时都可能无法正常构建，甚至可能在 tinderbox 测试它之前就不能构建了。纯 `-9999` 软件包因为没有可供 tinderbox 测试的非实时 ebuild，所以整个软件包都不在 tinderbox 自动测试的覆盖范围内。
+
+Tinderbox 可以让软件包维护者发现在他们自己的测试环境下不会出现的问题。像 tinderbox 曾经给我维护的 GURU 软件包报告的几个问题，当时我在我自己的测试环境下就没有发现。如果没有 tinderbox 的报告，我对这些问题就全然不知。
 
 - [Bug 833823][#833823]：`DEPEND` 中缺少测试依赖 `gui-libs/gtk:4`。在我当时测试这个 ebuild 所使用的环境中，`gui-libs/gtk:4` 是早就安装了的，因此即使该测试依赖没有在 ebuild 中明确声明，测试在本地也通过了。但当 tinderbox 在没有提前安装 `gui-libs/gtk:4` 的环境中测试该 ebuild 时，因为缺少依赖，测试就失败了。
 
 - [Bug 859973][#859973]：LTO 导致软件包构建失败。在使用了 LTO 编译器选项时，该软件包会导致编译错误。我当时还从没试过在启用 LTO 时构建该软件包，因此直到收到 tinderbox 的问题报告前，我对此问题都毫不知情。
 
-Tinderbox 慷慨地为维护者在不同的配置下测试软件包，而它只需要维护者确保软件包中有至少一个非实时 ebuild 作为交换条件。Tinderbox 的测试并不涵盖实时 ebuild——这可以理解，毕竟正如上文中所讨论的，实时 ebuild 随时都可能无法正常构建；甚至，一个实时 ebuild 有可能在 tinderbox 测试它之前就不能构建了。但这也意味着 tinderbox 无法测试纯 `-9999` 软件包，因为纯 `-9999` 软件包根本没有非实时 ebuild 可供 tinderbox 测试。
-
-作为建议，GURU 贡献者应考虑给他们维护的每个纯 `-9999` 软件包添加一个非实时 ebuild，以享受 tinderbox 的自动软件包测试带来的好处。
+为充分享受 tinderbox 的自动软件包测试带来的好处，建议 GURU 贡献者考虑为其维护的所有纯 `-9999` 软件包都添加非实时 ebuild。
 
 [GURU]: https://wiki.gentoo.org/wiki/Project:GURU
 [tinderbox]: https://blogs.gentoo.org/ago/2020/07/04/gentoo-tinderbox/
