@@ -36,10 +36,12 @@ special paths:
 
 ## Generating the Site
 
-First, ensure the **extended version** of Hugo is installed.  The extended
-version is required because this site has SCSS files, which only the extended
-version can handle.  The installation instructions are available
-[here][hugo-install].
+First, ensure the **extended version** of Hugo v0.115.0 or later is installed.
+The installation instructions are available [here][hugo-install].
+- The extended version is required because this site has SCSS files, which only
+  the extended version can handle.
+- This site depends on features introduced since Hugo v0.115.0, hence the Hugo
+  version requirement.
 
 To start a local development server for previewing, change the working
 directory to this repository's root, and run command `hugo server`.  By
