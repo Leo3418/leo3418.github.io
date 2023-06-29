@@ -2,6 +2,7 @@
 title: "Configure Gentoo on the LUKS Partition"
 weight: 330
 toc: false
+lastmod: 2022-08-21
 ---
 
 If a new Gentoo installation is being performed, then the system is now ready

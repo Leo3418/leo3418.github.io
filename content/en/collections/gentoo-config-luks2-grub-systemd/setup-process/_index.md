@@ -2,6 +2,7 @@
 title: "Setup Process"
 weight: 300
 toc: false
+lastmod: 2022-08-21
 ---
 
 The overall setup process consists of the following steps:
