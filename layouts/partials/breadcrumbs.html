@@ -7,24 +7,7 @@
                 (.Section | in (slice "collections" "posts"))
             )}}
 
-            {{- $titleSupplierPage := . }}
-
-            {{- /*
-            The landing page of a headless section does not necessarily have a
-            title, and in this case, the headless section's parent page defines
-            the section's title.  To use the '.GetPage' function to get the
-            parent page instead of the headless section's landing page, just
-            append a dot to the argument, which works for any file extension.
-            */}}
-            {{- if eq (len .Title) 0 }}
-                {{- with .File }}
-                    {{- $titleSupplierPage = ((path.Split .Path).Dir
-                        | strings.TrimSuffix "/" | printf "%s."
-                        | $.Site.GetPage) }}
-                {{- end }}
-            {{- end }}
-
-            {{- partial "breadcrumbs-item.html" $titleSupplierPage }}
+            {{- partial "breadcrumbs-item.html" . }}
             <span class="sep" aria-hidden="true">/</span>
 
             {{- end }}
