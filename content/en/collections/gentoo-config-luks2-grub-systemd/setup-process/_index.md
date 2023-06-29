@@ -1,27 +1,22 @@
 ---
-_build:
-  list: 'local'
-  render: 'link'
-weight: 301
+title: "Setup Process"
+weight: 300
+toc: false
 ---
 
-This file creates a headless section in the directory it is in.  The landing
-page of a headless section will not be rendered by Hugo, but all the descendant
-pages in the section will.
+The overall setup process consists of the following steps:
 
-This file can be used to build a hierarchy of children pages for a page without
-turning that parent page into a section landing page (i.e. a page whose kind is
-`section`).  Because Hugo treats `section` pages differently from `page` pages,
-letting the parent page have the `section` kind might not always be desirable.
-To do this, create a directory structure like the following:
-
-```
-.
-├── parent.md
-└── parent (Directory whose name matches the parent page's URL path)
-    ├── _index.md (This file)
-    ├── child-1.md
-    ├── child-2.md
-    ├── ...
-    └── child-n.md
-```
+1. A working environment where LUKS2 can be set up and a Gentoo installation
+   can be configured while it is not running is ready.
+2. The LUKS partition is created and opened from the environment.
+3. A Gentoo installation that can boot from the LUKS partition is configured in
+   the LUKS partition.
+   1. LUKS2 and Argon2 support are enabled for software packages that will
+      unlock the LUKS partition.
+   2. The system is configured so that the passphrase is asked only once during
+      boot.
+   3. The Linux kernel is configured with support for the LUKS partition.
+   4. To improve user experience, GRUB is configured to postpone asking for the
+      passphrase until necessary.
+4. The LUKS partition's parameters are tuned to achieve an acceptable unlock
+   speed in GRUB.
