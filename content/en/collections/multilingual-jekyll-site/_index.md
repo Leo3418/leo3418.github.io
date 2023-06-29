@@ -1,5 +1,6 @@
 ---
 title: "Build a Multilingual Jekyll Site"
+url: "collections/multilingual-jekyll-site"
 categories:
   - Tutorial
 show_reading_time: false

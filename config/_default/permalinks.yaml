@@ -1,2 +1,5 @@
-collections: '/:sections[:2]/:slugorfilename'
-posts: '/:year/:month/:day/:slugorfilename'
+page:
+  collections: '/:sections[:2]/:slugorfilename'
+  posts: '/:year/:month/:day/:slugorfilename'
+section:
+  collections: '/:sections[:2]/:sections[last]'

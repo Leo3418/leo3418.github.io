@@ -1,5 +1,6 @@
 ---
 title: "Gentoo Configuration Guide: Full Disk LUKS2 with GRUB and systemd"
+url: "collections/gentoo-config-luks2-grub-systemd"
 tags:
   - Gentoo
   - GNU/Linux

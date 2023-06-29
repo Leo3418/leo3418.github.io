@@ -1,5 +1,6 @@
 ---
 title: "建立多语言 Jekyll 网站"
+url: "collections/multilingual-jekyll-site"
 categories:
   - 教程
 show_reading_time: false
