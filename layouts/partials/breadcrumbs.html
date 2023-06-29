@@ -1,5 +1,3 @@
-{{- if ge (index (split hugo.Version ".") 1 | int) 109 }}
-{{- /* Use the new .Ancestors variable available since Hugo v0.109.0 */}}
 <nav class="breadcrumbs">
     <ol itemscope itemtype="https://schema.org/BreadcrumbList">
         {{- range .Ancestors.Reverse }}
@@ -34,14 +32,6 @@
         <li class="current" aria-current="page">{{ markdownify .Title }}</li>
     </ol>
 </nav>
-{{- else }}
-{{- /* TODO: Remove after fully migrated to Hugo v0.109.0+ */}}
-<nav class="breadcrumbs">
-    <ol itemscope itemtype="https://schema.org/BreadcrumbList">
-        {{- partial "breadcrumbs-items.html" (dict "p1" . "p2" .) }}
-    </ol>
-</nav>
-{{- end }}
 
 {{- define "partials/breadcrumbs-item.html" }}
 <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
@@ -49,40 +39,4 @@
         <span itemprop="name">{{ markdownify .Title }}</span>
     </a>
 </li>
-{{- end }}
-
-{{- /* TODO: Remove after fully migrated to Hugo v0.109.0+ */}}
-{{- define "partials/breadcrumbs-items.html" }}
-{{- /*
-Recursively generates breadcrumb items.  This template is taken from
-<https://gohugo.io/content-management/sections/#example-breadcrumb-navigation>.
-*/}}
-
-{{- if .p1.Parent }}
-{{- partial "breadcrumbs-items.html" (dict "p1" .p1.Parent "p2" .p2) }}
-{{- else if not .p1.IsHome }}
-{{- partial "breadcrumbs-items.html" (dict "p1" .p1.Site.Home "p2" .p2) }}
-{{- end }}
-
-{{- $p1Displayed := .p1 }}
-{{- if eq (len .p1.Title) 0 }}
-{{- with .p1.File }}
-{{- $p1Displayed = ((path.Split .Path).Dir | strings.TrimSuffix "/"
-    | printf "%s." | $.p1.Site.GetPage) }}
-{{- end }}
-{{- end }}
-
-{{- if .p1.IsHome }}
-    {{- partial "breadcrumbs-item.html" $p1Displayed }}
-{{- else if not (and .p1.Parent.IsHome
-    (.p1.Section | in (slice "collections" "posts"))) }}
-    <span class="sep" aria-hidden="true">/</span>
-    {{- if eq .p1 .p2 }}
-    <li class="current" aria-current="page">
-        {{- markdownify $p1Displayed.Title -}}
-    </li>
-    {{- else }}
-    {{- partial "breadcrumbs-item.html" $p1Displayed }}
-    {{- end }}
-{{- end }}
 {{- end }}
