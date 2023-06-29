@@ -22,11 +22,10 @@ section's directory is determined as follows:
   the post's permalink with any extension stripped.  e.g.
   '2006/01/02/lorem-ipsum.html' -> 'static/img/posts/drafts/lorem-ipsum/'
 - For each page in other sections: The page's permalink relative to the root of
-  the section it is in, with any extension stripped; for section landing pages
-  (whose '.Kind' is 'section'), '/index' will be appended to the path. e.g.
+  the section it is in, with any extension stripped. e.g.
   - 'collections/hugo/shortcode.html' ->
     'static/img/collections/hugo/shortcode/'
-  - 'collections/hugo.html' -> 'static/img/collections/hugo/index/'
+  - 'collections/hugo.html' -> 'static/img/collections/hugo/'
 
 Finally, under every path derived from the above rules, a directory whose name
 is the same as a locale's language code (i.e. what '.Language.Lang' returns)
@@ -100,26 +99,26 @@ Positional Parameters:
 
 {{- with .Page }}
     {{- $path := "" }}
+    {{- $pageBaseName := path.BaseName .RelPermalink }}
     {{- if eq .Section "posts" }}
         {{- $path = printf "%s/posts/%s%s%s%s"
             $type
             (cond .Draft "drafts/" (.Date.Format "2006-01-02-"))
-            (path.BaseName .RelPermalink)
+            $pageBaseName
             $l10nDir
             $file
         }}
     {{- else }}
-        {{- $path = printf "%s%s/%s%s%s%s"
+        {{- /* Hugo starts .Page.RelPermalink with .Site.LanguagePrefix
+            and may end it with '/', which can be removed by path.Clean */}}
+        {{- $pageURLParent := replace (path.Clean .RelPermalink | path.Dir)
+            .Site.LanguagePrefix ""
+            1
+        }}
+        {{- $path = printf "%s%s/%s%s%s"
             $type
-            (replace
-                (path.Dir .RelPermalink | absURL)
-                (printf "%s%s"
-                    (strings.TrimRight "/" .Site.BaseURL) .Site.LanguagePrefix)
-                ""
-                1
-            )
-            (path.BaseName .RelPermalink)
-            (cond .IsSection "/index" "")
+            $pageURLParent
+            $pageBaseName
             $l10nDir
             $file
         }}
