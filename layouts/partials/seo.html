@@ -9,7 +9,7 @@ If the current page is in a collection and is not the collection's landing
 page, then include the collection's title in the page title
 */}}
 {{- $collection := partial "GetCollection.html" . }}
-{{- if and $collection (eq .Kind "page") }}
+{{- if and $collection (ne . $collection) }}
 {{- $titleParts = $titleParts
     | append ($collection.Title | markdownify | plainify) }}
 {{- end }}
