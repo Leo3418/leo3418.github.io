@@ -11,8 +11,5 @@ cascade:
     _build:
       render: 'link'
   - _target:
-      path: '/posts'
-    layout: 'list'
-  - _target:
       path: '/posts/drafts/**'
     draft: true
