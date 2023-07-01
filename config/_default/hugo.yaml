@@ -7,9 +7,12 @@ enableInlineShortcodes: true
 
 cascade:
   - _target:
-      path: '/collections'
-    _build:
-      render: 'link'
-  - _target:
       path: '/posts/drafts/**'
     draft: true
+
+  - _target:
+      path: '/collections'
+    # Do not apply the 'collections.html' layout to this page
+    layout: 'list'
+    # Do not use the 'permalinks.section.collections' URL pattern for this page
+    url: 'collections'
