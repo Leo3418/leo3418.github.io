@@ -10,11 +10,10 @@ archive
         {{ .Content }}
 
         <ul class="taxonomy__index">
-            {{- range $i, $taxonomy := .Data.Terms.ByCount }}
-            {{- $termPage := $.GetPage $taxonomy.Term }}
-            <li><a href="{{ $termPage.RelPermalink }}">
-                <strong>{{ $termPage.Title }}</strong>
-                <span class="taxonomy__count">{{ $taxonomy.Count }}</span>
+            {{- range .Data.Terms.ByCount }}
+            <li><a href="{{ .Page.RelPermalink }}">
+                <strong>{{ .Page.Title }}</strong>
+                <span class="taxonomy__count">{{ .Count }}</span>
             </a></li>
             {{- end }}
         </ul>
