@@ -13,3 +13,26 @@
 {{- if .HasShortcode "asciicast" }}
 {{- partialCached "asciinema-player.html" . }}
 {{- end }}
+
+{{- define "partials/head-cacheable.html" }}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{{- $style := resources.Get "sass/main.scss"
+    | resources.ToCSS | resources.Minify | resources.Fingerprint
+}}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}"
+      integrity="{{ $style.Data.Integrity }}">
+{{- partial "LoadCSSIfPresent.html" "static/css/syntax.css" }}
+
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+{{- end }}
+
+{{- define "partials/LoadCSSIfPresent.html" }}
+{{- $pathInProject := . }}
+{{- if and
+    (fileExists $pathInProject) (os.Stat $pathInProject).Mode.IsRegular }}
+{{- $href := split $pathInProject "/" | after 1 | path.Join | relURL }}
+<link rel="stylesheet" href="{{ $href }}">
+{{- end }}
+{{- end }}
