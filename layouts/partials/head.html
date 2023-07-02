@@ -2,7 +2,7 @@
 
 {{- partial "seo.html" . }}
 
-{{- range .AlternativeOutputFormats -}}
+{{- range .AlternativeOutputFormats }}
 {{ printf `<link href="%s" type="%s" rel="%s">`
     .Permalink .MediaType.Type .Rel
     | safeHTML }}
