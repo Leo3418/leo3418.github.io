@@ -16,3 +16,10 @@ cascade:
     layout: 'list'
     # Do not use the 'permalinks.section.collections' URL pattern for this page
     url: 'collections'
+
+  - _target:
+      path: '/collections{,/**}'
+      kind: 'section'
+    outputs:
+      # Drop 'RSS'
+      - 'HTML'
