@@ -1,9 +1,8 @@
-{{- $rssEnabled := and
-    (not .Site.Params.atom_feed.hide)
-    (.Site.Home.AlternativeOutputFormats.Get "RSS")
-}}
+{{- $feedPage := .Site.Params.atom_feed.path | default "/" | .Site.GetPage }}
+{{- $feed := $feedPage.OutputFormats.Get "RSS" }}
+{{- $feedEnabled := and $feed (not .Site.Params.atom_feed.hide) }}
 
-{{- if or .Site.Menus.follow $rssEnabled }}
+{{- if or .Site.Menus.follow $feedEnabled }}
 <div class="page__footer-follow">
     <ul class="social-icons">
         <li><strong>{{ i18n "followLabel" }}</strong></li>
@@ -16,9 +15,8 @@
         </a></li>
     {{- end }}
 
-    {{- if $rssEnabled }}
-        {{- $path := .Site.Params.atom_feed.path | default "/" }}
-        <li><a href="{{ relref . (dict "path" $path "outputFormat" "rss") }}">
+    {{- if $feedEnabled }}
+        <li><a href="{{ $feed.Permalink }}">
             <i class="fas fa-fw fa-rss-square" aria-hidden="true"></i>
             {{ i18n "feedLabel" }}
         </a></li>
