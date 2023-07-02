@@ -4,7 +4,9 @@ collection; otherwise, returns a false value.
 */}}
 
 {{- $collection := false }}
+{{- if eq .Section "collections" }}
 {{- with .CurrentSection.File }}
 {{- $collection = split .Dir "/" | first 2 | path.Join | $.Site.GetPage }}
+{{- end }}
 {{- end }}
 {{- return $collection }}
