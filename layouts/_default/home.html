@@ -17,10 +17,8 @@ home
 
         <h2 class="archive__subtitle">{{ i18n "recentPosts" }}</h2>
         {{- $entriesLayout := .Param "entries_layout" | default "list" }}
-        {{- $paginator := .Paginate (where (where .Site.Pages
-            "Section" "posts")
-            "IsPage" true)
-        }}
+        {{- $paginator := .Paginate (where
+            .Site.RegularPages "Section" "posts") }}
         <div class="entries-{{ $entriesLayout }}">
         {{- range $paginator.Pages }}
         {{- .Scratch.Set "type" $entriesLayout }}
