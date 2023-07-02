@@ -7,12 +7,7 @@
 
 <html lang="{{ .Language.Lang }}">
     <head>
-        {{- partial "head-no-caching.html" . }}
-        {{- partialCached "head.html" . }}
-
-        {{- if .HasShortcode "asciicast" }}
-        {{- partialCached "asciinema-player.html" . }}
-        {{- end }}
+        {{- partial "head.html" . }}
     </head>
 
     <body class="layout--{{ block "layout" . }}{{ end }}">
