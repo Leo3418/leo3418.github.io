@@ -10,7 +10,7 @@
         {{- partial "head.html" . }}
     </head>
 
-    <body class="layout--{{ block "layout" . }}{{ end }}">
+    <body class="layout--{{ block "layout" . }}default{{ end }}">
         {{- partialCached "skip-links.html" . }}
         {{- partial "masthead.html" . }}
 
