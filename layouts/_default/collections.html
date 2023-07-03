@@ -1,13 +1,2 @@
-{{- define "layout" -}}
-single
-{{- end -}}
-
-{{- define "main" }}
-{{- partial "main/single.html" . }}
-{{- end }}
-
-{{- define "license" }}
-{{- with .Param "license" }}
-{{- partialCached (printf "licenses/%s.html" .) . }}
-{{- end }}
-{{- end }}
+{{- /* Render a sub-section's landing page as a regular page */}}
+{{- .Render "single" }}
