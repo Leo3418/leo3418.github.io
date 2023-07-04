@@ -11,7 +11,11 @@
         {{- $icon := .Params.icon | default "fas fa-link" }}
         <li><a href="{{ .URL }}" rel="nofollow noopener noreferrer">
             <i class="{{ $icon }}" aria-hidden="true"></i>
+            {{- if .Identifier }}
             {{ i18n .Identifier | default .Name }}
+            {{- else }}
+            {{ .Name }}
+            {{- end }}
         </a></li>
     {{- end }}
 
