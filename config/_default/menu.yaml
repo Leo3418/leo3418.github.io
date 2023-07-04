@@ -1,14 +1,11 @@
 follow:
-  - identifier: 'github'
-    name: "GitHub"
+  - name: "GitHub"
     params:
       icon: 'fab fa-fw fa-github'
-    url: 'https://github.com/Leo3418/'
+    url: 'https://github.com/Leo3418'
 
 navigation:
-  - identifier: 'tags'
+  - pageRef: '/tags'
     weight: 1
-    url: 'tags'
-  - identifier: 'categories'
+  - pageRef: '/categories'
     weight: 2
-    url: 'categories'
