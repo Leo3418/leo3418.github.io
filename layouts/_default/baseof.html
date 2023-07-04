@@ -10,7 +10,9 @@
         {{- partial "head.html" . }}
     </head>
 
-    <body class="layout--{{ block "layout" . }}default{{ end }}">
+    <body class="layout--{{ block "layout" . }}default{{ end }}
+        {{- with .Params.classes }} {{ cond (reflect.IsSlice .)
+            (delimit . " ") . }}{{- end -}}">
         {{- partialCached "skip-links.html" . }}
         {{- partial "masthead.html" . }}
 
