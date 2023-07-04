@@ -2,7 +2,7 @@
 {{- if $collection }}
 <div class="sidebar sticky">
 {{- .Scratch.Set "rootPage" $collection }}
-{{- partial "nav__list.html" . }}
+{{- partial "nav-list-hier.html" . }}
 {{- .Scratch.Delete "rootPage" }}
 </div>
 {{- end }}

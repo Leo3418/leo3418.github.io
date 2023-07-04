@@ -19,7 +19,7 @@ Recognized parameters in .Scratch:
     <label for="ac-toc">{{ i18n "menuLabel" }}</label>
     <ul class="nav__items">
         {{- range $rootPage.Pages }}
-        {{- partial "nav__list-pages.html" (dict
+        {{- partial "nav-list-hier-pages.html" (dict
             "currentPage" $currentPage
             "this" .
         )}}
@@ -27,7 +27,7 @@ Recognized parameters in .Scratch:
     </ul>
 </nav>
 
-{{- define "partials/nav__list-pages.html" }}
+{{- define "partials/nav-list-hier-pages.html" }}
 {{- /*
 A helper partial template for recursively generating a list of articles at all
 levels under a root page.  Accepts a dictionary with at least the following
@@ -50,7 +50,7 @@ generated list is glitchy as a result.
 
 {{- range .this.Pages }}
     <ul>
-        {{- partial "nav__list-pages.html" (dict
+        {{- partial "nav-list-hier-pages.html" (dict
             "currentPage" $.currentPage
             "this" .
         )}}
