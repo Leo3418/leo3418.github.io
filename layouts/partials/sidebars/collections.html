@@ -1,53 +1,8 @@
 {{- $collection := partial "GetCollection.html" . }}
 {{- if $collection }}
-{{- $currentPage := . }}
 <div class="sidebar sticky">
-    <nav class="nav__list">
-        <div class="nav__title" style="padding-left: 0;">
-            <a href="{{ $collection.RelPermalink }}">
-                {{- markdownify $collection.Title -}}
-            </a>
-        </div>
-        <input id="ac-toc" name="accordion-toc" type="checkbox" />
-        <label for="ac-toc">{{ i18n "menuLabel" }}</label>
-        <ul class="nav__items">
-            {{- range $collection.Pages }}
-            {{- partial "sidebars/collections-pages.html" (dict
-                "currentPage" $currentPage
-                "this" .
-            )}}
-            {{- end }}
-        </ul>
-    </nav>
+{{- .Scratch.Set "rootPage" $collection }}
+{{- partial "nav__list.html" . }}
+{{- .Scratch.Delete "rootPage" }}
 </div>
-{{- end }}
-
-{{- define "partials/sidebars/collections-pages.html" }}
-{{- /*
-A helper partial template for recursively generating a list of articles at all
-levels in a collection.  Accepts a dictionary with at least the following keys:
-- currentPage: The page currently displayed; used to emphasize its entry in the
-  list
-- this: The root page where the recursive list generation should start
-
-A dictionary instead of .Scratch is used to pass in these parameters' values
-because values read from .Scratch are undeterministic in recursion, and the
-generated list is glitchy as a result.
-*/}}
-
-{{- if eq (.this.Params._build.list | default "always") "always" }}
-    <li><a href="{{ .this.RelPermalink }}"
-           {{- if eq .this .currentPage }} class="active"{{- end -}}>
-        {{- markdownify .this.Title -}}
-    </a></li>
-{{- end }}
-
-{{- range .this.Pages }}
-    <ul>
-        {{- partial "sidebars/collections-pages.html" (dict
-            "currentPage" $.currentPage
-            "this" .
-        )}}
-    </ul>
-{{- end }}
 {{- end }}
