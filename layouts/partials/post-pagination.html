@@ -1,0 +1,52 @@
+{{/*
+Provides an element with "Previous" and "Next" links for navigating a
+pagination.  The context is assumed to be the current page in the pagination.
+
+Recognized parameters in .Scratch:
+- pages: An array of pages in the pagination
+*/}}
+
+{{- $pages := .Scratch.Get "pages" }}
+
+{{- $numPages := len $pages }}
+{{- $prev := false }}
+{{- $next := false }}
+
+{{- range $i, $page := $pages }}
+{{- if eq $page $.Page }}
+{{- $prev = index $pages (sub $i 1) }}
+{{- $next = index $pages (add $i 1) }}
+{{- end }}
+{{- end }}
+
+<nav class="pagination">
+    {{- if $prev }}
+    {{- $prevTitle := markdownify $prev.Title }}
+    <a href="{{ $prev.RelPermalink }}" class="pagination--pager"
+       title="{{ $prevTitle }}">
+        <div class="pagination-guide-text">{{ i18n "paginationPrevious" }}</div>
+        <div class="pagination-title">{{ $prevTitle }}</div>
+    </a>
+    {{- else }}
+    <a href="#" class="pagination--pager disabled" aria-disabled="true"
+       aria-label="{{ i18n "paginationAriaPrevious" }}">
+        <div class="pagination-guide-text">{{ i18n "paginationPrevious" }}</div>
+        <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
+    </a>
+    {{- end }}
+
+    {{- if $next }}
+    {{- $nextTitle := markdownify $next.Title }}
+    <a href="{{ $next.RelPermalink }}" class="pagination--pager"
+       title="{{ $nextTitle }}">
+        <div class="pagination-guide-text">{{ i18n "paginationNext" }}</div>
+        <div class="pagination-title">{{ $nextTitle }}</div>
+    </a>
+    {{- else }}
+    <a href="#" class="pagination--pager disabled" aria-disabled="true"
+       aria-label="{{ i18n "paginationAriaNext" }}">
+        <div class="pagination-guide-text">{{ i18n "paginationNext" }}</div>
+        <div class="pagination-no-title">{{ i18n "noMoreArticles" }}</div>
+    </a>
+    {{- end }}
+</nav>
