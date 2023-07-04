@@ -6,11 +6,15 @@ This is a closing shortcode; the content between the opening and closing
 shortcode tags is taken as the recording file's path.
 
 The named parameters recognized by this shortcode are exactly the options
-listed at <https://github.com/asciinema/asciinema-player/tree/v3.0.1#options>;
+listed at <https://github.com/asciinema/asciinema-player/tree/v3.5.0#options>;
 the parameters' names and supported values are the same as those options'.  For
 each unspecified named parameter, its corresponding option will not be set for
-the player either.  The only exception is the 'theme' option, whose value will
-be set to "tango" if the named parameter is not specified.
+the player either; the only exceptions and their default values are:
+- 'theme': "tango"
+
+In addition, 'logger: console' will always be used with the asciinema player
+when this shortcode's 'logger' parameter is specified, no matter what value is
+used for the parameter.
 */}}
 
 {{- $asciinemaPlayerId := printf "asciicast-%d" .Ordinal }}
@@ -74,16 +78,32 @@ be set to "tango" if the named parameter is not specified.
             fit: {{ . }},
             {{- end }}
 
+            {{- with .Get "controls" }}
+            controls: {{ cond (. | in (slice "true" "false")) (safeJS .) . }},
+            {{- end }}
+
+            {{- with .Get "markers" }}
+            markers: {{ safeJS . }},
+            {{- end }}
+
+            {{- with .Get "pauseOnMarkers" }}
+            pauseOnMarkers: {{ cond (. | in (slice "true" "false")) (safeJS .) . }},
+            {{- end }}
+
             {{- with .Get "terminalFontSize" }}
             terminalFontSize: {{ . }},
             {{- end }}
 
-            {{- with .Get "terminalFontFamily" -}}
+            {{- with .Get "terminalFontFamily" }}
             terminalFontFamily: {{ . }},
             {{- end }}
 
-            {{- with .Get "terminalLineHeight" -}}
+            {{- with .Get "terminalLineHeight" }}
             terminalLineHeight: {{ . }},
+            {{- end }}
+
+            {{- with .Get "logger" }}
+            logger: console,
             {{- end }}
         },
     );

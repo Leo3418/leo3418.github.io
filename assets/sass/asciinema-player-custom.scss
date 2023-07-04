@@ -6,19 +6,16 @@ $terminal-background-color: #121314;
     max-width: 596px;
 }
 
-// Adjust the style of selected text
-.asciinema-player *::selection {
-    background-color: #ffffff;
-    color: $terminal-background-color;
-}
+.ap-terminal {
+    // Adjust the style of selected text
+    *::selection {
+        background-color: #ffffff;
+        color: $terminal-background-color;
+    }
 
-// Disable text animations in asciinema terminals
-.asciinema-terminal span {
-    -webkit-transition: unset;
-    transition: unset;
-}
-
-// Unset the style of play button
-.play-button .icon {
-    all: unset;
+    // Disable text animations in asciinema terminals
+    span {
+        -webkit-transition: unset;
+        transition: unset;
+    }
 }
