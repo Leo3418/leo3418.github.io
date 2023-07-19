@@ -3,6 +3,7 @@ title: "Minimize Steam When Launching a Game Shortcut on Windows"
 categories:
   - Tutorial
 toc: true
+lastmod: 2023-07-15
 ---
 
 The recent Steam client major update has brought predominant user interface
@@ -170,7 +171,7 @@ The limitations of this solution are:
     start up as well as the time taken to power off if the user has not
     manually closed Steam before shutting down the system.
 
-  - The Steam client unnecessary consumes memory when it is running in the
+  - The Steam client unnecessarily consumes memory when it is running in the
     background.
 
 - If the user closes Steam and then launches a Steam game shortcut, the client
