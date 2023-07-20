@@ -11,8 +11,8 @@
 {{- partialCached "head-cacheable.html" . }}
 
 {{- if .HasShortcode "asciicast" }}
-{{- partialCached "asciinema-player.html" . }}
-{{- end }}
+{{ partialCached "asciinema-player.html" . }}
+{{ end }}
 
 {{- define "partials/head-cacheable.html" }}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
