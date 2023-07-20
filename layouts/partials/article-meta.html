@@ -1,7 +1,7 @@
 <meta itemprop="headline"
       content="{{ .Title | markdownify | plainify }}">
 <meta itemprop="description"
-      content="{{ .Description | default .Summary | markdownify | plainify }}">
+      content="{{ partial "GetMetaDescription.html" . }}">
 <meta itemprop="datePublished"
       content="{{ .Date.Format "2006-01-02T15:04:05Z07:00"  }}">
 <meta itemprop="dateModified"

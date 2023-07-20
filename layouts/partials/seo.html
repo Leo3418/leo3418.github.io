@@ -23,12 +23,7 @@ page, then include the collection's title in the page title
 {{- $ogType := cond (or (eq .Kind "page") (eq .Kind "section"))
     "article" "website" }}
 
-{{- $seoDescription := .Description
-    | default (printf "%s%s" .Summary (cond .Truncated
-        (printf " %s" (i18n "punctuationEllipsis"))
-        ""
-    ))
-    | markdownify | plainify }}
+{{- $seoDescription := partial "GetMetaDescription.html" . }}
 
 {{- $header := .Params.header }}
 {{- $pageLargeImage := $header.og_image

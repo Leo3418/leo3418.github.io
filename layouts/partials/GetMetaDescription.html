@@ -1,0 +1,12 @@
+{{/*
+For the page in the context, returns a description suitable for use in <meta>
+HTML elements if it is available; otherwise, returns a false value.
+*/}}
+
+{{- $metaDescription := false }}
+{{- with .Description }}
+    {{- $metaDescription = . }}
+{{- else }}
+    {{- $metaDescription = partial "GetHumanizedSummary.html" . }}
+{{- end }}
+{{- return $metaDescription }}

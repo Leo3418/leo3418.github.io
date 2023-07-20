@@ -1,0 +1,14 @@
+{{/*
+For the page in the context, returns the summary if it is available, with an
+ellipsis appended if the summary is truncated; otherwise, returns a false
+value.
+*/}}
+
+{{- $summary := false }}
+{{- with .Summary }}
+    {{- $summary = printf "%s%s"
+        (. | plainify | chomp)
+        (cond $.Truncated (printf " %s" (i18n "punctuationEllipsis")) "")
+        | htmlUnescape }}
+{{- end }}
+{{- return $summary }}
