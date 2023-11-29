@@ -153,10 +153,16 @@ if this tutorial's instructions were followed properly.
 The command below sets the key slot's time cost to 4 and memory requirement to
 128 MiB, which, at least on a dual-core Intel Core i5-7200U dated from 2017,
 allow the LUKS partition to be unlocked in about 2 seconds from GRUB and should
-still grant reasonable security:
+still grant reasonable security.  Note that customized encryption parameters
+(like `--pbkdf` and `--hash` in previous sections) must be explicitly specified
+again in the command, or else `cryptsetup` would reset them to their default
+values.
 
 ```console
-# cryptsetup luksConvertKey /dev/sda2 --key-slot 0 --pbkdf-force-iterations 4 --pbkdf-memory 131072
+# cryptsetup luksConvertKey /dev/sda2 \
+--key-slot 0 \
+--pbkdf argon2id --hash sha512 \
+--pbkdf-force-iterations 4 --pbkdf-memory 131072
 ```
 
 To test the new parameters' unlock speed in GRUB, reboot the system and observe
@@ -202,7 +208,10 @@ followed properly.  Note that when changing this key slot's parameters, the key
 file must be supplied to `cryptsetup` via the `--key-file` option.
 
 ```console
-# cryptsetup luksConvertKey /dev/sda2 --key-slot 1 --pbkdf-force-iterations 4 --pbkdf-memory 131072 --key-file /etc/cryptsetup-keys.d/gentoo.key
+# cryptsetup luksConvertKey /dev/sda2 \
+--key-slot 1 --key-file /etc/cryptsetup-keys.d/gentoo.key \
+--pbkdf argon2id --hash sha512 \
+--pbkdf-force-iterations 4 --pbkdf-memory 131072
 ```
 
 Before {{< format-time 2023-01-25 >}}, this page suggested that the two key
