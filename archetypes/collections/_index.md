@@ -1,6 +1,6 @@
 ---
-title: "{{ replace .Name `-` ` ` | title }}"
-url: "collections/{{ .Name }}"
+title: "{{ replace .File.ContentBaseName `-` ` ` | title }}"
+url: 'collections/{{ .File.ContentBaseName }}'
 ---
 
 {{- /*
