@@ -46,7 +46,7 @@ following configuration:
     - A Btrfs volume with one or more subvolumes
     - An LVM physical volume with one or more logical volumes
 
-- **GRUB 2.06** is used as the bootloader.
+- **GRUB** is used as the bootloader.
 - **systemd** is used as the init system.
 - **dracut** is used as the initramfs generator.
   - An initramfs is required for this configuration because unlocking the LUKS

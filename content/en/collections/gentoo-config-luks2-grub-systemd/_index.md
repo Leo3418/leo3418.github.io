@@ -30,14 +30,12 @@ articles in this collection.
 
 ## Caveats and Disclaimers
 
-- This tutorial depends on **unofficial modifications** to GRUB 2.06.  The
-  patches for these modifications are from staged commits for the next GRUB
-  release, the [grub-devel mailing list][grub-devel-archive], and a modified
-  GRUB package on the [Arch User Repository (AUR)][arch-wiki-aur].  Although
-  these patches have been tested by myself and have not exhibited any issues so
-  far, and they presumably have also been tested by their original authors,
+- This tutorial depends on **unofficial modification** to GRUB.  The patch for
+  the modification is from the [grub-devel mailing list][grub-devel-archive].
+  Although the patch has been tested by myself and has not exhibited any issues
+  so far, and it presumably has also been tested by their original authors,
   reviewers, testers, and some other users too, there is **no guarantee** on
-  the modifications' functionality, stability, compatibility, security, or
+  the modification's functionality, stability, compatibility, security, or
   performance whatsoever.
 
 - This tutorial gives **no professional advice on computer security**.
@@ -58,4 +56,3 @@ my best to make the information in this tutorial accurate, but still, **use it
 at your own risk**.
 
 [grub-devel-archive]: https://lists.gnu.org/archive/html/grub-devel/
-[arch-wiki-aur]: https://wiki.archlinux.org/title/Arch_User_Repository
