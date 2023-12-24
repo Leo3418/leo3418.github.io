@@ -40,7 +40,7 @@ dracut, or else the LUKS partition could not be unlocked during boot.
 
 Neither GRUB 2.12 nor GRUB 2.06 supports the Argon2id PBKDF; GRUB 2.06 even has
 more limitations on LUKS2 support.  Therefore, both GRUB 2.12 and GRUB 2.06
-need some patch for LUKS2 with Argon2id support.
+need some patches for LUKS2 with Argon2id support.
 
 ### GRUB 2.12
 
