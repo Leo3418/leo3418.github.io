@@ -312,10 +312,10 @@ a kernel without `genkernel` is definitely possible, is not very hard, and is
 
 Before starting to compile and install a kernel, it is strongly recommended to
 install a package that provides the `/sbin/installkernel` utility, such as
-`sys-kernel/installkernel-gentoo`.  This is because, if the installation
-scripts in the kernel sources cannot locate `/sbin/installkernel`, they will
-perform [their own kernel installation logic][linux-install.sh], which is to
-install the kernel's executable image to [`/boot/vmlinuz` if it is
+`sys-kernel/installkernel`.  This is because, if the installation scripts in
+the kernel sources cannot locate `/sbin/installkernel`, they will perform
+[their own kernel installation logic][linux-install.sh], which is to install
+the kernel's executable image to [`/boot/vmlinuz` if it is
 compressed][vmlinuz-etymology] or `/boot/vmlinux` if it is not; however, some
 bootloaders might not support these installation paths.  For example, GRUB 2
 searches the kernel's image using [`/boot/vmlinuz-*` and `/boot/vmlinux-*`
@@ -323,12 +323,12 @@ patterns][grub-10_linux]; the extra hyphen causes GRUB 2 to disregard
 `/boot/vmlinuz` and `/boot/vmlinux`.  Once `/sbin/installkernel` is installed,
 the kernel sources' Makefiles will call it to handle kernel installation
 instead, and the `/sbin/installkernel` provided by
-`sys-kernel/installkernel-gentoo` installs the kernel's image to
-`/boot/vmlinuz-*` or `/boot/vmlinux-*` (with the hyphen), so bootloaders like
-GRUB 2 can properly detect it.
+`sys-kernel/installkernel` installs the kernel's image to `/boot/vmlinuz-*` or
+`/boot/vmlinux-*` (with the hyphen), so bootloaders like GRUB 2 can properly
+detect it.
 
 ```console
-# emerge --ask --noreplace sys-kernel/installkernel-gentoo
+# emerge --ask --noreplace sys-kernel/installkernel
 ```
 
 Assuming that a kernel configuration file has been created, compiling and
