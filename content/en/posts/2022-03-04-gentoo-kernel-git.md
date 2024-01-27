@@ -7,7 +7,6 @@ tags:
 categories:
   - Tutorial
 toc: true
-lastmod: 2022-03-04
 ---
 
 Gentoo offers its users a wide array of Linux kernel packages in the

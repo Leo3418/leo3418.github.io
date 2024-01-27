@@ -7,7 +7,6 @@ tags:
 categories:
   - 教程
 toc: true
-lastmod: 2022-03-04
 ---
 
 Gentoo 软件仓库的 `sys-kernel/*` 类别下有若干 Linux 内核软件包可供用户选择；不同的软件包安装内核的方式也不相同。其中，`sys-kernel/*-sources` 软件包（例如 `sys-kernel/gentoo-sources`、`sys-kernel/vanilla-sources`）只安装内核源代码文件，不进行任何其它操作。这样的特性适合想自己手动编译并安装内核、但仍然希望系统软件包管理器自动更新内核源码的用户。
