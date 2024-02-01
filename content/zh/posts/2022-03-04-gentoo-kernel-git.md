@@ -183,7 +183,7 @@ Date:   Thu Nov 18 19:17:21 2021 +0100
 
 ### 不使用 `genkernel` 来编译并安装内核
 
-在刚开始接触内核构建与定制的用户当中，使用 `genkernel` 是一种很流行的方法；但是，这种方法在 Gentoo 手册中毕竟是[作为一种备选方法介绍的][handbook-genkernel]。不使用 `genkernel` 构建内核不仅可行，操作也并不难，并且[在手册中也是被作为一种主要方法介绍的][handbook-manual-build]。
+在刚开始接触内核构建与定制的用户当中，使用 `genkernel` 是一种很流行的方法；但是，这种方法在 Gentoo 手册中毕竟是[作为一种备选方法介绍的][handbook-genkernel]。不使用 `genkernel` 构建内核不仅可行，操作也并不难。
 
 开始编译并安装内核之前，强烈推荐先安装一个提供 `/sbin/installkernel` 工具的软件包，例如 `sys-kernel/installkernel`。这是因为，如果内核源码中的安装脚本未找到 `/sbin/installkernel`，其就会执行[自己的内核安装逻辑][linux-install.sh]，将内核本体安装到 [`/boot/vmlinuz`（如果内核是压缩过的）][vmlinuz-etymology]或者 `/boot/vmlinux`（如果没有压缩）；但是，一些引导程序可能不支持这些内核安装路径。例如，GRUB 2 搜索内核本体时检查的路径是 [`/boot/vmlinuz-*` 和 `/boot/vmlinux-*`][grub-10_linux]；这个多出来的连字符就会导致 GRUB 2 忽略 `/boot/vmlinuz` 和 `/boot/vmlinux` 路径。`/sbin/installkernel` 安装好后，内核源码中的 Makefile 就会调用它来安装内核，而 `sys-kernel/installkernel` 提供的 `/sbin/installkernel` 会将内核本体安装到 `/boot/vmlinuz-*` 或 `/boot/vmlinux-*`（即带有连字符的路径），允许诸如 GRUB 2 的引导程序识别到它。
 
@@ -240,8 +240,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 这样一来，手动构建内核的过程中的唯一挑战就剩下了配置内核。
 
-[handbook-genkernel]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel/zh-cn#.E5.A4.87.E9.80.89.EF.BC.9A.E4.BD.BF.E7.94.A8genkernel
-[handbook-manual-build]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel/zh-cn#.E7.BC.96.E8.AF.91.E5.92.8C.E5.AE.89.E8.A3.85
+[handbook-genkernel]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel/zh-cn#.E5.A4.87.E9.80.89.EF.BC.9Agenkernel
 [linux-install.sh]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/arch/x86/boot/install.sh?h=v5.16.11#n37
 [vmlinuz-etymology]: https://zh.wikipedia.org/wiki/Vmlinux#vmlinuz
 [grub-10_linux]: https://git.savannah.gnu.org/cgit/grub.git/tree/util/grub.d/10_linux.in?h=grub-2.06#n167

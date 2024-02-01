@@ -306,8 +306,7 @@ package.
 Using `genkernel` is quite a popular way to build a custom kernel among users
 who are new to the process; however, it is [introduced as an alternative
 way][handbook-genkernel] to build the kernel in the Gentoo Handbook.  Building
-a kernel without `genkernel` is definitely possible, is not very hard, and is
-[the primary method presented by the Handbook][handbook-manual-build].
+a kernel without `genkernel` is definitely possible and is not very hard.
 
 Before starting to compile and install a kernel, it is strongly recommended to
 install a package that provides the `/sbin/installkernel` utility, such as
@@ -393,8 +392,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 This leaves kernel configuration as the only challenging task in building a
 kernel manually.
 
-[handbook-genkernel]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Using_genkernel
-[handbook-manual-build]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Compiling_and_installing
+[handbook-genkernel]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Kernel#Alternative:_Genkernel
 [linux-install.sh]: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/arch/x86/boot/install.sh?h=v5.16.11#n37
 [vmlinuz-etymology]: https://en.wikipedia.org/wiki/Vmlinux#Etymology
 [grub-10_linux]: https://git.savannah.gnu.org/cgit/grub.git/tree/util/grub.d/10_linux.in?h=grub-2.06#n167
