@@ -12,7 +12,7 @@ site-root/_posts$ ls
 en  zh
 ```
 
-接着，在每个文件夹下创建一个文件名格式为 `YEAR-MONTH-DAY-title.MARKUP` 的文件，详情可参阅 [Jekyll 官方文档的描述]((https://jekyllrb.com/docs/posts/#creating-posts))。然后在每个文件头部的信息块中加入一个 `lang` 变量，它的值就是当前文件中的帖子的语言。
+接着，在每个文件夹下创建一个文件名格式为 `YEAR-MONTH-DAY-title.MARKUP` 的文件，详情可参阅 [Jekyll 官方文档的描述](https://jekyllrb.com/docs/posts/#creating-posts)。然后在每个文件头部的信息块中加入一个 `lang` 变量，它的值就是当前文件中的帖子的语言。
 
 ```console
 site-root/_posts$ ls *
