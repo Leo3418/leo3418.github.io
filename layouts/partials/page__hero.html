@@ -43,7 +43,7 @@
         {{- end }}
         {{- end }}
 
-        {{- partial "page__meta.html" . }}
+        {{- partial "page__meta.html" (dict "page" .) }}
 
         {{- $ctaURL := $header.ctaURL }}
         {{- if $ctaURL }}

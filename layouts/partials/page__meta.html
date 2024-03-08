@@ -1,6 +1,5 @@
 {{/*
-Provides an element for metadata of the current page in the context, like its
-date and reading time.
+Provides an element for metadata of a page, like its date and reading time.
 
 By default, a page's date will be shown if and only if it is under the "posts"
 section.  This can be overridden with the `show_date` boolean variable in the
@@ -13,30 +12,32 @@ overridden with the `show_lastmod` boolean variable in the page's front matter.
 By default, the reading time will always be shown.  This can be overridden with
 the `show_reading_time` boolean variable in the page's front matter.
 
-Recognized parameters in .Scratch:
-- page: The object for the page
+The context should be a dictionary with these key-value pairs:
+- page: The page whose metadata is to be read
 - type: The type of the post list ("grid", "list", etc.); optional
 */}}
 
-{{- $type := .Scratch.Get "type" }}
+{{- $page := .page }}
+{{- $type := index . "type" }}
 
 {{- $dateFormat := ":date_medium" }}
 
-{{- $showDate := .Params.show_date
-    | default (eq .Section "posts") }}
+{{- $showDate := $page.Params.show_date
+    | default (eq $page.Section "posts") }}
 {{- /* Compare only the date part between .Date and .Lastmod; ignore time */}}
-{{- $showLastmod := .Params.show_lastmod
-    | default (or (not $showDate)
-        (ne (.Date.Format "2006-01-02") (.Lastmod.Format "2006-01-02"))) }}
-{{- $showReadingTime := .Params.show_reading_time
+{{- $showLastmod := $page.Params.show_lastmod
+    | default (or (not $showDate) (ne
+        ($page.Date.Format "2006-01-02")
+        ($page.Lastmod.Format "2006-01-02"))) }}
+{{- $showReadingTime := $page.Params.show_reading_time
     | default true }}
 
 <p class="page__meta">
     {{- if $showDate }}
     <span class="page__meta-date">
         <i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i>
-        <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
-            {{- time.Format $dateFormat .Date -}}
+        <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">
+            {{- time.Format $dateFormat $page.Date -}}
         </time>
     </span>
     {{- end }}
@@ -49,7 +50,7 @@ Recognized parameters in .Scratch:
         <i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i>
         {{ i18n "updated" }}
         <time datetime="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
-            {{- time.Format $dateFormat .Lastmod -}}
+            {{- time.Format $dateFormat $page.Lastmod -}}
         </time>
     </span>
     {{- end }}
@@ -62,7 +63,7 @@ Recognized parameters in .Scratch:
         <i class="{{ cond
             (and (eq $type "grid") (or $showDate $showLastmod))
              "fa-fw " "" }}far fa-clock" aria-hidden="true"></i>
-        {{ i18n "readingTime" .ReadingTime }}
+        {{ i18n "readingTime" $page.ReadingTime }}
     </span>
     {{- end }}
 </p>

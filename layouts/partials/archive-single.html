@@ -27,9 +27,7 @@ The context should be a dictionary with these key-value pairs:
             </a>
         </h3>
 
-        {{- $page.Scratch.Set "type" $type }}
-        {{- partial "page__meta.html" $page }}
-        {{- $page.Scratch.Delete "type" }}
+        {{- partial "page__meta.html" (dict "page" $page "type" $type) }}
 
         {{- with $page.Description }}
         <p class="archive__item-excerpt" itemprop="description">

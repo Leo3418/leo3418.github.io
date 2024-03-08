@@ -31,7 +31,7 @@ single
                     itemprop="headline">
                     {{- markdownify .Title -}}
                 </h1>
-                {{- partial "page__meta.html" . }}
+                {{- partial "page__meta.html" (dict "page" .) }}
             </header>
             {{- end }}
 
