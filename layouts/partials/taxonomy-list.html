@@ -1,17 +1,18 @@
 {{/*
-Provides an element that shows all terms in a taxonomy assigned to the current
-page in the context.
+Provides an element that shows all terms assigned to a page in a taxonomy.
 
-Recognized parameters in .Scratch:
+The context should be a dictionary with these key-value pairs:
+- page: The page whose taxonomy is to be displayed
 - taxonomy: The name of the taxonomy to show in the element
 - iconClass: The class for the icon shown for the taxonomy
 */}}
 
-{{- $taxonomy := .Scratch.Get "taxonomy" }}
-{{- $iconClass := .Scratch.Get "iconClass" }}
+{{- $page := .page }}
+{{- $taxonomy := .taxonomy }}
+{{- $iconClass := .iconClass }}
 
-{{- if index .Params $taxonomy }}
-{{- $taxonomyPage := urlize $taxonomy | .Site.GetPage }}
+{{- if index $page.Params $taxonomy }}
+{{- $taxonomyPage := urlize $taxonomy | site.GetPage }}
 {{- $scratch := newScratch }}
 {{- range $taxonomyPage.Data.Terms }}
 {{- $scratch.SetInMap "taxonomyHomes" .Page.Title .Page.RelPermalink }}
@@ -23,7 +24,7 @@ Recognized parameters in .Scratch:
         {{ $taxonomyPage.Title }}{{ i18n "punctuationColon" | safeHTML }}
     </strong>
     <span itemprop="keywords">
-        {{- range $i, $term := index .Params $taxonomy }}
+        {{- range $i, $term := index $page.Params $taxonomy }}
         {{- if gt $i 0 -}}
             <span class="sep">
                 {{- i18n "punctuationCommaInList" | safeHTML -}}

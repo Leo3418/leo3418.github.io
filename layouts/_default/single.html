@@ -59,16 +59,16 @@ single
             </section>
 
             <footer class="page__meta">
-                {{- .Scratch.Set "taxonomy" "tags" }}
-                {{- .Scratch.Set "iconClass" "fas fa-fw fa-tags" }}
-                {{- partial "taxonomy-list.html" . }}
-
-                {{- .Scratch.Set "taxonomy" "categories" }}
-                {{- .Scratch.Set "iconClass" "fas fa-fw fa-folder-open" }}
-                {{- partial "taxonomy-list.html" . }}
-
-                {{- .Scratch.Delete "taxonomy" }}
-                {{- .Scratch.Delete "iconClass" }}
+                {{- partial "taxonomy-list.html" (dict
+                    "page" .
+                    "taxonomy" "tags"
+                    "iconClass" "fas fa-fw fa-tags"
+                )}}
+                {{- partial "taxonomy-list.html" (dict
+                    "page" .
+                    "taxonomy" "categories"
+                    "iconClass" "fas fa-fw fa-folder-open"
+                )}}
             </footer>
 
             {{- $partialPath := printf "post-paginations/%s.html" .Section }}
