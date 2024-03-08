@@ -1,13 +1,13 @@
 {{/*
-Provides an element that helps navigate a hierarchy of pages.  The context is
-assumed to be the current page in the hierarchy.
+Provides an element that helps navigate a hierarchy of pages.
 
-Recognized parameters in .Scratch:
+The context should be a dictionary with these key-value pairs:
+- page: The current page in the hierarchy
 - rootPage: The root page of the hierarchy
 */}}
 
-{{- $currentPage := . }}
-{{- $rootPage := .Scratch.Get "rootPage" }}
+{{- $currentPage := .page }}
+{{- $rootPage := .rootPage }}
 
 <nav class="nav__list">
     <div class="nav__title" style="padding-left: 0;">
