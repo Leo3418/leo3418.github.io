@@ -20,8 +20,7 @@ $masthead-mobile: $small;
     flex: 1;
 
     label {
-        margin-top: auto;
-        margin-bottom: auto;
+        margin-block: auto;
     }
 }
 
@@ -172,8 +171,7 @@ $masthead-mobile: $small;
     column-gap: 16px;
 
     p {
-        margin-top: 0;
-        margin-bottom: 0;
+        margin-block: 0;
     }
 }
 
@@ -184,12 +182,8 @@ $masthead-mobile: $small;
 }
 
 .footer-site-info .powered-by {
-    ul {
-        margin-top: 0;
-    }
-
     ul, li {
-        margin-bottom: 0;
+        margin-block: 0;
     }
 }
 
@@ -258,8 +252,7 @@ h1, h2, h3, h4, h5, h6, strong, em, del {
 p, a, li, figcaption, td {
     & > code {
         font-size: $code-font-size;
-        padding-left: $code-padding-horizontal;
-        padding-right: $code-padding-horizontal;
+        padding-inline: $code-padding-horizontal;
 
         &:before, &:after {
             content: unset;
@@ -351,18 +344,15 @@ figcaption {
     font-size: $type-size-6;
 
     footer {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-inline: 1rem;
 
         @include breakpoint($large) {
-            padding-left: calc(#{$right-sidebar-width-narrow} + 1rem);
-            padding-right: calc(#{$right-sidebar-width-narrow} + 1rem);
+            padding-inline: calc(#{$right-sidebar-width-narrow} + 1rem);
         }
 
         @include breakpoint($x-large) {
             max-width: $max-width;
-            padding-left: calc(#{$right-sidebar-width} + 1rem);
-            padding-right: calc(#{$right-sidebar-width} + 1rem);
+            padding-inline: calc(#{$right-sidebar-width} + 1rem);
         }
     }
 
@@ -381,8 +371,7 @@ figcaption {
     li {
         font-size: 0.75rem;
         line-height: normal;
-        margin-top: 6px;
-        margin-bottom: 6px;
+        margin-block: 6px;
     }
 
     ul {
@@ -399,8 +388,7 @@ figcaption {
 
 .page__content img:not(.align-left):not(.align-right) {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
 }
 
 figure img {
@@ -413,8 +401,7 @@ figure img {
 table {
     display: revert;
     width: unset;
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
 }
 
 // Breadcrumbs
@@ -428,8 +415,7 @@ table {
         @include breakpoint($large) {
             width: calc(100% - 2 * #{$right-sidebar-width-narrow});
             float: unset;
-            margin-left: auto;
-            margin-right: auto;
+            margin-inline: auto;
         }
 
         @include breakpoint($x-large) {
