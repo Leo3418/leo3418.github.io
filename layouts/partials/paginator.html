@@ -1,11 +1,10 @@
 {{/*
 Generates a widget for navigating pages from a paginator.
 
-Recognized parameters in .Scratch:
-- paginator: The paginator object
+The context should be the paginator object.
 */}}
 
-{{- $paginator := .Scratch.Get "paginator" }}
+{{- $paginator := . }}
 
 {{- if gt $paginator.TotalPages 1 }}
 {{- $i18nAriaPrev := i18n "paginationAriaPrevious" }}

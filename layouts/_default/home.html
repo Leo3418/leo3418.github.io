@@ -25,9 +25,7 @@ archive
             (dict "page" . "type" $entriesLayout) }}
         {{- end }}
         </div>
-        {{- .Scratch.Set "paginator" $paginator }}
-        {{- partial "paginator.html" . }}
-        {{- .Scratch.Delete "paginator" }}
+        {{- partial "paginator.html" $paginator }}
     </div>
 </div>
 {{- end }}
