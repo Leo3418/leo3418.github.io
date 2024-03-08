@@ -21,9 +21,8 @@ archive
             .Site.RegularPages "Section" "posts") }}
         <div class="entries-{{ $entriesLayout }}">
         {{- range $paginator.Pages }}
-        {{- .Scratch.Set "type" $entriesLayout }}
-        {{- partial "archive-single.html" . }}
-        {{- .Scratch.Delete "type" }}
+        {{- partial "archive-single.html"
+            (dict "page" . "type" $entriesLayout) }}
         {{- end }}
         </div>
         {{- .Scratch.Set "paginator" $paginator }}

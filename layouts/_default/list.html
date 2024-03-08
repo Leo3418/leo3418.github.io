@@ -14,9 +14,8 @@ archive
         {{- $entriesLayout := .Param "entries_layout" | default "list" }}
         <div class="entries-{{ $entriesLayout }}">
             {{- range .Pages }}
-            {{- .Scratch.Set "type" $entriesLayout }}
-            {{- partial "archive-single.html" . }}
-            {{- .Scratch.Delete "type" }}
+            {{- partial "archive-single.html"
+                (dict "page" . "type" $entriesLayout) }}
             {{- end }}
         </div>
     </div>

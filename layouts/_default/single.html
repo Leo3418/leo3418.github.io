@@ -84,9 +84,7 @@ single
         <h2 class="page__related-title">{{ i18n "relatedLabel" }}</h2>
         <div class="grid__wrapper">
             {{- range . }}
-            {{- .Scratch.Set "type" "grid" }}
-            {{- partial "archive-single.html" . }}
-            {{- .Scratch.Delete "type" }}
+            {{- partial "archive-single.html" (dict "page" . "type" "grid") }}
             {{- end }}
         </div>
     </div>

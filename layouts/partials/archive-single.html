@@ -1,15 +1,16 @@
 {{/*
-Provides an element that can be used in an archive for the current page in the
-context.
+Provides an element that can be used as a page's entry in an archive.
 
-Recognized parameters in .Scratch:
-- type: The type of the archive's layout ("grid", "list", etc.); defaults to
-  "list"
+The context should be a dictionary with these key-value pairs:
+- page: The page whose entry is to be created
+- type: The type of the archive's layout ("grid", "list", etc.); optional --
+  defaults to "list"
 */}}
 
-{{- $type := .Scratch.Get "type" | default "list" }}
+{{- $page := .page }}
+{{- $type := index . "type" | default "list" }}
 
-{{- $teaser := .Params.header.teaser | default .Site.Params.teaser }}
+{{- $teaser := $page.Params.header.teaser | default site.Params.teaser }}
 
 <div class="{{ $type }}__item">
     <article class="archive__item"
@@ -21,24 +22,24 @@ Recognized parameters in .Scratch:
         {{- end }}
 
         <h3 class="archive__item-title no_toc" itemprop="headline">
-            <a href="{{ .RelPermalink }}" rel="permalink">
-                {{- markdownify .Title -}}
+            <a href="{{ $page.RelPermalink }}" rel="permalink">
+                {{- markdownify $page.Title -}}
             </a>
         </h3>
 
-        {{- .Scratch.Set "type" $type }}
-        {{- partial "page__meta.html" . }}
-        {{- .Scratch.Delete "type" }}
+        {{- $page.Scratch.Set "type" $type }}
+        {{- partial "page__meta.html" $page }}
+        {{- $page.Scratch.Delete "type" }}
 
-        {{- with .Description }}
+        {{- with $page.Description }}
         <p class="archive__item-excerpt" itemprop="description">
             {{ . }}
         </p>
         {{- end }}
-        {{- if .Summary }}
+        {{- if $page.Summary }}
         <p class="archive__item-excerpt"
-           {{- if not $.Description }} itemprop="description"{{ end }}>
-            {{- partial "GetHumanizedSummary.html" . }}
+           {{- if not $page.Description }} itemprop="description"{{ end }}>
+            {{- partial "GetHumanizedSummary.html" $page }}
         </p>
         {{- end }}
     </article>
