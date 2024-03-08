@@ -1,7 +1,5 @@
 {{- $collection := partial "GetCollection.html" . }}
 {{- if $collection }}
 {{- $pages := partialCached "GetDescendantPages.html" $collection $collection }}
-{{- .Scratch.Set "pages" $pages }}
-{{- partial "post-pagination.html" . }}
-{{- .Scratch.Delete "pages" }}
+{{- partial "post-pagination.html" (dict "page" . "pages" $pages) }}
 {{- end }}

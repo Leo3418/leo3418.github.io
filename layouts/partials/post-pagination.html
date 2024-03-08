@@ -1,19 +1,21 @@
 {{/*
-Provides an element with "Previous" and "Next" links for navigating a
-pagination.  The context is assumed to be the current page in the pagination.
+Provides an element for the current page with "Previous" and "Next" links for
+navigating a pagination.
 
-Recognized parameters in .Scratch:
-- pages: An array of pages in the pagination
+The context should be a dictionary with these key-value pairs:
+- page: The current page in the pagination
+- pages: The slice of pages in the pagination
 */}}
 
-{{- $pages := .Scratch.Get "pages" }}
+{{- $currentPage := .page }}
+{{- $pages := .pages }}
 
 {{- $numPages := len $pages }}
 {{- $prev := false }}
 {{- $next := false }}
 
 {{- range $i, $page := $pages }}
-{{- if eq $page $.Page }}
+{{- if eq $page $currentPage }}
 {{- $prev = index $pages (sub $i 1) }}
 {{- $next = index $pages (add $i 1) }}
 {{- end }}
