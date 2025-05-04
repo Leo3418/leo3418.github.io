@@ -25,6 +25,8 @@ cascade:
   - _target:
       path: '/collections{,/**}'
       kind: 'section'
+    # Render a collection sub-section's landing page as a regular page
+    layout: 'single'
     outputs:
       # Drop 'RSS'
       - 'HTML'
