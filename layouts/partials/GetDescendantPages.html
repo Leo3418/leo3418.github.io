@@ -9,6 +9,6 @@ a headless section's landing page) plus all its recursive descendant pages.
 {{- end }}
 
 {{- range .Pages }}
-{{- $pages = $pages | append (partialCached "GetDescendantPages.html" . .) }}
+{{- $pages = $pages | append (partial "GetDescendantPages.html" .) }}
 {{- end }}
 {{- return $pages }}
