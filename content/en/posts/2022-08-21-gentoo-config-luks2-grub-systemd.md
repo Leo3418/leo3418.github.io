@@ -1,7 +1,7 @@
 ---
 title: "Gentoo Configuration Guide: Full Disk LUKS2 with GRUB and systemd"
 show_reading_time: false
-_build:
+build:
   render: 'link'
 ---
 
