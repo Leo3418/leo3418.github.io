@@ -48,12 +48,14 @@ generated list is glitchy as a result.
     </a></li>
 {{- end }}
 
-{{- range .this.Pages }}
+{{- if gt (len .this.Pages) 0 }}
     <ul>
+    {{- range .this.Pages }}
         {{- partial "nav-list-hier-pages.html" (dict
             "currentPage" $.currentPage
             "this" .
         )}}
+    {{- end }}
     </ul>
 {{- end }}
 {{- end }}
