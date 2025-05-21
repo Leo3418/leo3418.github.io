@@ -41,7 +41,7 @@ because values read from .Scratch are undeterministic in recursion, and the
 generated list is glitchy as a result.
 */}}
 
-{{- if eq (.this.Params._build.list | default "always") "always" }}
+{{- if eq (.this.Params.build.list | default "always") "always" }}
     <li><a href="{{ .this.RelPermalink }}"
            {{- if eq .this .currentPage }} class="active"{{- end -}}>
         {{- markdownify .this.Title -}}

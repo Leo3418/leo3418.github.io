@@ -4,7 +4,7 @@ a headless section's landing page) plus all its recursive descendant pages.
 */}}
 
 {{- $pages := slice }}
-{{- if eq (.Params._build.list | default "always") "always" }}
+{{- if eq (.Params.build.list | default "always") "always" }}
 {{- $pages = $pages | append . }}
 {{- end }}
 
