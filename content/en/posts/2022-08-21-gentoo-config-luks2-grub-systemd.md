@@ -3,6 +3,7 @@ title: "Gentoo Configuration Guide: Full Disk LUKS2 with GRUB and systemd"
 show_reading_time: false
 build:
   render: 'link'
+lastmod: 2022-08-21
 ---
 
 [This post is just for a redirection page to the collection with the same name.
