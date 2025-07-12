@@ -11,26 +11,22 @@ cascade:
     draft: true
 
   - _target:
-      path: '/collections'
-    # Do not apply the 'collections.html' layout to this page
-    layout: 'list'
-    # Do not use the 'permalinks.section.collections' URL pattern for this page
-    url: 'collections'
-
-  - _target:
-      path: '/collections/*'
-    # Do not use the 'permalinks.section.collections' URL pattern
-    url: ':sections[:2]'
-
-  - _target:
       path: '/collections{,/**}'
+      kind: 'section'
+    outputs:
+      # Drop 'RSS'
+      - 'HTML'
+
+  - _target:
+      path: '/collections/**'
       kind: 'section'
     # Render a collection sub-section's landing page as a regular page
     layout: 'single'
+
+  - _target:
+      path: '/collections/*/**'
+      kind: 'section'
     # Must set the URL here with the '.html' file extension instead of in the
     # 'permalinks' site configuration because, since v0.148.0, Hugo no longer
     # generates ugly URLs for section pages
     url: ':sections[:2]/:sections[last].html'
-    outputs:
-      # Drop 'RSS'
-      - 'HTML'
