@@ -1,5 +1,5 @@
 page:
   collections: '/:sections[:2]/:slugorcontentbasename'
   posts: '/:year/:month/:day/:slugorcontentbasename'
-section:
-  collections: '/:sections[:2]/:sections[last]'
+# Permalink for 'section.collections' is configured in 'cascade.url' because,
+# since v0.148.0, Hugo no longer generates ugly URLs for section pages

@@ -27,6 +27,10 @@ cascade:
       kind: 'section'
     # Render a collection sub-section's landing page as a regular page
     layout: 'single'
+    # Must set the URL here with the '.html' file extension instead of in the
+    # 'permalinks' site configuration because, since v0.148.0, Hugo no longer
+    # generates ugly URLs for section pages
+    url: ':sections[:2]/:sections[last].html'
     outputs:
       # Drop 'RSS'
       - 'HTML'
