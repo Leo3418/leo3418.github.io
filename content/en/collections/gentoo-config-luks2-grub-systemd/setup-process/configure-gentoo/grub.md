@@ -136,3 +136,27 @@ Now, GRUB is ready to be installed/reinstalled as normal:
 
 Once GRUB has been successfully installed, the system is ready to reboot into
 the Gentoo installation on the new LUKS partition.
+
+If you are using SHA-512 for your partition (or a hash algorithm that is not
+SHA-256), you must append `--modules=gcry_sha512` to the `grub-install` command,
+as GRUB automatically adds `gcry_sha256` without checking the actual hash algorithm
+in use.
+{.notice--info}
+
+In some cases, depending on your machine, the bootloader may
+immediately fail trying to decrypt your Argon2-encrypted partition. It will immediately
+claim "Invalid passphrase" after submitting your password. This error is most likely
+due to the EFI binary being unable to allocate the default Argon2 memory cost of 1 GiB and
+GRUB emitting a misleading error message as a result. To confirm, type `set debug=all`
+then `cryptomount -a` to retry with debugging messages enabled and see if it has
+trouble allocating the requisite memory for the desired LUKS2 keyslot (not the other
+keyslots not meant for your passphrase). You can lower the amount of memory via
+`cryptsetup luksChangeKey -S <key-slot> --pbkdf-memory <memory-in-KiB>
+<other params copied from original> /dev/sda2`. This will require you to input your
+password thrice (once to decrypt and gain the ability to make modifications, twice
+to confirm a "new" password that you do not need to necessarily change, yet it still
+asks you anways). Lower memory cost is not necessarily harmful to your security as
+`cryptsetup` automatically adjusts the time cost factor upon recognizing your desired
+lesser memory cost amount, but you can always binary search for the maximum memory cost
+amount that GRUB can work with in 20 steps (since the default memory cost is 2^20).
+{.notice--info}
