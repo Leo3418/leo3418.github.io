@@ -1,41 +1,8 @@
 {{/*
 Based on this site's convention for organizing static files, returns the full
-relative path of a static file to the site base URL.  The returned path's value
-depends on the current page's permalink, section, kind, and draft status.
-
-This site's static files are organized in the following convention:
-- The files are organized by their types under different directories in the
-  union of all static directories, like 'static/img/' for images, and
-  'static/res/' for miscellaneous resources.
-- Under each type's directory are static files of that type for the section of
-  this site whose name is the same as the directory, such as
-  'static/img/collections/' for all images used in the 'collections' section,
-  and 'static/res/posts/' for all resources used in the 'posts' section.
-
-With respect to the basic conventions above, the exact path relative to a
-section's directory is determined as follows:
-- For each post that is not a draft: The post's date in 'YYYY-MM-DD' format,
-  followed by a hyphen, and the last element of the post's permalink with any
-  extension stripped.  e.g. '2006/01/02/lorem-ipsum.html' ->
-  'static/img/posts/2006-01-02-lorem-ipsum/'
-- For each draft post: The string 'drafts/', followed by the last element of
-  the post's permalink with any extension stripped.  e.g.
-  '2006/01/02/lorem-ipsum.html' -> 'static/img/posts/drafts/lorem-ipsum/'
-- For each page in other sections: The page's permalink relative to the root of
-  the section it is in, with any extension stripped. e.g.
-  - 'collections/hugo/shortcode.html' ->
-    'static/img/collections/hugo/shortcode/'
-  - 'collections/hugo.html' -> 'static/img/collections/hugo/'
-
-Finally, under every path derived from the above rules, a directory whose name
-is the same as a locale's language code (i.e. what '.Language.Lang' returns)
-can be optionally created to store localized static files for the locale.  Any
-static files not in such a directory are unlocalized files that may be shared
-across all multilingual variants of the site.  For example:
-- 'static/img/posts/2006-01-02-lorem-ipsum/en/' contains the post's images
-  that are localized for English
-- 'static/img/posts/2006-01-02-lorem-ipsum/' is for images that can be shared
-  among all locales
+relative path of a static file to the site base URL.  The convention is
+documented in the top comment of this site's partial template
+'static-path.html'.
 
 Named Parameters:
 - type: The static file's type, such as 'img' and 'res'
@@ -70,7 +37,7 @@ Positional Parameters:
     {{- end }}
 
     {{- with .Get "file" }}
-        {{- $file = printf "/%s" . }}
+        {{- $file = . }}
     {{- end }}
 
     {{- $l10n = gt (.Get "l10n" | len) 0 }}
@@ -83,7 +50,7 @@ Positional Parameters:
     {{- end }}
 
     {{- with .Get 1 }}
-        {{- $file = printf "/%s" . }}
+        {{- $file = . }}
     {{- end }}
 
     {{- range after 2 .Params }}
@@ -95,33 +62,10 @@ Positional Parameters:
     {{- end }}
 {{- end }}
 
-{{- $l10nDir := cond $l10n (printf "/%s" .Page.Language.Lang) "" }}
-
-{{- with .Page }}
-    {{- $path := "" }}
-    {{- $pageBaseName := path.BaseName .RelPermalink }}
-    {{- if eq .Section "posts" }}
-        {{- $path = printf "%s/posts/%s%s%s%s"
-            $type
-            (cond .Draft "drafts/" (.Date.Format "2006-01-02-"))
-            $pageBaseName
-            $l10nDir
-            $file
-        }}
-    {{- else }}
-        {{- /* Hugo starts .Page.RelPermalink with .Site.LanguagePrefix
-            and may end it with '/', which can be removed by path.Clean */}}
-        {{- $pageURLParent := replace (path.Clean .RelPermalink | path.Dir)
-            .Site.LanguagePrefix ""
-            1
-        }}
-        {{- $path = printf "%s%s/%s%s%s"
-            $type
-            $pageURLParent
-            $pageBaseName
-            $l10nDir
-            $file
-        }}
-    {{- end }}
-    {{- cond $abs (absURL $path) (relURL $path) }}
-{{- end -}}
+{{- partial "static-path.html" (dict
+    "page" .Page
+    "type" $type
+    "file" $file
+    "l10n" $l10n
+    "abs" $abs
+) -}}
