@@ -2,11 +2,11 @@
 title: "Enable LUKS2 and Argon2 Support for Packages"
 weight: 332
 vars:
-  patches_base_url: "res/collections/gentoo-config-luks2-grub-systemd"
   memregion_patch: "4500-grub-2.06-runtime-memregion-alloc.patch"
   argon2_patch_206: "5000-grub-2.06-luks2-argon2-v4.patch"
   argon2_patch_212: "grub-2.12-luks2-argon2-v4.patch"
   aur_patch: "9500-grub-AUR-improved-luks2.patch"
+lastmod: 2023-12-24
 ---
 
 Because the LUKS partition uses LUKS2 and Argon2id, support for these LUKS
@@ -44,8 +44,10 @@ need some patches for LUKS2 with Argon2id support.
 
 ### GRUB 2.12
 
-GRUB 2.12 only needs one patch [`{{< param vars.argon2_patch_212 >}}`]({{<
-patchesBaseURL.inline >}}{{- relURL .Page.Params.vars.patches_base_url -}}
+GRUB 2.12 only needs one patch [`{{< param vars.argon2_patch_212 >}}`](
+{{< patchesBaseURL.inline >}}
+{{- partial "static-path.html" (dict
+    "page" (index .Page.Ancestors.Reverse 2) "type" "res") -}}
 {{< /patchesBaseURL.inline >}}/{{< param vars.argon2_patch_212 >}}) to get
 support for LUKS2 with Argon2.  This patch was originally [submitted to the
 grub-devel mailing list][grub-devel-argon2-v4] and targeted GRUB 2.06; I ported
@@ -65,16 +67,20 @@ To apply this patch to Gentoo's GRUB package -- `sys-boot/grub`, add it as a
 applied to all Gentoo revisions of GRUB 2.12 (`-r1`, `-r2`, etc.).  The
 following commands may be used to do this:
 
-{{< commands.inline >}}
-{{ $content := `# mkdir -p /etc/portage/patches/sys-boot/grub-2.12
-# cd /etc/portage/patches/sys-boot/grub-2.12
-` }}
-{{- $patches := slice
-    .Page.Params.vars.argon2_patch_212
-}}
+{{< commands.inline "2.12" "argon2_patch_212" >}}
+{{- $grubVer := .Get 0 }}
+{{- $patches := split (.Get 1) " " }}
+{{- $patches = apply $patches "printf" "vars.%s" "." }}
+{{- $patches = apply $patches "page.Param" "." }}
+
+{{ $content := print
+    "# mkdir -p /etc/portage/patches/sys-boot/grub-" $grubVer | println }}
+{{ $content := print $content
+    "# cd /etc/portage/patches/sys-boot/grub-" $grubVer | println }}
+{{- $baseURL := partial "static-path.html" (dict
+    "page" (index .Page.Ancestors.Reverse 2) "type" "res" "abs" true) }}
 {{- range $patches }}
-{{- $url := printf "%s/%s" $.Page.Params.vars.patches_base_url . | absURL }}
-{{- $content = print $content "# curl -O " $url | println }}
+{{- $content = print $content "# curl -O " $baseURL "/" . | println }}
 {{- end }}
 {{- highlight $content "console" }}
 {{< /commands.inline >}}
@@ -141,21 +147,7 @@ arbitrary.
 Similar to the case of GRUB 2.12, add these patches as Portage user patches to
 `/etc/portage/patches/sys-boot/grub-2.06`:
 
-{{< commands.inline >}}
-{{ $content := `# mkdir -p /etc/portage/patches/sys-boot/grub-2.06
-# cd /etc/portage/patches/sys-boot/grub-2.06
-` }}
-{{- $patches := slice
-    .Page.Params.vars.memregion_patch
-    .Page.Params.vars.argon2_patch_206
-    .Page.Params.vars.aur_patch
-}}
-{{- range $patches }}
-{{- $url := printf "%s/%s" $.Page.Params.vars.patches_base_url . | absURL }}
-{{- $content = print $content "# curl -O " $url | println }}
-{{- end }}
-{{- highlight $content "console" }}
-{{< /commands.inline >}}
+{{< commands.inline "2.06" "memregion_patch argon2_patch_206 aur_patch" />}}
 
 Then, add the required environment variables to
 `/etc/portage/env/sys-boot/grub-2.06`:
