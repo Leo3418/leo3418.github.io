@@ -1,7 +1,8 @@
 {{- $titleParts := slice }}
 
 {{- with .Title }}
-{{- $titleParts = $titleParts | append (. | markdownify | plainify) }}
+{{- $titleParts = $titleParts
+    | append (. | markdownify | plainify | htmlUnescape) }}
 {{- end }}
 
 {{- /*
@@ -11,7 +12,7 @@ page, then include the collection's title in the page title
 {{- $collection := partial "GetCollection.html" . }}
 {{- if and $collection (ne . $collection) }}
 {{- $titleParts = $titleParts
-    | append ($collection.Title | markdownify | plainify) }}
+    | append ($collection.Title | markdownify | plainify | htmlUnescape) }}
 {{- end }}
 
 {{- $titleDelimiter := " - " }}
