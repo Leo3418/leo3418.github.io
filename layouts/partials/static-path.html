@@ -25,7 +25,7 @@ section's directory is determined as follows:
   the section it is in, with any extension stripped. e.g.
   - 'collections/hugo/shortcode.html' ->
     'static/img/collections/hugo/shortcode/'
-  - 'collections/hugo.html' -> 'static/img/collections/hugo/'
+  - 'collections/hugo/index.html' -> 'static/img/collections/hugo/'
 
 Finally, under every path derived from the above rules, a directory whose name
 is the same as a locale's language code (i.e. what '.Language.Lang' returns)
@@ -65,6 +65,7 @@ The context should be a dictionary with these key-value pairs:
 {{- with $page }}
     {{- $path := "" }}
     {{- $pageBaseName := path.BaseName .RelPermalink }}
+
     {{- if eq .Section "posts" }}
         {{- $path = printf "%s/posts/%s%s%s%s"
             $type
@@ -74,6 +75,12 @@ The context should be a dictionary with these key-value pairs:
             $file
         }}
     {{- else }}
+        {{- if eq $pageBaseName "index" }}
+            {{- /* e.g. for 'collections/hugo/index.html', return
+            '/<type>/collections/hugo' rather than
+            '/<type>/collections/hugo/index', especially on Hugo v0.148.0+ */}}
+            {{- $pageBaseName = "" }}
+        {{- end }}
         {{- /* Hugo starts .Page.RelPermalink with .Site.LanguagePrefix
             and may end it with '/', which can be removed by path.Clean */}}
         {{- $pageURLParent := replace (path.Clean .RelPermalink | path.Dir)
