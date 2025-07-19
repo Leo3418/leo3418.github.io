@@ -55,10 +55,7 @@ The context should be a dictionary with these key-value pairs:
 {{- $l10n := index . "l10n" | default false }}
 {{- $abs := index . "abs" | default false }}
 
-{{- with $file }}
-    {{- $file = printf "/%s" . }}
-{{- end }}
-{{- $l10nDir := cond $l10n (printf "/%s" $page.Language.Lang) "" }}
+{{- $l10nDir := cond $l10n $page.Language.Lang "" }}
 
 {{- $staticPath := false }}
 
@@ -67,10 +64,14 @@ The context should be a dictionary with these key-value pairs:
     {{- $pageBaseName := path.BaseName .RelPermalink }}
 
     {{- if eq .Section "posts" }}
-        {{- $path = printf "%s/posts/%s%s%s%s"
-            $type
+        {{- $dir := printf "%s%s"
             (cond .Draft "drafts/" (.Date.Format "2006-01-02-"))
             $pageBaseName
+        }}
+        {{- $path = path.Join
+            $type
+            "posts"
+            $dir
             $l10nDir
             $file
         }}
@@ -87,7 +88,7 @@ The context should be a dictionary with these key-value pairs:
             .Site.LanguagePrefix ""
             1
         }}
-        {{- $path = printf "%s%s/%s%s%s"
+        {{- $path = path.Join
             $type
             $pageURLParent
             $pageBaseName
