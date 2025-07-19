@@ -43,7 +43,7 @@ generated list is glitchy as a result.
 
 {{- if eq (.this.Params.build.list | default "always") "always" }}
     <li><a href="{{ .this.RelPermalink }}"
-           {{- if eq .this .currentPage }} class="active"{{- end -}}>
+           {{- if .this.Eq .currentPage }} class="active"{{- end -}}>
         {{- markdownify .this.Title -}}
     </a></li>
 {{- end }}

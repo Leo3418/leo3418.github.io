@@ -15,7 +15,7 @@ The context should be a dictionary with these key-value pairs:
 {{- $next := false }}
 
 {{- range $i, $page := $pages }}
-{{- if eq $page $currentPage }}
+{{- if $page.Eq $currentPage }}
 {{- $prev = index $pages (sub $i 1) }}
 {{- $next = index $pages (add $i 1) }}
 {{- end }}
