@@ -4,6 +4,7 @@ tags:
   - GNU/Linux
 categories:
   - Blog
+lastmod: 2025-08-14
 ---
 
 In my years of using GNOME, I have been using GNOME Terminal, and it has served

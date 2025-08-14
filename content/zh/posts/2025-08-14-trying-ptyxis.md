@@ -4,6 +4,7 @@ tags:
   - GNU/Linux
 categories:
   - 博客
+lastmod: 2025-08-14
 ---
 
 我使用 GNOME 已经有好几年了，这期间用的一直是 GNOME 终端（GNOME Terminal），我感觉很好用。虽然后面又出现了 GNOME 控制台（GNOME Console），有一些不错的新功能，但它却没有个别 GNOME 终端中存在、且我需要用到的功能，所以一直以来我仍然在坚守 GNOME 终端。而到了现在，随着 Ptyxis（英文发音 [/ˈtɪksɪs/][ptyxis-wiktionary]）的出现，为 GNOME 设计的终端模拟器程序已经多达三个。简单上手体验了 Ptyxis 后，我很快就对它爱不释手，而在花了几天折腾一番后，我成功让 Ptyxis 达到了可以取代 GNOME 终端的标准。
