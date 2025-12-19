@@ -6,10 +6,10 @@ This is a closing shortcode; the content between the opening and closing
 shortcode tags is taken as the recording file's path.
 
 The named parameters recognized by this shortcode are exactly the options
-listed at <https://github.com/asciinema/asciinema-player/tree/v3.5.0#options>;
-the parameters' names and supported values are the same as those options'.  For
-each unspecified named parameter, its corresponding option will not be set for
-the player either; the only exceptions and their default values are:
+listed at <https://docs.asciinema.org/manual/player/options/>; the parameters'
+names and supported values are the same as those options'.  For each
+unspecified named parameter, its corresponding option will not be set for the
+player either; the only exceptions and their default values are:
 - 'theme': "tango"
 
 In addition, 'logger: console' will always be used with the asciinema player
@@ -72,6 +72,12 @@ used for the parameter.
             {{- with .Get "poster" }}
             {{- /* Avoid replacing '\r\n' with '\r\r\n' */}}
             poster: {{ . | replaceRE "\r\n" "\n" | replaceRE "\n" "\r\n" }},
+            {{- end }}
+
+            {{- with .Get "audioUrl" }}
+                {{ partial "inline/asciinema-player/resource-or-url.html"
+                    (dict "page" $.Page "dest" .)
+                }},
             {{- end }}
 
             {{- with .Get "fit" }}
