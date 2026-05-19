@@ -6,24 +6,24 @@ enableGitInfo: true
 enableInlineShortcodes: true
 
 cascade:
-  - _target:
+  - target:
       path: '/posts/drafts/**'
     draft: true
 
-  - _target:
+  - target:
       path: '/collections{,/**}'
       kind: 'section'
     outputs:
       # Drop 'RSS'
       - 'HTML'
 
-  - _target:
+  - target:
       path: '/collections/**'
       kind: 'section'
     # Render a collection sub-section's landing page as a regular page
     layout: 'single'
 
-  - _target:
+  - target:
       path: '/collections/*/**'
       kind: 'section'
     # Must set the URL here with the '.html' file extension instead of in the
