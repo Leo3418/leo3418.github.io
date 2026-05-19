@@ -74,5 +74,5 @@ ready, make a new initramfs with the `cryptsetup` program and the key file for
 automatic unlock from systemd:
 
 ```console
-# dracut --force "" "$(cat /usr/src/linux/include/config/kernel.release)"
+# dracut --force --verbose "" "$(cat /usr/src/linux/include/config/kernel.release)"
 ```
