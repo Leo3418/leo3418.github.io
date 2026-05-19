@@ -52,7 +52,7 @@ toc: true
 [cachyos-benchmark]: https://www.phoronix.com/review/cachyos-x86-64-v3-v4
 [gentoo-news-x86-64-v3]: https://www.gentoo.org/news/2024/02/04/x86-64-v3.html
 [portage-user-patches-fix-bugs]: {{< relref "2021-03-01-portage-user-patches" >}}
-[portage-user-patches-grub-argon2]: {{< relref path="collections/gentoo-config-luks2-grub-systemd/setup-process/configure-gentoo/packages#add-patches-for-grub" lang="en" >}}
+[portage-user-patches-grub-argon2]: {{< relref path="collections/gentoo-config-luks2-grub-systemd/patch-grub" lang="en" >}}
 
 ## 效果
 

@@ -3,16 +3,15 @@ title: "Configure GRUB for Better User Experience"
 weight: 337
 ---
 
-Although GRUB now has out-of-box support for LUKS2 and Argon2id thanks to the
-patches applied previously, a few additional configuration steps can still be
-taken to improve the user experience of unlocking the LUKS partition from GRUB.
+A few additional configuration steps can be taken to improve the user
+experience of unlocking the LUKS partition from GRUB.
 
 ## Update GRUB Settings for LUKS
 
-GRUB's default settings disregard operating systems in LUKS partitions and
-therefore does not generate menu entries for them.  To let GRUB probe LUKS
-partitions and create corresponding menu entries, the following option needs to
-be added to `/etc/default/grub`:
+With the default configuration, GRUB disregards operating systems in LUKS
+partitions and therefore does not generate menu entries for them.  To let GRUB
+probe LUKS partitions and create corresponding menu entries, the following
+option needs to be added to `/etc/default/grub`:
 
 ```bash
 # /etc/default/grub

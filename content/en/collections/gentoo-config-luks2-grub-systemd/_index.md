@@ -12,7 +12,6 @@ cascade:
 - date: 2022-08-21
 - show_date: true
 - toc: true
-lastmod: 2022-08-21
 ---
 
 This collection is a tutorial which provides instructions to set up LUKS2-based
@@ -28,14 +27,6 @@ up being too long for a post, it has been decomposed into several smaller
 articles in this collection.
 
 ## Caveats and Disclaimers
-
-- This tutorial depends on **unofficial modification** to GRUB.  The patch for
-  the modification is from the [grub-devel mailing list][grub-devel-archive].
-  Although the patch has been tested by myself and has not exhibited any issues
-  so far, and it presumably has also been tested by their original authors,
-  reviewers, testers, and some other users too, there is **no guarantee** on
-  the modification's functionality, stability, compatibility, security, or
-  performance whatsoever.
 
 - This tutorial gives **no professional advice on computer security**.
   Although I endeavor to make responsible recommendations on security practices

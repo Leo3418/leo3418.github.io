@@ -42,11 +42,10 @@ is more resilient to header corruption and still provides modest protection
 when a weak passphrase is used.  These enhancements are realized by use of a
 second copy of the LUKS header and Argon2id.
 
-However, LUKS2 full disk encryption is not necessarily easy to set up:
+However, LUKS2 full disk encryption is not necessarily straightforward to set
+up:
 - On Gentoo, where many software packages' features can be customized via USE
   flags, the USE flags related to LUKS must be enabled.
-- Configuring the GRUB bootloader for LUKS2 with Argon2id is tricky because as
-  of version 2.12, GRUB still does not support Argon2id.
 - The boot process might prompt for the passphrase twice: GRUB asks for it
   first, and the init system will ask for it again because GRUB cannot pass
   the passphrase or the unlocked state to the init system.
