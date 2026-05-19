@@ -10,4 +10,4 @@ chapter of the Handbook.  *Updating the @world set* should be the last step
 which has been completed at this point, so feel free to resume from the step
 following it.
 
-[handbook-base]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Configuring_the_USE_variable
+[handbook-base]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Removing_obsolete_packages

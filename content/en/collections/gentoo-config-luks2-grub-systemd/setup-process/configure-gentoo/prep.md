@@ -47,11 +47,11 @@ file system to `/mnt/gentoo` for subsequent steps.
 
 [handbook-create-fs]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks#Creating_file_systems
 
-## New Installation Only: Unpack stage3
+## New Installation Only: Unpack Stage File
 
 If a new Gentoo installation is being performed, then please follow the
-[Handbook's instructions][handbook-stage] to unpack stage3 to the new file
-system.
+[Handbook's instructions][handbook-stage] to unpack a stage file to the new
+file system.
 
 [handbook-stage]: https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage
 

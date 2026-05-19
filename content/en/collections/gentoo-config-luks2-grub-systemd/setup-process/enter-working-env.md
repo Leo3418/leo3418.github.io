@@ -14,16 +14,16 @@ performed.  It must meet the following criteria:
   not running.
 
 The easiest way to get access to such an environment is to create a bootable
-drive from one of the following medias, then restart the computer and boot into
+drive from one of the following media, then restart the computer and boot into
 this drive:
 - Gentoo minimal installation CD, which has a small size and provides a pure
   command-line environment
-- The fairly new Gentoo LiveGUI USB image, which provides a live Gentoo system
-  with a desktop environment
+- The Gentoo LiveGUI USB image, which provides a live Gentoo system with a
+  desktop environment
 - Most GNU/Linux distributions' live ISO image, which usually provides a
   desktop environment too
 
-The Gentoo medias can be obtained from the [Downloads page on the Gentoo
+The Gentoo media can be obtained from the [Downloads page on the Gentoo
 website][gentoo-downloads].  A bootable USB drive can be created using
 [instructions on the Gentoo Wiki][gentoo-wiki-liveusb].
 

@@ -47,9 +47,13 @@ If a new Gentoo installation is being performed, then please follow the
 instructions in the following Handbook sections under the *Configuring Portage*
 chapter:
 1. [Installing a Gentoo ebuild repository snapshot from the web](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Installing_a_Gentoo_ebuild_repository_snapshot_from_the_web)
-2. [Optional: Updating the Gentoo ebuild repository](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Updating_the_Gentoo_ebuild_repository)
-3. [Reading news items](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Reading_news_items)
-4. [Choosing the right profile](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile)
+2. [Optional: Selecting mirrors](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Selecting_mirrors)
+3. [Optional: Updating the Gentoo ebuild repository](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Updating_the_Gentoo_ebuild_repository)
+4. [Reading news items](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Reading_news_items)
+5. [Choosing the right profile](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Choosing_the_right_profile)
+6. [Optional: Adding a binary package host](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Adding_a_binary_package_host)
+7. [Optional: Configuring the USE variable](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Configuring_the_USE_variable)
+8. [Optional: Configure the ACCEPT_LICENSE variable](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base#Optional:_Configure_the_ACCEPT_LICENSE_variable)
 
 ## Rebuild Packages
 

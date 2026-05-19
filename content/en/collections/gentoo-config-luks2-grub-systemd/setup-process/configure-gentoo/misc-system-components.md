@@ -9,13 +9,13 @@ For **both** a new Gentoo installation and encryption of an existing
 installation, the `/etc/fstab` file needs to be checked and updated as needed.
 
 This is apparently required for a new installation because the default
-`/etc/fstab` in stage3 is just a template.  But for an existing installation,
-because the file system has been recreated on the LUKS partition, its partition
-identifiers -- including but are not limited to its UUID -- are changed, so an
-update to `/etc/fstab` is needed too.  Even if the block device name is used in
-`/etc/fstab` to identify the partition, the block device for the file system is
-also changed after LUKS configuration from `/dev/sda2` to `/dev/mapper/gentoo`
-for example, so an update is still necessary.
+`/etc/fstab` in the stage file is just a template.  But for an existing
+installation, because the file system has been recreated on the LUKS partition,
+its partition identifiers -- including but are not limited to its UUID -- are
+changed, so an update to `/etc/fstab` is needed too.  Even if the block device
+name is used in `/etc/fstab` to identify the partition, the block device for
+the file system is also changed after LUKS configuration from `/dev/sda2` to
+`/dev/mapper/gentoo` for example, so an update is still necessary.
 
 When updating the content of `/etc/fstab`, please make sure that the new
 partition identifier (i.e. the first field in a line) is for the file system
