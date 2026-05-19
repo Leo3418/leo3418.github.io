@@ -36,7 +36,7 @@ special paths:
 
 ## Generating the Site
 
-First, ensure the **extended version** of Hugo v0.144.0 or later is installed.
+First, ensure the **extended version** of Hugo v0.158.0 or later is installed.
 The installation instructions are available [here][hugo-install].
 - The extended version is required because this site has SCSS files, which only
   the extended version can handle.
