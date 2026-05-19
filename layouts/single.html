@@ -16,7 +16,7 @@ single
 
 <div id="main" role="main">
     {{- $partialPath := printf "sidebars/%s.html" .Section }}
-    {{- if templates.Exists (printf "partials/%s" $partialPath) }}
+    {{- if templates.Exists (printf "_partials/%s" $partialPath) }}
     {{- partial $partialPath . }}
     {{- end }}
 
@@ -72,7 +72,7 @@ single
             </footer>
 
             {{- $partialPath := printf "post-paginations/%s.html" .Section }}
-            {{- if templates.Exists (printf "partials/%s" $partialPath) }}
+            {{- if templates.Exists (printf "_partials/%s" $partialPath) }}
             {{- partial $partialPath . }}
             {{- end }}
         </div>
