@@ -35,11 +35,13 @@
                         </label>
                         <ul class="floating-menu navigation-links visible-links">
                             {{- range .Site.Menus.navigation }}
-                            {{- with $.Site.GetPage .URL }}
                             <li class="masthead__menu-item">
+                            {{- with .Page }}
                                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                            </li>
+                            {{- else }}
+                                <a href="{{ .URL }}">{{ .Name }}</a>
                             {{- end }}
+                            </li>
                             {{- end }}
                         </ul>
                     </div>
