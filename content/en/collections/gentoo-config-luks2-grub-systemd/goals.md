@@ -78,25 +78,8 @@ extent, and they are recommended to consult these additional resources:
 
 ## Resulting Boot Process
 
-The boot process that the instructions in this tutorial are intended to achieve
-is described as follows:
+After following this tutorial's instructions, the user will just need to enter
+the LUKS partition's passphrase *once* in the entire boot process.  The user
+will enter the passphrase in GRUB, before the Linux kernel is loaded.
 
-1. When GRUB starts, it shows the menu without asking for the passphrase.  This
-   will allow the user to not enter the passphrase until it is really needed.
-   For example, booting an alternative operating system that is not on the LUKS
-   partition (e.g. Microsoft Windows) does not require the passphrase for the
-   LUKS partition; neither does using the "UEFI Firmware Settings" option to
-   easily launch the computer's BIOS utility.  With the resulting
-   configuration, the passphrase will not be asked in these scenarios.
-2. When a menu entry for the operating system on the LUKS partition is
-   selected, GRUB prompts for the passphrase.  This will be the **only** time
-   when the user needs to enter the passphrase.
-   ![GRUB asks for passphrase after selecting a menu
-   entry]({{< static-path img grub-unlock.png >}})
-3. If the passphrase entered is correct, then the boot process continues
-   normally.  The passphrase will not be asked anymore during the boot.
-   ![GRUB boots the operating system upon successful
-   authentication]({{< static-path img grub-unlock-success.png >}})
-4. If an incorrect passphrase is supplied, GRUB returns to the menu.  The user
-   can retry entering the passphrase by selecting the same menu entry, or
-   choose a different entry.
+![GRUB asks for passphrase]({{< static-path img grub-unlock.png >}})

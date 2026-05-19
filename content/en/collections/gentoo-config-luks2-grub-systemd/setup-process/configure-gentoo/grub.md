@@ -1,10 +1,7 @@
 ---
-title: "Configure GRUB for Better User Experience"
+title: "Configure GRUB"
 weight: 337
 ---
-
-A few additional configuration steps can be taken to improve the user
-experience of unlocking the LUKS partition from GRUB.
 
 ## Update GRUB Settings for LUKS
 
@@ -54,54 +51,57 @@ with the actual block device for the ESP.
 # mount /dev/sda1 "${ESP}"
 ```
 
-## Improve GRUB's Passphrase Prompt
+## Optional: Delay GRUB's Passphrase Prompt
 
-At this point, if GRUB was installed normally, it would be functional and can
-unlock the LUKS partition already.  However, it would ask for the passphrase
-immediately when it launches, before even showing any menu entries:
+At this point, if GRUB has been installed normally, it will be functional and
+can unlock the LUKS partition already.  However, it will ask for the LUKS
+partition's passphrase *immediately* when it launches, even *before* showing
+any menu entries:
 
 ![GRUB asks for passphrase directly when it starts]({{< static-path img
 grub-start-unlock.png >}})
 
-This might be an acceptable behavior, until an incorrect passphrase is entered,
-in which case GRUB would directly fall back to the rescue mode without giving a
-chance to reenter the passphrase:
+Users who accept this behavior of GRUB can skip this step and move on to the
+next one.
 
-![GRUB falls back to the rescue mode directly if authentication fails when it
-starts]({{< static-path img grub-start-unlock-failure.png >}})
+To some users, this behavior may be undesirable because they want to access
+some GRUB menu options without entering the passphrase.  After all, some options
+do not really need the passphrase because they need not unlock the LUKS
+partition, like options to boot an alternative operating system that is not on
+the LUKS partition (e.g.  Microsoft Windows), and the “UEFI Firmware Settings”
+option for launching the computer’s BIOS utility.  These users might not wish to
+unnecessarily enter the passphrase to use these options.
 
-To avoid this behavior of GRUB, move the `/boot/grub` directory to the ESP,
-then create a symbolic link to the new directory under `/boot`.
+To avoid this behavior of GRUB, these users should move the `/boot/grub`
+directory to the ESP, then create a symbolic link to the new directory under
+`/boot`:
 
-If a new Gentoo installation is being performed, or an existing installation
-where GRUB is not used is being worked with, then please run the following
-command:
+1. If a new Gentoo installation is being performed, or an existing installation
+   where GRUB is not used is being worked with, then please run the following
+   command:
 
-```console
-# mkdir "${ESP}/grub"
-```
+   ```console
+   # mkdir "${ESP}/grub"
+   ```
 
-If GRUB is already being used as the bootloader, please use this command
-instead to move existing GRUB files to the ESP:
+   If GRUB is already being used as the bootloader, please use this command
+   instead to move existing GRUB files to the ESP:
 
-```console
-# mv /boot/grub "${ESP}"
-```
+   ```console
+   # mv /boot/grub "${ESP}"
+   ```
 
-Then, **in both cases**, run the following command to set up the symbolic link:
+2. Then, **in both cases**, run the following command to set up the symbolic link:
 
-```console
-# ln -s "${ESP}/grub" /boot
-```
+   ```console
+   # ln -s "${ESP}/grub" /boot
+   ```
 
 Now, GRUB's passphrase prompt is deferred until a menu entry that requires the
-LUKS partition to be unlocked is selected, and if an incorrect passphrase is
-entered, GRUB no longer falls back to the rescue mode.  Instead, the user can
-press any key to return to the menu and reselect the same menu entry to reenter
-the passphrase.
+LUKS partition to be unlocked is selected.
 
-![GRUB allows authentication retry]({{< static-path img grub-unlock-failure.png
->}})
+![GRUB asks for passphrase after selecting a menu entry]({{< static-path img
+grub-unlock.png >}})
 
 Moving the contents of the `/boot/grub` directory to the ESP resolves this user
 experience issue by making all critical files GRUB needs for full

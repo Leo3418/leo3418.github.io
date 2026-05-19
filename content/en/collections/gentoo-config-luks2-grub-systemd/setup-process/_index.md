@@ -17,7 +17,6 @@ The overall setup process consists of the following steps:
    2. The system is configured so that the passphrase is asked only once during
       boot.
    3. The Linux kernel is configured with support for the LUKS partition.
-   4. To improve user experience, GRUB is configured to postpone asking for the
-      passphrase until necessary.
+   4. GRUB is configured for unlocking the LUKS partition.
 4. The LUKS partition's parameters are tuned to achieve an acceptable unlock
    speed in GRUB.
