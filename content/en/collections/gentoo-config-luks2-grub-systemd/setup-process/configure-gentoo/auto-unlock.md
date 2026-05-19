@@ -34,23 +34,21 @@ while it is locked.
 For the sake of security, the key file must be a unique file.  Do not use files
 that can be easily replicated or acquired by someone else as a key file, such
 as simple plain text files and music files.  Use of a new, randomly-created
-file is recommended.  The following commands allow such a file to be created
+file is recommended.  The following command allows such a file to be created
 and added to systemd's standard location for LUKS key files --
 `/etc/cryptsetup-keys.d`:
 
 ```console
-# mkdir /etc/cryptsetup-keys.d
-# dd if=/dev/urandom of=/etc/cryptsetup-keys.d/gentoo.key bs=1 count=4096
+# head --bytes=4096 /dev/urandom | install -D --mode=0600 /dev/stdin /etc/cryptsetup-keys.d/gentoo.key
 ```
 
-The key file's security is pivotal to the security of data on the LUKS
+The `--bytes` option to `head` specifies the size of the key file in bytes.
+
+The `--mode` option to `install` prevents non-root users from accessing the key
+file.  The key file's security is pivotal to the security of data on the LUKS
 partition.  It shall be treated in the same manner as SSH private keys and PGP
-private keys.  Therefore, its file permission shall be limited to `root` access
+private keys.  Therefore, its file permission shall be limited to root access
 only since unlocking a LUKS partition always requires superuser privilege.
-
-```console
-# chmod 600 /etc/cryptsetup-keys.d/gentoo.key
-```
 
 ## Add the Key File to LUKS
 
