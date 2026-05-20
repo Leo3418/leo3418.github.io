@@ -177,14 +177,24 @@ earliest to the latest.  So, if the passphrase key slot's modification time is
 the earliest, GRUB 2.14 will be able to attempt it first; otherwise, GRUB 2.14
 would waste time trying the incorrect key slot.
 
-Even though achieving a faster unlock speed in GRUB does not require tuning
-down the parameters of the key slot for the key file since this key slot is not
-intended for GRUB at all, keeping its parameters in sync with the passphrase
-key slot does not worsen the LUKS partition's security and may even expedite
-systemd's automatic unlock.  After all, as long as the key file has been
-properly created and secured, its corresponding key slot is more secure than
-the passphrase key slot when all parameters are identical since a key file
-cannot be guessed, brute-forced or phished as easily as a passphrase.
+Keeping both key slots' parameters in sync also allows GRUB to re-prompt for
+the passphrase faster when the user has entered a wrong passphrase.  If only
+the passphrase key slot is tuned down but the key file's key slot is not, GRUB
+will unlock the LUKS partition quickly when the entered passphrase is correct,
+but when the passphrase is incorrect, it will still need to spend about half a
+minute trying to unlock it before eventually failing and re-prompting for the
+correct passphrase.  With an incorrect passphrase, because there is another key
+slot to try (the one for the key file), GRUB will attempt to unlock it using
+the entered passphrase too; if this key slot's parameters are too challenging
+for GRUB, GRUB will still have to waste about half a minute just trying to
+unlock it.
+
+In addition, for the key file's key slot, keeping its parameters in sync with
+the passphrase key slot does not worsen the LUKS partition's security and also
+expedites systemd's automatic unlock.  After all, as long as the key file has
+been properly created and secured, its corresponding key slot is more secure
+than the passphrase key slot when all parameters are identical since a key file
+cannot be guessed, brute-forced or phished as easily as a passphrase can be.
 
 To test the new unlock speed in GRUB, reboot the system and observe how long
 GRUB takes to unlock the LUKS partition after the passphrase is supplied.  If
