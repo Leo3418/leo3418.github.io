@@ -8,11 +8,11 @@ operation takes about half a minute to complete; whereas on a normal running
 operating system, the same partition may just take a few seconds to unlock.
 This is because the cryptographic libraries GRUB uses for unlocking are less
 efficient than `cryptsetup`.  In particular, hardware accelerations for
-unlocking are generally unavailable in GRUB since it runs at a still quite
+unlocking are generally unavailable in GRUB since GRUB runs at a still quite
 early stage of the boot process.
 
 If such an unlock speed is unbearable, the LUKS partition's parameters can be
-tuned for faster unlocks with less performance requirements and also **less
+tuned for faster unlocks with less performance requirements but also **less
 security**.
 
 ## LUKS and Argon2id Parameters' Impact on Unlock Speed
@@ -101,6 +101,8 @@ Digests:
 	            d9 c8 e6 e4 ae e5 45 c0 23 78 b5 47 e7 0f 85 f4
 	            a4 96 bf e5 61 3d 2e 4d 50 2a c5 61 67 f9 a8 f0
 ```
+
+### Default Parameters Selected by `cryptsetup`
 
 If a parameter's value was not specified when the LUKS partition was
 initialized or a key file was added, then it would be determined by the
