@@ -135,6 +135,10 @@ could cost GRUB half a minute due to those factors' absence.
 
 ## Change the Parameters
 
+The parameters that affect the unlock speed the most are applied on a per-key
+slot basis rather than on the entire LUKS partition, so they need to be changed
+individually for each key slot.
+
 `cryptsetup luksConvertKey` can be used to update a key slot's parameters.  If
 the `--key-file` option is *not* included in its invocation, then `cryptsetup`
 asks for the passphrase and applies the new settings to any key slot that can
@@ -147,14 +151,21 @@ these ones for updating a key slot's parameters:
 - `--pbkdf-force-iterations`: The new time cost for the key slot
 - `--pbkdf-memory`: The new memory requirement for the key slot
 
-The following commands set the number of iterations (i.e. time cost) to 4 and
+The commands below set the number of iterations (i.e. time cost) to 4 and
 memory requirement to 400 MiB, which, at least on a quad-core Intel Core
 i5-1135G7 dated from 2020, allow the LUKS partition to be unlocked in about 2
-seconds from GRUB 2.14 and should still grant reasonable security:
+seconds from GRUB 2.14 and should still grant reasonable security.  Note that
+customized encryption parameters (like `--pbkdf` and `--hash` in previous
+sections) must be explicitly specified again in the commands, or else
+`cryptsetup` would reset them to their default values.
 
 ```console
-# cryptsetup luksConvertKey /dev/sda2 --pbkdf-force-iterations 4 --pbkdf-memory 409600
-# cryptsetup luksConvertKey /dev/sda2 --pbkdf-force-iterations 4 --pbkdf-memory 409600 --key-file /etc/cryptsetup-keys.d/gentoo.key
+# cryptsetup luksConvertKey /dev/sda2 \
+--pbkdf argon2id --hash sha512 \
+--pbkdf-force-iterations 4 --pbkdf-memory 409600
+# cryptsetup luksConvertKey /dev/sda2 \
+--pbkdf argon2id --hash sha512 \
+--pbkdf-force-iterations 4 --pbkdf-memory 409600 --key-file /etc/cryptsetup-keys.d/gentoo.key
 ```
 
 These commands update the parameters for both key slots together.  Although
