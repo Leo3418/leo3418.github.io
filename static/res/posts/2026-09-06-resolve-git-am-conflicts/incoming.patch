@@ -1,0 +1,27 @@
+From 769c4207dbdfa90bb5e05951b8c776e71b90451c Mon Sep 17 00:00:00 2001
+From: Git User <git-user@localhost>
+Date: Fri, 14 Aug 2026 15:25:54 -0400
+Subject: [PATCH] hello, world and foobar
+
+---
+ foobar.txt | 1 +
+ hello.txt  | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/foobar.txt b/foobar.txt
+index 257cc56..3bd1f0e 100644
+--- a/foobar.txt
++++ b/foobar.txt
+@@ -1 +1,2 @@
+ foo
++bar
+diff --git a/hello.txt b/hello.txt
+index ce01362..94954ab 100644
+--- a/hello.txt
++++ b/hello.txt
+@@ -1 +1,2 @@
+ hello
++world
+-- 
+2.55.0
+
