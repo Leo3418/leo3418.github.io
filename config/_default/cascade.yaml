@@ -1,0 +1,25 @@
+cascade:
+  - target:
+      path: '/posts/drafts/**'
+    draft: true
+
+  - target:
+      path: '/collections{,/**}'
+      kind: 'section'
+    outputs:
+      # Drop 'RSS'
+      - 'HTML'
+
+  - target:
+      path: '/collections/**'
+      kind: 'section'
+    # Render a collection sub-section's landing page as a regular page
+    layout: 'single'
+
+  - target:
+      path: '/collections/*/**'
+      kind: 'section'
+    # Must set the URL here with the '.html' file extension instead of in the
+    # 'permalinks' site configuration because, since v0.148.0, Hugo no longer
+    # generates ugly URLs for section pages
+    url: ':sections[:2]/:sections[last].html'
